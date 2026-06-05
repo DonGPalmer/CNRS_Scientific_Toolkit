@@ -2,13 +2,14 @@
 .pytest_cache/CACHEDIR.TAG
 .pytest_cache/README.md
 .pytest_cache/v/cache/nodeids
-CLAIM_STATUS_MERGED.md
+CLAIM_STATUS.md
 EXAMPLE_SMOKE_STATUS.md
 LICENSE
-MERGE_REVIEW.md
+NOTICE
 README.md
+RELEASE_NOTES.md
 SOURCE_INDEX.txt
-TEST_STATUS_MERGED.md
+TEST_STATUS.md
 cnrs/__init__.py
 cnrs/__pycache__/__init__.cpython-313.pyc
 cnrs/__pycache__/cnrs_add.cpython-313.pyc

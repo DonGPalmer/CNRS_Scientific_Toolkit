@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cnrs"
 version = "0.3.1"
-description = "CNRS scientific toolkit: complex-base arithmetic, CNRS-float, CNRS-H calculus, ODEs, branch-aware workflows, and observation maps"
+description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, branch workflows, and observation maps"
 authors = [
     { name = "Donald G. Palmer", email = "dgpalmer@nul1.com" }
 ]
 readme = "README.md"
-license = { text = "MIT" }
+license = { text = "Apache-2.0" }
 requires-python = ">=3.9"
 dependencies = ["numpy>=1.24"]
 
