@@ -17,8 +17,10 @@ standard real/complex input
 cnrs/                  Core CNRS implementation and scientific modules
 tests/                 Pytest test suite
 examples/              Runnable scientific workflow examples
-docs/                  Supporting documentation
-reports/               Generated reports / notes
+README.md              Project overview and quick start
+CLAIM_STATUS.md        Current tested/practical/open claim status
+TEST_STATUS.md         Captured test output
+RELEASE_NOTES.md       Current release summary
 ```
 
 Core capabilities include:
@@ -36,6 +38,8 @@ Explicit observation maps
 Scale-law fitting and differentiation
 Three-workflow comparison examples
 ```
+
+Additional documentation can be added later as the public repository develops.
 
 ## Scientific purpose
 
