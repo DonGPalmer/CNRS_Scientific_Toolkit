@@ -55,6 +55,16 @@ C. CNRS complex-state late reduction
 
 This helps test what information is lost when calculations are projected to real-valued observables too early.
 
+## Project documentation
+
+CNRS Scientific Toolkit is part of the broader Scale Space / CNRS research programme.
+
+Project index and reading guide:
+
+https://www.nul1.com/
+
+The project index connects the book-level synthesis, Scale Space papers, CNRS mathematical documents, software-related records, open problems, and Zenodo concept DOI records. For technical background and citation routes, start there.
+
 ## Quick start
 
 From the repository root:
