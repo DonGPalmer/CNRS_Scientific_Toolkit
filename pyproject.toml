@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cnrs"
+version = "0.3.1"
+description = "CNRS scientific toolkit: complex-base arithmetic, CNRS-float, CNRS-H calculus, ODEs, branch-aware workflows, and observation maps"
+authors = [
+    { name = "Donald G. Palmer", email = "dgpalmer@nul1.com" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+scale = ["numpy>=1.24"]
+
+[project.urls]
+"Zenodo" = "https://zenodo.org/records/19797882"
+"ORCID"  = "https://orcid.org/0000-0003-4335-5533"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
