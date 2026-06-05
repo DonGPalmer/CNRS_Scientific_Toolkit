@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+title: "CNRS Scientific Toolkit"
+message: "If you use this software, please cite the repository and the project documentation."
+type: software
+authors:
+  - family-names: Palmer
+    given-names: Donald G.
+    orcid: "https://orcid.org/0000-0003-4335-5533"
+repository-code: "https://github.com/DonGPalmer/CNRS_Scientific_Toolkit"
+url: "https://www.nul1.com/"
+license: Apache-2.0
+version: "0.1.0"
+date-released: "2026-06-05"
