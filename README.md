@@ -59,7 +59,7 @@ As with many research programs, future work may modify, replace, or extend indiv
 
 **GitHub:** https://github.com/DonGPalmer/CNRS_Scientific_Toolkit  
 **Programme landing page:** https://www.nul1.com  
-**Zenodo:** https://doi.org/10.5281/zenodo.19797882  
+**Zenodo:** https://doi.org/10.5281/zenodo.20574852  
 **ORCID:** https://orcid.org/0000-0003-4335-5533
 
 ## What is included
