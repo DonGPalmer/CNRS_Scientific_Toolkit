@@ -1,6 +1,9 @@
 # CNRS Scientific Toolkit
 
-CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representational System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, CNRS-H scale-law calculus, and CNRS-H coefficient-based ODE methods.
+CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representational System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, CNRS-H scale-law calculus, CNRS-H coefficient-based ODE methods, and NumPy/SciPy interoperability.
+
+**Base:** `z0 = -2 + i`  (a Gaussian integer, `N(z0) = 5`)  
+**Digit alphabet:** `D = {0, 1, 2, 3, 4}`
 
 The package is designed to interoperate with ordinary scientific workflows:
 
@@ -11,19 +14,69 @@ standard real/complex input
     -> standard real/complex/decimal output
 ```
 
+## Research Status
+
+CNRS Scientific Toolkit is an open research-code package supporting the development and evaluation of CNRS and related multi-scale modeling concepts.
+
+The toolkit contains:
+
+- Reference implementations of CNRS arithmetic, calculus, normalization, and transducer systems.
+- Experimental algorithms and prototype representations.
+- Validation and regression tests.
+- Demonstration models for scale-aware, biological, oscillator, and related scientific applications.
+- Reproducible examples used in ongoing research and publication development.
+
+### Scope
+
+This repository is intended to support:
+
+- Reproducibility of published and pre-publication results.
+- Exploration of alternative representational and computational frameworks.
+- Investigation of cross-scale mathematical structures.
+- Development of new numerical, symbolic, and dynamical methods.
+- Independent verification and extension by other researchers.
+
+### Research Nature of the Software
+
+This repository is released as an **open research-code package**.
+
+Many components are active research implementations rather than finalized production software. The inclusion of a module, algorithm, example, or demonstration does **not** imply that any associated scientific hypothesis, interpretation, or theoretical framework has been fully established or experimentally validated.
+
+Users should therefore regard the toolkit as:
+
+- A reference implementation of current CNRS research.
+- A platform for experimentation and exploration.
+- A reproducible computational companion to the associated papers and technical notes.
+- An invitation for independent analysis, testing, criticism, and extension.
+
+### Project Philosophy
+
+The long-term goal of the project is not to provide a finished theory, but to develop and evaluate mathematical structures, computational tools, and multi-scale representations that may prove useful across scientific disciplines.
+
+As with many research programs, future work may modify, replace, or extend individual components while preserving useful mathematical or computational ideas that emerge from the investigation.
+
+## Repository
+
+**GitHub:** https://github.com/DonGPalmer/CNRS_Scientific_Toolkit  
+**Programme landing page:** https://www.nul1.com  
+**Zenodo:** https://doi.org/10.5281/zenodo.19797882  
+**ORCID:** https://orcid.org/0000-0003-4335-5533
+
 ## What is included
 
 ```text
 cnrs/                  Core CNRS implementation and scientific modules
+cnrs/science/          Scientific workflow helpers and observation maps
+examples/              Runnable CNRS and scientific workflow examples
 tests/                 Pytest test suite
-examples/              Runnable scientific workflow examples
+docs/                  Research status, API overview, claim/test status, and example-smoke status
 README.md              Project overview and quick start
-CLAIM_STATUS.md        Current tested/practical/open claim status
-TEST_STATUS.md         Captured test output
-RELEASE_NOTES.md       Current release summary
+RELEASE_NOTES.md       Release history
+CITATION.cff           Citation metadata
+CONTRIBUTING.md         Contributor guidance for research-code additions
 ```
 
-Core capabilities include:
+Core capabilities:
 
 ```text
 CNRS-A finite complex-base representation over z0 = -2+i
@@ -36,72 +89,233 @@ CNRS-H linear ODE solvers
 Branch-aware complex-state helpers
 Explicit observation maps
 Scale-law fitting and differentiation
-Three-workflow comparison examples
+Biological scale dynamics and Turing-threshold examples
+Complex oscillator and three-workflow examples
+NumPy/SciPy interoperability bridge
 ```
 
-Additional documentation can be added later as the public repository develops.
-
-## Scientific purpose
-
-The toolkit is meant to make CNRS inspectable, testable, and extensible. It provides working code, tests, and examples for evaluating where CNRS may be useful in scientific computation, especially where complex-valued state should be preserved before choosing a real-valued observation map.
-
-A recurring workflow in the examples is:
+Scientific toolkit modules include:
 
 ```text
-A. early real reduction
-B. ordinary complex late reduction
-C. CNRS complex-state late reduction
+cnrs_scale      ScaleLaw: fitting, allometric, derivative, threshold tools
+cnrs_bio        Gierer-Meinhardt biological scale dynamics
+cnrs_oscillator Stuart-Landau, RLC, driven harmonic, interference examples
+cnrs_interop    NumPy/SciPy bridge and benchmark utilities
 ```
 
-This helps test what information is lost when calculations are projected to real-valued observables too early.
+## Implementation maturity
 
-## Project documentation
+### Stable
 
-CNRS Scientific Toolkit is part of the broader Scale Space / CNRS research programme.
+Fully implemented, tested, and verified:
 
-Project index and reading guide:
+- Gaussian integer representation (`cnrs_repr`)
+- Addition via 14-state finite-state transducer (`cnrs_add`)
+- Multiplication via Cauchy convolution + carry normalization (`cnrs_mul`)
+- Division by base, base powers, and Gaussian units (`cnrs_div`)
+- High-level arithmetic wrappers (`cnrs_ops`, `cnrs_value`)
+- CNRS-H EGF digit-shift calculus (`cnrs_h`)
 
-https://www.nul1.com/
+### Experimental
 
-The project index connects the book-level synthesis, Scale Space papers, CNRS mathematical documents, software-related records, open problems, and Zenodo concept DOI records. For technical background and citation routes, start there.
+Implemented and tested for representative cases:
+
+- Gaussian rational expansion (`cnrs_rational`): finite, pure z0-adic periodic, and Laurent-periodic cases
+- CNRS floating-point arithmetic (`cnrs_float`)
+- H-streams and operator calculus (`cnrs_hstream`, `cnrs_hstream_ops`, `cnrs_operator`)
+- Layer-2 branch index arithmetic (`cnrs_layer2`, `cnrs_layer2_value`)
+- Scientific workflow helpers (`cnrs.science`)
+- CNRS-H linear ODE solvers (`cnrs_ode`)
+- Scale-law, biological-scale, oscillator, and interop utilities
+
+### Prototype / research sketch
+
+Scaffolding for future work:
+
+- Analytic continuation engine (`cnrs_expansion`, `cnrs_continuation`)
+- Layer-3 / Layer-4 global analytic objects (`cnrs_layer3`, `cnrs_layer4`)
+- Global constraint and solver scaffolding (`cnrs_global_constraints`, `cnrs_global_solver`)
+- Scale-integration bridge example (`examples/scale_integration.py`)
+
+## Test status
+
+Current validation status:
+
+```text
+559 passed, 6 xfailed
+```
+
+The 6 expected failures document known representational limits, including transcendental numbers and long-period rationals. They are not regressions.
+
+See [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md), [`docs/API_OVERVIEW.md`](docs/API_OVERVIEW.md), [`docs/TEST_STATUS.md`](docs/TEST_STATUS.md), [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md), and [`docs/EXAMPLE_SMOKE_STATUS.md`](docs/EXAMPLE_SMOKE_STATUS.md) for details.
 
 ## Quick start
 
 From the repository root:
 
 ```bash
+pip install numpy scipy          # runtime dependencies for scientific examples
+pip install pytest               # for running tests
 python -m pytest -q
+```
+
+Run selected examples:
+
+```bash
+python examples/quickstart_cnrs.py
+python examples/demo.py
+python examples/scale_integration.py
+
+# Science workflow examples
 python examples/science_workflows/interference_three_workflows.py
 python examples/science_workflows/complex_scale_law.py
 python examples/science_workflows/phase_branch_tracking.py
 python examples/science_workflows/scale_law_fit_demo.py
 python examples/science_workflows/observation_maps_demo.py
+
+# v0.2.0 examples
+python examples/science_workflows/turing_scale_exit.py
+python examples/science_workflows/rlc_three_workflows.py
+python examples/science_workflows/cnrs_vs_scipy_benchmark.py
+```
+
+See [`examples/README.md`](examples/README.md) for example categories and smoke-test guidance.
+
+## Documentation map
+
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — contributor guidance and testing expectations.
+- [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md) — research-code status and maturity levels.
+- [`docs/API_OVERVIEW.md`](docs/API_OVERVIEW.md) — compact module map.
+- [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md) — tested/practical/open claim boundaries.
+- [`docs/TEST_STATUS.md`](docs/TEST_STATUS.md) — test-suite status.
+- [`docs/EXAMPLE_SMOKE_STATUS.md`](docs/EXAMPLE_SMOKE_STATUS.md) — runnable example status.
+
+## Core CNRS examples
+
+```python
+import cnrs
+
+# Represent a Gaussian integer
+s = cnrs.gaussian_to_cnrs_str(3 + 2j)   # -> '1332'
+z = cnrs.cnrs_to_gaussian(s)            # -> (3+2j)
+
+# Addition via finite-state transducer
+a = cnrs.gaussian_to_cnrs_str(3 + 2j)
+b = cnrs.gaussian_to_cnrs_str(1 + 1j)
+c = cnrs.cnrs_add(a, b)
+
+# Multiplication via convolution + carry normalization
+m = cnrs.cnrs_mul(a, b)
+```
+
+## Example: interference and beat frequency
+
+```python
+from cnrs.cnrs_oscillator import interference_pair, compare_interference
+import numpy as np
+
+# Two oscillators at omega1=1.0, omega2=1.5
+sol = interference_pair(omega1=1.0, omega2=1.5)
+
+# Workflow A: incoherent sum loses the beat
+A_intensity = 1.0 + 1.0   # |amp1|² + |amp2|² — constant
+
+# Workflow C: CNRS-H stream preserves the beat at omega2-omega1 = 0.5
+t_vals = np.linspace(0.0, 2*np.pi/0.5, 200)
+mod2 = sol.modulus_sq(t_vals)   # oscillates at beat frequency
+
+result = compare_interference(omega1=1.0, omega2=1.5)
+print(result.metrics["B_beat_frequency"])      # 0.5
+print(result.metrics["A_intensity_constant"])  # True
+print(result.interpretation)
+```
+
+## Example: Turing instability exit scale
+
+```python
+from cnrs.cnrs_bio import GmParams, find_s_exit, turing_profile
+
+p = GmParams()   # Paper 18 default parameters
+
+# Find the scale at which Turing instability becomes extinct
+s_exit = find_s_exit(p)
+print(f"s_exit ≈ {s_exit:.3f} nats")   # ≈ 0.520 nats
+
+# Full profile across scale
+prof = turing_profile(p)
+print(f"d_hi = {prof.d_hi:.3f}")
+print(f"Active scales: s < {prof.s_exit:.3f} nats")
+```
+
+## Example: CNRS-H vs SciPy comparison
+
+```python
+from cnrs.cnrs_interop import solve_and_compare, benchmark_linear
+import numpy as np
+
+# Side-by-side comparison for y' = lam*y
+result = solve_and_compare(
+    lam=complex(-0.3, 2.0),
+    y0=complex(1.0),
+    s_vals=np.linspace(0.0, 0.5, 100),
+    terms=30,
+)
+print(result.summary())
+
+# Timing benchmark
+bench = benchmark_linear(n_repeat=20)
+print(bench.summary())
 ```
 
 ## Example: complex scale law
 
 ```python
-from cnrs.science.three_workflows import compare_complex_scale_law
+from cnrs.cnrs_scale import fit_allometric
+import numpy as np
 
-result = compare_complex_scale_law(alpha=-0.14, omega=4.25, omega2=1.75)
-print(result.metrics)
+# Allometric power law: y ~ A * exp(b * s) = A * ell^b
+s = np.linspace(0.0, 5.0, 60)
+y = 1.5 * np.exp(0.75 * s)
+
+result = fit_allometric(s, y)
+print(f"Allometric exponent b = {result.exponent:.4f}")
+print(f"Amplitude A = {result.amplitude:.4f}")
+print(f"R² = {result.r_squared:.6f}")
+
+# Exact digit-shift derivative of the fitted law
+print(f"Log-derivative at s=1: {result.law.log_derivative(1.0).real:.4f}")
 ```
 
-This compares early modulus-squared reduction with complex-state-preserving workflows and shows how the oscillatory scale frequency is retained in the complex state.
+## The three-workflow pattern
 
-## Claim status
-
-See [`CLAIM_STATUS.md`](CLAIM_STATUS.md) for a concise summary of what is tested, what is currently practical, and what remains open.
-
-## Test status
-
-The current package test suite passed in this environment:
+A recurring design in the toolkit:
 
 ```text
-260 passed, 6 xfailed
+Workflow A — early real reduction
+    Convert to |z|² or Re(z) immediately.
+    Fast; loses phase, branch, and interference information.
+
+Workflow B — late complex reduction
+    Propagate in ordinary Python complex; measure at the end.
+    Retains phase; no digit-shift calculus.
+
+Workflow C — CNRS complex-state preservation
+    Propagate via CNRS-H EGF stream; exact digit-shift derivative;
+    choose observation map only at the final step.
+    Retains all complex structure; supports exact differentiation.
 ```
 
-See [`TEST_STATUS.md`](TEST_STATUS.md) for the captured test output.
+The toolkit's `compare_*` functions demonstrate these workflows side-by-side, showing what early reduction loses relative to full complex-state preservation.
+
+## Scientific purpose
+
+The toolkit is meant to make CNRS inspectable, testable, and extensible. It provides working code, tests, and examples for evaluating where CNRS may be useful in scientific computation, especially where complex-valued state should be preserved before choosing a real-valued observation map.
+
+The digit-shift identity for CNRS-H differentiation is proved within the EGF convention. ODE solutions are tested computationally against SciPy and exact analytical formulae. Standard QM and GR exact solutions are verified as CNRS-H streams. See [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md) for the precise status of each claim.
+
+## Disclosure
+
+AI collaboration is disclosed throughout this programme and in associated papers, in accordance with the policies of the target journals.
 
 ## License
 

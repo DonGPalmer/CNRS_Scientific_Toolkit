@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cnrs"
-version = "0.3.1"
-description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, branch workflows, and observation maps"
+version = "0.2.0"
+description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, scale laws, biological scale dynamics, complex oscillators, and NumPy/SciPy interoperability"
 authors = [
     { name = "Donald G. Palmer", email = "dgpalmer@nul1.com" }
 ]
@@ -15,7 +15,9 @@ requires-python = ">=3.9"
 dependencies = ["numpy>=1.24"]
 
 [project.optional-dependencies]
-dev = ["pytest>=7"]
+dev = ["pytest>=7", "scipy>=1.10"]
+interop = ["scipy>=1.10"]
+data = ["pandas>=2"]
 scale = ["numpy>=1.24"]
 
 [project.urls]
