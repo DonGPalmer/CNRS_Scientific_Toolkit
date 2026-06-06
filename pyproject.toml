@@ -21,7 +21,7 @@ data = ["pandas>=2"]
 scale = ["numpy>=1.24"]
 
 [project.urls]
-"Zenodo" = "https://zenodo.org/records/19797882"
+"Zenodo" = "https://doi.org/10.5281/zenodo.20574852"
 "ORCID"  = "https://orcid.org/0000-0003-4335-5533"
 
 [tool.pytest.ini_options]
