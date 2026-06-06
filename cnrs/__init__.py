@@ -26,16 +26,30 @@ The package is organised in three layers:
       - Pure z0-adic periodic rationals (denominator coprime to 5).
       - Laurent-periodic z0-adic rationals (denominator divisible by 5).
     Evaluate via CnrsRational.z0_adic_value() (fast float),
-    CnrsRational.z0_adic_value_fractions() (fully exact: returns (Fraction, Fraction)),
-    or CnrsRational.z0_adic_value_exact() (exact internally, returns complex).
-    Long-period expansions require sufficiently large max_frac; exceeding it
-    raises RuntimeError.
+    CnrsRational.z0_adic_value_fractions() (fully exact),
+    or CnrsRational.z0_adic_value_exact() (exact internally).
     CNRS floating-point arithmetic (CNRS-float, experimental).
-    Branch-index (Layer-2) and global analytic (Layer-3/4) objects (prototype).
+    Branch-index (Layer-2) and global analytic (Layer-3/4) objects.
 
-  Scientific toolkit (v0.3.0+)
+  Scientific toolkit (v0.2.0)
     CnrsComplex: unified complex interface matching Python's built-in complex.
-    Wraps CnrsFloat with arithmetic, measurement, and array utilities.
+
+    OdeSolution / cnrs_solve_*: CNRS-H coefficient-recurrence ODE solvers.
+    Exact (up to floating-point) linear ODE solutions via digit shift.
+
+    ScaleLaw: CNRS-H backed scale-law toolkit.
+    Construction, fitting, differentiation, allometric analysis, and
+    Turing-threshold detection via CNRS-H EGF calculus.
+
+    Biological scale dynamics (cnrs_bio):
+    Gierer-Meinhardt activator-inhibitor model in the CNRS-H multi-scale
+    framework. Scale-dependent Turing conditions, s_exit detection, and
+    scale-gradient corrections. Parameters from Paper 18.
+
+    Complex oscillators (cnrs_oscillator):
+    Stuart-Landau, RLC, driven harmonic, and interference models via
+    CNRS-H coefficient recurrence. Three-workflow comparisons showing
+    what early real reduction loses vs. full complex-state preservation.
 
 Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
@@ -76,29 +90,140 @@ from .cnrs_layer2_value import L2Val
 from .cnrs_layer3 import L3Value
 from .cnrs_layer4 import L4Value, L4State
 
-# ── Scientific toolkit ────────────────────────────────────────────────────────
+# ── Scientific toolkit — complex interface ────────────────────────────────────
 
 from .cnrs_complex import CnrsComplex, encode_array, decode_array, to_numpy
-from .cnrs_ode import cnrs_solve_linear, cnrs_solve_driven, cnrs_solve_second_order, OdeSolution
+
+# ── Scientific toolkit — ODE solvers ─────────────────────────────────────────
+
+from .cnrs_ode import (
+    cnrs_solve_linear,
+    cnrs_solve_driven,
+    cnrs_solve_second_order,
+    OdeSolution,
+)
+
+# ── Scientific toolkit — scale laws ──────────────────────────────────────────
+
+from .cnrs_scale import (
+    ScaleLaw,
+    FitResult,
+    AllometricResult,
+    TuringResult,
+    fit_exponential,
+    fit_egf,
+    fit_allometric,
+    turing_threshold,
+)
+
+# ── Scientific toolkit — biological scale dynamics ────────────────────────────
+
+from .cnrs_bio import (
+    GmParams,
+    da_profile,
+    dh_profile,
+    d_ratio,
+    gm_steady_state,
+    gm_jacobian,
+    gm_steady_state_check,
+    turing_discriminant,
+    turing_active,
+    find_s_exit,
+    d_eff,
+    gm_k0_rhs,
+    turing_profile,
+    TuringProfile,
+    compare_turing_workflows,
+    TuringWorkflowResult,
+)
+
+# ── Scientific toolkit — complex oscillators ──────────────────────────────────
+
+from .cnrs_oscillator import (
+    StuartLandauParams,
+    RlcParams,
+    DrivenParams,
+    OscillatorSolution,
+    stuart_landau_linear,
+    rlc_free,
+    rlc_driven,
+    driven_harmonic,
+    interference_pair,
+    ThreeWorkflowResult,
+    compare_stuart_landau,
+    compare_rlc,
+    compare_interference,
+)
+
+# ── Scientific toolkit — NumPy/SciPy interoperability ─────────────────────────
+
+from .cnrs_interop import (
+    cnrsh_to_numpy,
+    numpy_to_cnrsh,
+    ode_solution_to_numpy,
+    cnrs_complex_to_numpy,
+    modulus_array,
+    modulus_sq_array,
+    real_array,
+    imag_array,
+    phase_array,
+    phase_rate_array,
+    cnrs_to_scipy_ivp,
+    scipy_ivp_to_cnrsh,
+    solve_and_compare,
+    ComparisonResult,
+    benchmark_linear,
+    benchmark_second_order,
+    BenchmarkResult,
+    to_dataframe,
+)
 
 __all__ = [
-    # Constants
+    # ── Constants
     "Z0", "DIGITS",
-    # Representation
+    # ── Representation
     "gaussian_to_cnrs_digits", "gaussian_to_cnrs_str",
     "cnrs_to_gaussian", "normalize_cnrs",
-    # Arithmetic
+    # ── Arithmetic
     "add_cnrs", "mul_cnrs", "div_by_base_power", "div_by_base", "div_cnrs",
     "cnrs_add", "cnrs_sub", "cnrs_mul", "cnrs_neg", "cnrs_eq",
     "CVal",
-    # Calculus
+    # ── Calculus
     "CnrsH", "HStream", "Operator",
-    # Analytic
+    # ── Analytic continuation
     "InfiniteExpansion", "CnrsRational", "gaussian_rational_to_cnrs", "CnrsFloat",
-    # Layered objects
+    # ── Layered objects
     "Layer2", "L2Val", "L3Value", "L4Value", "L4State",
-    # Scientific toolkit
+    # ── Scientific toolkit — complex interface
     "CnrsComplex", "encode_array", "decode_array", "to_numpy",
+    # ── Scientific toolkit — ODE solvers
     "cnrs_solve_linear", "cnrs_solve_driven", "cnrs_solve_second_order",
     "OdeSolution",
+    # ── Scientific toolkit — scale laws
+    "ScaleLaw", "FitResult", "AllometricResult", "TuringResult",
+    "fit_exponential", "fit_egf", "fit_allometric", "turing_threshold",
+    # ── Scientific toolkit — biological scale dynamics
+    "GmParams",
+    "da_profile", "dh_profile", "d_ratio",
+    "gm_steady_state", "gm_jacobian", "gm_steady_state_check",
+    "turing_discriminant", "turing_active",
+    "find_s_exit", "d_eff", "gm_k0_rhs",
+    "turing_profile", "TuringProfile",
+    "compare_turing_workflows", "TuringWorkflowResult",
+    # ── Scientific toolkit — complex oscillators
+    "StuartLandauParams", "RlcParams", "DrivenParams",
+    "OscillatorSolution",
+    "stuart_landau_linear", "rlc_free", "rlc_driven",
+    "driven_harmonic", "interference_pair",
+    "ThreeWorkflowResult",
+    "compare_stuart_landau", "compare_rlc", "compare_interference",
+    # ── Scientific toolkit — interoperability
+    "cnrsh_to_numpy", "numpy_to_cnrsh", "ode_solution_to_numpy",
+    "cnrs_complex_to_numpy",
+    "modulus_array", "modulus_sq_array", "real_array", "imag_array",
+    "phase_array", "phase_rate_array",
+    "cnrs_to_scipy_ivp", "scipy_ivp_to_cnrsh",
+    "solve_and_compare", "ComparisonResult",
+    "benchmark_linear", "benchmark_second_order", "BenchmarkResult",
+    "to_dataframe",
 ]

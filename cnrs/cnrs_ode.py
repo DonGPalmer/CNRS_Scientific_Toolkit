@@ -170,7 +170,8 @@ class OdeSolution:
         -------
         complex
         """
-        if warn and s > self._s_max * 1.1:
+        s_real = float(s.real) if hasattr(s, "real") else float(s)
+        if warn and s_real > self._s_max * 1.1:
             warnings.warn(
                 f"Evaluating OdeSolution at s={s:.3f} nats, which exceeds "
                 f"the reliable domain s_max≈{self._s_max:.3f} nats for "
