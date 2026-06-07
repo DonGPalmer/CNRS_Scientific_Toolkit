@@ -178,6 +178,48 @@ from .cnrs_interop import (
     to_dataframe,
 )
 
+# ── Scientific toolkit — Component 7: multi-scale SS physics ─────────────────
+from .cnrs_multiscale import (
+    ScaleLadder,
+    LadderEvalResult,
+    ScaleGradientResult,
+    scale_gradient_correction,
+    ladder_profile,
+    ladder_to_scalelaws,
+    JunctionCondition,
+    FieldEquationCheck,
+    PsiZeroDeterminer,
+)
+
+# ── Scientific toolkit — Component 8: scale-sweep and regime detection ────────
+from .cnrs_regime import (
+    ScaleParameter,
+    ScaleSweep,
+    ScaleSweepResult,
+    RegimeTransition,
+    detect_transitions,
+    logarithmic_scale,
+    length_from_scale,
+)
+
+# ── Scientific toolkit — reaction-diffusion scale-exit ────────────────────────
+from .cnrs_rd_scale_exit import (
+    RDLinearKinetics,
+    ExponentialDiffusionLaw,
+    TuringPoint,
+    ScaleTransition,
+    ScaleExitResult,
+    TuringThresholds,
+    turing_thresholds,
+    turing_diagnostic,
+    scan_scale_exit,
+    exponential_gm_scale_exit,
+    gm_default_kinetics,
+    ladder_diffusion_law,
+    scalelaw_diffusion_law,
+    scan_scale_exit_ladder,
+)
+
 __all__ = [
     # ── Constants
     "Z0", "DIGITS",
@@ -226,4 +268,17 @@ __all__ = [
     "solve_and_compare", "ComparisonResult",
     "benchmark_linear", "benchmark_second_order", "BenchmarkResult",
     "to_dataframe",
+    # ── Scientific toolkit — Component 7: multi-scale SS physics
+    "ScaleLadder", "LadderEvalResult", "ScaleGradientResult",
+    "scale_gradient_correction", "ladder_profile", "ladder_to_scalelaws",
+    "JunctionCondition", "FieldEquationCheck", "PsiZeroDeterminer",
+    # ── Scientific toolkit — Component 8: scale-sweep and regime detection
+    "ScaleParameter", "ScaleSweep", "ScaleSweepResult", "RegimeTransition",
+    "detect_transitions", "logarithmic_scale", "length_from_scale",
+    # ── Scientific toolkit — reaction-diffusion scale-exit
+    "RDLinearKinetics", "ExponentialDiffusionLaw",
+    "TuringPoint", "ScaleTransition", "ScaleExitResult", "TuringThresholds",
+    "turing_thresholds", "turing_diagnostic", "scan_scale_exit",
+    "exponential_gm_scale_exit", "gm_default_kinetics",
+    "ladder_diffusion_law", "scalelaw_diffusion_law", "scan_scale_exit_ladder",
 ]

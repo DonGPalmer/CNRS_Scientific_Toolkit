@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cnrs"
-version = "0.2.0"
-description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, scale laws, biological scale dynamics, complex oscillators, and NumPy/SciPy interoperability"
+version = "0.3.0"
+description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, scale laws, biological scale dynamics, complex oscillators, NumPy/SciPy interoperability, multi-scale SS physics engine, and scale-regime detection"
 authors = [
     { name = "Donald G. Palmer", email = "dgpalmer@nul1.com" }
 ]

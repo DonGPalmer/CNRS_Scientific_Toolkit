@@ -34,6 +34,7 @@ cnrs/cnrs_layer3_continuation.py
 cnrs/cnrs_layer3_ops.py
 cnrs/cnrs_layer4.py
 cnrs/cnrs_mul.py
+cnrs/cnrs_multiscale.py
 cnrs/cnrs_ode.py
 cnrs/cnrs_operator.py
 cnrs/cnrs_ops.py
@@ -41,6 +42,8 @@ cnrs/cnrs_oscillator.py
 cnrs/cnrs_physics_check.py
 cnrs/cnrs_rational.py
 cnrs/cnrs_rational_verify.py
+cnrs/cnrs_rd_scale_exit.py
+cnrs/cnrs_regime.py
 cnrs/cnrs_repr.py
 cnrs/cnrs_scale.py
 cnrs/cnrs_value.py
@@ -62,8 +65,10 @@ examples/scale_integration.py
 examples/science_workflows/cnrs_vs_scipy_benchmark.py
 examples/science_workflows/complex_scale_law.py
 examples/science_workflows/interference_three_workflows.py
+examples/science_workflows/cnrs_multiscale_turing_window.py
 examples/science_workflows/observation_maps_demo.py
 examples/science_workflows/phase_branch_tracking.py
+examples/science_workflows/cnrs_rd_scale_exit_demo.py
 examples/science_workflows/rlc_three_workflows.py
 examples/science_workflows/scale_law_fit_demo.py
 examples/science_workflows/turing_scale_exit.py
@@ -73,8 +78,11 @@ tests/test_cnrs_bio.py
 tests/test_cnrs_complex.py
 tests/test_cnrs_h.py
 tests/test_cnrs_interop.py
+tests/test_cnrs_multiscale.py
 tests/test_cnrs_ode.py
 tests/test_cnrs_oscillator.py
+tests/test_cnrs_rd_scale_exit.py
+tests/test_cnrs_regime.py
 tests/test_cnrs_scale.py
 tests/test_evaluate_limitations.py
 tests/test_expansion.py
