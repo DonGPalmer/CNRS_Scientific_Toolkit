@@ -1,3 +1,36 @@
+# CNRS Scientific Toolkit v0.8.0
+
+Theme: **CNRS-A Native Values and CNRS-H Native Coefficient Calculus**.
+
+This release moves the toolkit forward from native-status classification to theory-aligned native implementation.  It incorporates the AI0 native arithmetic work, updated to match the current CNRS theoretical direction.
+
+## Added
+
+- `cnrs/cnrs_value.py` with `CVal`, a canonical CNRS-A value wrapper.
+- Native negation using the finite CNRS-A representation `-1 = "144"`.
+- Native subtraction as `a + (-b)`.
+- `cnrs/cnrs_h_native.py` with `CnrsHNative`, a CNRS-H EGF object whose coefficients are `CVal` instances.
+- Native CNRS-H EGF product through binomial convolution over `CVal` coefficients.
+- Native finite-order composition by Faà di Bruno / Bell-polynomial recurrence.
+- Native finite-order chain-rule and Leibniz verification helpers.
+- `cnrs/cnrs_division_status.py` for theory-aligned division classification.
+- `cnrs/cnrs_formal_state.py` for a lightweight CNRS* formal state tuple.
+- Documentation: `THEOREM_ALIGNMENT.md`, `CNRS_DIVISION_STATUS.md`, and `CNRS_NATIVE_COEFFICIENT_CALCULUS.md`.
+- Tests for CVal arithmetic, CNRS-H native coefficient calculus, native composition, chain rule, division status, and formal state behavior.
+
+## Corrected framing
+
+- The 14-state normalizer is scoped to bounded addition input.
+- Multiplication is described as convolution followed by general CNRS-A normalisation.
+- CNRS-H composition is algorithmically native, not finite-state-native for non-polynomial outer functions.
+- Division is classified as finite, shifted, or eventually periodic; finite-string field closure is not claimed.
+
+## Validation
+
+The v0.8.0 targeted native tests pass, and the full test suite passes in the build environment.
+
+---
+
 
 # v0.7.0 — CNRS-native scientific state
 
@@ -636,3 +669,22 @@ Scale-law fitting and differentiation
 Three-workflow scientific comparison examples
 260 passing tests, 6 expected limitation markers
 ```
+## v0.8.0 — CNRS native-status and internal consistency
+
+Added:
+
+- `cnrs/native_status.py`
+- `docs/CNRS_NATIVE_STATUS_REGISTER.md`
+- `tools/audit_native_status.py`
+- `tests/test_native_status_v071.py`
+
+Updated:
+
+- version metadata to `0.7.1`
+- architecture and native-status documentation
+- package exports for native-status helpers
+- science-layer description to emphasize CNRS-H-centered states
+
+This release classifies toolkit components as CNRS-native, bridge, validation,
+scaffold, application, or compatibility.  It is intended to support the formal
+CNRS proof-ladder programme by making the implementation's claim status explicit.

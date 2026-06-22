@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
@@ -73,10 +73,19 @@ from .cnrs_mul import mul_cnrs
 from .cnrs_div import div_by_base_power, div_by_base, div_cnrs
 from .cnrs_ops import cnrs_add, cnrs_sub, cnrs_mul, cnrs_neg, cnrs_eq
 from .cnrs_value import CVal
+from .cnrs_division_status import (
+    DivisionKind, DivisionClassification, CnrsDivisionExpansion,
+    classify_division, division_expansion,
+)
 
 # ── Layer 2: CNRS-H calculus ──────────────────────────────────────────────────
 
 from .cnrs_h import CnrsH
+from .cnrs_h_native import (
+    CnrsHNative, NonGaussianCoefficientError, compose_native,
+    verify_chain_rule_native, verify_leibniz, coeff_strings,
+)
+from .cnrs_formal_state import BranchIndex, CnrsFormalState, CnrsFormalStateError
 from .cnrs_hstream import HStream
 from .cnrs_operator import Operator
 
@@ -242,6 +251,20 @@ from .cnrs_scientific_state import (
     scientific_state_from_symbolic,
 )
 
+
+# ── Native status registry (v0.8.0) ─────────────────────────────────────────
+from .native_status import (
+    NativeStatus,
+    ComponentStatus,
+    STATUS_REGISTRY,
+    all_statuses as all_component_statuses,
+    native_components,
+    by_status as components_by_status,
+    by_layer as components_by_layer,
+    get_component as get_component_status,
+    status_table as native_status_table,
+)
+
 # ── Scientific toolkit — ODE solvers ─────────────────────────────────────────
 
 from .cnrs_ode import (
@@ -380,8 +403,13 @@ __all__ = [
     "add_cnrs", "mul_cnrs", "div_by_base_power", "div_by_base", "div_cnrs",
     "cnrs_add", "cnrs_sub", "cnrs_mul", "cnrs_neg", "cnrs_eq",
     "CVal",
+    "DivisionKind", "DivisionClassification", "CnrsDivisionExpansion",
+    "classify_division", "division_expansion",
     # ── Calculus
-    "CnrsH", "HStream", "Operator",
+    "CnrsH", "CnrsHNative", "NonGaussianCoefficientError",
+    "compose_native", "verify_chain_rule_native", "verify_leibniz", "coeff_strings",
+    "BranchIndex", "CnrsFormalState", "CnrsFormalStateError",
+    "HStream", "Operator",
     # ── Analytic continuation
     "InfiniteExpansion", "CnrsRational", "gaussian_rational_to_cnrs", "CnrsFloat",
     # ── Layered objects
@@ -436,7 +464,7 @@ __all__ = [
     "CnrsScientificState", "CnrsScientificStateError",
     "scientific_state_from_symbolic",
 
-    # ── Scientific toolkit — ODE solvers
+# ── Scientific toolkit — ODE solvers
     "cnrs_solve_linear", "cnrs_solve_driven", "cnrs_solve_second_order",
     "OdeSolution",
     # ── Scientific toolkit — scale laws

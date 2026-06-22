@@ -178,3 +178,41 @@ cnrs/cnrs_scientific_state.py — CNRS-native science-facing state object
 cnrs/science/state.py — science-layer facade for CnrsScientificState
 examples/science_workflows/cnrs_scientific_state_demo.py — v0.7.0 scientific state demonstration
 docs/CNRS_SCIENTIFIC_STATE.md — documentation for the consolidated scientific state object
+
+v0.7.1 native-status additions
+------------------------------
+cnrs/native_status.py — programmatic status registry classifying native, bridge, validation, scaffold, application, and compatibility components.
+tests/test_native_status_v071.py — tests for the native-status registry and package export consistency.
+docs/CNRS_NATIVE_STATUS_REGISTER.md — user-facing native-status register and category definitions.
+tools/audit_native_status.py — prints the registry as a markdown table.
+
+v0.8.0 theory-aligned native additions
+--------------------------------------
+cnrs/cnrs_value.py
+    CNRS-A native value wrapper (CVal).  Adds native negation via -1 = "144" and subtraction as a + (-b).
+
+cnrs/cnrs_h_native.py
+    CNRS-H native coefficient calculus.  Stores EGF coefficients as CVal objects and implements native product, composition, Leibniz, and finite-order chain-rule checks.
+
+cnrs/cnrs_division_status.py
+    Division classification into Gaussian-integer, terminating/shifted, and eventually-periodic cases.  Wraps existing cnrs_rational expansion machinery.
+
+cnrs/cnrs_formal_state.py
+    Lightweight CNRS* formal state object: CNRS-A value, explicit branch index, CNRS-H native jet, center, order, and domain metadata.
+
+docs/THEOREM_ALIGNMENT.md
+    Maps theory components to toolkit objects and status categories.
+
+docs/CNRS_DIVISION_STATUS.md
+    Records the theory-aligned status of division in the toolkit.
+
+docs/CNRS_NATIVE_COEFFICIENT_CALCULUS.md
+    Documents CnrsHNative and its boundary between native operations and bridge evaluation.
+
+tests/test_cval_native_arithmetic.py
+tests/test_cnrs_h_native.py
+tests/test_cnrs_h_native_compose.py
+tests/test_division_status_v080.py
+tests/test_formal_state_v080.py
+tests/test_theorem_alignment_v080.py
+    v0.8.0 native arithmetic, coefficient-calculus, formal-state, division-status, and theorem-alignment tests.

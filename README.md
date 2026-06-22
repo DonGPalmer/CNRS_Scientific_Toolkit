@@ -1,5 +1,18 @@
 # CNRS Scientific Toolkit
 
+## v0.8.0: CNRS native-status and internal consistency
+
+v0.8.0 adds a programmatic native-status registry so the toolkit can distinguish CNRS-native structures from bridge, validation, scaffold, application, and compatibility layers.  This release does not add another workaround layer; it clarifies which modules express CNRS internally and which modules support conversion, validation, comparison, or scientific applications.
+
+```python
+from cnrs.native_status import get_component, native_components, status_table
+
+print(get_component("CNRS-H chain rule").status)
+print(status_table(native_components()))
+```
+
+See `docs/CNRS_NATIVE_STATUS_REGISTER.md`, `docs/CNRS_NATIVE_STATUS.md`, and `docs/ARCHITECTURE.md`.
+
 ## v0.7.0: CNRS-H branch-aware local continuation
 
 v0.7.0 continues the move toward a full CNRS-native toolkit by making path-induced branch changes affect finite CNRS-H local coefficients when a supported symbolic source expression is available. It adds a branch-continuation rebuild layer for `log`, `sqrt`, and `pow_branch` expressions: winding events shift explicit symbolic branch labels, then the CNRS-H jet is rebuilt from the continued expression. This is still local finite-order continuation scaffolding, not a full Riemann-surface analytic-continuation theorem.
@@ -9,7 +22,7 @@ v0.7.0 continues the move toward a full CNRS-native toolkit by making path-induc
 
 v0.6.2 extends the CNRS-native branch architecture with piecewise-linear continuation paths, winding-number diagnostics, conservative branch-state updates for log/sqrt/power scaffolding, and path-history metadata on CNRS-H local jets. This is still local path/winding bookkeeping, not full analytic continuation or Riemann-surface lifting.
 
-## v0.6.2: CNRS-H branch-state propagation
+## v0.6.1: CNRS-H branch-state propagation
 
 v0.6.2 extends the CNRS-native architecture by carrying branch-state metadata into CNRS-H local jets. Branch choices from symbolic `log`, `sqrt`, and `pow_branch` expressions now survive conversion into finite coefficient jets and are preserved through local differentiation, integration, center shifting, multiplication, composition, and chain-rule verification. The feature remains local branch bookkeeping, not full path-dependent analytic continuation.
 
@@ -245,6 +258,25 @@ Current validation status:
 The 6 expected failures document known representational limits, including transcendental numbers and long-period rationals. They are not regressions.
 
 See [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md), [`docs/API_OVERVIEW.md`](docs/API_OVERVIEW.md), [`docs/TEST_STATUS.md`](docs/TEST_STATUS.md), [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md), [`docs/EXAMPLE_SMOKE_STATUS.md`](docs/EXAMPLE_SMOKE_STATUS.md), [`docs/CLI_QUICKSTART.md`](docs/CLI_QUICKSTART.md), and [`docs/SYMBOLIC_CALCULUS_QUICKSTART.md`](docs/SYMBOLIC_CALCULUS_QUICKSTART.md) for details.
+
+
+
+## v0.8.0: CNRS-A Native Values and CNRS-H Native Coefficient Calculus
+
+Version 0.8.0 is a theory-aligned release.  It incorporates the native CNRS-A value wrapper and a CNRS-H native coefficient-calculus layer so that finite EGF coefficients can be carried as CNRS-A digit strings rather than ordinary Python numeric coefficients.
+
+Key additions:
+
+- `cnrs.cnrs_value.CVal`: canonical CNRS-A value wrapper.
+- Native negation via the finite CNRS-A identity `-1 = "144"`.
+- Native subtraction as `a + (-b)`.
+- `cnrs.cnrs_h_native.CnrsHNative`: CNRS-H EGF coefficients stored as `CVal` objects.
+- `compose_native`: finite-order Faà di Bruno / Bell-polynomial composition using CNRS-A coefficient arithmetic.
+- `verify_chain_rule_native`: finite-order chain-rule verification in native coefficient space.
+- `cnrs.cnrs_division_status`: theory-aligned division classification.
+- `cnrs.cnrs_formal_state.CnrsFormalState`: lightweight CNRS* state tuple carrying value, branch index, native jet, center, order, and domain metadata.
+
+The release also adds theorem-alignment documentation under `docs/`.  The 14-state addition normalizer is scoped to bounded addition input; multiplication is described as convolution followed by general CNRS-A normalisation.  Division is classified into finite, shifted, and eventually-periodic cases rather than described as finite-string field closure.
 
 ## Quick start
 
@@ -507,3 +539,21 @@ print(state.diff().evaluate(-12))
 This is still a finite local representation, but it makes the native CNRS-H
 spine explicit rather than presenting scientific workflows as wrappers around
 standard external methods.
+
+## v0.8.0 — Native-status and internal-consistency release
+
+v0.8.0 adds a programmatic native-status registry so the toolkit can distinguish
+CNRS-native structures from bridge, validation, scaffold, application, and
+compatibility layers.
+
+```python
+from cnrs.native_status import get_component, native_components, status_table
+
+print(get_component("CNRS-H chain rule").status)
+print(status_table(native_components()))
+```
+
+The release does not add another mathematical workaround layer.  It clarifies
+which modules are intended to express CNRS internally and which modules support
+conversion, validation, comparison, or applications.  This keeps the Python
+research toolkit aligned with the formal CNRS proof-ladder work.

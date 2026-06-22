@@ -1,10 +1,11 @@
 """
-CNRS Scientific Toolkit v0.1
+CNRS science layer
 
-Experimental scientific workflow helpers built on top of the core CNRS package.
+Science-facing objects and workflows built around CNRS-H local states.
 
-The science layer is intentionally interoperable: standard Python complex/float
-values at the boundaries, CNRS representations inside selected workflows.
+The preferred v0.7+ pattern keeps the CNRS-H jet/state as the primary
+representation and applies observation maps only when an explicit real-valued
+quantity is needed.
 """
 from .branch import CnrsBranch
 from .observation import observe, real, imag, abs_value, abs2, phase, phase_current, observation_table

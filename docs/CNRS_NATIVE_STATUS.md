@@ -47,3 +47,15 @@ Branch continuation is now partly coefficient-active: supported symbolic branch 
 
 
 | `CnrsScientificState` | Native scientific integration object | Finite local representation; not global analytic continuation |
+
+## v0.7.1 native-status registry
+
+v0.7.1 adds a programmatic registry in `cnrs.native_status`.  The registry
+classifies public components as `native_core`, `native_finite`, `native_local`,
+`bridge`, `validation`, `scaffold`, `application`, or `compatibility`.
+
+This is a status map, not a theorem prover. Its purpose is to keep the toolkit
+aligned with the theoretical CNRS programme and to prevent bridge/validation
+utilities from being mistaken for the native CNRS core.
+
+See `docs/CNRS_NATIVE_STATUS_REGISTER.md` and `tools/audit_native_status.py`.

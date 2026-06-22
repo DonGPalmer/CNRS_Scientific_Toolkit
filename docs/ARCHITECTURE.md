@@ -68,3 +68,25 @@ The scientific state layer sits above `cnrs.h` and below application workflows.
 It does not replace CNRS-H calculus; it packages a native CNRS-H jet with the
 metadata needed for scientific use: scale unit, branch state, path history,
 local domain, source expression, and observation policy.
+
+## v0.7.1 native-status classification
+
+The package now includes a lightweight status registry:
+
+```python
+from cnrs.native_status import get_component, native_components, status_table
+```
+
+The registry makes the architecture explicit:
+
+```text
+CNRS-native core:      cnrs.core, cnrs.h, cnrs.science.state
+Bridge/access layers:  cnrs.symbolic, cnrs.cnrs_h_bridge
+Validation layers:     cnrs.validation, CnrsDual/autodiff, reference complex checks
+Scaffolds:             domain diagnostics, Taylor-model metadata, symbolic continuation rebuilds
+Applications:          observation maps and scientific workflows
+Compatibility:         legacy flat cnrs.cnrs_* modules
+```
+
+The design rule for future releases is: use CNRS-native representations when
+available, and keep external methods in bridge, validation, or scaffold roles.
