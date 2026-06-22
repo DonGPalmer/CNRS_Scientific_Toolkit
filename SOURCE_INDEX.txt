@@ -1,4 +1,4 @@
-Generated source/file index for the CNRS Scientific Toolkit v0.5.1 package.
+Generated source/file index for the CNRS Scientific Toolkit v0.5.4 package.
 
 .gitignore
 CITATION.cff
@@ -22,6 +22,10 @@ cnrs/cnrs_float.py
 cnrs/cnrs_global_constraints.py
 cnrs/cnrs_global_solver.py
 cnrs/cnrs_h.py
+cnrs/cnrs_h_bridge.py
+cnrs/cnrs_h_chain.py
+cnrs/cnrs_h_domain.py
+cnrs/cnrs_h_jet.py
 cnrs/cnrs_h_verify.py
 cnrs/cnrs_hstream.py
 cnrs/cnrs_hstream_ops.py
@@ -56,6 +60,8 @@ cnrs/symbolic.py
 docs/API_OVERVIEW.md
 docs/CLAIM_STATUS.md
 docs/CLI_QUICKSTART.md
+docs/CNRS_H_CHAIN_RULE_THEORY.md
+docs/CNRS_H_DOMAIN_DIAGNOSTICS.md
 docs/EXAMPLE_SMOKE_STATUS.md
 docs/RESEARCH_STATUS.md
 docs/SYMBOLIC_CALCULUS_QUICKSTART.md
@@ -66,6 +72,9 @@ examples/quickstart_cnrs.py
 examples/scale_integration.py
 examples/science_workflows/branch_aware_symbolic_demo.py
 examples/science_workflows/chain_rule_scale_law.py
+examples/science_workflows/cnrs_h_domain_diagnostics_demo.py
+examples/science_workflows/cnrs_h_local_scale_expansion_demo.py
+examples/science_workflows/cnrs_h_native_chain_rule_demo.py
 examples/science_workflows/cnrs_multiscale_turing_window.py
 examples/science_workflows/cnrs_rd_scale_exit_demo.py
 examples/science_workflows/cnrs_vs_scipy_benchmark.py
@@ -77,6 +86,7 @@ examples/science_workflows/rlc_three_workflows.py
 examples/science_workflows/scale_law_fit_demo.py
 examples/science_workflows/symbolic_chain_rule_demo.py
 examples/science_workflows/symbolic_integration_demo.py
+examples/science_workflows/symbolic_to_cnrs_h_demo.py
 examples/science_workflows/turing_scale_exit.py
 pyproject.toml
 tests/test_arithmetic.py
@@ -86,6 +96,10 @@ tests/test_cli.py
 tests/test_cnrs_bio.py
 tests/test_cnrs_complex.py
 tests/test_cnrs_h.py
+tests/test_cnrs_h_bridge.py
+tests/test_cnrs_h_chain_rule.py
+tests/test_cnrs_h_domain.py
+tests/test_cnrs_h_jet.py
 tests/test_cnrs_interop.py
 tests/test_cnrs_multiscale.py
 tests/test_cnrs_ode.py
@@ -103,9 +117,40 @@ tests/test_symbolic_diff.py
 tests/test_symbolic_integrate.py
 tests/test_tc_equations.py
 
-cnrs/cnrs_h_bridge.py
-tests/test_cnrs_h_bridge.py
-examples/science_workflows/symbolic_to_cnrs_h_demo.py
-cnrs/cnrs_h_chain.py - Direct finite-order CNRS-H EGF composition and chain-rule checks.
-tests/test_cnrs_h_chain_rule.py - Regression tests for direct CNRS-H chain rule.
-examples/science_workflows/cnrs_h_native_chain_rule_demo.py - Demonstration of direct CNRS-H chain rule.
+v0.5.4 additions
+----------------
+cnrs/cnrs_h_taylor_model.py
+    Taylor-model-style wrapper for CNRS-H local jets with optional remainder metadata.
+tests/test_cnrs_h_taylor_model.py
+    Regression tests for Taylor-model construction, bound propagation, and chain-rule comparison.
+examples/science_workflows/cnrs_h_taylor_model_demo.py
+    Demonstrates local Taylor-model diagnostics around a scale point.
+docs/CNRS_H_TAYLOR_MODELS.md
+    Scope and usage notes for v0.5.4 Taylor-model remainder metadata.
+
+v0.6.0 architecture consolidation additions:
+- cnrs/core/__init__.py
+- cnrs/core/base.py
+- cnrs/core/digits.py
+- cnrs/core/value.py
+- cnrs/core/branch.py
+- cnrs/core/arithmetic.py
+- cnrs/h/__init__.py
+- cnrs/h/series.py
+- cnrs/h/calculus.py
+- cnrs/h/compose.py
+- cnrs/h/chain_rule.py
+- cnrs/h/jet.py
+- cnrs/h/domain.py
+- cnrs/h/taylor_model.py
+- cnrs/validation/__init__.py
+- cnrs/validation/autodiff.py
+- cnrs/validation/compare.py
+- cnrs/validation/reference_complex.py
+- cnrs/workflows/__init__.py
+- cnrs/workflows/scale_laws.py
+- cnrs/workflows/reaction_diffusion.py
+- cnrs/workflows/oscillator.py
+- docs/ARCHITECTURE.md
+- docs/CNRS_NATIVE_STATUS.md
+- tests/test_architecture_v060.py

@@ -1,5 +1,21 @@
 # CNRS Scientific Toolkit
 
+## v0.6.0: CNRS-native core architecture
+
+v0.6.0 is a consolidation release.  It keeps all established flat imports, but introduces an explicit architecture that distinguishes CNRS-native components from bridge, validation, and workflow layers.
+
+Preferred native imports now include:
+
+```python
+from cnrs.core import CVal, BranchState
+from cnrs.h import CnrsH, CnrsHJet, verify_jet_chain_rule
+from cnrs.validation import CnrsDual   # reference validation layer
+```
+
+See `docs/ARCHITECTURE.md` and `docs/CNRS_NATIVE_STATUS.md`.
+
+
+
 CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representational System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, first-order chain-rule automatic differentiation, minimal symbolic differentiation and conservative symbolic integration, CNRS-H scale-law calculus, CNRS-H coefficient-based ODE methods, and NumPy/SciPy interoperability.
 
 **Base:** `z0 = -2 + i`  (a Gaussian integer, `N(z0) = 5`)  
@@ -13,6 +29,31 @@ standard real/complex input
     -> complex-state-preserving workflow
     -> standard real/complex/decimal output
 ```
+
+### v0.5.4: CNRS-H Taylor-model remainder metadata
+
+The v0.5.4 release adds a lightweight Taylor-model-style wrapper around finite CNRS-H local jets. A jet still represents a local expansion around an explicit center:
+
+```text
+f(s) ~= sum_n d_n * (s - s0)^n / n!
+```
+
+`CnrsHTaylorModel` pairs that finite jet with optional remainder/error metadata. This makes finite-truncation uncertainty explicit while preserving the structural CNRS-H operations introduced in v0.5.1–v0.5.3.
+
+```python
+from cnrs.symbolic import Var, exp
+from cnrs.cnrs_h_taylor_model import taylor_model_from_symbolic
+
+s = Var("s")
+model = taylor_model_from_symbolic(exp(s), s, center=0, order=8, sample_point=0.1)
+value, radius = model.enclosure(0.1)
+
+print(value)   # finite jet value
+print(radius)  # last-retained-term diagnostic unless caller supplied a bound
+```
+
+The release propagates known bounds through addition, subtraction, scalar multiplication, and local center-product diagnostics. Differentiation, integration, composition, and center shifting keep the finite jet operation but mark propagated bounds as unknown unless a trusted bound is supplied. This is not interval arithmetic or a rigorous global convergence proof.
+
 
 ## Research Status
 
@@ -94,6 +135,7 @@ Complex oscillator and three-workflow examples
 NumPy/SciPy interoperability bridge
 First-order chain-rule automatic differentiation (`cnrs.autodiff`)
 Minimal symbolic differentiation and conservative symbolic integration (`cnrs.symbolic`)
+Symbolic-to-CNRS-H bridge, local jets, and domain diagnostics (`cnrs.cnrs_h_bridge`, `cnrs.cnrs_h_jet`, `cnrs.cnrs_h_domain`)
 ```
 
 Scientific toolkit modules include:
@@ -146,7 +188,7 @@ Scaffolding for future work:
 
 ## Command-line interface
 
-The toolkit includes a lightweight CLI for common workflows. The v0.5.1 release adds explicit branch-aware symbolic expressions for `log`, `sqrt`, and `pow_branch`, including CLI parsing for branch choices.
+The toolkit includes a lightweight CLI for common workflows. The v0.4.5 release adds explicit branch-aware symbolic expressions for `log`, `sqrt`, and `pow_branch`, including CLI parsing for branch choices.
 
 ```bash
 cnrs version
@@ -166,7 +208,7 @@ The CLI is deliberately small: it exposes conversion, symbolic evaluation, diffe
 
 ## Branch-aware symbolic calculus
 
-v0.5.1 makes local branch choices explicit for symbolic complex functions:
+v0.4.5 makes local branch choices explicit for symbolic complex functions:
 
 ```python
 from cnrs.symbolic import Var, log, sqrt, pow_branch, BranchState
@@ -184,7 +226,7 @@ Branch metadata is preserved through expression construction, substitution, diff
 Current validation status:
 
 ```text
-811 passed, 6 xfailed
+821 passed, 6 xfailed
 ```
 
 The 6 expected failures document known representational limits, including transcendental numbers and long-period rationals. They are not regressions.
@@ -224,7 +266,7 @@ python examples/science_workflows/symbolic_chain_rule_demo.py
 # v0.4.2+ symbolic integration example
 python examples/science_workflows/symbolic_integration_demo.py
 
-# v0.5.1+ branch-aware symbolic example
+# v0.4.5+ branch-aware symbolic example
 python examples/science_workflows/branch_aware_symbolic_demo.py
 
 # Additional science examples

@@ -33,6 +33,10 @@ This document gives a compact map of the CNRS Scientific Toolkit modules. It is 
 | `cnrs.cnrs_hstream_ops` | H-stream operations. |
 | `cnrs.cnrs_operator` | Operator-calculus utilities. |
 | `cnrs.cnrs_ode` | CNRS-H coefficient-recurrence ODE solvers. |
+| `cnrs.cnrs_h_bridge` | Conservative symbolic-to-CNRS-H coefficient bridge around zero. |
+| `cnrs.cnrs_h_chain` | Finite EGF composition and direct CNRS-H chain-rule checks. |
+| `cnrs.cnrs_h_jet` | Finite local CNRS-H jets with explicit expansion centers. |
+| `cnrs.cnrs_h_domain` | Lightweight radius/singularity metadata, local validity checks, and truncation diagnostics for CNRS-H jets. |
 
 ## Layered and branch-state objects
 
@@ -165,3 +169,54 @@ D(f ∘ g) = (Df ∘ g) * Dg
 ```
 
 This layer is distinct from `CnrsDual` autodiff.  It uses CNRS-H digit-shift differentiation plus finite EGF composition.  It is intentionally truncated to a requested order and should be read as a computational coefficient-calculus implementation, not a full global analytic-continuation engine.
+
+
+## CNRS-H local jets — v0.6.0
+
+`cnrs.cnrs_h_jet` adds explicit expansion-point support:
+
+```python
+from cnrs.symbolic import Var, exp
+from cnrs.cnrs_h_jet import jet_from_symbolic
+
+s = Var("s")
+jet = jet_from_symbolic(exp(0.08*s), s, center=-12, order=8)
+djet = jet.diff(order=8)
+```
+
+A `CnrsHJet` represents a finite local expansion in `(s-center)`. It supports center-preserving differentiation/integration, multiplication of jets at the same center, finite composition, center shifting for finite jets, and local-jet chain-rule verification.
+
+Scope: this is a local finite-order representation, not a global analytic-continuation theorem.
+
+
+## CNRS-H domain diagnostics — v0.6.0
+
+`cnrs.cnrs_h_domain` adds conservative local-domain metadata for CNRS-H jets.  It does not make local finite jets global; it records what is known or hinted about the local expansion.
+
+Main API:
+
+```python
+from cnrs.cnrs_h_domain import CnrsHDomain, infer_symbolic_domain
+from cnrs.cnrs_h_jet import jet_from_symbolic
+from cnrs.symbolic import Var, log
+
+s = Var("s")
+j = jet_from_symbolic(log(1+s), s, center=0, order=8)
+
+assert j.domain.radius == 1.0
+assert j.valid_for(0.25) is True
+assert j.valid_for(1.25) is False
+```
+
+Supported domain inferences are intentionally modest: polynomials and affine `exp`/`sin`/`cos` forms are marked entire; affine denominators, `log`, `sqrt`, and non-integer powers can report nearby poles or branch points.  Unknown cases remain unknown rather than guessed.
+
+## CNRS-H Taylor-model remainder metadata (v0.6.0)
+
+`cnrs.cnrs_h_taylor_model` adds a lightweight wrapper around `CnrsHJet`:
+
+- `CnrsHTaylorModel`
+- `taylor_model_from_jet(...)`
+- `taylor_model_from_symbolic(...)`
+- `verify_taylor_model_chain_rule(...)`
+
+A Taylor model stores the finite local jet plus optional remainder/error metadata. Bounds are diagnostic unless supplied by a trusted caller; the module is not interval arithmetic or a global convergence proof engine.

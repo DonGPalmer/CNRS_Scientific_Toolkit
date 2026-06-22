@@ -1,5 +1,64 @@
 # Release Notes
 
+## v0.6.0 — CNRS-Native Core Architecture
+
+v0.6.0 consolidates the CNRS Scientific Toolkit around an explicit native architecture.  The release preserves all historical flat imports, but adds package façades that separate the CNRS-native core from bridge, validation, and workflow layers.
+
+Added:
+
+- `cnrs/core/` — native CNRS-A base, digit, value, arithmetic, and branch-state façade.
+- `cnrs/h/` — native CNRS-H series, coefficient calculus, composition, chain rule, jets, domain diagnostics, and Taylor-model metadata.
+- `cnrs/validation/` — reference autodiff, complex comparison, and validation helpers.
+- `cnrs/workflows/` — scale-law, reaction-diffusion, and oscillator workflow façades.
+- `docs/ARCHITECTURE.md` — architectural map and compatibility policy.
+- `docs/CNRS_NATIVE_STATUS.md` — native / bridge / validation / workflow classification.
+- `tests/test_architecture_v060.py` — compatibility and architecture import tests.
+
+This release does not remove the useful bridge and validation tools.  It makes their role explicit: `CnrsDual` autodiff is a reference validation layer, while the direct CNRS-H coefficient chain rule is the primary CNRS-native chain-rule implementation.
+
+Validation: 842 passed, 6 xfailed.
+
+## v0.5.4 — CNRS-H Taylor-Model Remainder Metadata
+
+- Added `cnrs.cnrs_h_taylor_model`, a lightweight Taylor-model-style wrapper for CNRS-H local jets.
+- Added `CnrsHTaylorModel`, `taylor_model_from_jet`, `taylor_model_from_symbolic`, and `verify_taylor_model_chain_rule`.
+- Added explicit optional `remainder_bound` metadata and disk-style `enclosure(point)` diagnostics.
+- Added last-retained-term indicator construction from an existing `CnrsHJet` sample point.
+- Added conservative propagation through addition, subtraction, and scalar multiplication, with local center diagnostics for products.
+- Differentiation, integration, composition, and center shifting keep the finite jet operation but mark propagated bounds as unknown unless supplied by the caller.
+- Added `tests/test_cnrs_h_taylor_model.py`.
+- Added `examples/science_workflows/cnrs_h_taylor_model_demo.py`.
+- Added `docs/CNRS_H_TAYLOR_MODELS.md`.
+- Scope: finite local Taylor-model-style metadata; not interval arithmetic, rigorous global bounds, or full analytic continuation.
+
+Validation: 837 passed, 6 xfailed.
+
+## v0.5.3 — CNRS-H Domain and Convergence Diagnostics
+
+- Added `cnrs.cnrs_h_domain`, a lightweight local-domain metadata layer for CNRS-H jets.
+- Added `CnrsHDomain`, `infer_symbolic_domain`, `domain_from_radius`, and `estimate_next_term_error`.
+- Added radius/singularity hints for supported symbolic expressions, including polynomials, `exp`, `sin`, `cos`, affine denominators, `log(1+s)`, and `sqrt(1+s)`.
+- Extended `CnrsHJet` with structured `domain`, `truncation_error`, `valid_for()`, `distance_to_boundary()`, `estimate_truncation_error()`, and `with_domain()`.
+- Added `tests/test_cnrs_h_domain.py`.
+- Added `examples/science_workflows/cnrs_h_domain_diagnostics_demo.py`.
+- Added `docs/CNRS_H_DOMAIN_DIAGNOSTICS.md`.
+- Scope: conservative local radius/singularity diagnostics and last-term indicators; not rigorous global analytic continuation or certified interval bounds.
+
+Validation: 830 passed, 6 xfailed.
+
+## v0.5.2 — CNRS-H Jets and Expansion Points
+
+- Added `cnrs.cnrs_h_jet`, a finite local CNRS-H jet object with explicit expansion point metadata.
+- Added `CnrsHJet`, representing `f(s) ~= sum d_n (s-s0)^n/n!`.
+- Added structural local-jet differentiation, integration, multiplication, center shifting, composition, and chain-rule verification.
+- Added `jet_from_symbolic(expr, var, center=s0, order=N)` for derivative-coefficient construction around nonzero centers.
+- Added `tests/test_cnrs_h_jet.py`.
+- Added `examples/science_workflows/cnrs_h_local_scale_expansion_demo.py`.
+- Added `docs/CNRS_H_CHAIN_RULE_THEORY.md`.
+- Scope: finite local jets, not full convergence/domain or analytic-continuation tracking.
+
+Validation: 821 passed, 6 xfailed.
+
 ## v0.5.1 — Direct CNRS-H Chain Rule
 
 - Added `cnrs.cnrs_h_chain`, a finite-order CNRS-H coefficient-space chain-rule layer.
@@ -11,7 +70,7 @@
 
 Validation: 811 passed, 6 xfailed.
 
-## v0.5.1 — Symbolic-to-CNRS-H Bridge
+## v0.5.0 — Symbolic-to-CNRS-H Bridge
 
 Introduces the first tested bridge between the symbolic calculus layer and CNRS-H coefficient calculus.  Supported symbolic expressions can now be converted into finite CNRS-H exponential-generating-function representations, differentiated or integrated structurally, and compared against symbolic differentiation/integration paths.
 

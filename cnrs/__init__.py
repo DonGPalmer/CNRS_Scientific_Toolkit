@@ -31,7 +31,7 @@ The package is organised in three layers:
     CNRS floating-point arithmetic (CNRS-float, experimental).
     Branch-index (Layer-2) and global analytic (Layer-3/4) objects.
 
-  Scientific toolkit (v0.5.1)
+  Scientific toolkit (v0.6.0)
     CnrsComplex: unified complex interface matching Python's built-in complex.
 
     OdeSolution / cnrs_solve_*: CNRS-H coefficient-recurrence ODE solvers.
@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.5.1"
+__version__ = "0.6.0"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
@@ -163,6 +163,38 @@ from .cnrs_h_chain import (
     monomial as cnrsh_monomial,
     identity as cnrsh_identity,
     constant as cnrsh_constant,
+)
+
+# ── Scientific toolkit — CNRS-H local jets and expansion points ─────────────
+from .cnrs_h_jet import (
+    CnrsHJet,
+    CnrsHJetError,
+    JetChainRuleComparison,
+    jet_from_cnrsh,
+    jet_from_symbolic,
+    jet_constant,
+    jet_identity,
+    verify_jet_chain_rule,
+)
+
+# ── Scientific toolkit — CNRS-H convergence/domain diagnostics ─────────────
+from .cnrs_h_domain import (
+    CnrsHDomain,
+    INF as CNRS_H_DOMAIN_INF,
+    combine_domains,
+    domain_from_radius,
+    infer_symbolic_domain,
+    estimate_next_term_error,
+)
+
+# ── Scientific toolkit — CNRS-H Taylor-model remainder metadata ─────────────
+from .cnrs_h_taylor_model import (
+    CnrsHTaylorModel,
+    TaylorModelError,
+    TaylorModelChainRuleComparison,
+    taylor_model_from_jet,
+    taylor_model_from_symbolic,
+    verify_taylor_model_chain_rule,
 )
 
 # ── Scientific toolkit — ODE solvers ─────────────────────────────────────────
@@ -335,7 +367,21 @@ __all__ = [
     "cnrsh_monomial", "cnrsh_identity", "cnrsh_constant",
 
 
-# ── Scientific toolkit — ODE solvers
+    # ── Scientific toolkit — CNRS-H local jets and expansion points
+    "CnrsHJet", "CnrsHJetError", "JetChainRuleComparison",
+    "jet_from_cnrsh", "jet_from_symbolic", "jet_constant",
+    "jet_identity", "verify_jet_chain_rule",
+
+    # ── Scientific toolkit — CNRS-H convergence/domain diagnostics
+    "CnrsHDomain", "CNRS_H_DOMAIN_INF", "combine_domains",
+    "domain_from_radius", "infer_symbolic_domain", "estimate_next_term_error",
+
+    # ── Scientific toolkit — CNRS-H Taylor-model remainder metadata
+    "CnrsHTaylorModel", "TaylorModelError", "TaylorModelChainRuleComparison",
+    "taylor_model_from_jet", "taylor_model_from_symbolic",
+    "verify_taylor_model_chain_rule",
+
+    # ── Scientific toolkit — ODE solvers
     "cnrs_solve_linear", "cnrs_solve_driven", "cnrs_solve_second_order",
     "OdeSolution",
     # ── Scientific toolkit — scale laws
@@ -379,3 +425,7 @@ __all__ = [
     "exponential_gm_scale_exit", "gm_default_kinetics",
     "ladder_diffusion_law", "scalelaw_diffusion_law", "scan_scale_exit_ladder",
 ]
+
+# ── v0.6.0 native architecture façades ───────────────────────────────────────
+# These packages make the CNRS-native hierarchy explicit while preserving the
+# historical flat import paths used by earlier releases.

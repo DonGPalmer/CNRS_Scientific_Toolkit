@@ -94,3 +94,19 @@ D(f ∘ g) = (Df ∘ g) * Dg
 ```
 
 This layer is distinct from `CnrsDual` autodiff.  It uses CNRS-H digit-shift differentiation plus finite EGF composition.  It is intentionally truncated to a requested order and should be read as a computational coefficient-calculus implementation, not a full global analytic-continuation engine.
+
+
+## v0.5.4 CNRS-H local jets
+
+`cnrs.cnrs_h_jet` adds explicit expansion-point support for finite local CNRS-H coefficient calculus:
+
+```python
+from cnrs.symbolic import Var, exp
+from cnrs.cnrs_h_jet import jet_from_symbolic
+
+s = Var("s")
+jet = jet_from_symbolic(exp(0.08*s), s, center=-12, order=8)
+djet = jet.diff(order=8)
+```
+
+A jet represents `f(s) ~= sum d_n (s-s0)^n/n!`. This is useful for local scale analysis around nonzero scale addresses. It is a finite local representation, not a global analytic-continuation engine.

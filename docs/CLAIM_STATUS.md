@@ -1,11 +1,11 @@
-# Claim Status — v0.5.1
+# Claim Status — v0.6.0
 
 This file separates implemented computational claims from open mathematical or scientific claims.
 
 ## Current validation
 
 ```text
-811 passed, 6 xfailed
+821 passed, 6 xfailed
 ```
 
 The expected failures are known representational-limit cases and are not regressions.
@@ -24,6 +24,8 @@ The expected failures are known representational-limit cases and are not regress
 - v0.4.2 conservative rule-based symbolic integration with unevaluated `Integral` fallback.
 - v0.4.3/v0.4.4 lightweight CLI access, example discovery, and documentation polish.
 - v0.5.1 explicit branch-state scaffolding for symbolic `log`, `sqrt`, and branch-aware powers.
+- v0.5.1 symbolic-to-CNRS-H bridge and direct finite CNRS-H chain-rule checks.
+- v0.6.0 CNRS-H local jets with explicit expansion points and nonzero-center chain-rule checks.
 
 ## v0.4.0 claim
 
@@ -56,6 +58,15 @@ The toolkit provides a lightweight CLI with conversion, symbolic evaluation, dif
 
 Status: **implemented and tested for basic command workflows and friendly error handling.**
 
+
+## v0.6.0 CNRS-H local-jet claim
+
+`cnrs.cnrs_h_jet` provides finite local CNRS-H jets around explicit expansion points. A jet represents `f(s) ~= sum d_n (s-s0)^n/n!`, supports center-preserving differentiation/integration, finite multiplication/composition, center shifting for finite jets, and local-jet chain-rule checks.
+
+Status: **implemented and regression-tested for representative finite local jets, including nonzero expansion centers.**
+
+Boundary: this is a finite local coefficient object. It does not yet prove convergence domains, Taylor remainder bounds, branch-path transport, or global analytic continuation.
+
 ## Open / research-level claims
 
 - Full mathematical completeness of CNRS for all complex values.
@@ -75,3 +86,8 @@ The v0.5.1 release adds `cnrs.cnrs_h_bridge`, a conservative bridge from support
 Status: implemented and regression-tested for finite truncated CNRS-H EGF coefficient series.
 
 The toolkit now supports direct coefficient-space composition and verification of `D(f ∘ g) = (Df ∘ g) * Dg` without relying on the `CnrsDual` autodiff wrapper.  The claim is finite-order and computational: it applies to the represented truncated series and does not yet constitute a complete analytic theorem for arbitrary CNRS-H functions, branch paths, or singular functions.
+
+
+## v0.6.0 domain diagnostics
+
+`cnrs.cnrs_h_domain` provides conservative local radius/singularity metadata and last-term truncation indicators for supported CNRS-H jets.  These are diagnostics, not rigorous global convergence proofs or analytic-continuation theorems.

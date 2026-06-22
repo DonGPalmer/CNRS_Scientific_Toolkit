@@ -1,0 +1,54 @@
+# CNRS Scientific Toolkit Architecture — v0.6.0
+
+v0.6.0 is an architecture-consolidation release.  It keeps the established
+flat module API for compatibility, but adds explicit package façades that show
+which parts of the toolkit are intended to be CNRS-native and which parts are
+bridges, validation tools, or scientific workflows.
+
+## Native spine
+
+```text
+cnrs.core      CNRS-A base, digits, value, arithmetic, branch-state façade
+cnrs.h         CNRS-H coefficient calculus, jets, composition, chain rule,
+               domain diagnostics, and Taylor-model metadata
+```
+
+The native spine is the preferred conceptual API.  In this structure,
+`CnrsH`, `CnrsHJet`, and the direct CNRS-H chain-rule implementation are not
+presented as wrappers around ordinary autodiff.  Differentiation is coefficient
+shift, integration is reverse coefficient shift, and composition is finite EGF
+composition.
+
+## Supporting layers
+
+```text
+cnrs.symbolic.py     human-readable expression layer and symbolic/CNRS-H bridge
+cnrs.validation      reference autodiff, reference complex comparisons, and
+                     cross-check helpers
+cnrs.workflows       scientific examples and applied model interfaces
+```
+
+These layers are useful, but they are not the core CNRS claim.  For example,
+`cnrs.validation.autodiff` is kept as a reference method to test native CNRS-H
+calculus, not as the primary CNRS chain-rule implementation.
+
+## Compatibility policy
+
+Earlier imports remain valid:
+
+```python
+from cnrs.cnrs_h_jet import CnrsHJet
+from cnrs.autodiff import CnrsDual
+```
+
+The v0.6.0 preferred native imports are:
+
+```python
+from cnrs.core import CVal, BranchState
+from cnrs.h import CnrsH, CnrsHJet, verify_jet_chain_rule
+from cnrs.validation import CnrsDual
+```
+
+This release does not claim a full global analytic-continuation theorem.  It
+organizes the toolkit so future branch/path, rigorous remainder, and formal
+claim layers can be added without mixing them with validation scaffolds.

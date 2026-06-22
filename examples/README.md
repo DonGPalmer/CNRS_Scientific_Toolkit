@@ -40,9 +40,9 @@ Located in `examples/science_workflows/`.
 | `phase_branch_tracking.py` | Demonstration | Phase and branch tracking. |
 | `scale_law_fit_demo.py` | Demonstration | Scale-law fitting example. |
 | `chain_rule_scale_law.py` | v0.4.0 demonstration | First-order automatic differentiation and chain-rule workflows. |
-| `symbolic_chain_rule_demo.py` | v0.5.1 demonstration | Minimal symbolic differentiation and symbolic-vs-autodiff cross-checks. |
+| `symbolic_chain_rule_demo.py` | v0.5.4 demonstration | Minimal symbolic differentiation and symbolic-vs-autodiff cross-checks. |
 | `symbolic_integration_demo.py` | v0.4.4 demonstration | Conservative symbolic integration with differentiate-the-antiderivative checks. |
-| `branch_aware_symbolic_demo.py` | v0.5.1 demonstration | Explicit branch-aware symbolic log/sqrt/power workflows. |
+| `branch_aware_symbolic_demo.py` | v0.5.4 demonstration | Explicit branch-aware symbolic log/sqrt/power workflows. |
 
 ## Smoke testing examples
 
@@ -90,7 +90,7 @@ cnrs diff "sin(exp(s/L))" --var s
 cnrs integrate "A*exp(k*s)" --var s
 ```
 
-## Branch-aware symbolic example — v0.5.1+
+## Branch-aware symbolic example — v0.5.4+
 
 ```bash
 python examples/science_workflows/branch_aware_symbolic_demo.py
@@ -100,4 +100,11 @@ Demonstrates explicit local branch tags for logarithms, square roots, and branch
 
 - `science_workflows/symbolic_to_cnrs_h_demo.py` — symbolic calculus to CNRS-H coefficient bridge.
 
-| `cnrs_h_native_chain_rule_demo.py` | v0.5.1 demonstration | Direct CNRS-H finite-series chain-rule verification. |
+| `cnrs_h_native_chain_rule_demo.py` | v0.5.4 demonstration | Direct CNRS-H finite-series chain-rule verification. |
+
+
+## v0.5.4 local jet example
+
+- `science_workflows/cnrs_h_local_scale_expansion_demo.py` — CNRS-H local expansion around a nonzero scale address and finite local-jet chain-rule check.
+
+- `science_workflows/cnrs_h_domain_diagnostics_demo.py` — CNRS-H local-domain/radius diagnostics for finite jets.

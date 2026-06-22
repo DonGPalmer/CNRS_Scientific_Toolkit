@@ -1,4 +1,4 @@
-# Example Smoke Status — v0.5.1
+# Example Smoke Status — v0.6.0
 
 The following examples are expected to run from the repository root.
 
@@ -38,12 +38,12 @@ python -m cnrs.cli diff "sin(exp(s/L))" --var s --at s=1.2,L=5
 - `examples/science_workflows/branch_aware_symbolic_demo.py` — branch-aware symbolic log/sqrt/power demonstration.
 
 
-## v0.5.1 symbolic-to-CNRS-H bridge
+## v0.6.0 symbolic-to-CNRS-H bridge
 
-The v0.5.1 release adds `cnrs.cnrs_h_bridge`, a conservative bridge from supported symbolic expressions to finite CNRS-H EGF coefficient representations.  It supports constants, polynomials, simple scale laws such as `A*exp(k*s)`, and `exp`/`sin`/`cos` of affine arguments.  Unsupported expressions raise `UnsupportedBridgeExpression`.
+The v0.6.0 release adds `cnrs.cnrs_h_bridge`, a conservative bridge from supported symbolic expressions to finite CNRS-H EGF coefficient representations.  It supports constants, polynomials, simple scale laws such as `A*exp(k*s)`, and `exp`/`sin`/`cos` of affine arguments.  Unsupported expressions raise `UnsupportedBridgeExpression`.
 
 
-## v0.5.1 direct CNRS-H chain-rule example
+## v0.6.0 direct CNRS-H chain-rule example
 
 Smoke target:
 
@@ -52,3 +52,14 @@ python examples/science_workflows/cnrs_h_native_chain_rule_demo.py
 ```
 
 Expected result: the direct CNRS-H chain-rule comparison passes with zero or near-zero coefficient error for the demonstrated finite series.
+
+
+## v0.6.0
+
+Smoke-ran `examples/science_workflows/cnrs_h_local_scale_expansion_demo.py` successfully.
+
+- `examples/science_workflows/cnrs_h_domain_diagnostics_demo.py` — domain/radius validity and truncation diagnostics for CNRS-H local jets.
+
+## v0.6.0 addition
+
+- `examples/science_workflows/cnrs_h_taylor_model_demo.py` — CNRS-H Taylor-model-style remainder metadata demo.
