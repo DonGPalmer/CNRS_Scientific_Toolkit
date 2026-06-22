@@ -1,18 +1,27 @@
 # CNRS Scientific Toolkit
 
-## v0.6.0: CNRS-native core architecture
+## v0.7.0: CNRS-H branch-aware local continuation
 
-v0.6.0 is a consolidation release.  It keeps all established flat imports, but introduces an explicit architecture that distinguishes CNRS-native components from bridge, validation, and workflow layers.
+v0.7.0 continues the move toward a full CNRS-native toolkit by making path-induced branch changes affect finite CNRS-H local coefficients when a supported symbolic source expression is available. It adds a branch-continuation rebuild layer for `log`, `sqrt`, and `pow_branch` expressions: winding events shift explicit symbolic branch labels, then the CNRS-H jet is rebuilt from the continued expression. This is still local finite-order continuation scaffolding, not a full Riemann-surface analytic-continuation theorem.
+
+
+## v0.6.2: CNRS-H path/winding tracking
+
+v0.6.2 extends the CNRS-native branch architecture with piecewise-linear continuation paths, winding-number diagnostics, conservative branch-state updates for log/sqrt/power scaffolding, and path-history metadata on CNRS-H local jets. This is still local path/winding bookkeeping, not full analytic continuation or Riemann-surface lifting.
+
+## v0.6.2: CNRS-H branch-state propagation
+
+v0.6.2 extends the CNRS-native architecture by carrying branch-state metadata into CNRS-H local jets. Branch choices from symbolic `log`, `sqrt`, and `pow_branch` expressions now survive conversion into finite coefficient jets and are preserved through local differentiation, integration, center shifting, multiplication, composition, and chain-rule verification. The feature remains local branch bookkeeping, not full path-dependent analytic continuation.
 
 Preferred native imports now include:
 
 ```python
 from cnrs.core import CVal, BranchState
-from cnrs.h import CnrsH, CnrsHJet, verify_jet_chain_rule
+from cnrs.h import CnrsH, CnrsHJet, verify_jet_chain_rule, branch_state_from_symbolic
 from cnrs.validation import CnrsDual   # reference validation layer
 ```
 
-See `docs/ARCHITECTURE.md` and `docs/CNRS_NATIVE_STATUS.md`.
+See `docs/ARCHITECTURE.md`, `docs/CNRS_NATIVE_STATUS.md`, and `docs/CNRS_H_BRANCH_STATE.md`.
 
 
 
@@ -29,6 +38,10 @@ standard real/complex input
     -> complex-state-preserving workflow
     -> standard real/complex/decimal output
 ```
+
+### v0.6.0: CNRS-native core architecture
+
+v0.6.0 introduced the explicit `cnrs.core`, `cnrs.h`, `cnrs.validation`, and `cnrs.workflows` façades while preserving flat imports.
 
 ### v0.5.4: CNRS-H Taylor-model remainder metadata
 
@@ -474,3 +487,23 @@ AI collaboration is disclosed throughout this programme and in associated papers
 ## License
 
 Apache License 2.0. See [`LICENSE`](LICENSE).
+## v0.7.0 — CNRS-native scientific state
+
+This release adds `CnrsScientificState`, the first consolidated science-facing
+CNRS object.  It keeps the CNRS-H local jet as the primary representation while
+carrying source expression, expansion center, scale unit, branch state, path
+history, domain metadata, claim status, and observation maps in one object.
+
+```python
+from cnrs.symbolic import Var, exp
+from cnrs.cnrs_scientific_state import CnrsScientificState
+
+s = Var("s")
+state = CnrsScientificState.from_symbolic(exp(0.08*s), s, center=-12, order=8)
+print(state.evaluate(-12))
+print(state.diff().evaluate(-12))
+```
+
+This is still a finite local representation, but it makes the native CNRS-H
+spine explicit rather than presenting scientific workflows as wrappers around
+standard external methods.

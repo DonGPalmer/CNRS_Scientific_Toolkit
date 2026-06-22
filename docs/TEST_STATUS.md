@@ -3,7 +3,7 @@
 Current validation status for the CNRS Scientific Toolkit v0.6.0 release candidate:
 
 ```text
-842 passed, 6 xfailed
+851 passed, 6 xfailed
 ```
 
 The 6 expected failures document known representational limits, including transcendental numbers and long-period rational cases. They are not regressions.
@@ -25,7 +25,7 @@ The 6 expected failures document known representational limits, including transc
 - v0.5.2: 821 passed, 6 xfailed.
 - v0.5.3: 830 passed, 6 xfailed.
 - v0.5.4: 837 passed, 6 xfailed.
-- v0.6.0: 842 passed, 6 xfailed.
+- v0.6.0: 851 passed, 6 xfailed.
 
 ## Recommended validation commands
 
@@ -43,3 +43,20 @@ python examples/science_workflows/cnrs_h_taylor_model_demo.py
 python -m cnrs.cli version
 python -m compileall -q cnrs examples tests
 ```
+
+
+## v0.6.1 additional validation
+
+- Added `tests/test_cnrs_h_branch.py` for branch-state extraction, merge conflicts, jet propagation, composition, and branch-aware finite chain-rule metadata.
+- Full suite: `851 passed, 6 xfailed`.
+
+## v0.6.2 path/winding tests
+
+Adds `tests/test_cnrs_h_path.py` covering circular path winding, reversed winding, invalid paths through branch points, log/sqrt branch-state updates, reference continuation values, jet path history, and public `cnrs.h` facade imports.
+
+## v0.7.0 continuation rebuild tests
+
+Adds tests for branch-delta extraction, symbolic branch shifting, logarithm branch constant shifts, square-root sign-flip coefficients, and no-winding invariance.
+
+
+- `tests/test_cnrs_scientific_state.py` validates the v0.7.0 scientific state object, including evaluation, derivative, observation maps, branch continuation, metadata-only continuation, and Taylor-model wrapping.

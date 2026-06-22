@@ -52,3 +52,19 @@ from cnrs.validation import CnrsDual
 This release does not claim a full global analytic-continuation theorem.  It
 organizes the toolkit so future branch/path, rigorous remainder, and formal
 claim layers can be added without mixing them with validation scaffolds.
+
+## v0.6.2 path/winding extension
+
+The CNRS-H native layer now includes path/winding scaffolding. Branch-state metadata can be updated by supplied continuation paths and recorded on local jets. This extends static branch bookkeeping toward path-aware complex representation while remaining finite and local.
+
+## v0.7.0 continuation rebuild extension
+
+The CNRS-H path layer now feeds a symbolic branch-continuation rebuild layer. When symbolic source expressions are available, branch events can change local coefficients, placing branch metadata and finite coefficient calculus closer together in the native CNRS-H spine.
+
+
+## Scientific state layer (v0.7.0)
+
+The scientific state layer sits above `cnrs.h` and below application workflows.
+It does not replace CNRS-H calculus; it packages a native CNRS-H jet with the
+metadata needed for scientific use: scale unit, branch state, path history,
+local domain, source expression, and observation policy.

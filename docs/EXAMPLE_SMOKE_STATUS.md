@@ -63,3 +63,17 @@ Smoke-ran `examples/science_workflows/cnrs_h_local_scale_expansion_demo.py` succ
 ## v0.6.0 addition
 
 - `examples/science_workflows/cnrs_h_taylor_model_demo.py` — CNRS-H Taylor-model-style remainder metadata demo.
+
+
+- `examples/science_workflows/cnrs_h_branch_state_demo.py` — smoke-tested in v0.6.1.
+
+## v0.6.2 example
+
+`examples/science_workflows/cnrs_h_path_winding_demo.py` demonstrates a loop around zero, winding-number calculation, log/sqrt branch updates, and path history recorded on a CNRS-H jet.
+
+## v0.7.0 example
+
+Smoke example: `examples/science_workflows/cnrs_h_branch_continuation_demo.py`.
+
+
+- `examples/science_workflows/cnrs_scientific_state_demo.py` smoke-runs the consolidated state API.

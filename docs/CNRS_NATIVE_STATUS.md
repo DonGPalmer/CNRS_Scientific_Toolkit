@@ -31,3 +31,19 @@ The v0.6.0 claim is architectural, not theorem-completing:
 The toolkit still needs future work on rigorous remainder propagation,
 path/winding tracking, branch-state propagation in CNRS-H jets, and formal
 analytic-continuation theorems.
+
+
+## v0.6.1 update
+
+Branch-state propagation inside `CnrsHJet` is classified as **CNRS-native local bookkeeping**. It carries branch choices into the CNRS-H coefficient object. It remains distinct from future path-dependent analytic continuation, which is still experimental/open.
+
+## v0.6.2 native-status update
+
+Path/winding tracking is now part of the CNRS-H branch scaffold. It is classified as **native branch bookkeeping / experimental analytic-continuation scaffold**. It is not yet a full global analytic-continuation theorem.
+
+## v0.7.0 native-status update
+
+Branch continuation is now partly coefficient-active: supported symbolic branch changes can rebuild CNRS-H jets rather than only recording branch metadata. This remains local finite-order scaffolding, not full analytic-continuation semantics.
+
+
+| `CnrsScientificState` | Native scientific integration object | Finite local representation; not global analytic continuation |

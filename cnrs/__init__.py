@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
@@ -165,6 +165,43 @@ from .cnrs_h_chain import (
     constant as cnrsh_constant,
 )
 
+# ── Scientific toolkit — CNRS-H branch-state helpers ───────────────────────
+from .cnrs_h_branch import (
+    BranchConflict,
+    BranchMergeResult,
+    merge_branch_states,
+    branch_state_from_symbolic,
+    branch_merge_report,
+    branch_note_for_composition,
+)
+
+# ── Scientific toolkit — CNRS-H continuation paths and winding ─────────────
+from .cnrs_h_path import (
+    ContinuationPathError,
+    PathSegment,
+    BranchPoint,
+    WindingEvent,
+    ContinuationPath,
+    circle_path,
+    winding_number,
+    winding_events,
+    update_branch_state_along_path,
+    continue_log,
+    continue_sqrt,
+    path_history_note,
+)
+
+
+# ── Scientific toolkit — branch-aware symbolic jet continuation ────────────
+from .cnrs_h_continuation import (
+    CnrsHContinuationError,
+    BranchDelta,
+    ContinuationRebuildResult,
+    branch_delta_from_events,
+    shift_symbolic_branches,
+    continued_jet_from_symbolic,
+)
+
 # ── Scientific toolkit — CNRS-H local jets and expansion points ─────────────
 from .cnrs_h_jet import (
     CnrsHJet,
@@ -195,6 +232,14 @@ from .cnrs_h_taylor_model import (
     taylor_model_from_jet,
     taylor_model_from_symbolic,
     verify_taylor_model_chain_rule,
+)
+
+
+# ── Scientific toolkit — CNRS-native scientific state ─────────────────────
+from .cnrs_scientific_state import (
+    CnrsScientificState,
+    CnrsScientificStateError,
+    scientific_state_from_symbolic,
 )
 
 # ── Scientific toolkit — ODE solvers ─────────────────────────────────────────
@@ -367,6 +412,12 @@ __all__ = [
     "cnrsh_monomial", "cnrsh_identity", "cnrsh_constant",
 
 
+    # ── Scientific toolkit — CNRS-H path/winding scaffolding
+    "ContinuationPathError", "PathSegment", "BranchPoint", "WindingEvent",
+    "ContinuationPath", "circle_path", "winding_number", "winding_events",
+    "update_branch_state_along_path", "continue_log", "continue_sqrt",
+    "path_history_note",
+
     # ── Scientific toolkit — CNRS-H local jets and expansion points
     "CnrsHJet", "CnrsHJetError", "JetChainRuleComparison",
     "jet_from_cnrsh", "jet_from_symbolic", "jet_constant",
@@ -380,6 +431,10 @@ __all__ = [
     "CnrsHTaylorModel", "TaylorModelError", "TaylorModelChainRuleComparison",
     "taylor_model_from_jet", "taylor_model_from_symbolic",
     "verify_taylor_model_chain_rule",
+
+    # ── Scientific toolkit — CNRS-native scientific state
+    "CnrsScientificState", "CnrsScientificStateError",
+    "scientific_state_from_symbolic",
 
     # ── Scientific toolkit — ODE solvers
     "cnrs_solve_linear", "cnrs_solve_driven", "cnrs_solve_second_order",

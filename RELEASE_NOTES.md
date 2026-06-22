@@ -1,4 +1,76 @@
+
+# v0.7.0 — CNRS-native scientific state
+
+Added a consolidated `CnrsScientificState` object for science workflows.  The
+state object keeps CNRS-H local jets as the primary representation and carries
+source expressions, scale units, branch/path metadata, local-domain metadata,
+claim-status labels, and observation maps.
+
+Added:
+
+- `cnrs/cnrs_scientific_state.py`
+- `cnrs/science/state.py`
+- `tests/test_cnrs_scientific_state.py`
+- `examples/science_workflows/cnrs_scientific_state_demo.py`
+- `docs/CNRS_SCIENTIFIC_STATE.md`
+
+This release marks the start of the v0.7 line: native scientific objects built
+on top of the CNRS-H calculus spine.
+
 # Release Notes
+
+## v0.7.0 — CNRS-H Branch-Aware Local Continuation
+
+v0.7.0 adds a conservative branch-aware continuation rebuild layer. In v0.6.2, continuation paths updated branch-state metadata on `CnrsHJet`. In v0.7.0, `continued_jet_from_symbolic(...)` can shift explicit symbolic branches in supported `log`, `sqrt`, and `pow_branch` expressions from path/winding events, then rebuild the finite CNRS-H jet from the continued expression.
+
+Added:
+
+- `cnrs/cnrs_h_continuation.py`
+- `cnrs/h/continuation.py`
+- `tests/test_cnrs_h_continuation.py`
+- `examples/science_workflows/cnrs_h_branch_continuation_demo.py`
+- `docs/CNRS_H_BRANCH_CONTINUATION.md`
+
+Claim status: local finite-order coefficient recalculation for supported symbolic expressions; not full global analytic continuation or Riemann-surface lifting.
+
+
+## v0.6.2 — CNRS-H Path and Winding Tracking
+
+v0.6.2 adds conservative path/winding scaffolding to the CNRS-H branch-aware layer. It introduces piecewise-linear continuation paths, winding-number diagnostics around isolated branch points, branch-state updates for log/sqrt/power metadata, and `CnrsHJet.continue_along(...)` for recording path-induced branch changes.
+
+### Added
+
+- `cnrs/cnrs_h_path.py`
+- `cnrs/h/path.py`
+- `tests/test_cnrs_h_path.py`
+- `examples/science_workflows/cnrs_h_path_winding_demo.py`
+- `docs/CNRS_H_PATH_CONTINUATION.md`
+
+### Status
+
+This release does not claim full analytic continuation. It supplies local path/winding bookkeeping for finite CNRS-H jets and prepares the toolkit for later coefficient re-expansion and Riemann-surface work.
+
+## v0.6.2 — CNRS-H Branch-State Propagation
+
+v0.6.2 moves branch-state bookkeeping into the CNRS-H local jet layer. Branch choices from symbolic `log`, `sqrt`, and `pow_branch` expressions now become metadata on finite CNRS-H coefficient jets, and that metadata is preserved through the native local operations.
+
+Added:
+
+- `cnrs.cnrs_h_branch` — branch-state merge and extraction helpers.
+- `tests/test_cnrs_h_branch.py` — branch extraction, propagation, composition, and chain-rule metadata tests.
+- `examples/science_workflows/cnrs_h_branch_state_demo.py`.
+- `docs/CNRS_H_BRANCH_STATE.md`.
+
+Updated:
+
+- `CnrsHJet` now carries `branch_state` and `branch_note`.
+- `jet_from_symbolic(...)` extracts local branch state from symbolic expressions.
+- Jet differentiation, integration, center shifting, multiplication, composition, and finite chain-rule verification preserve or conservatively merge branch metadata.
+- `cnrs.h` and flat imports expose the branch helpers.
+
+Scope: local branch-state bookkeeping inside finite CNRS-H jets. This is not yet path-dependent analytic continuation, Riemann-surface lifting, or monodromy tracking.
+
+Validation: 851 passed, 6 xfailed.
 
 ## v0.6.0 — CNRS-Native Core Architecture
 

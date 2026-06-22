@@ -220,3 +220,27 @@ Supported domain inferences are intentionally modest: polynomials and affine `ex
 - `verify_taylor_model_chain_rule(...)`
 
 A Taylor model stores the finite local jet plus optional remainder/error metadata. Bounds are diagnostic unless supplied by a trusted caller; the module is not interval arithmetic or a global convergence proof engine.
+
+
+## v0.6.1 CNRS-H branch-state layer
+
+`cnrs.cnrs_h_branch` provides `branch_state_from_symbolic`, `merge_branch_states`, and related helpers. `CnrsHJet` carries `branch_state` and `branch_note`, so local choices made in symbolic `log`, `sqrt`, and `pow_branch` expressions survive into CNRS-H coefficient jets and are preserved through local coefficient operations.
+
+## v0.6.2 Path/winding layer
+
+`cnrs.cnrs_h_path` and `cnrs.h.path` provide `ContinuationPath`, `BranchPoint`, `winding_number`, branch-state path updates, and conservative reference continuation helpers for log and sqrt. `CnrsHJet.continue_along(...)` records path-induced branch updates and path history.
+
+## v0.7.0 Branch-aware continuation rebuild
+
+`cnrs.cnrs_h_continuation` adds `continued_jet_from_symbolic(...)`, `shift_symbolic_branches(...)`, and `BranchDelta`. The layer shifts explicit symbolic branches from path/winding events and rebuilds finite CNRS-H jets from the continued expression.
+
+
+## CNRS Scientific State
+
+`CnrsScientificState` is the v0.7.0 science-facing object that combines a
+CNRS-H local jet with source-expression, branch/path, domain, scale-unit, and
+observation metadata.
+
+```python
+from cnrs import CnrsScientificState
+```

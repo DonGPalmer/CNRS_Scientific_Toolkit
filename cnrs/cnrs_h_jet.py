@@ -26,6 +26,8 @@ from . import symbolic as sy
 from .cnrs_h_bridge import UnsupportedBridgeExpression, _eval_symbolic_scalar
 from .cnrs_h_chain import compose_series, max_coeff_error, multiply_truncated, truncate_pad
 from .cnrs_h_domain import CnrsHDomain, combine_domains, domain_from_radius, estimate_next_term_error, infer_symbolic_domain
+from .symbolic import BranchState, DEFAULT_BRANCH_STATE
+from .cnrs_h_branch import branch_merge_report, merge_branch_states, branch_note_for_composition
 
 
 class CnrsHJetError(ValueError):
@@ -87,6 +89,9 @@ class CnrsHJet:
     radius_hint: float | None = None
     domain: CnrsHDomain | None = None
     truncation_error: float | None = None
+    branch_state: BranchState = DEFAULT_BRANCH_STATE
+    branch_note: str = ""
+    path_history: tuple[str, ...] = ()
     description: str = ""
 
     def __post_init__(self) -> None:
@@ -101,6 +106,9 @@ class CnrsHJet:
             )
         elif self.domain is not None and self.radius_hint is None:
             object.__setattr__(self, "radius_hint", self.domain.radius)
+        if self.branch_state is None:
+            object.__setattr__(self, "branch_state", DEFAULT_BRANCH_STATE)
+        object.__setattr__(self, "path_history", tuple(self.path_history or ()))
 
     @property
     def order(self) -> int:
@@ -122,6 +130,9 @@ class CnrsHJet:
             radius_hint=self.radius_hint,
             domain=self.domain,
             truncation_error=self.truncation_error,
+            branch_state=self.branch_state,
+            branch_note=self.branch_note,
+            path_history=self.path_history,
             description=self.description,
         )
 
@@ -162,8 +173,64 @@ class CnrsHJet:
             radius_hint=None if domain is None else domain.radius,
             domain=domain,
             truncation_error=self.truncation_error,
+            branch_state=self.branch_state,
+            branch_note=self.branch_note,
+            path_history=self.path_history,
             description=self.description,
         )
+
+    def with_branch_state(self, branch_state: BranchState, *, note: str | None = None) -> "CnrsHJet":
+        """Return a copy carrying explicit local CNRS branch-state metadata and path-history metadata."""
+        return CnrsHJet(
+            self.series,
+            center=self.center,
+            var=self.var,
+            radius_hint=self.radius_hint,
+            domain=self.domain,
+            truncation_error=self.truncation_error,
+            branch_state=branch_state,
+            branch_note=self.branch_note if note is None else note,
+            description=self.description,
+        )
+
+    def branch_summary(self) -> str:
+        """Return a compact description of this jet's local branch state."""
+        if self.branch_note:
+            return f"{self.branch_state} — {self.branch_note}"
+        return str(self.branch_state)
+
+    def continue_along(self, path, *, branch_points=None) -> "CnrsHJet":
+        """Return a copy with branch state updated by a continuation path.
+
+        This is local path/winding bookkeeping for finite CNRS-H jets.  It does
+        not recompute coefficients by analytic continuation; it records how the
+        branch state changes along a supplied piecewise-linear path.
+        """
+        from .cnrs_h_path import (
+            BranchPoint,
+            winding_events,
+            update_branch_state_along_path,
+            path_history_note,
+        )
+
+        bps = branch_points or (BranchPoint(0j, kind="log", label="0"),)
+        events = winding_events(path, bps)
+        new_state = update_branch_state_along_path(self.branch_state, path, bps)
+        note = path_history_note(path, events)
+        return CnrsHJet(
+            self.series,
+            center=self.center,
+            var=self.var,
+            radius_hint=self.radius_hint,
+            domain=self.domain,
+            truncation_error=self.truncation_error,
+            branch_state=new_state,
+            branch_note=note,
+            path_history=self.path_history + (note,),
+            description=self.description,
+        )
+
+    continue_path = continue_along
 
     def _require_same_center(self, other: "CnrsHJet") -> None:
         if self.var != other.var:
@@ -185,6 +252,9 @@ class CnrsHJet:
             var=self.var,
             radius_hint=_combine_radius(self.radius_hint, other.radius_hint),
             domain=combine_domains(self.domain or domain_from_radius(self.radius_hint), other.domain or domain_from_radius(other.radius_hint)),
+            branch_state=merge_branch_states(self.branch_state, other.branch_state).state,
+            branch_note=merge_branch_states(self.branch_state, other.branch_state).summary(),
+            path_history=self.path_history + other.path_history,
             description="sum",
         ).truncate(order)
 
@@ -199,11 +269,14 @@ class CnrsHJet:
             var=self.var,
             radius_hint=_combine_radius(self.radius_hint, other.radius_hint),
             domain=combine_domains(self.domain or domain_from_radius(self.radius_hint), other.domain or domain_from_radius(other.radius_hint)),
+            branch_state=merge_branch_states(self.branch_state, other.branch_state).state,
+            branch_note=merge_branch_states(self.branch_state, other.branch_state).summary(),
+            path_history=self.path_history + other.path_history,
             description="difference",
         ).truncate(order)
 
     def __neg__(self) -> "CnrsHJet":
-        return CnrsHJet(-self.series, center=self.center, var=self.var, radius_hint=self.radius_hint, domain=self.domain, truncation_error=self.truncation_error, description="negated")
+        return CnrsHJet(-self.series, center=self.center, var=self.var, radius_hint=self.radius_hint, domain=self.domain, truncation_error=self.truncation_error, branch_state=self.branch_state, branch_note=self.branch_note, path_history=self.path_history, description="negated")
 
     def __mul__(self, other: object) -> "CnrsHJet":
         if isinstance(other, CnrsHJet):
@@ -215,13 +288,15 @@ class CnrsHJet:
                 var=self.var,
                 radius_hint=_combine_radius(self.radius_hint, other.radius_hint),
                 domain=combine_domains(self.domain or domain_from_radius(self.radius_hint), other.domain or domain_from_radius(other.radius_hint)),
+                branch_state=merge_branch_states(self.branch_state, other.branch_state).state,
+                branch_note=merge_branch_states(self.branch_state, other.branch_state).summary(),
                 description="product",
             )
         try:
             scalar = complex(other)  # type: ignore[arg-type]
         except TypeError:
             return NotImplemented
-        return CnrsHJet(self.series * scalar, center=self.center, var=self.var, radius_hint=self.radius_hint, domain=self.domain, truncation_error=self.truncation_error, description=self.description)
+        return CnrsHJet(self.series * scalar, center=self.center, var=self.var, radius_hint=self.radius_hint, domain=self.domain, truncation_error=self.truncation_error, branch_state=self.branch_state, branch_note=self.branch_note, path_history=self.path_history, description=self.description)
 
     def __rmul__(self, other: object) -> "CnrsHJet":
         return self.__mul__(other)
@@ -231,7 +306,7 @@ class CnrsHJet:
         out = self.series.differentiate()
         if order is not None:
             out = truncate_pad(out, order)
-        return CnrsHJet(out, center=self.center, var=self.var, radius_hint=self.radius_hint, domain=self.domain, truncation_error=self.truncation_error, description=f"D({self.description})".strip())
+        return CnrsHJet(out, center=self.center, var=self.var, radius_hint=self.radius_hint, domain=self.domain, truncation_error=self.truncation_error, branch_state=self.branch_state, branch_note=self.branch_note, path_history=self.path_history, description=f"D({self.description})".strip())
 
     differentiate = diff
     D = diff
@@ -241,7 +316,7 @@ class CnrsHJet:
         out = self.series.integrate(constant)
         if order is not None:
             out = truncate_pad(out, order)
-        return CnrsHJet(out, center=self.center, var=self.var, radius_hint=self.radius_hint, domain=self.domain, truncation_error=self.truncation_error, description=f"Int({self.description})".strip())
+        return CnrsHJet(out, center=self.center, var=self.var, radius_hint=self.radius_hint, domain=self.domain, truncation_error=self.truncation_error, branch_state=self.branch_state, branch_note=self.branch_note, path_history=self.path_history, description=f"Int({self.description})".strip())
 
     def compose(self, inner: "CnrsHJet", *, order: int | None = None) -> "CnrsHJet":
         """Return the local jet for ``self(inner(s))``.
@@ -267,6 +342,9 @@ class CnrsHJet:
             var=inner.var,
             radius_hint=inner.radius_hint,
             domain=inner.domain,
+            branch_state=merge_branch_states(self.branch_state, inner.branch_state).state,
+            branch_note=branch_note_for_composition(self.branch_state, inner.branch_state),
+            path_history=self.path_history + inner.path_history,
             description=f"{self.description or 'outer'}∘{inner.description or 'inner'}",
         )
 
@@ -300,6 +378,9 @@ class CnrsHJet:
             radius_hint=self.radius_hint,
             domain=self.domain,
             truncation_error=self.truncation_error,
+            branch_state=self.branch_state,
+            branch_note=self.branch_note,
+            path_history=self.path_history,
             description=f"shift_center({self.description})".strip(),
         )
 
@@ -320,9 +401,9 @@ def _combine_radius(a: float | None, b: float | None) -> float | None:
     return min(a, b)
 
 
-def jet_from_cnrsh(series: CnrsH, *, center: complex | float | int = 0, var: str = "s", radius_hint: float | None = None, domain: CnrsHDomain | None = None, truncation_error: float | None = None, description: str = "") -> CnrsHJet:
+def jet_from_cnrsh(series: CnrsH, *, center: complex | float | int = 0, var: str = "s", radius_hint: float | None = None, domain: CnrsHDomain | None = None, truncation_error: float | None = None, branch_state: BranchState = DEFAULT_BRANCH_STATE, branch_note: str = "", path_history: tuple[str, ...] = (), description: str = "") -> CnrsHJet:
     """Wrap an existing CNRS-H coefficient object as a local jet."""
-    return CnrsHJet(series, center=center, var=var, radius_hint=radius_hint, domain=domain, truncation_error=truncation_error, description=description)
+    return CnrsHJet(series, center=center, var=var, radius_hint=radius_hint, domain=domain, truncation_error=truncation_error, branch_state=branch_state, branch_note=branch_note, path_history=path_history, description=description)
 
 
 def jet_constant(value: complex | float | int, *, center: complex | float | int = 0, var: str = "s", order: int = 12) -> CnrsHJet:
@@ -347,6 +428,7 @@ def jet_from_symbolic(
     radius_hint: float | None = None,
     domain: CnrsHDomain | None = None,
     truncation_error: float | None = None,
+    branch_state: BranchState | None = None,
     description: str = "",
 ) -> CnrsHJet:
     """Build a CNRS-H jet by evaluating symbolic derivatives at ``center``.
@@ -376,6 +458,9 @@ def jet_from_symbolic(
             domain = domain_from_radius(radius_hint, note="caller radius_hint", confidence="hint")
         else:
             domain = inferred
+    branch_report = branch_merge_report(e)
+    effective_branch_state = branch_state or branch_report.state
+    branch_note = branch_report.summary() if effective_branch_state != DEFAULT_BRANCH_STATE or branch_report.has_conflicts else ""
     return CnrsHJet(
         CnrsH.from_list(coeffs),
         center=center,
@@ -383,6 +468,9 @@ def jet_from_symbolic(
         radius_hint=radius_hint,
         domain=domain,
         truncation_error=truncation_error,
+        branch_state=effective_branch_state,
+        branch_note=branch_note,
+        path_history=(),
         description=description or str(e),
     )
 
@@ -421,4 +509,5 @@ __all__ = [
     "jet_constant",
     "jet_identity",
     "verify_jet_chain_rule",
+    "BranchState",
 ]

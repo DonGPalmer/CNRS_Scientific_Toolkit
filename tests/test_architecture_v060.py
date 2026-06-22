@@ -1,4 +1,4 @@
-"""v0.6.0 architecture and compatibility tests."""
+"""v0.7.0 architecture and compatibility tests."""
 
 
 def test_core_facade_exports_native_objects():
@@ -49,6 +49,14 @@ def test_flat_imports_still_work():
     from cnrs.autodiff import CnrsDual
     from cnrs import __version__
 
-    assert __version__ == "0.6.0"
+    assert __version__ == "0.7.0"
     assert CnrsHJet is not None
     assert CnrsDual is not None
+
+
+def test_science_state_export_available():
+    from cnrs import CnrsScientificState
+    from cnrs.science import scientific_state_from_symbolic
+
+    assert CnrsScientificState is not None
+    assert scientific_state_from_symbolic is not None

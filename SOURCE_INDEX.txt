@@ -154,3 +154,27 @@ v0.6.0 architecture consolidation additions:
 - docs/ARCHITECTURE.md
 - docs/CNRS_NATIVE_STATUS.md
 - tests/test_architecture_v060.py
+
+cnrs/cnrs_h_branch.py - CNRS-H branch-state extraction and merge helpers (v0.6.1)
+tests/test_cnrs_h_branch.py - Branch-state propagation tests (v0.6.1)
+examples/science_workflows/cnrs_h_branch_state_demo.py - Branch-state propagation demo (v0.6.1)
+docs/CNRS_H_BRANCH_STATE.md - Branch-state propagation notes (v0.6.1)
+
+
+v0.6.2 additions
+----------------
+cnrs/cnrs_h_path.py
+cnrs/h/path.py
+tests/test_cnrs_h_path.py
+examples/science_workflows/cnrs_h_path_winding_demo.py
+docs/CNRS_H_PATH_CONTINUATION.md
+
+cnrs/cnrs_h_continuation.py — branch-aware symbolic continuation rebuild for CNRS-H jets
+cnrs/h/continuation.py — h-layer exports for continuation rebuild
+tests/test_cnrs_h_continuation.py — tests for continuation rebuild
+examples/science_workflows/cnrs_h_branch_continuation_demo.py — demo for branch-active continuation
+docs/CNRS_H_BRANCH_CONTINUATION.md — continuation rebuild documentation
+cnrs/cnrs_scientific_state.py — CNRS-native science-facing state object
+cnrs/science/state.py — science-layer facade for CnrsScientificState
+examples/science_workflows/cnrs_scientific_state_demo.py — v0.7.0 scientific state demonstration
+docs/CNRS_SCIENTIFIC_STATE.md — documentation for the consolidated scientific state object
