@@ -331,12 +331,22 @@ def sqrt(u: Any, branch: int | None = None) -> CnrsDual:
     """
     Branch-aware square root.
 
-    Implemented as exp(0.5 * log(u, branch)).
-    This makes the branch convention explicit and keeps chain-rule behaviour
-    consistent with the logarithm.
+    The value is computed as ``exp(0.5 * log(u, branch))`` to keep branch
+    handling consistent with the logarithm. The derivative is computed
+    directly as ``0.5 * u' / sqrt(u)`` rather than propagated through a
+    second exp/log round-trip -- algebraically identical, since
+    d/dx exp(0.5*log(u)) = exp(0.5*log(u)) * 0.5*u'/u = sqrt(u) * 0.5*u'/u
+    = 0.5*u'/sqrt(u), but this avoids an extra complex exp() and log() call
+    and the (tiny but nonzero) extra floating-point error each introduces.
     """
     u = as_dual(u)
-    return exp(0.5 * log(u, branch=branch))
+    b = u.branch if branch is None else int(branch)
+    z = complex(u.value)
+    if abs(z) == 0:
+        raise ZeroDivisionError("sqrt derivative is singular at zero")
+    root = cmath.exp(0.5 * branch_log(z, b))
+    deriv = 0.5 * complex(u.deriv) / root
+    return CnrsDual(root, deriv, branch=b, L=u.L)
 
 
 def pow_const(u: Any, exponent: Scalar) -> CnrsDual:

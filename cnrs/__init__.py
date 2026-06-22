@@ -31,7 +31,7 @@ The package is organised in three layers:
     CNRS floating-point arithmetic (CNRS-float, experimental).
     Branch-index (Layer-2) and global analytic (Layer-3/4) objects.
 
-  Scientific toolkit (v0.4.0)
+  Scientific toolkit (v0.5.1)
     CnrsComplex: unified complex interface matching Python's built-in complex.
 
     OdeSolution / cnrs_solve_*: CNRS-H coefficient-recurrence ODE solvers.
@@ -54,6 +54,9 @@ The package is organised in three layers:
 Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
+
+__version__ = "0.5.1"
+
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
 
@@ -109,6 +112,57 @@ from .autodiff import (
     derivative,
     value_and_derivative,
     compose,
+)
+
+
+# ── Scientific toolkit — minimal symbolic calculus ───────────────────────────
+from .symbolic import (
+    BranchState, DEFAULT_BRANCH_STATE,
+    Expr, Const, Var, Log, Sqrt, Pow,
+    exp as symbolic_exp,
+    log as symbolic_log,
+    sin as symbolic_sin,
+    cos as symbolic_cos,
+    tan as symbolic_tan,
+    sqrt as symbolic_sqrt,
+    pow_branch,
+    Integral,
+    integrate as symbolic_integrate,
+    diff as symbolic_diff,
+)
+
+
+# ── Scientific toolkit — symbolic/CNRS-H bridge ─────────────────────────────
+from .cnrs_h_bridge import (
+    UnsupportedBridgeExpression,
+    BridgeComparison,
+    cnrs_h_from_symbolic,
+    symbolic_derivative_to_cnrs_h,
+    cnrs_h_derivative_of_symbolic,
+    symbolic_integral_to_cnrs_h,
+    cnrs_h_integral_of_symbolic,
+    compare_symbolic_and_cnrs_h_derivative,
+    compare_symbolic_and_cnrs_h_integral,
+    max_coeff_error,
+    evaluate_cnrsh_series,
+)
+
+
+# ── Scientific toolkit — direct CNRS-H chain rule ───────────────────────────
+from .cnrs_h_chain import (
+    ChainRuleComparison,
+    CnrsHChainError,
+    compose_series,
+    chain_rule_lhs,
+    chain_rule_rhs,
+    verify_chain_rule,
+    power_series,
+    exp_series as cnrsh_exp_series,
+    sin_series as cnrsh_sin_series,
+    cos_series as cnrsh_cos_series,
+    monomial as cnrsh_monomial,
+    identity as cnrsh_identity,
+    constant as cnrsh_constant,
 )
 
 # ── Scientific toolkit — ODE solvers ─────────────────────────────────────────
@@ -238,6 +292,8 @@ from .cnrs_rd_scale_exit import (
 )
 
 __all__ = [
+    # ── Version
+    "__version__",
     # ── Constants
     "Z0", "DIGITS",
     # ── Representation
@@ -260,7 +316,26 @@ __all__ = [
     "autodiff_exp", "autodiff_log", "autodiff_sin", "autodiff_cos",
     "autodiff_tan", "autodiff_sqrt", "pow_const",
     "derivative", "value_and_derivative", "compose",
-    # ── Scientific toolkit — ODE solvers
+    
+
+    # ── Scientific toolkit — symbolic/CNRS-H bridge
+    "UnsupportedBridgeExpression", "BridgeComparison",
+    "cnrs_h_from_symbolic",
+    "symbolic_derivative_to_cnrs_h", "cnrs_h_derivative_of_symbolic",
+    "symbolic_integral_to_cnrs_h", "cnrs_h_integral_of_symbolic",
+    "compare_symbolic_and_cnrs_h_derivative",
+    "compare_symbolic_and_cnrs_h_integral",
+    "max_coeff_error", "evaluate_cnrsh_series",
+
+    
+    # ── Scientific toolkit — direct CNRS-H chain rule
+    "ChainRuleComparison", "CnrsHChainError",
+    "compose_series", "chain_rule_lhs", "chain_rule_rhs", "verify_chain_rule",
+    "power_series", "cnrsh_exp_series", "cnrsh_sin_series", "cnrsh_cos_series",
+    "cnrsh_monomial", "cnrsh_identity", "cnrsh_constant",
+
+
+# ── Scientific toolkit — ODE solvers
     "cnrs_solve_linear", "cnrs_solve_driven", "cnrs_solve_second_order",
     "OdeSolution",
     # ── Scientific toolkit — scale laws

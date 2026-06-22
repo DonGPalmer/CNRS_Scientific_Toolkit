@@ -1,5 +1,128 @@
 # Release Notes
 
+## v0.5.1 — Direct CNRS-H Chain Rule
+
+- Added `cnrs.cnrs_h_chain`, a finite-order CNRS-H coefficient-space chain-rule layer.
+- Added EGF-series composition `compose_series(f, g, order=N)`.
+- Added direct chain-rule checks `D(f ∘ g)` versus `(Df ∘ g) * Dg` without using `CnrsDual`.
+- Added `tests/test_cnrs_h_chain_rule.py`.
+- Added `examples/science_workflows/cnrs_h_native_chain_rule_demo.py`.
+- Scope: finite truncated CNRS-H series; this is a structural coefficient-calculus implementation, not a full analytic-continuation theorem.
+
+Validation: 811 passed, 6 xfailed.
+
+## v0.5.1 — Symbolic-to-CNRS-H Bridge
+
+Introduces the first tested bridge between the symbolic calculus layer and CNRS-H coefficient calculus.  Supported symbolic expressions can now be converted into finite CNRS-H exponential-generating-function representations, differentiated or integrated structurally, and compared against symbolic differentiation/integration paths.
+
+### Added
+
+- `cnrs/cnrs_h_bridge.py` with conservative symbolic-to-CNRS-H conversion.
+- `cnrs_h_from_symbolic(expr, var, order, env)` for supported expressions around the expansion point `var = 0`.
+- Commutation checks for symbolic differentiation vs. CNRS-H digit-shift differentiation.
+- Commutation checks for conservative symbolic integration vs. CNRS-H digit-shift integration, with integration constants handled explicitly.
+- `tests/test_cnrs_h_bridge.py` covering polynomials, scale laws, exponentials, sine/cosine, symbolic parameters, unsupported cases, and bridge comparison helpers.
+- `examples/science_workflows/symbolic_to_cnrs_h_demo.py`.
+
+### Supported bridge subset
+
+- Constants and the expansion variable.
+- Polynomials built from `+`, `-`, `*`, and non-negative integer powers.
+- Division by expressions independent of the expansion variable.
+- `exp`, `sin`, and `cos` of affine arguments such as `k*s`, `s/L`, or `k*s+b`.
+- Scale laws such as `A*exp(k*s)` with numeric parameter values supplied through `env`.
+
+### Scope note
+
+This is a minimal bridge, not a full symbolic series engine.  Unsupported expressions raise `UnsupportedBridgeExpression` rather than silently producing unreliable expansions.
+
+### Validation
+
+```text
+811 passed, 6 xfailed
+```
+
+The 6 expected failures remain known representational-limit tests, not regressions. Existing reliable-domain warnings from scale-law and oscillator tests remain expected.
+
+## v0.4.4 — CLI Usability and Documentation Polish
+
+This release stabilizes the user-facing command-line surface added in v0.4.3 and adds quickstart documentation for command-line and symbolic-calculus workflows.
+
+### Added
+
+- `cnrs examples`: lists packaged examples and their intended use.
+- `docs/CLI_QUICKSTART.md`: command-line examples, expression syntax, and common workflows.
+- `docs/SYMBOLIC_CALCULUS_QUICKSTART.md`: symbolic differentiation/integration quickstart and autodiff cross-check pattern.
+- Additional CLI regression tests for example discovery and friendly missing-variable errors.
+
+### Improved
+
+- Clearer top-level CLI help epilog with runnable examples.
+- Friendlier CLI error handling for missing symbolic variables and unevaluated symbolic cases.
+- README and documentation links now surface CLI and symbolic-calculus quickstarts.
+
+### Validation
+
+```text
+772 passed, 6 xfailed
+```
+
+The 6 expected failures remain known representational-limit tests, not regressions. Existing reliable-domain warnings from scale-law and oscillator tests remain expected.
+
+## v0.4.3 — Lightweight Command-Line Interface
+
+Adds a small command-line interface for common workflows.
+
+### Added
+
+- `cnrs/cli.py`
+- `tests/test_cli.py`
+- Project script entry point: `cnrs = "cnrs.cli:main"`
+- Commands: `version`, `convert`, `eval`, `diff`, `integrate`, and `demo`
+
+### Validation
+
+```text
+770 passed, 6 xfailed
+```
+
+## v0.4.2 — Conservative Symbolic Integration
+
+Adds a conservative rule-based symbolic integrator to the minimal symbolic calculus layer.
+
+### Added
+
+- `integrate(expr, var)` for constants, linearity, constant-factor extraction, powers, reciprocal/log, and affine exp/sin/cos forms.
+- `Integral(expr, var)` fallback for unsupported cases rather than overclaiming symbolic integration.
+- `tests/test_symbolic_integrate.py`
+- `examples/science_workflows/symbolic_integration_demo.py`
+
+### Validation
+
+```text
+760 passed, 6 xfailed
+```
+
+## v0.4.1 — Minimal Symbolic Differentiation
+
+Adds a small expression-tree symbolic calculus layer on top of the v0.4.0 chain-rule autodiff layer.
+
+### Added
+
+- `cnrs/symbolic.py`: minimal symbolic expression trees for constants, variables, arithmetic, powers, and elementary functions.
+- Symbolic differentiation rules for sums, products, quotients, powers, `exp`, `log`, `sin`, `cos`, `tan`, and `sqrt`.
+- Conservative simplification rules for zero/one identities and constant folding.
+- Simple branch tags for `log`, `sqrt`, and branch-aware powers.
+- Symbolic evaluation through ordinary CNRS-compatible values or through `CnrsDual` for autodiff cross-checks.
+- `tests/test_symbolic_diff.py`
+- `examples/science_workflows/symbolic_chain_rule_demo.py`
+
+### Validation
+
+```text
+748 passed, 6 xfailed
+```
+
 ## v0.4.0 — Chain Rule Automatic Differentiation
 
 This release adds first-order chain-rule capability for CNRS scientific workflows.
@@ -10,23 +133,14 @@ This release adds first-order chain-rule capability for CNRS scientific workflow
 - `CnrsDual`: carries `(value, derivative)` and propagates derivatives through arithmetic.
 - Chain-rule elementary functions: `exp`, `log`, `sin`, `cos`, `tan`, `sqrt`, and scalar/dual powers.
 - Convenience helpers: `derivative`, `value_and_derivative`, `compose`, `pow_const`.
-- `tests/test_autodiff_chain_rule.py`: analytic regression tests for addition, product, quotient, elementary functions, nested composition, branch-aware logarithm, and scale-law derivatives.
-- `examples/science_workflows/chain_rule_scale_law.py`: runnable demonstration of nested chain-rule, exponential scale laws, and scale-transform derivatives.
-
-### Changed
-
-- Updated package metadata to `0.4.0`.
-- Exported the autodiff layer from `cnrs.__init__` with explicit `autodiff_*` function aliases to avoid name collisions.
-- Fixed `examples/scale_integration.py` import path so it runs directly from the repository root.
-- Removed generated `__pycache__` files from the release archive.
+- `tests/test_autodiff_chain_rule.py`.
+- `examples/science_workflows/chain_rule_scale_law.py`.
 
 ### Validation
 
 ```text
 733 passed, 6 xfailed
 ```
-
-The 6 expected failures remain known representational-limit tests, not regressions.
 
 ## v0.3.0 — Multi-Scale Physics Engine (Components 7 and 8)
 

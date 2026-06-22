@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cnrs"
-version = "0.4.0"
-description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, scale laws, biological scale dynamics, complex oscillators, NumPy/SciPy interoperability, multi-scale SS physics engine, and scale-regime detection, and first-order chain-rule automatic differentiation"
+version = "0.5.1"
+description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, scale laws, biological scale dynamics, complex oscillators, NumPy/SciPy interoperability, multi-scale SS physics engine, and scale-regime detection, and first-order chain-rule automatic differentiation, minimal symbolic differentiation/integration, explicit branch-aware symbolic calculus, a lightweight CLI, and a first symbolic-to-CNRS-H coefficient-calculus bridge"
 authors = [
     { name = "Donald G. Palmer", email = "dgpalmer@nul1.com" }
 ]
@@ -19,6 +19,10 @@ dev = ["pytest>=7", "scipy>=1.10"]
 interop = ["scipy>=1.10"]
 data = ["pandas>=2"]
 scale = ["numpy>=1.24"]
+
+
+[project.scripts]
+cnrs = "cnrs.cli:main"
 
 [project.urls]
 "Zenodo" = "https://doi.org/10.5281/zenodo.20574852"

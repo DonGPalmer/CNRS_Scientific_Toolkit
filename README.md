@@ -1,6 +1,6 @@
 # CNRS Scientific Toolkit
 
-CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representational System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, first-order chain-rule automatic differentiation, CNRS-H scale-law calculus, CNRS-H coefficient-based ODE methods, and NumPy/SciPy interoperability.
+CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representational System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, first-order chain-rule automatic differentiation, minimal symbolic differentiation and conservative symbolic integration, CNRS-H scale-law calculus, CNRS-H coefficient-based ODE methods, and NumPy/SciPy interoperability.
 
 **Base:** `z0 = -2 + i`  (a Gaussian integer, `N(z0) = 5`)  
 **Digit alphabet:** `D = {0, 1, 2, 3, 4}`
@@ -93,6 +93,7 @@ Biological scale dynamics and Turing-threshold examples
 Complex oscillator and three-workflow examples
 NumPy/SciPy interoperability bridge
 First-order chain-rule automatic differentiation (`cnrs.autodiff`)
+Minimal symbolic differentiation and conservative symbolic integration (`cnrs.symbolic`)
 ```
 
 Scientific toolkit modules include:
@@ -103,6 +104,7 @@ cnrs_bio        Gierer-Meinhardt biological scale dynamics
 cnrs_oscillator Stuart-Landau, RLC, driven harmonic, interference examples
 cnrs_interop    NumPy/SciPy bridge and benchmark utilities
 autodiff       First-order dual-number chain-rule layer over CnrsComplex
+symbolic       Minimal expression-tree symbolic differentiation, integration, and evaluation
 ```
 
 ## Implementation maturity
@@ -128,6 +130,7 @@ Implemented and tested for representative cases:
 - Layer-2 branch index arithmetic (`cnrs_layer2`, `cnrs_layer2_value`)
 - Scientific workflow helpers (`cnrs.science`)
 - First-order chain-rule automatic differentiation (`cnrs.autodiff`)
+- Minimal symbolic differentiation, conservative symbolic integration, and explicit branch-state scaffolding (`cnrs.symbolic`)
 - CNRS-H linear ODE solvers (`cnrs_ode`)
 - Scale-law, biological-scale, oscillator, and interop utilities
 
@@ -140,17 +143,53 @@ Scaffolding for future work:
 - Global constraint and solver scaffolding (`cnrs_global_constraints`, `cnrs_global_solver`)
 - Scale-integration bridge example (`examples/scale_integration.py`)
 
+
+## Command-line interface
+
+The toolkit includes a lightweight CLI for common workflows. The v0.5.1 release adds explicit branch-aware symbolic expressions for `log`, `sqrt`, and `pow_branch`, including CLI parsing for branch choices.
+
+```bash
+cnrs version
+cnrs convert "1+2j" --to cnrs
+cnrs convert "104" --from cnrs
+cnrs eval "sin(exp(s/L))" --at s=1.2,L=5
+cnrs eval "log(z, branch=2)" --at z=-1
+cnrs eval "sqrt(z, branch=1)" --at z=-1
+cnrs diff "sin(exp(s/L))" --var s
+cnrs diff "sin(exp(s/L))" --var s --at s=1.2,L=5
+cnrs integrate "A*exp(k*s)" --var s
+cnrs examples
+cnrs demo
+```
+
+The CLI is deliberately small: it exposes conversion, symbolic evaluation, differentiation, conservative integration, explicit branch examples, example discovery, and a short demo without turning the toolkit into a full computer-algebra system or graphical application. See [`docs/CLI_QUICKSTART.md`](docs/CLI_QUICKSTART.md) and [`docs/SYMBOLIC_CALCULUS_QUICKSTART.md`](docs/SYMBOLIC_CALCULUS_QUICKSTART.md).
+
+## Branch-aware symbolic calculus
+
+v0.5.1 makes local branch choices explicit for symbolic complex functions:
+
+```python
+from cnrs.symbolic import Var, log, sqrt, pow_branch, BranchState
+
+z = Var("z")
+expr = log(z, branch=2)
+root = sqrt(z, branch=1)
+power = pow_branch(z, 0.5, branch=1)
+```
+
+Branch metadata is preserved through expression construction, substitution, differentiation, conservative integration when relevant, evaluation, and CLI parsing. This is a branch-state scaffold, not a complete path-dependent analytic-continuation or Riemann-surface engine.
+
 ## Test status
 
 Current validation status:
 
 ```text
-733 passed, 6 xfailed
+811 passed, 6 xfailed
 ```
 
 The 6 expected failures document known representational limits, including transcendental numbers and long-period rationals. They are not regressions.
 
-See [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md), [`docs/API_OVERVIEW.md`](docs/API_OVERVIEW.md), [`docs/TEST_STATUS.md`](docs/TEST_STATUS.md), [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md), and [`docs/EXAMPLE_SMOKE_STATUS.md`](docs/EXAMPLE_SMOKE_STATUS.md) for details.
+See [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md), [`docs/API_OVERVIEW.md`](docs/API_OVERVIEW.md), [`docs/TEST_STATUS.md`](docs/TEST_STATUS.md), [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md), [`docs/EXAMPLE_SMOKE_STATUS.md`](docs/EXAMPLE_SMOKE_STATUS.md), [`docs/CLI_QUICKSTART.md`](docs/CLI_QUICKSTART.md), and [`docs/SYMBOLIC_CALCULUS_QUICKSTART.md`](docs/SYMBOLIC_CALCULUS_QUICKSTART.md) for details.
 
 ## Quick start
 
@@ -178,6 +217,15 @@ python examples/science_workflows/observation_maps_demo.py
 
 # v0.4.0 chain-rule example
 python examples/science_workflows/chain_rule_scale_law.py
+
+# v0.4.1+ symbolic differentiation example
+python examples/science_workflows/symbolic_chain_rule_demo.py
+
+# v0.4.2+ symbolic integration example
+python examples/science_workflows/symbolic_integration_demo.py
+
+# v0.5.1+ branch-aware symbolic example
+python examples/science_workflows/branch_aware_symbolic_demo.py
 
 # Additional science examples
 python examples/science_workflows/turing_scale_exit.py
@@ -221,7 +269,29 @@ Lscale = 5.0
 value, deriv = value_and_derivative(lambda s: sin(exp(s / Lscale)), 1.2, L=18)
 ```
 
-The autodiff layer is a first-order numerical chain-rule layer over `CnrsComplex`; it is not a full symbolic algebra system and does not replace the exact coefficient-shift calculus in `CnrsH`.
+The autodiff layer is a first-order numerical chain-rule layer over `CnrsComplex`. The `cnrs.symbolic` layer adds minimal expression-tree symbolic differentiation and can cross-check symbolic derivatives against the autodiff backend; it is still not a full computer algebra system and does not replace the exact coefficient-shift calculus in `CnrsH`.
+
+
+## Example: minimal symbolic differentiation
+
+```python
+from cnrs.symbolic import Var, exp, sin, log, diff
+from cnrs.autodiff import CnrsDual
+
+s = Var("s")
+L = Var("L")
+expr = sin(exp(s / L)) + log(s * s + 2)
+dexpr = diff(expr, s).simplify()
+
+value = expr.eval({"s": 1.2, "L": 5.0}, L=20)
+deriv = dexpr.eval({"s": 1.2, "L": 5.0}, L=20)
+
+# Cross-check through the autodiff backend.
+dual_value = expr.eval({"s": CnrsDual.variable(1.2, L=20), "L": 5.0}, L=20)
+assert abs(complex(deriv) - complex(dual_value.deriv)) < 1e-3
+```
+
+The symbolic layer currently supports `+`, `-`, `*`, `/`, powers, `exp`, `log`, `sin`, `cos`, `tan`, and `sqrt`, with conservative simplification and simple branch tags for `log`, `sqrt`, and powers.
 
 ## Documentation map
 
