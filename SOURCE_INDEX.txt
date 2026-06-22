@@ -1,9 +1,13 @@
 # Source Index
 
-Generated source/file index for the CNRS Scientific Toolkit package.
+Generated source/file index for the CNRS Scientific Toolkit v0.4.0 package.
 
 ```text
 .gitignore
+.pytest_cache/.gitignore
+.pytest_cache/CACHEDIR.TAG
+.pytest_cache/README.md
+.pytest_cache/v/cache/nodeids
 CITATION.cff
 CONTRIBUTING.md
 LICENSE
@@ -12,6 +16,7 @@ README.md
 RELEASE_NOTES.md
 SOURCE_INDEX.txt
 cnrs/__init__.py
+cnrs/autodiff.py
 cnrs/cnrs_add.py
 cnrs/cnrs_bio.py
 cnrs/cnrs_complex.py
@@ -62,18 +67,20 @@ examples/README.md
 examples/demo.py
 examples/quickstart_cnrs.py
 examples/scale_integration.py
+examples/science_workflows/chain_rule_scale_law.py
+examples/science_workflows/cnrs_multiscale_turing_window.py
+examples/science_workflows/cnrs_rd_scale_exit_demo.py
 examples/science_workflows/cnrs_vs_scipy_benchmark.py
 examples/science_workflows/complex_scale_law.py
 examples/science_workflows/interference_three_workflows.py
-examples/science_workflows/cnrs_multiscale_turing_window.py
 examples/science_workflows/observation_maps_demo.py
 examples/science_workflows/phase_branch_tracking.py
-examples/science_workflows/cnrs_rd_scale_exit_demo.py
 examples/science_workflows/rlc_three_workflows.py
 examples/science_workflows/scale_law_fit_demo.py
 examples/science_workflows/turing_scale_exit.py
 pyproject.toml
 tests/test_arithmetic.py
+tests/test_autodiff_chain_rule.py
 tests/test_cnrs_bio.py
 tests/test_cnrs_complex.py
 tests/test_cnrs_h.py

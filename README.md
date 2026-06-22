@@ -1,6 +1,6 @@
 # CNRS Scientific Toolkit
 
-CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representational System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, CNRS-H scale-law calculus, CNRS-H coefficient-based ODE methods, and NumPy/SciPy interoperability.
+CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representational System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, first-order chain-rule automatic differentiation, CNRS-H scale-law calculus, CNRS-H coefficient-based ODE methods, and NumPy/SciPy interoperability.
 
 **Base:** `z0 = -2 + i`  (a Gaussian integer, `N(z0) = 5`)  
 **Digit alphabet:** `D = {0, 1, 2, 3, 4}`
@@ -59,7 +59,7 @@ As with many research programs, future work may modify, replace, or extend indiv
 
 **GitHub:** https://github.com/DonGPalmer/CNRS_Scientific_Toolkit  
 **Programme landing page:** https://www.nul1.com  
-**Zenodo:** https://doi.org/10.5281/zenodo.20574852  
+**Zenodo:** https://doi.org/10.5281/zenodo.19797882  
 **ORCID:** https://orcid.org/0000-0003-4335-5533
 
 ## What is included
@@ -92,6 +92,7 @@ Scale-law fitting and differentiation
 Biological scale dynamics and Turing-threshold examples
 Complex oscillator and three-workflow examples
 NumPy/SciPy interoperability bridge
+First-order chain-rule automatic differentiation (`cnrs.autodiff`)
 ```
 
 Scientific toolkit modules include:
@@ -101,6 +102,7 @@ cnrs_scale      ScaleLaw: fitting, allometric, derivative, threshold tools
 cnrs_bio        Gierer-Meinhardt biological scale dynamics
 cnrs_oscillator Stuart-Landau, RLC, driven harmonic, interference examples
 cnrs_interop    NumPy/SciPy bridge and benchmark utilities
+autodiff       First-order dual-number chain-rule layer over CnrsComplex
 ```
 
 ## Implementation maturity
@@ -125,6 +127,7 @@ Implemented and tested for representative cases:
 - H-streams and operator calculus (`cnrs_hstream`, `cnrs_hstream_ops`, `cnrs_operator`)
 - Layer-2 branch index arithmetic (`cnrs_layer2`, `cnrs_layer2_value`)
 - Scientific workflow helpers (`cnrs.science`)
+- First-order chain-rule automatic differentiation (`cnrs.autodiff`)
 - CNRS-H linear ODE solvers (`cnrs_ode`)
 - Scale-law, biological-scale, oscillator, and interop utilities
 
@@ -142,7 +145,7 @@ Scaffolding for future work:
 Current validation status:
 
 ```text
-559 passed, 6 xfailed
+733 passed, 6 xfailed
 ```
 
 The 6 expected failures document known representational limits, including transcendental numbers and long-period rationals. They are not regressions.
@@ -173,13 +176,52 @@ python examples/science_workflows/phase_branch_tracking.py
 python examples/science_workflows/scale_law_fit_demo.py
 python examples/science_workflows/observation_maps_demo.py
 
-# v0.2.0 examples
+# v0.4.0 chain-rule example
+python examples/science_workflows/chain_rule_scale_law.py
+
+# Additional science examples
 python examples/science_workflows/turing_scale_exit.py
 python examples/science_workflows/rlc_three_workflows.py
 python examples/science_workflows/cnrs_vs_scipy_benchmark.py
 ```
 
 See [`examples/README.md`](examples/README.md) for example categories and smoke-test guidance.
+
+
+### Reaction-diffusion scale-exit prototype
+
+The development version includes a reusable reaction-diffusion scale-exit layer:
+
+```text
+cnrs/rd_scale_exit.py
+examples/science_workflows/reaction_diffusion_scale_exit.py
+docs/RD_SCALE_EXIT.md
+```
+
+It detects Turing entry/exit transitions for two-species reaction-diffusion
+systems with scale-dependent diffusion laws. The default Gierer-Meinhardt
+example reproduces a scale exit near `s ≈ 0.524` nats.
+
+
+## Example: chain-rule automatic differentiation
+
+```python
+from cnrs.autodiff import exp, sin, derivative, value_and_derivative
+
+# d/ds exp(s^2) at s = 2
+d = derivative(lambda s: exp(s * s), 2.0, L=18)
+
+# value and derivative for a scale law y = A exp(k s)
+A = 2.0
+k = 0.3
+value, deriv = value_and_derivative(lambda s: A * exp(k * s), 4.0, L=18)
+
+# nested chain rule: y = sin(exp(s/L))
+Lscale = 5.0
+value, deriv = value_and_derivative(lambda s: sin(exp(s / Lscale)), 1.2, L=18)
+```
+
+The autodiff layer is a first-order numerical chain-rule layer over `CnrsComplex`; it is not a full symbolic algebra system and does not replace the exact coefficient-shift calculus in `CnrsH`.
 
 ## Documentation map
 

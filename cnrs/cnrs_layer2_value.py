@@ -63,10 +63,17 @@ class L2Val:
         return L2Val(self.v + other.v)
 
     def __sub__(self, other: "L2Val") -> "L2Val":
-        # Subtraction via Gaussian semantics for now
+        """
+        Subtraction via Gaussian semantics, branch reset.
+
+        Fixed (Thread 19 downstream check) for consistency with the
+        corrected Layer2.__sub__: this method previously computed
+        k1-k2 independently, bypassing Layer2.__sub__ entirely, which
+        carried the same k1-k2 bug. Now resets to k=0, matching the
+        proved branch-reset addition rule applied to a + (-b).
+        """
         g = self.to_gaussian() - other.to_gaussian()
-        k = self.k - other.k
-        return L2Val.from_gaussian(g, k)
+        return L2Val.from_gaussian(g, 0)
 
     def __mul__(self, other: "L2Val") -> "L2Val":
         return L2Val(self.v * other.v)

@@ -1,5 +1,33 @@
 # Release Notes
 
+## v0.4.0 — Chain Rule Automatic Differentiation
+
+This release adds first-order chain-rule capability for CNRS scientific workflows.
+
+### Added
+
+- `cnrs/autodiff.py`: dual-number style automatic differentiation over `CnrsComplex`.
+- `CnrsDual`: carries `(value, derivative)` and propagates derivatives through arithmetic.
+- Chain-rule elementary functions: `exp`, `log`, `sin`, `cos`, `tan`, `sqrt`, and scalar/dual powers.
+- Convenience helpers: `derivative`, `value_and_derivative`, `compose`, `pow_const`.
+- `tests/test_autodiff_chain_rule.py`: analytic regression tests for addition, product, quotient, elementary functions, nested composition, branch-aware logarithm, and scale-law derivatives.
+- `examples/science_workflows/chain_rule_scale_law.py`: runnable demonstration of nested chain-rule, exponential scale laws, and scale-transform derivatives.
+
+### Changed
+
+- Updated package metadata to `0.4.0`.
+- Exported the autodiff layer from `cnrs.__init__` with explicit `autodiff_*` function aliases to avoid name collisions.
+- Fixed `examples/scale_integration.py` import path so it runs directly from the repository root.
+- Removed generated `__pycache__` files from the release archive.
+
+### Validation
+
+```text
+733 passed, 6 xfailed
+```
+
+The 6 expected failures remain known representational-limit tests, not regressions.
+
 ## v0.3.0 — Multi-Scale Physics Engine (Components 7 and 8)
 
 Two new scientific toolkit components extending CNRS into Scale Space

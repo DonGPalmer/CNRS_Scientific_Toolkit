@@ -111,8 +111,14 @@ def test_multiplication(samples: int = 200):
 def test_layer2(samples: int = 100):
     """
     Check Layer-2 arithmetic:
-      (z1,k1) + (z2,k2) = (z1+z2, k1+k2)
-      (z1,k1) * (z2,k2) = (z1*z2, k1+k2)
+      (z1,k1) + (z2,k2) = (z1+z2, 0)        [branch reset, per P2 Capstone
+                                              Prop. "Properties of (X~,+)" (iv)]
+      (z1,k1) * (z2,k2) = (z1*z2, k1+k2)    [branch accumulation]
+
+    Fixed (Thread 19 downstream check): this previously asserted k1+k2
+    for addition, matching a bug in Layer2.__add__ rather than the
+    proved capstone result. Multiplication's k1+k2 rule is unaffected
+    and was already correct.
     """
     for _ in range(samples):
         g1 = _rand_gint()
@@ -123,14 +129,14 @@ def test_layer2(samples: int = 100):
         L1 = Layer2.from_gaussian(g1, k1)
         L2 = Layer2.from_gaussian(g2, k2)
 
-        # Addition
+        # Addition (branch reset)
         Ls = L1 + L2
         if Ls.to_gaussian() != g1 + g2:
             raise AssertionError("Layer-2 addition Gaussian mismatch")
-        if Ls.k != k1 + k2:
-            raise AssertionError("Layer-2 addition branch mismatch")
+        if Ls.k != 0:
+            raise AssertionError("Layer-2 addition branch mismatch (expected reset to 0)")
 
-        # Multiplication
+        # Multiplication (branch accumulation)
         Lm = L1 * L2
         if Lm.to_gaussian() != g1 * g2:
             raise AssertionError("Layer-2 multiplication Gaussian mismatch")

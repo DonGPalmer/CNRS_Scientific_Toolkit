@@ -31,7 +31,7 @@ The package is organised in three layers:
     CNRS floating-point arithmetic (CNRS-float, experimental).
     Branch-index (Layer-2) and global analytic (Layer-3/4) objects.
 
-  Scientific toolkit (v0.2.0)
+  Scientific toolkit (v0.4.0)
     CnrsComplex: unified complex interface matching Python's built-in complex.
 
     OdeSolution / cnrs_solve_*: CNRS-H coefficient-recurrence ODE solvers.
@@ -93,6 +93,23 @@ from .cnrs_layer4 import L4Value, L4State
 # ── Scientific toolkit — complex interface ────────────────────────────────────
 
 from .cnrs_complex import CnrsComplex, encode_array, decode_array, to_numpy
+
+
+# ── Scientific toolkit — chain-rule automatic differentiation ────────────────
+from .autodiff import (
+    CnrsDual,
+    as_dual,
+    exp as autodiff_exp,
+    log as autodiff_log,
+    sin as autodiff_sin,
+    cos as autodiff_cos,
+    tan as autodiff_tan,
+    sqrt as autodiff_sqrt,
+    pow_const,
+    derivative,
+    value_and_derivative,
+    compose,
+)
 
 # ── Scientific toolkit — ODE solvers ─────────────────────────────────────────
 
@@ -238,6 +255,11 @@ __all__ = [
     "Layer2", "L2Val", "L3Value", "L4Value", "L4State",
     # ── Scientific toolkit — complex interface
     "CnrsComplex", "encode_array", "decode_array", "to_numpy",
+    # ── Scientific toolkit — chain-rule autodiff
+    "CnrsDual", "as_dual",
+    "autodiff_exp", "autodiff_log", "autodiff_sin", "autodiff_cos",
+    "autodiff_tan", "autodiff_sqrt", "pow_const",
+    "derivative", "value_and_derivative", "compose",
     # ── Scientific toolkit — ODE solvers
     "cnrs_solve_linear", "cnrs_solve_driven", "cnrs_solve_second_order",
     "OdeSolution",

@@ -87,10 +87,17 @@ def test_tc_ch18_layer2_addition_value():
 
 
 def test_tc_ch18_layer2_addition_branch():
-    """TC Ch.18 — Layer-2 addition sums branch indices."""
+    """P2 Capstone — Layer-2 addition resets the branch index to 0.
+
+    Fixed (Thread 19 downstream check): this test previously asserted
+    k1+k2 (matching a now-fixed bug in Layer2.__add__) and mis-cited
+    TC Ch.18 as its source. TC Ch.18 does not state an addition rule;
+    the actual proved source is CNRS_problem2_capstone_v8.tex,
+    Proposition "Properties of (X~, +)" part (iv), "branch reset".
+    """
     L1 = Layer2.from_gaussian(3+2j, k=4)
     L2 = Layer2.from_gaussian(-1+5j, k=-2)
-    assert (L1 + L2).k == 2
+    assert (L1 + L2).k == 0
 
 
 def test_tc_ch18_layer2_multiplication_value():

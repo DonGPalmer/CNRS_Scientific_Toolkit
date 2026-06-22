@@ -81,3 +81,19 @@ This document gives a compact map of the CNRS Scientific Toolkit modules. It is 
 | `tests/` | Automated pytest suite. |
 | `tests/test_cnrs_interop.py` | NumPy/SciPy interop checks. |
 | `tests/test_physics.py` | Analytic formula sanity checks; these are representational checks, not new physical claims. |
+
+
+## Chain-rule autodiff — v0.4.0
+
+`cnrs.autodiff` adds a first-order automatic differentiation layer over `CnrsComplex`.
+
+Main API:
+
+```python
+from cnrs.autodiff import (
+    CnrsDual, derivative, value_and_derivative, compose,
+    exp, log, sin, cos, tan, sqrt, pow_const,
+)
+```
+
+Scope: scalar complex-valued functions of one scalar variable; arithmetic, elementary functions, nested composition, and simple branch-aware logarithm/square-root experiments.

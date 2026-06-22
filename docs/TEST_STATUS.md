@@ -1,34 +1,26 @@
-# Test Status
+# Test Status — v0.4.0
 
-Current package validation status for the v0.2.0 research-code package after merging the AI0 interoperability and example updates.
-
-```text
-559 passed, 6 xfailed
-```
-
-The 6 expected failures document known representational limits and are not regressions.
-
-## Added in this merge
+Current validation status for the CNRS Scientific Toolkit v0.4.0 release candidate:
 
 ```text
-cnrs/cnrs_interop.py              NumPy/SciPy interoperability bridge
-tests/test_cnrs_interop.py        interoperability tests
-tests/test_physics.py             standard QM/GR analytic-solution checks
-examples/science_workflows/cnrs_vs_scipy_benchmark.py
-examples/science_workflows/rlc_three_workflows.py
-examples/science_workflows/turing_scale_exit.py
+733 passed, 6 xfailed
 ```
 
-## Example smoke checks
+The 6 expected failures document known representational limits, including transcendental numbers and long-period rational cases. They are not regressions.
 
-The following examples were run successfully:
+New in v0.4.0:
 
-```text
-python examples/science_workflows/turing_scale_exit.py
-python examples/science_workflows/rlc_three_workflows.py
-python examples/science_workflows/cnrs_vs_scipy_benchmark.py
+- `tests/test_autodiff_chain_rule.py`
+- First-order chain-rule autodiff tests over `CnrsComplex` via `CnrsDual`
+- Analytic derivative checks for arithmetic, elementary functions, nested composition, scale-law derivatives, and branch-aware logarithm values
+
+Recommended release validation commands:
+
+```bash
+python -m pytest -q
+python examples/quickstart_cnrs.py
+python examples/demo.py
+python examples/scale_integration.py
+python examples/science_workflows/chain_rule_scale_law.py
+for f in examples/science_workflows/*.py; do python "$f"; done
 ```
-
-## Notes
-
-The test suite emits warnings when examples intentionally evaluate CNRS-H streams outside conservative reliable-domain estimates. These warnings are expected and document convergence-domain boundaries rather than test failures.

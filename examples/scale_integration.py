@@ -75,9 +75,14 @@ import math
 import numpy as np
 from typing import List, Tuple
 
-import sys, os
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from .cnrs_h import CnrsH
+from pathlib import Path
+import sys
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+from cnrs.cnrs_h import CnrsH
 
 def cnrsh_value(digits, rho): return CnrsH(digits).evaluate(rho)
 def cnrsh_differentiate(digits): return list(CnrsH(digits).differentiate().coeffs)

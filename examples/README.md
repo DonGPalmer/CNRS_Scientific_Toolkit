@@ -52,3 +52,14 @@ python examples/science_workflows/cnrs_vs_scipy_benchmark.py
 ```
 
 See `docs/EXAMPLE_SMOKE_STATUS.md` for the currently recorded smoke-test status.
+
+
+## Chain-rule example — v0.4.0
+
+Run from the repository root:
+
+```bash
+python examples/science_workflows/chain_rule_scale_law.py
+```
+
+This demonstrates first-order automatic differentiation over CNRS-compatible complex values for `exp(s^2)`, an exponential scale law, and a nested scale transformation `sin(exp(s/L))`.
