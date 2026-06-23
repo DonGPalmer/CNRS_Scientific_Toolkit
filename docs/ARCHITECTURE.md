@@ -90,3 +90,13 @@ Compatibility:         legacy flat cnrs.cnrs_* modules
 
 The design rule for future releases is: use CNRS-native representations when
 available, and keep external methods in bridge, validation, or scaffold roles.
+
+
+## v0.8.0 theorem-aligned native additions
+
+v0.8.0 adds native `CVal` negation/subtraction, `CnrsHNative` coefficient calculus, theory-aligned division classification, and a lightweight CNRS* formal state object. These additions are classified in `cnrs.native_status` and documented in `docs/THEOREM_ALIGNMENT.md`.
+
+
+## v0.8.1 theory-aligned consolidation
+
+v0.8.1 adds scoped normalization, structured division expansion reports, theorem-alignment registry support, and CNRS* state preservation operations. The key architectural distinction is that bounded addition normalization and general finite coefficient normalization are separate native routes.

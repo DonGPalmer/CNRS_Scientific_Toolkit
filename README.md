@@ -1,24 +1,65 @@
 # CNRS Scientific Toolkit
 
-## v0.8.0: CNRS-A native values and CNRS-H native coefficient calculus
+## v0.9.0: native rational values and complex-state preservation workflows
 
-v0.8.0 moves the toolkit closer to the formal CNRS architecture. It adds native `CVal` arithmetic with CNRS-A negation/subtraction, a `CnrsHNative` coefficient-calculus layer where coefficients are themselves CNRS-A values, theory-aligned division classification, and a lightweight CNRS* formal state object.
+v0.9.0 builds on the v0.8.x theory-aligned core. It adds value-facing support for finite and periodic CNRS rational divisions, plus lightweight scientific workflow helpers for measuring what is preserved by complex-state workflows and what is lost by early projection to real-valued observables.
 
 ```python
-from cnrs import CVal, CnrsHNative, compose_native, classify_denominator
+from cnrs import rational_value, build_preservation_report
+from cnrs.cnrs_h_native import CnrsHNative, compose_native
+
+# Structured rational value: finite/periodic status is explicit.
+x = rational_value(1, 2)
+print(x.status)
+print(x.structured_report())
+
+# Native CNRS-H composition can feed a state-preserving workflow.
+f = CnrsHNative.from_gaussian_list([1] * 8)   # exp
+g = CnrsHNative.from_gaussian_list([0, 2])    # 2s
+h = compose_native(f, g, order=6)
+report = build_preservation_report(h, [0, 0.1, 0.2], name="native_exp_2s")
+print(report.summary())
+```
+
+See `docs/CNRS_RATIONAL_VALUES.md`, `docs/CNRS_SCIENTIFIC_WORKFLOWS_V090.md`, `docs/CNRS_NORMALIZATION_STATUS.md`, `docs/CNRS_DIVISION_STRUCTURED_EXPANSIONS.md`, and `docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md`.
+
+Validation: `1026 passed, 6 xfailed`.
+
+## v0.8.1: theory-aligned normalization, division, and formal-state preservation
+
+v0.8.1 consolidates the v0.8.0 native core. It makes the normalization status explicit, expands division into structured prefix/period reports, adds a theorem-alignment registry, and gives the lightweight CNRS* formal state preservation operations for differentiation, integration, addition, and multiplication.
+
+```python
+from cnrs import (
+    CVal, CnrsHNative, CnrsFormalState,
+    normalize_addition, normalize_general_coefficients,
+    normalize_multiplication_convolution,
+    expand_division, division_summary,
+    get_theorem_record,
+)
 
 x = CVal.from_gaussian(3+2j)
 y = -x                  # native negation using -1 = "144"
 
-f = CnrsHNative.from_gaussian_list([1, 1, 1, 1])   # truncated exp
-s2 = CnrsHNative.from_gaussian_list([0, 2])        # 2s
-h = compose_native(f, s2, order=3)
+# Addition has a bounded normalisation route; multiplication convolution uses
+# general CNRS-A normalisation.
+add_norm = normalize_addition("4", "4")
+mul_norm = normalize_multiplication_convolution("444444", "444444")
 
-print(classify_denominator(1, 10).status)          # shifted_periodic_tail
+# Division is reported as structured prefix/period data, not finite-string field closure.
+report = division_summary(1, 10)
+
+state = CnrsFormalState.from_gaussian_coefficients(1, [1, 2, 3])
+d_state = state.differentiate()
+
+print(get_theorem_record("CNRS-A multiplication closure").status)
 ```
 
-See `docs/THEOREM_ALIGNMENT.md`, `docs/CNRS_H_NATIVE.md`, `docs/CNRS_DIVISION_STATUS.md`, and `docs/CNRS_FORMAL_STATE.md`.
+See `docs/CNRS_NORMALIZATION_STATUS.md`, `docs/CNRS_DIVISION_STRUCTURED_EXPANSIONS.md`, `docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md`, `docs/CNRS_FORMAL_STATE_PRESERVATION.md`, `docs/THEOREM_ALIGNMENT.md`, `docs/CNRS_H_NATIVE.md`, `docs/CNRS_DIVISION_STATUS.md`, and `docs/CNRS_FORMAL_STATE.md`.
 
+## v0.8.0: CNRS-A native values and CNRS-H native coefficient calculus
+
+v0.8.0 moved the toolkit closer to the formal CNRS architecture. It added native `CVal` arithmetic with CNRS-A negation/subtraction, a `CnrsHNative` coefficient-calculus layer where coefficients are themselves CNRS-A values, theory-aligned division classification, and a lightweight CNRS* formal state object.
 
 ## v0.7.1: CNRS native-status and internal consistency
 
@@ -272,7 +313,7 @@ Branch metadata is preserved through expression construction, substitution, diff
 Current validation status:
 
 ```text
-1003 passed, 6 xfailed
+1015 passed, 6 xfailed
 ```
 
 The 6 expected failures document known representational limits, including transcendental numbers and long-period rationals. They are not regressions.

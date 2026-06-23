@@ -7,7 +7,7 @@ Provides a small wrapper class `CVal` around CNRS-A digit strings, with:
 
   - construction from Gaussian / complex
   - conversion back to Gaussian
-  - CNRS-A add / sub / neg / mul  (native over finite CNRS-A strings)
+  - CNRS-A add / sub / neg / mul  (all native)
   - semantic equality
 
 This is a convenience layer on top of:
@@ -55,7 +55,7 @@ class CVal:
     Internally stores a canonical CNRS-A digit string.
 
     All four arithmetic operations are CNRS-A native:
-      __add__  — native bounded-input addition layer (add_cnrs)
+      __add__  — bounded-input CNRS-A addition (add_cnrs)
       __neg__  — multiplication by the CNRS-A representation of -1 (mul_cnrs)
       __sub__  — a + (-b), i.e. FST after negation
       __mul__  — convolution followed by general CNRS-A normalisation (mul_cnrs)
@@ -86,7 +86,7 @@ class CVal:
     # -----------------------------
 
     def __add__(self, other: "CVal") -> "CVal":
-        """Add via the CNRS-A native addition layer."""
+        """Add via the 14-state FST transducer."""
         return CVal(normalize_cnrs(add_cnrs(self.s, other.s)))
 
     def __neg__(self) -> "CVal":
@@ -94,7 +94,7 @@ class CVal:
 
         -1 in base z0 = -2+i is the finite digit string "144".
         Routing through mul_cnrs keeps negation entirely within
-        CNRS-A multiplication and normalisation.
+        CNRS-A convolution + general carry normalisation.
         """
         return CVal(normalize_cnrs(mul_cnrs(_NEG_ONE, self.s)))
 
@@ -103,7 +103,7 @@ class CVal:
         return self + (-other)
 
     def __mul__(self, other: "CVal") -> "CVal":
-        """Multiply via CNRS-A convolution and general normalisation."""
+        """Multiply via convolution + carry normalisation."""
         return CVal(normalize_cnrs(mul_cnrs(self.s, other.s)))
 
     # -----------------------------

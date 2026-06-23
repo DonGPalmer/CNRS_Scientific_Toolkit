@@ -1,34 +1,30 @@
-# CNRS Toolkit Theorem Alignment (v0.8.0)
+# CNRS Toolkit theorem alignment (v0.8.1)
 
-This note records how the v0.8.0 code aligns with the current CNRS theoretical architecture.  It is a status map, not a proof document.
+This release aligns the Python implementation more tightly with the current CNRS theoretical architecture.
 
-## Core rule
+The guiding rule is: use CNRS internally wherever CNRS has a native structure; retain Python complex arithmetic, symbolic parsing, and dual-number methods as bridge, validation, or interface layers.
 
-Use CNRS-native structures where they exist.  Use ordinary Python, symbolic parsing, and reference complex arithmetic only as bridge, validation, or interface layers.
+## Theory-to-code map
 
-## Alignment table
-
-| Theory component | Toolkit object | Status |
+| Theory component | Toolkit component | Status |
 |---|---|---|
-| CNRS-A finite canonical value | `cnrs.cnrs_value.CVal` | native core |
-| CNRS-A addition | `CVal.__add__`, `add_cnrs` | native bounded-input addition |
-| CNRS-A negation | `CVal.__neg__` via `-1 = "144"` | native finite multiplication |
-| CNRS-A subtraction | `CVal.__sub__` as `a + (-b)` | native finite arithmetic |
-| CNRS-A multiplication | `CVal.__mul__`, `mul_cnrs` | convolution + general CNRS-A normalisation |
-| CNRS-A division | `cnrs_division_status`, `cnrs_rational` | classified: finite / shifted / eventually periodic |
-| CNRS-H coefficient calculus | `CnrsHNative` | native coefficient calculus over `CVal` |
+| CNRS-A canonical value | `cnrs.cnrs_value.CVal` | native core |
+| Native negation | `-CVal`, using `-1 = "144"` | native core |
+| Native subtraction | `a + (-b)` | native core |
+| CNRS-A multiplication | `CVal.__mul__`, `mul_cnrs` | native core; convolution + general normalization |
+| CNRS-A division classification | `cnrs.division` | native finite/periodic classification |
+| CNRS-H native coefficients | `CnrsHNative` | native core |
 | CNRS-H differentiation | `CnrsHNative.differentiate()` | exact coefficient drop |
 | CNRS-H integration | `CnrsHNative.integrate()` | exact coefficient prepend |
-| CNRS-H product | `CnrsHNative.__mul__` | native EGF binomial convolution |
-| CNRS-H composition | `compose_native` | finite-order Bell-polynomial / Faà di Bruno algorithm |
+| CNRS-H product | `CnrsHNative.__mul__` | EGF binomial convolution using `CVal` coefficients |
+| CNRS-H composition | `compose_native` | algorithmic-native finite-order coefficient calculus |
 | CNRS-H chain rule | `verify_chain_rule_native` | finite-order native verification |
-| CNRS* state | `CnrsFormalState` | local theory-aligned state tuple |
-| Scientific state | `CnrsScientificState` | science-facing local object |
+| CNRS* state | `CnrsFormalState` | finite local theory-aligned state |
 
-## Important scope notes
+## Scope discipline
 
-The 14-state addition normalizer is scoped to bounded raw alphabets arising from addition.  Multiplication closure uses convolution followed by general CNRS-A normalisation.  The toolkit should not describe arbitrary multiplication convolution normalisation as the same finite-state result as addition.
+The 14-state normalizer is scoped to bounded addition inputs. Multiplication closure is implemented by convolution followed by general CNRS-A normalization, not by reusing the addition transducer as if arbitrary convolution coefficients were bounded.
 
-CNRS-H composition is algorithmically native through integer Bell-polynomial coefficient arithmetic.  It is not claimed to be a fixed finite-state digit transducer for non-polynomial outer functions.
+Division is not presented as finite-string field closure. It is classified into terminating and periodic cases. Persistent denominators are represented by periodic structures.
 
-Division is not finite field closure inside finite CNRS-A strings.  The toolkit exposes a classification into Gaussian-integer, terminating/shifted, and eventually-periodic cases.  Sharp minimal carry-state counts remain theory work.
+EGF composition is not treated as a finite-state CNRS-A transducer. It is an algorithmic-native CNRS-H coefficient-calculus operation using Bell polynomials / Faà di Bruno recurrence.

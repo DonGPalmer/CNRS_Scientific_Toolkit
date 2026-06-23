@@ -1,26 +1,20 @@
-# CNRS-A Division Status (v0.8.0)
+# CNRS-A division status (v0.8.1)
 
-CNRS-A has exact finite representation for Gaussian integers and exact native addition, subtraction, negation, and multiplication over finite canonical strings.  Division is different: general division does not remain a finite CNRS-A string.
+CNRS-A finite digit strings are closed under addition, negation, subtraction, and multiplication. General division is different: it is not finite-string field closure.
 
-The toolkit therefore classifies division rather than presenting it as ordinary field closure.
+The toolkit therefore classifies division results rather than pretending all quotients are finite CNRS-A strings.
 
-## Implemented categories
+## Cases
 
-`cnrs.cnrs_division_status.classify_division(numerator, denominator)` returns one of:
+| Case | Meaning | Toolkit status |
+|---|---|---|
+| Gaussian integer quotient | reduced denominator is 1 | finite |
+| terminating base-power denominator | reduced denominator is a pure power of 5 for ordinary integer denominators | terminating fractional representation |
+| periodic coprime denominator | denominator is coprime to 5 | z0-adic periodic representation |
+| shifted periodic tail | denominator has a power-of-5 factor and a persistent coprime factor | Laurent-periodic representation |
 
-| Category | Meaning |
-|---|---|
-| `gaussian_integer` | reduced denominator is 1 |
-| `terminating_z0_power` | denominator contributes only a finite base-shift / power-of-5 effect under the existing rational layer |
-| `eventually_periodic` | reduced denominator is coprime to 5; z0-adic tail is eventually periodic |
-| `shifted_eventually_periodic` | finite shift followed by a periodic tail |
+Use `cnrs.division.classify_denominator` for the denominator classification and `cnrs.division.expand_division` for the classified expansion object.
 
-`division_expansion(...)` combines this classification with the existing exact `CnrsRational` expansion object.
+The exact expansion engine is the existing `gaussian_rational_to_cnrs` implementation. The new v0.8.0 module adds theorem-aligned status language and a structured wrapper.
 
-## What is established in code
-
-The code computes exact rational expansion data using the existing `cnrs_rational` machinery.  It records prefix, period, period length, and string-with-period display where applicable.
-
-## What remains open theoretically
-
-The toolkit does not claim a sharp formula for minimal carry-state cardinalities.  It also does not claim finite-string field closure for all division.  Those remain mathematical questions for the theory track.
+Sharp minimal carry-state cardinalities remain a mathematical open problem. The toolkit does not claim a universal sharp bound.

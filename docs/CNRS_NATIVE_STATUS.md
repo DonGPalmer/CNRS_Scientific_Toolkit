@@ -59,3 +59,13 @@ aligned with the theoretical CNRS programme and to prevent bridge/validation
 utilities from being mistaken for the native CNRS core.
 
 See `docs/CNRS_NATIVE_STATUS_REGISTER.md` and `tools/audit_native_status.py`.
+
+
+## v0.8.0 theorem-aligned native additions
+
+v0.8.0 adds native `CVal` negation/subtraction, `CnrsHNative` coefficient calculus, theory-aligned division classification, and a lightweight CNRS* formal state object. These additions are classified in `cnrs.native_status` and documented in `docs/THEOREM_ALIGNMENT.md`.
+
+
+## v0.8.1 theory-aligned consolidation
+
+v0.8.1 adds scoped normalization, structured division expansion reports, theorem-alignment registry support, and CNRS* state preservation operations. The key architectural distinction is that bounded addition normalization and general finite coefficient normalization are separate native routes.

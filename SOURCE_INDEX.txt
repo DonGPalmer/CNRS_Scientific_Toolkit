@@ -1,6 +1,4 @@
-Generated source/file index for the CNRS Scientific Toolkit v0.5.4 package.
-
-.gitignore
+gitignore
 CITATION.cff
 CONTRIBUTING.md
 LICENSE
@@ -22,10 +20,15 @@ cnrs/cnrs_float.py
 cnrs/cnrs_global_constraints.py
 cnrs/cnrs_global_solver.py
 cnrs/cnrs_h.py
+cnrs/cnrs_h_branch.py
 cnrs/cnrs_h_bridge.py
 cnrs/cnrs_h_chain.py
+cnrs/cnrs_h_continuation.py
 cnrs/cnrs_h_domain.py
 cnrs/cnrs_h_jet.py
+cnrs/cnrs_h_native.py
+cnrs/cnrs_h_path.py
+cnrs/cnrs_h_taylor_model.py
 cnrs/cnrs_h_verify.py
 cnrs/cnrs_hstream.py
 cnrs/cnrs_hstream_ops.py
@@ -49,34 +52,80 @@ cnrs/cnrs_rd_scale_exit.py
 cnrs/cnrs_regime.py
 cnrs/cnrs_repr.py
 cnrs/cnrs_scale.py
+cnrs/cnrs_scientific_state.py
 cnrs/cnrs_value.py
 cnrs/cnrs_verify.py
+cnrs/core/__init__.py
+cnrs/core/arithmetic.py
+cnrs/core/base.py
+cnrs/core/branch.py
+cnrs/core/digits.py
+cnrs/core/value.py
+cnrs/division.py
+cnrs/formal_state.py
+cnrs/h/__init__.py
+cnrs/h/calculus.py
+cnrs/h/chain_rule.py
+cnrs/h/compose.py
+cnrs/h/continuation.py
+cnrs/h/domain.py
+cnrs/h/jet.py
+cnrs/h/path.py
+cnrs/h/series.py
+cnrs/h/taylor_model.py
+cnrs/native_status.py
 cnrs/science/__init__.py
 cnrs/science/branch.py
 cnrs/science/observation.py
 cnrs/science/scale_law.py
+cnrs/science/state.py
 cnrs/science/three_workflows.py
 cnrs/symbolic.py
+cnrs/validation/__init__.py
+cnrs/validation/autodiff.py
+cnrs/validation/compare.py
+cnrs/validation/reference_complex.py
+cnrs/workflows/__init__.py
+cnrs/workflows/oscillator.py
+cnrs/workflows/reaction_diffusion.py
+cnrs/workflows/scale_laws.py
 docs/API_OVERVIEW.md
+docs/ARCHITECTURE.md
 docs/CLAIM_STATUS.md
 docs/CLI_QUICKSTART.md
+docs/CNRS_DIVISION_STATUS.md
+docs/CNRS_FORMAL_STATE.md
+docs/CNRS_H_BRANCH_CONTINUATION.md
+docs/CNRS_H_BRANCH_STATE.md
 docs/CNRS_H_CHAIN_RULE_THEORY.md
 docs/CNRS_H_DOMAIN_DIAGNOSTICS.md
+docs/CNRS_H_NATIVE.md
+docs/CNRS_H_PATH_CONTINUATION.md
+docs/CNRS_H_TAYLOR_MODELS.md
+docs/CNRS_NATIVE_STATUS.md
+docs/CNRS_NATIVE_STATUS_REGISTER.md
+docs/CNRS_SCIENTIFIC_STATE.md
 docs/EXAMPLE_SMOKE_STATUS.md
 docs/RESEARCH_STATUS.md
 docs/SYMBOLIC_CALCULUS_QUICKSTART.md
 docs/TEST_STATUS.md
+docs/THEOREM_ALIGNMENT.md
 examples/README.md
 examples/demo.py
 examples/quickstart_cnrs.py
 examples/scale_integration.py
 examples/science_workflows/branch_aware_symbolic_demo.py
 examples/science_workflows/chain_rule_scale_law.py
+examples/science_workflows/cnrs_h_branch_continuation_demo.py
+examples/science_workflows/cnrs_h_branch_state_demo.py
 examples/science_workflows/cnrs_h_domain_diagnostics_demo.py
 examples/science_workflows/cnrs_h_local_scale_expansion_demo.py
 examples/science_workflows/cnrs_h_native_chain_rule_demo.py
+examples/science_workflows/cnrs_h_path_winding_demo.py
+examples/science_workflows/cnrs_h_taylor_model_demo.py
 examples/science_workflows/cnrs_multiscale_turing_window.py
 examples/science_workflows/cnrs_rd_scale_exit_demo.py
+examples/science_workflows/cnrs_scientific_state_demo.py
 examples/science_workflows/cnrs_vs_scipy_benchmark.py
 examples/science_workflows/complex_scale_law.py
 examples/science_workflows/interference_three_workflows.py
@@ -89,6 +138,7 @@ examples/science_workflows/symbolic_integration_demo.py
 examples/science_workflows/symbolic_to_cnrs_h_demo.py
 examples/science_workflows/turing_scale_exit.py
 pyproject.toml
+tests/test_architecture_v060.py
 tests/test_arithmetic.py
 tests/test_autodiff_chain_rule.py
 tests/test_branch_symbolic.py
@@ -96,10 +146,16 @@ tests/test_cli.py
 tests/test_cnrs_bio.py
 tests/test_cnrs_complex.py
 tests/test_cnrs_h.py
+tests/test_cnrs_h_branch.py
 tests/test_cnrs_h_bridge.py
 tests/test_cnrs_h_chain_rule.py
+tests/test_cnrs_h_continuation.py
 tests/test_cnrs_h_domain.py
 tests/test_cnrs_h_jet.py
+tests/test_cnrs_h_native.py
+tests/test_cnrs_h_native_compose.py
+tests/test_cnrs_h_path.py
+tests/test_cnrs_h_taylor_model.py
 tests/test_cnrs_interop.py
 tests/test_cnrs_multiscale.py
 tests/test_cnrs_ode.py
@@ -107,8 +163,13 @@ tests/test_cnrs_oscillator.py
 tests/test_cnrs_rd_scale_exit.py
 tests/test_cnrs_regime.py
 tests/test_cnrs_scale.py
+tests/test_cnrs_scientific_state.py
+tests/test_cval_native_arithmetic.py
+tests/test_division_classification_v080.py
 tests/test_evaluate_limitations.py
 tests/test_expansion.py
+tests/test_formal_state_v080.py
+tests/test_native_status_v071.py
 tests/test_physics.py
 tests/test_rational_all_cases.py
 tests/test_rational_arithmetic.py
@@ -116,103 +177,30 @@ tests/test_science_toolkit.py
 tests/test_symbolic_diff.py
 tests/test_symbolic_integrate.py
 tests/test_tc_equations.py
-
-v0.5.4 additions
-----------------
-cnrs/cnrs_h_taylor_model.py
-    Taylor-model-style wrapper for CNRS-H local jets with optional remainder metadata.
-tests/test_cnrs_h_taylor_model.py
-    Regression tests for Taylor-model construction, bound propagation, and chain-rule comparison.
-examples/science_workflows/cnrs_h_taylor_model_demo.py
-    Demonstrates local Taylor-model diagnostics around a scale point.
-docs/CNRS_H_TAYLOR_MODELS.md
-    Scope and usage notes for v0.5.4 Taylor-model remainder metadata.
-
-v0.6.0 architecture consolidation additions:
-- cnrs/core/__init__.py
-- cnrs/core/base.py
-- cnrs/core/digits.py
-- cnrs/core/value.py
-- cnrs/core/branch.py
-- cnrs/core/arithmetic.py
-- cnrs/h/__init__.py
-- cnrs/h/series.py
-- cnrs/h/calculus.py
-- cnrs/h/compose.py
-- cnrs/h/chain_rule.py
-- cnrs/h/jet.py
-- cnrs/h/domain.py
-- cnrs/h/taylor_model.py
-- cnrs/validation/__init__.py
-- cnrs/validation/autodiff.py
-- cnrs/validation/compare.py
-- cnrs/validation/reference_complex.py
-- cnrs/workflows/__init__.py
-- cnrs/workflows/scale_laws.py
-- cnrs/workflows/reaction_diffusion.py
-- cnrs/workflows/oscillator.py
-- docs/ARCHITECTURE.md
-- docs/CNRS_NATIVE_STATUS.md
-- tests/test_architecture_v060.py
-
-cnrs/cnrs_h_branch.py - CNRS-H branch-state extraction and merge helpers (v0.6.1)
-tests/test_cnrs_h_branch.py - Branch-state propagation tests (v0.6.1)
-examples/science_workflows/cnrs_h_branch_state_demo.py - Branch-state propagation demo (v0.6.1)
-docs/CNRS_H_BRANCH_STATE.md - Branch-state propagation notes (v0.6.1)
-
-
-v0.6.2 additions
-----------------
-cnrs/cnrs_h_path.py
-cnrs/h/path.py
-tests/test_cnrs_h_path.py
-examples/science_workflows/cnrs_h_path_winding_demo.py
-docs/CNRS_H_PATH_CONTINUATION.md
-
-cnrs/cnrs_h_continuation.py — branch-aware symbolic continuation rebuild for CNRS-H jets
-cnrs/h/continuation.py — h-layer exports for continuation rebuild
-tests/test_cnrs_h_continuation.py — tests for continuation rebuild
-examples/science_workflows/cnrs_h_branch_continuation_demo.py — demo for branch-active continuation
-docs/CNRS_H_BRANCH_CONTINUATION.md — continuation rebuild documentation
-cnrs/cnrs_scientific_state.py — CNRS-native science-facing state object
-cnrs/science/state.py — science-layer facade for CnrsScientificState
-examples/science_workflows/cnrs_scientific_state_demo.py — v0.7.0 scientific state demonstration
-docs/CNRS_SCIENTIFIC_STATE.md — documentation for the consolidated scientific state object
-
-v0.7.1 native-status additions
-------------------------------
-cnrs/native_status.py — programmatic status registry classifying native, bridge, validation, scaffold, application, and compatibility components.
-tests/test_native_status_v071.py — tests for the native-status registry and package export consistency.
-docs/CNRS_NATIVE_STATUS_REGISTER.md — user-facing native-status register and category definitions.
-tools/audit_native_status.py — prints the registry as a markdown table.
-
-v0.8.0 theory-aligned native additions
---------------------------------------
-cnrs/cnrs_value.py
-    CNRS-A native value wrapper (CVal).  Adds native negation via -1 = "144" and subtraction as a + (-b).
-
-cnrs/cnrs_h_native.py
-    CNRS-H native coefficient calculus.  Stores EGF coefficients as CVal objects and implements native product, composition, Leibniz, and finite-order chain-rule checks.
-
-cnrs/cnrs_division_status.py
-    Division classification into Gaussian-integer, terminating/shifted, and eventually-periodic cases.  Wraps existing cnrs_rational expansion machinery.
-
-cnrs/cnrs_formal_state.py
-    Lightweight CNRS* formal state object: CNRS-A value, explicit branch index, CNRS-H native jet, center, order, and domain metadata.
-
-docs/THEOREM_ALIGNMENT.md
-    Maps theory components to toolkit objects and status categories.
-
-docs/CNRS_DIVISION_STATUS.md
-    Records the theory-aligned status of division in the toolkit.
-
-docs/CNRS_NATIVE_COEFFICIENT_CALCULUS.md
-    Documents CnrsHNative and its boundary between native operations and bridge evaluation.
-
-tests/test_cval_native_arithmetic.py
-tests/test_cnrs_h_native.py
-tests/test_cnrs_h_native_compose.py
-tests/test_division_status_v080.py
-tests/test_formal_state_v080.py
 tests/test_theorem_alignment_v080.py
-    v0.8.0 native arithmetic, coefficient-calculus, formal-state, division-status, and theorem-alignment tests.
+tools/audit_native_status.py
+
+
+## v0.8.1 theory-aligned core consolidation
+
+cnrs/normalization.py                         Scoped CNRS-A normalization routes: bounded addition, general finite coefficients, multiplication convolution.
+cnrs/theorem_alignment.py                     Registry mapping implementation features to theorem/status categories.
+docs/CNRS_NORMALIZATION_STATUS.md             Normalization scope documentation.
+docs/CNRS_DIVISION_STRUCTURED_EXPANSIONS.md   Prefix/period division expansion documentation.
+docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md       Theorem-alignment registry documentation.
+docs/CNRS_FORMAL_STATE_PRESERVATION.md        CNRS* state preservation documentation.
+tests/test_normalization_v081.py              Scoped normalization regression tests.
+tests/test_division_structured_v081.py        Structured division expansion tests.
+tests/test_formal_state_preservation_v081.py  CNRS* preservation operation tests.
+tests/test_theorem_alignment_v081.py          Theorem-alignment registry tests.
+
+
+## v0.9.0 native rational values and scientific workflows
+
+cnrs/rational_value.py                          CNRS rational/periodic value object preserving division status.
+cnrs/science/workflow.py                        Observation-preservation workflow reports and projection diagnostics.
+docs/CNRS_RATIONAL_VALUES.md                    Rational-value documentation.
+docs/CNRS_SCIENTIFIC_WORKFLOWS_V090.md          Scientific workflow documentation.
+tests/test_rational_value_v090.py               Rational-value status tests.
+tests/test_scientific_workflow_v090.py           Complex-state workflow tests.
+examples/science_workflows/cnrs_v090_preservation_workflow_demo.py  v0.9.0 preservation workflow demo.

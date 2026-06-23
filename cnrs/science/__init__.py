@@ -13,3 +13,10 @@ from .scale_law import CnrsScaleLaw, fit_egf_scale_law, exp_scale_law
 from .three_workflows import ThreeWorkflowResult, compare_interference, compare_complex_scale_law, compare_branch_winding
 
 from .state import CnrsScientificState, CnrsScientificStateError, scientific_state_from_symbolic
+from .workflow import (
+    ObservationPreservationReport,
+    sample_state,
+    preservation_metrics,
+    build_preservation_report,
+    compare_state_pair,
+)

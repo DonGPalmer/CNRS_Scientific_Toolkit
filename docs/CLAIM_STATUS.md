@@ -1,11 +1,15 @@
-# Claim Status — v0.6.0
+# v0.9.0 Claim Status Addendum
+
+`CnrsRationalValue` is a status-preserving representation layer for finite and periodic division outputs. It does not claim finite-string field closure for general division. Scientific workflow diagnostics quantify projection effects; they are diagnostic tools, not standalone physical claims.
+
+# Claim Status — v0.8.1
 
 This file separates implemented computational claims from open mathematical or scientific claims.
 
 ## Current validation
 
 ```text
-821 passed, 6 xfailed
+1015 passed, 6 xfailed
 ```
 
 The expected failures are known representational-limit cases and are not regressions.
@@ -26,6 +30,9 @@ The expected failures are known representational-limit cases and are not regress
 - v0.5.1 explicit branch-state scaffolding for symbolic `log`, `sqrt`, and branch-aware powers.
 - v0.5.1 symbolic-to-CNRS-H bridge and direct finite CNRS-H chain-rule checks.
 - v0.6.0 CNRS-H local jets with explicit expansion points and nonzero-center chain-rule checks.
+
+- v0.8.0 native `CVal` arithmetic, `CnrsHNative` coefficient calculus, division classification, and CNRS* formal-state tuple.
+- v0.8.1 scoped normalization routes, structured division reports, theorem-alignment registry, and CNRS* state-preservation operations.
 
 ## v0.4.0 claim
 

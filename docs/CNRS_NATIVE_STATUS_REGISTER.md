@@ -62,3 +62,13 @@ of the implementation are intended to be CNRS-native and which remain bridge,
 validation, or scaffold. Formal support still belongs in CNRS papers/proof
 notes, especially for finite CNRS-A normalization/arithmetic, Layer-2 branch
 representation, and CNRS-H coefficient calculus.
+
+
+## v0.8.0 theorem-aligned native additions
+
+v0.8.0 adds native `CVal` negation/subtraction, `CnrsHNative` coefficient calculus, theory-aligned division classification, and a lightweight CNRS* formal state object. These additions are classified in `cnrs.native_status` and documented in `docs/THEOREM_ALIGNMENT.md`.
+
+
+## v0.8.1 theory-aligned consolidation
+
+v0.8.1 adds scoped normalization, structured division expansion reports, theorem-alignment registry support, and CNRS* state preservation operations. The key architectural distinction is that bounded addition normalization and general finite coefficient normalization are separate native routes.

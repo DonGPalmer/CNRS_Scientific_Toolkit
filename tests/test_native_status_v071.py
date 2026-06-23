@@ -1,4 +1,4 @@
-"""v0.8.0 native-status and internal-consistency tests."""
+"""v0.9.0 native-status and internal-consistency tests."""
 
 
 def test_native_status_registry_classifies_core_components():
@@ -40,7 +40,7 @@ def test_native_status_exported_from_flat_package():
     import cnrs
     from cnrs import NativeStatus, get_component_status
 
-    assert cnrs.__version__ == "0.8.0"
+    assert cnrs.__version__ == "0.9.0"
     assert NativeStatus.NATIVE_CORE.value == "native_core"
     assert get_component_status("CNRS-H calculus").is_native
 

@@ -8,9 +8,9 @@ Unlike ``CnrsH``, which stores EGF coefficients as plain Python
 ``CVal`` — a CNRS-A digit string in base z0 = -2 + i.  All coefficient
 arithmetic is routed through the native CNRS-A layers:
 
-  - addition        uses CNRS-A native bounded-input addition (``add_cnrs``)
+  - addition        uses bounded-input CNRS-A addition (``add_cnrs``)
   - negation        multiplies by the CNRS-A representation of -1 (``mul_cnrs``)
-  - subtraction     a + (-b): FST after native negation
+  - subtraction     a + (-b): native negation followed by CNRS-A addition
   - multiplication  convolution followed by general CNRS-A normalisation (``mul_cnrs``)
 
 The structural CNRS-H operations remain unchanged:
@@ -98,7 +98,7 @@ class CnrsHNative:
 
     Differentiation and integration are exact structural operations.
     Coefficient addition and multiplication are routed through the
-    CNRS-A native addition and general multiplication/normalisation layers.
+    CNRS-A addition and general multiplication/normalisation layers.
     """
     coeffs: tuple  # tuple of CVal
 
@@ -235,13 +235,13 @@ class CnrsHNative:
         return CnrsHNative(result)
 
     def __sub__(self, other: "CnrsHNative") -> "CnrsHNative":
-        """Pointwise coefficient subtraction via native CVal subtraction."""
+        """Pointwise coefficient subtraction (via CNRS-A native arithmetic)."""
         n = max(len(self.coeffs), len(other.coeffs))
         result = tuple(_cval_sub(self.coeff(i), other.coeff(i)) for i in range(n))
         return CnrsHNative(result)
 
     def __neg__(self) -> "CnrsHNative":
-        """Negate all coefficients via native CVal negation."""
+        """Negate all coefficients (via CNRS-A native arithmetic)."""
         return CnrsHNative(tuple(_cval_neg(c) for c in self.coeffs))
 
     def __mul__(self, other: object) -> "CnrsHNative":
@@ -270,7 +270,7 @@ class CnrsHNative:
         """CNRS-A native EGF binomial convolution.
 
         Every multiply is ``CVal * CVal`` -> ``CVal`` (mul_cnrs).
-        Every add    is ``CVal + CVal`` -> ``CVal`` (native CNRS-A addition).
+        Every add    is ``CVal + CVal`` -> ``CVal`` (CNRS-A addition).
         Binomial coefficients C(n,k) are converted to ``CVal`` via
         ``CVal.from_gaussian``.
         """
@@ -285,7 +285,7 @@ class CnrsHNative:
                 binom = CVal.from_gaussian(complex(comb(i + j, i), 0))
                 # All three multiplications are CNRS-A native
                 term = binom * self.coeffs[i] * other.coeffs[j]
-                # Addition is CNRS-A FST native
+                # Addition is CNRS-A native
                 c[i + j] = c[i + j] + term
 
         return CnrsHNative(tuple(c))

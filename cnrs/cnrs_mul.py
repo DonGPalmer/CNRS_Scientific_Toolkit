@@ -1,7 +1,7 @@
 """
 cnrs_mul.py
 -----------
-CNRS-A multiplication via convolution + normalization.
+CNRS-A multiplication via convolution + general canonical normalisation.
 
 Implements:
   - mul_cnrs(a, b): multiply two CNRS-A digit strings
@@ -109,14 +109,14 @@ def _normalize_coeffs(coeffs: List[int]) -> List[int]:
 
 def mul_cnrs(a: str, b: str) -> str:
     """
-    Multiply two CNRS-A digit strings using convolution + normalization.
+    Multiply two CNRS-A digit strings using convolution + general normalisation.
 
     Steps:
       1. Split each operand into integer and fractional parts.
       2. Remove '.', treat as pure integer digit strings.
       3. Convert to LSB-first digit lists.
       4. Convolve the digit lists (integer coefficients).
-      5. Normalize coefficients into CNRS-A digits via cnrs_remainder and base Z0.
+      5. Normalize arbitrary convolution coefficients into CNRS-A digits via the general carry algorithm, not the bounded addition transducer.
       6. Insert decimal point with total_frac = frac_a_len + frac_b_len.
       7. Canonically normalize the resulting string.
 

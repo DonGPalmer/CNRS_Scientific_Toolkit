@@ -31,7 +31,7 @@ The package is organised in three layers:
     CNRS floating-point arithmetic (CNRS-float, experimental).
     Branch-index (Layer-2) and global analytic (Layer-3/4) objects.
 
-  Scientific toolkit (v0.6.0)
+  Scientific toolkit (v0.9.0)
     CnrsComplex: unified complex interface matching Python's built-in complex.
 
     OdeSolution / cnrs_solve_*: CNRS-H coefficient-recurrence ODE solvers.
@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
@@ -73,9 +73,15 @@ from .cnrs_mul import mul_cnrs
 from .cnrs_div import div_by_base_power, div_by_base, div_cnrs
 from .cnrs_ops import cnrs_add, cnrs_sub, cnrs_mul, cnrs_neg, cnrs_eq
 from .cnrs_value import CVal
-from .cnrs_division_status import (
-    DivisionKind, DivisionClassification, CnrsDivisionExpansion,
-    classify_division, division_expansion,
+from .normalization import (
+    NormalizationScope, NormalizationResult,
+    normalize_general_coefficients, normalize_addition,
+    multiplication_raw_coefficients, normalize_multiplication_convolution,
+)
+from .division import (
+    DivisionStatus, DenominatorClassification, CnrsDivisionExpansion,
+    classify_denominator, expand_division, terminating_expansion, periodic_expansion,
+    division_summary,
 )
 
 # ── Layer 2: CNRS-H calculus ──────────────────────────────────────────────────
@@ -85,7 +91,6 @@ from .cnrs_h_native import (
     CnrsHNative, NonGaussianCoefficientError, compose_native,
     verify_chain_rule_native, verify_leibniz, coeff_strings,
 )
-from .cnrs_formal_state import BranchIndex, CnrsFormalState, CnrsFormalStateError
 from .cnrs_hstream import HStream
 from .cnrs_operator import Operator
 
@@ -250,9 +255,10 @@ from .cnrs_scientific_state import (
     CnrsScientificStateError,
     scientific_state_from_symbolic,
 )
+from .formal_state import CnrsFormalState
 
 
-# ── Native status registry (v0.8.0) ─────────────────────────────────────────
+# ── Native status and theorem-alignment registries ─────────────────────────────────────────
 from .native_status import (
     NativeStatus,
     ComponentStatus,
@@ -263,6 +269,11 @@ from .native_status import (
     by_layer as components_by_layer,
     get_component as get_component_status,
     status_table as native_status_table,
+)
+from .theorem_alignment import (
+    TheoremStatus, TheoremRecord, THEOREM_REGISTRY,
+    all_theorem_records, by_status as theorem_records_by_status,
+    get_theorem_record, theorem_alignment_table,
 )
 
 # ── Scientific toolkit — ODE solvers ─────────────────────────────────────────
@@ -391,6 +402,16 @@ from .cnrs_rd_scale_exit import (
     scan_scale_exit_ladder,
 )
 
+# ── CNRS rational values and scientific workflow reports (v0.9.0) ────────────
+from .rational_value import CnrsRationalValue, rational_value, rational_batch
+from .science.workflow import (
+    ObservationPreservationReport,
+    sample_state,
+    preservation_metrics,
+    build_preservation_report,
+    compare_state_pair,
+)
+
 __all__ = [
     # ── Version
     "__version__",
@@ -403,12 +424,12 @@ __all__ = [
     "add_cnrs", "mul_cnrs", "div_by_base_power", "div_by_base", "div_cnrs",
     "cnrs_add", "cnrs_sub", "cnrs_mul", "cnrs_neg", "cnrs_eq",
     "CVal",
-    "DivisionKind", "DivisionClassification", "CnrsDivisionExpansion",
-    "classify_division", "division_expansion",
+    "DivisionStatus", "DenominatorClassification", "CnrsDivisionExpansion",
+    "classify_denominator", "expand_division", "terminating_expansion", "periodic_expansion",
+    "CnrsRationalValue", "rational_value", "rational_batch",
     # ── Calculus
-    "CnrsH", "CnrsHNative", "NonGaussianCoefficientError",
-    "compose_native", "verify_chain_rule_native", "verify_leibniz", "coeff_strings",
-    "BranchIndex", "CnrsFormalState", "CnrsFormalStateError",
+    "CnrsH", "CnrsHNative", "NonGaussianCoefficientError", "compose_native",
+    "verify_chain_rule_native", "verify_leibniz", "coeff_strings",
     "HStream", "Operator",
     # ── Analytic continuation
     "InfiniteExpansion", "CnrsRational", "gaussian_rational_to_cnrs", "CnrsFloat",
@@ -462,7 +483,7 @@ __all__ = [
 
     # ── Scientific toolkit — CNRS-native scientific state
     "CnrsScientificState", "CnrsScientificStateError",
-    "scientific_state_from_symbolic",
+    "scientific_state_from_symbolic", "CnrsFormalState",
 
 # ── Scientific toolkit — ODE solvers
     "cnrs_solve_linear", "cnrs_solve_driven", "cnrs_solve_second_order",
@@ -507,6 +528,8 @@ __all__ = [
     "turing_thresholds", "turing_diagnostic", "scan_scale_exit",
     "exponential_gm_scale_exit", "gm_default_kinetics",
     "ladder_diffusion_law", "scalelaw_diffusion_law", "scan_scale_exit_ladder",
+    "ObservationPreservationReport", "sample_state", "preservation_metrics",
+    "build_preservation_report", "compare_state_pair",
 ]
 
 # ── v0.6.0 native architecture façades ───────────────────────────────────────
