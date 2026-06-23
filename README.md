@@ -1,5 +1,55 @@
 # CNRS Scientific Toolkit
 
+## v0.10.0: dual-path arithmetic, carry-guard tightening, and Lagrange inversion
+
+v0.10.0 builds on the v0.9.0 theory-aligned core with three additions to the
+native CNRS-A / CNRS-H layer.
+
+**Dual-path arithmetic (`CnrsHMode`).** A new adapter automatically selects
+`CnrsHNative` (CNRS-A digit-string coefficients) when EGF coefficients are
+Gaussian integers, and falls back to `CnrsH` (fast plain-Python path) otherwise.
+`ScaleLaw`, `OdeSolution`, and `cnrs_solve_linear` now expose a `native`
+parameter and a `.native_mode` property.
+
+**Carry-drain bounds tightened.** The addition transducer drain guard is reduced
+from 1000 to 20 (provably correct: carry is always in the 14-state canonical
+set). The multiplication normalization drain guard is reduced from 1000 to 100
+(empirically ≤ 12 steps for inputs up to ~10³ digits; formal proof is an open
+item).
+
+**Native Lagrange inversion (`invert_native`).** Computes the compositional
+inverse g of a `CnrsHNative` series f (f(g(s)) = s) using the Lagrange
+inversion recurrence in CNRS-A coefficient space. All arithmetic routes through
+`CVal` (add_cnrs / mul_cnrs). Verification via `verify_inversion` confirms
+f(g(s)) = s at the digit-string level (`strings_match=True`, `max_error=0.0`).
+
+```python
+from cnrs.cnrs_h_native import CnrsHNative, invert_native, verify_inversion
+
+# f(s) = exp(s) - 1  →  g(s) = log(1+s)
+# g_n = (-1)^{n-1} * (n-1)!   (all integer, all verifiable at digit level)
+f = CnrsHNative.from_gaussian_list([0, 1, 1, 1, 1, 1, 1, 1])
+result = verify_inversion(f, order=8)
+print(result["strings_match"])   # True
+print(result["max_error"])       # 0.0
+print([c.to_gaussian() for c in result["g"].coeffs])
+# [0, 1, -1, 2, -6, 24, -120, 720]
+
+# Dual-path: auto-selects native for Gaussian-integer coefficients
+from cnrs.cnrs_scale import ScaleLaw
+law = ScaleLaw.from_coeffs([1, 2, -1, 3])
+print(law.native_mode)           # True  (Gaussian integers → CnrsHNative)
+
+law2 = ScaleLaw.exponential(lam=1.5)
+print(law2.native_mode)          # False (float coefficients → CnrsH)
+```
+
+Validation: `1121 passed, 6 xfailed`.
+
+Patch note: this build fixes native `CnrsHMode.integrate()` so Gaussian-integer
+complex integration constants such as `3+0j` and `1+2j` are accepted correctly
+in native mode, with regression tests.
+
 ## v0.9.0: native rational values and complex-state preservation workflows
 
 v0.9.0 builds on the v0.8.x theory-aligned core. It adds value-facing support for finite and periodic CNRS rational divisions, plus lightweight scientific workflow helpers for measuring what is preserved by complex-state workflows and what is lost by early projection to real-valued observables.
@@ -243,11 +293,16 @@ symbolic       Minimal expression-tree symbolic differentiation, integration, an
 Fully implemented, tested, and verified:
 
 - Gaussian integer representation (`cnrs_repr`)
-- Addition via 14-state finite-state transducer (`cnrs_add`)
-- Multiplication via Cauchy convolution + carry normalization (`cnrs_mul`)
+- Addition via 14-state finite-state transducer (`cnrs_add`) — carry drain bound provably ≤ 14 steps
+- Multiplication via Cauchy convolution + carry normalization (`cnrs_mul`) — drain bound empirically ≤ 12 steps
 - Division by base, base powers, and Gaussian units (`cnrs_div`)
 - High-level arithmetic wrappers (`cnrs_ops`, `cnrs_value`)
 - CNRS-H EGF digit-shift calculus (`cnrs_h`)
+- CNRS-H native coefficient calculus with CVal coefficients (`cnrs_h_native`):
+  - differentiation, integration, multiplication, composition (Faà di Bruno)
+  - chain-rule verification, Leibniz verification
+  - **Lagrange series inversion** (`invert_native`, `verify_inversion`) — v0.10.0
+- Dual-path CNRS-H adapter (`cnrs_h_mode`) — v0.10.0
 
 ### Experimental
 
@@ -313,7 +368,7 @@ Branch metadata is preserved through expression construction, substitution, diff
 Current validation status:
 
 ```text
-1015 passed, 6 xfailed
+1121 passed, 6 xfailed
 ```
 
 The 6 expected failures document known representational limits, including transcendental numbers and long-period rationals. They are not regressions.

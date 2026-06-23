@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cnrs"
-version = "0.9.0"
+version = "0.10.0"
 description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, scale laws, biological scale dynamics, complex oscillators, NumPy/SciPy interoperability, multi-scale SS physics engine, and scale-regime detection, and first-order chain-rule automatic differentiation, minimal symbolic differentiation/integration, explicit branch-aware symbolic calculus, a lightweight CLI, and a first symbolic-to-CNRS-H coefficient-calculus bridge, local CNRS-H jets with expansion points, lightweight convergence/domain diagnostics, CNRS-H branch-state propagation, and native-status classification, scoped CNRS-A normalisation, theorem-alignment registry, structured division expansions, and formal-state preservation, native rational values, and complex-state preservation workflows"
 authors = [
     { name = "Donald G. Palmer", email = "dgpalmer@nul1.com" }

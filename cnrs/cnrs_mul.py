@@ -84,7 +84,12 @@ def _normalize_coeffs(coeffs: List[int]) -> List[int]:
         q = (a - d) / Z0
         carry = complex(round(q.real), round(q.imag))
 
-    # drain remaining carry
+    # Drain remaining carry.
+    # Unlike the addition transducer (where carry is bounded to the 14-state
+    # canonical set), the carry here is a general Gaussian integer whose
+    # magnitude depends on the convolution input size.  Empirically the drain
+    # completes in ≤12 steps for inputs up to ~10^3 digits; the guard is set
+    # to 100 to leave headroom without the original unconstrained value of 1000.
     drain_guard = 0
     while carry != 0:
         a = carry
@@ -93,7 +98,7 @@ def _normalize_coeffs(coeffs: List[int]) -> List[int]:
         q = (a - d) / Z0
         carry = complex(round(q.real), round(q.imag))
         drain_guard += 1
-        if drain_guard > 1000:
+        if drain_guard > 100:
             raise RuntimeError("Carry did not drain in normalization")
 
     # trim highest zeros

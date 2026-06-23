@@ -26,6 +26,7 @@ cnrs/cnrs_h_chain.py
 cnrs/cnrs_h_continuation.py
 cnrs/cnrs_h_domain.py
 cnrs/cnrs_h_jet.py
+cnrs/cnrs_h_mode.py
 cnrs/cnrs_h_native.py
 cnrs/cnrs_h_path.py
 cnrs/cnrs_h_taylor_model.py
@@ -204,3 +205,27 @@ docs/CNRS_SCIENTIFIC_WORKFLOWS_V090.md          Scientific workflow documentatio
 tests/test_rational_value_v090.py               Rational-value status tests.
 tests/test_scientific_workflow_v090.py           Complex-state workflow tests.
 examples/science_workflows/cnrs_v090_preservation_workflow_demo.py  v0.9.0 preservation workflow demo.
+
+
+## v0.10.0 dual-path arithmetic, carry-guard tightening, and Lagrange inversion
+
+cnrs/cnrs_h_mode.py                             Dual-path CnrsHMode adapter: auto-selects CnrsHNative or CnrsH.
+tests/test_stress_outside_normal.py             Drain guard and dual-path architecture stress tests (31 tests).
+tests/test_lagrange_inversion.py                Native Lagrange inversion tests (57 tests).
+
+### Modified files
+
+cnrs/cnrs_add.py                                Carry drain guard tightened: 1000 → 20 (provably bounded by 14-state set).
+cnrs/cnrs_mul.py                                Carry drain guard tightened: 1000 → 100 (empirically ≤ 12 steps).
+cnrs/cnrs_h_native.py                           Added: invert_native, verify_inversion, InversionError, _GAUSSIAN_UNITS.
+cnrs/cnrs_scale.py                              ScaleLaw uses CnrsHMode; gains native parameter and native_mode property.
+cnrs/cnrs_ode.py                                OdeSolution uses CnrsHMode; cnrs_solve_linear gains native parameter.
+cnrs/cnrs_interop.py                            numpy_to_cnrsh fixed to return CnrsH for backward compatibility.
+cnrs/__init__.py                                Exports: InversionError, invert_native, verify_inversion, CnrsHMode, native_eligible.
+
+### Modified documentation
+
+docs/CNRS_H_NATIVE.md                           Updated for v0.10.0: Lagrange inversion, dual-path adapter, open items.
+docs/TEST_STATUS.md                             v0.10.0 test count (1120 passed, 6 xfailed) and new test descriptions.
+docs/CLAIM_STATUS.md                            v0.10.0 implemented/tested claims and open items.
+docs/CNRS_NATIVE_STATUS.md                      v0.10.0 component status entries and architecture position.

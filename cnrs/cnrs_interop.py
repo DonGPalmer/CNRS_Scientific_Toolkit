@@ -115,7 +115,12 @@ def numpy_to_cnrsh(y_vals: np.ndarray, s_vals: Sequence[float],
     CnrsH stream — the EGF coefficient stream fitted to the data.
     """
     law = fit_egf(s_vals, y_vals.astype(complex), degree=degree)
-    return law._h
+    # Return a plain CnrsH stream for backward compatibility.
+    # law._mode holds a CnrsHMode; extract the fast-path backend.
+    mode = law._mode
+    if mode.native:
+        return mode.backend.to_cnrs_h()
+    return mode.backend
 
 
 def ode_solution_to_numpy(sol: OdeSolution, s_vals: Sequence[float]) -> np.ndarray:

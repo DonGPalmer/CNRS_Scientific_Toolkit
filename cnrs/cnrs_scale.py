@@ -105,6 +105,7 @@ from typing import Optional, Sequence, Union
 import numpy as np
 
 from .cnrs_h import CnrsH
+from .cnrs_h_mode import CnrsHMode, native_eligible
 
 
 # ---------------------------------------------------------------------------
@@ -139,13 +140,29 @@ class ScaleLaw:
 
     Wraps a CnrsH EGF stream and provides evaluation, differentiation,
     log-derivative, and observable maps.
+
+    The ``native`` parameter controls which arithmetic backend is used:
+
+      native=None  (default) — auto-select: uses CnrsHNative when all EGF
+                               coefficients are Gaussian integers; falls back
+                               to CnrsH (plain Python complex) otherwise.
+      native=True            — force CNRS-A native arithmetic; raises if any
+                               coefficient is not a Gaussian integer.
+      native=False           — always use the fast CnrsH path.
+
+    The active path is readable via ``.native_mode``.
     """
 
     def __init__(self, h: CnrsH, name: str = "scale_law",
-                 _s_max: Optional[float] = None):
-        self._h = h
+                 _s_max: Optional[float] = None,
+                 native: Optional[bool] = None):
+        if isinstance(h, CnrsHMode):
+            self._mode = h
+        else:
+            self._mode = CnrsHMode.from_coeffs(list(h.coeffs), native=native)
+        self._h = self._mode   # kept for backward-compat attribute access
         self.name = name
-        coeffs = list(h.coeffs) if hasattr(h, "coeffs") else []
+        coeffs = list(self._mode.coeffs)
         if len(coeffs) >= 2 and abs(coeffs[0]) > 1e-15:
             lam_mag = abs(coeffs[1] / coeffs[0])
             self.s_max = (_s_max if _s_max is not None
@@ -153,30 +170,38 @@ class ScaleLaw:
         else:
             self.s_max = _s_max if _s_max is not None else float("inf")
 
+    @property
+    def native_mode(self) -> bool:
+        """True if CNRS-A native arithmetic (CnrsHNative) is active."""
+        return self._mode.native
+
     # ---- construction -------------------------------------------------------
 
     @classmethod
     def exponential(cls, lam: complex, scale: complex = 1.0,
-                    terms: int = 32, name: Optional[str] = None) -> "ScaleLaw":
+                    terms: int = 32, name: Optional[str] = None,
+                    native: Optional[bool] = None) -> "ScaleLaw":
         """f(s) = scale * exp(lam * s)."""
         coeffs = [scale * (lam ** n) for n in range(terms)]
         h = CnrsH.from_list(coeffs)
         lam_mag = abs(lam)
         s_max = _s_max_estimate(terms, lam_mag) if lam_mag > 1e-15 else float("inf")
         label = name or f"{scale}*exp(({lam})*s)"
-        return cls(h, name=label, _s_max=s_max)
+        return cls(h, name=label, _s_max=s_max, native=native)
 
     @classmethod
     def from_coeffs(cls, coeffs: Sequence[complex],
-                    name: Optional[str] = None) -> "ScaleLaw":
+                    name: Optional[str] = None,
+                    native: Optional[bool] = None) -> "ScaleLaw":
         """From a list of EGF coefficients [c0, c1, c2, ...]."""
         h = CnrsH.from_list(list(coeffs))
-        return cls(h, name=name or "scale_law")
+        return cls(h, name=name or "scale_law", native=native)
 
     @classmethod
-    def from_cnrsh(cls, h: CnrsH, name: Optional[str] = None) -> "ScaleLaw":
+    def from_cnrsh(cls, h: CnrsH, name: Optional[str] = None,
+                   native: Optional[bool] = None) -> "ScaleLaw":
         """From an existing CnrsH stream."""
-        return cls(h, name=name or "scale_law")
+        return cls(h, name=name or "scale_law", native=native)
 
     # ---- evaluation ---------------------------------------------------------
 
@@ -184,7 +209,7 @@ class ScaleLaw:
         """Complex value f(s) at a single point."""
         s_real = float(s.real if hasattr(s, "real") else s)
         _domain_warn(s_real, self.s_max, self.name)
-        return self._h.evaluate(complex(s))
+        return self._mode.evaluate(complex(s))
 
     def __call__(self, s):
         """Evaluate at s (scalar or numpy array)."""
@@ -198,14 +223,24 @@ class ScaleLaw:
 
     def derivative(self, name: Optional[str] = None) -> "ScaleLaw":
         """df/ds via exact CNRS-H digit shift."""
-        dh = self._h.differentiate()
-        return ScaleLaw(dh, name=name or f"D({self.name})", _s_max=self.s_max)
+        dmode = self._mode.differentiate()
+        sl = ScaleLaw.__new__(ScaleLaw)
+        sl._mode = dmode
+        sl._h = dmode
+        sl.name = name or f"D({self.name})"
+        sl.s_max = self.s_max
+        return sl
 
     def integral(self, constant: complex = 0.0,
                  name: Optional[str] = None) -> "ScaleLaw":
         """Antiderivative ∫f ds via CNRS-H digit prepend."""
-        ih = self._h.integrate(constant)
-        return ScaleLaw(ih, name=name or f"I({self.name})", _s_max=self.s_max)
+        imode = self._mode.integrate(constant)
+        sl = ScaleLaw.__new__(ScaleLaw)
+        sl._mode = imode
+        sl._h = imode
+        sl.name = name or f"I({self.name})"
+        sl.s_max = self.s_max
+        return sl
 
     def log_derivative(self, s: Union[float, complex]) -> complex:
         """f'(s)/f(s) — allometric exponent proxy at s."""

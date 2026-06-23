@@ -538,6 +538,202 @@ def verify_leibniz(
 
 
 # ---------------------------------------------------------------------------
+# Native Lagrange inversion: g such that f(g(s)) = s
+# ---------------------------------------------------------------------------
+
+# Gaussian integer units: the only values whose reciprocal is also a
+# Gaussian integer.  1/u for u in _GAUSSIAN_UNITS gives another unit.
+_GAUSSIAN_UNITS: dict[complex, complex] = {
+    1+0j:  1+0j,
+    -1+0j: -1+0j,
+    0+1j:  0-1j,
+    0-1j:  0+1j,
+}
+
+
+class InversionError(ValueError):
+    """Raised when the series cannot be inverted in Gaussian-integer arithmetic."""
+
+
+def invert_native(f: "CnrsHNative", order: int) -> "CnrsHNative":
+    """Compute the compositional inverse g of f in CNRS-A native arithmetic.
+
+    Returns g such that f(g(s)) = s, computed to ``order`` EGF coefficients.
+
+    All arithmetic is routed through ``CVal`` (CNRS-A digit strings) via
+    ``add_cnrs`` / ``mul_cnrs``.  No Python arithmetic touches the EGF
+    coefficients directly.
+
+    Requirements
+    ------------
+    f.coeff(0) = 0
+        f(0) = 0 is necessary for a compositional inverse to exist as a
+        formal power series.
+    f.coeff(1) ∈ {1, −1, i, −i}
+        f′(0) must be a Gaussian integer unit so that 1/f′(0) is also a
+        Gaussian integer.  Non-unit f′(0) would produce non-integer
+        coefficients for g, which cannot be stored in CnrsHNative.
+
+    Algorithm
+    ---------
+    The recurrence follows directly from f(g(s)) = s expanded via Faà di
+    Bruno's formula.  Writing (f ∘ g)_n for the n-th EGF coefficient of the
+    composition::
+
+        (f ∘ g)_n = Σ_{k=1}^n  f_k · B_{n,k}(g_1, …, g_{n-k+1})
+
+    Setting this equal to the identity series (1 for n=1, 0 for n≥2) and
+    using B_{n,1}(g_1,…,g_n) = g_n gives::
+
+        g_1 = 1 / f_1
+        g_n = −(1/f_1) · Σ_{k=2}^n  f_k · B_{n,k}(g_1, …, g_{n-k+1})
+
+    For k ≥ 2 the Bell argument g_{n-k+1} ≤ g_{n-1}, so the sum uses only
+    already-computed coefficients.  The Bell table is built incrementally
+    alongside the g coefficients, keeping everything within a single pass.
+
+    Parameters
+    ----------
+    f : CnrsHNative
+        The series to invert.  Must satisfy f(0) = 0 and f′(0) ∈ {1,−1,i,−i}.
+    order : int
+        Number of output EGF coefficients (indices 0 … order−1).
+
+    Returns
+    -------
+    CnrsHNative
+        The compositional inverse g, with g.coeff(0) = 0.
+
+    Raises
+    ------
+    InversionError
+        If f(0) ≠ 0 or f′(0) is not a Gaussian integer unit.
+    """
+    if order <= 0:
+        raise ValueError("order must be positive")
+
+    # --- validate f(0) = 0 ---
+    f0 = f.coeff(0).to_gaussian()
+    if f0 != 0:
+        raise InversionError(
+            f"invert_native requires f(0) = 0 (f.coeff(0) = 0); got {f0!r}. "
+            "Shift f by its constant term before inverting."
+        )
+
+    # --- validate f'(0) is a Gaussian unit ---
+    f1_gaussian = f.coeff(1).to_gaussian()
+    if f1_gaussian not in _GAUSSIAN_UNITS:
+        raise InversionError(
+            f"invert_native requires f′(0) = f.coeff(1) to be a Gaussian "
+            f"integer unit {{1, −1, i, −i}}; got {f1_gaussian!r}. "
+            "Non-unit f′(0) produces non-integer inverse coefficients."
+        )
+    inv_f1 = _to_cval(_GAUSSIAN_UNITS[f1_gaussian])   # 1/f_1 as CVal
+
+    # --- g array: g_coeffs[n] = g_n (1-indexed EGF coefficient) ---
+    # Index 0 is unused (g_0 = 0); we size to order+1 for convenient indexing.
+    g_coeffs: list[CVal] = [_ZERO_CVAL] * (order + 1)
+    g_coeffs[1] = inv_f1   # g_1 = 1/f_1
+
+    # --- Bell table: B[n][k] as in _bell_table, built incrementally ---
+    # We maintain B[n][k] for n = 0..order, k = 0..order.
+    # At each step n we can compute B[n][k] for k ≥ 2 from g_1..g_{n-k+1}
+    # (already known), then compute g_n, then fill B[n][1] = g_n.
+    N = order + 1
+    B: list[list[CVal]] = [[_ZERO_CVAL] * N for _ in range(N)]
+    B[0][0] = _ONE_CVAL
+    # B[1][1] = g_1 (set after g_1 is known)
+    if order >= 1:
+        B[1][1] = g_coeffs[1]
+
+    for n in range(2, order):
+        # Step 1: compute B[n][k] for k = 2..n using g_1..g_{n-k+1} (known)
+        for k in range(2, n + 1):
+            val = _ZERO_CVAL
+            for m in range(1, n - k + 2):   # m = 1 .. n-k+1
+                g_m = g_coeffs[m] if m <= order else _ZERO_CVAL
+                if g_m == _ZERO_CVAL:
+                    continue
+                binom = _to_cval(comb(n - 1, m - 1))
+                val = val + binom * g_m * B[n - m][k - 1]
+            B[n][k] = val
+
+        # Step 2: compute g_n = -(1/f_1) * Σ_{k=2}^n f_k * B[n][k]
+        correction = _ZERO_CVAL
+        for k in range(2, n + 1):
+            f_k = f.coeff(k)
+            if f_k == _ZERO_CVAL:
+                continue
+            correction = correction + f_k * B[n][k]
+        g_n = -(inv_f1 * correction)
+        g_coeffs[n] = g_n
+
+        # Step 3: fill B[n][1] = g_n (needed by future iterations)
+        B[n][1] = g_n
+
+    # --- assemble output: [g_0, g_1, ..., g_{order-1}] ---
+    out = tuple(g_coeffs[i] for i in range(order))
+    return CnrsHNative(out)
+
+
+def verify_inversion(
+    f: "CnrsHNative",
+    order: int,
+    *,
+    atol: float = 1e-10,
+) -> dict:
+    """Verify that g = invert_native(f) satisfies f(g(s)) = s at the
+    coefficient level, entirely within CNRS-A arithmetic.
+
+    The identity series has EGF coefficients [0, 1, 0, 0, …].
+    Both f(g(s)) and the identity are compared coefficient-by-coefficient
+    as digit strings (strictest check) and as Gaussian values (numeric).
+
+    Parameters
+    ----------
+    f : CnrsHNative — the series to invert
+    order : int     — number of EGF coefficients to verify
+    atol : float    — tolerance for the numeric check
+
+    Returns
+    -------
+    dict with keys:
+      g              : CnrsHNative — the computed inverse
+      fog            : CnrsHNative — f(g(s)) truncated to order terms
+      max_error      : float       — max |fog_n − id_n| over Gaussian values
+      passed         : bool        — True if max_error ≤ atol
+      strings_match  : bool        — True iff every digit string is exact
+    """
+    g = invert_native(f, order)
+    fog = compose_native(f, g, order - 1).pad(order)
+
+    # Identity: coeff 0 → 0, coeff 1 → 1, rest → 0
+    identity_vals = [0] * order
+    if order > 1:
+        identity_vals[1] = 1
+
+    errors = [
+        abs(fog.coeff(n).to_gaussian() - identity_vals[n])
+        for n in range(order)
+    ]
+    max_error = max(errors) if errors else 0.0
+
+    # Digit-string check: exact match with the identity CVal strings
+    id_cvals = [_ZERO_CVAL] * order
+    if order > 1:
+        id_cvals[1] = _ONE_CVAL
+    strings_match = all(fog.coeff(n).s == id_cvals[n].s for n in range(order))
+
+    return {
+        "g": g,
+        "fog": fog,
+        "max_error": max_error,
+        "passed": max_error <= atol,
+        "strings_match": strings_match,
+    }
+
+
+# ---------------------------------------------------------------------------
 # Coefficient-space diagnostic
 # ---------------------------------------------------------------------------
 
@@ -549,7 +745,10 @@ def coeff_strings(h: CnrsHNative) -> list[str]:
 __all__ = [
     "CnrsHNative",
     "NonGaussianCoefficientError",
+    "InversionError",
     "compose_native",
+    "invert_native",
+    "verify_inversion",
     "verify_chain_rule_native",
     "verify_leibniz",
     "coeff_strings",

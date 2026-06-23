@@ -31,7 +31,7 @@ The package is organised in three layers:
     CNRS floating-point arithmetic (CNRS-float, experimental).
     Branch-index (Layer-2) and global analytic (Layer-3/4) objects.
 
-  Scientific toolkit (v0.9.0)
+  Scientific toolkit (v0.10.0)
     CnrsComplex: unified complex interface matching Python's built-in complex.
 
     OdeSolution / cnrs_solve_*: CNRS-H coefficient-recurrence ODE solvers.
@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
@@ -88,9 +88,11 @@ from .division import (
 
 from .cnrs_h import CnrsH
 from .cnrs_h_native import (
-    CnrsHNative, NonGaussianCoefficientError, compose_native,
+    CnrsHNative, NonGaussianCoefficientError, InversionError,
+    compose_native, invert_native, verify_inversion,
     verify_chain_rule_native, verify_leibniz, coeff_strings,
 )
+from .cnrs_h_mode import CnrsHMode, native_eligible
 from .cnrs_hstream import HStream
 from .cnrs_operator import Operator
 
@@ -428,8 +430,10 @@ __all__ = [
     "classify_denominator", "expand_division", "terminating_expansion", "periodic_expansion",
     "CnrsRationalValue", "rational_value", "rational_batch",
     # ── Calculus
-    "CnrsH", "CnrsHNative", "NonGaussianCoefficientError", "compose_native",
+    "CnrsH", "CnrsHNative", "NonGaussianCoefficientError", "InversionError",
+    "compose_native", "invert_native", "verify_inversion",
     "verify_chain_rule_native", "verify_leibniz", "coeff_strings",
+    "CnrsHMode", "native_eligible",
     "HStream", "Operator",
     # ── Analytic continuation
     "InfiniteExpansion", "CnrsRational", "gaussian_rational_to_cnrs", "CnrsFloat",

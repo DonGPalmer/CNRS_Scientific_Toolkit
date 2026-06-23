@@ -36,3 +36,35 @@ python -m cnrs.cli version
 PYTHONPATH=. python tools/audit_native_status.py
 python -m compileall -q cnrs examples tests tools
 ```
+
+# v0.10.0 Test Status
+
+Validation in the build environment: `1121 passed, 6 xfailed`. The expected failures remain known representational-limit tests, not regressions.
+
+## v0.10.0 additions
+
+- `tests/test_stress_outside_normal.py` (31 tests):
+  - `TestDrainGuardStress` (6 tests): large/alternating coefficient injection directly into `_normalize_coeffs`; drain step bounds measured across worst-case carries and 2 000 random convolution inputs; 300-digit all-4 string multiplication end-to-end; 2 000 random Gaussian-integer multiplication correctness checks.
+  - `TestDualPathArchitecture` (25 tests): auto-selection in both directions; large-Gaussian fallback (lam=3j, order 40); forced native/fast overrides; `NonGaussianCoefficientError` on forced-native with float input; value agreement to 1e-12 at multiple evaluation points; path propagation through `derivative()` and `integral()`; `.native_mode` accuracy on `ScaleLaw` and `OdeSolution`.
+
+- `tests/test_cnrs_h_mode_integrate_v010.py` (6 tests):
+  - regression checks for native integration constants in `CnrsHMode`;
+  - accepts `3+0j` and `1+2j`;
+  - rejects non-Gaussian constants with `NonGaussianCoefficientError`;
+  - confirms fast-path integration and propagation through `ScaleLaw` / `OdeSolution`.
+
+- `tests/test_lagrange_inversion.py` (57 tests):
+  - `TestIdentityInversion`: coefficients, digit strings, and verify result for f(s) = s.
+  - `TestLogFromExp`: `strings_match`, `max_error`, per-coefficient values against (−1)^{n−1}·(n−1)!, hardcoded CNRS-A digit strings for g_1 through g_6, and f(g(s)) identity verification.
+  - `TestQuadraticShift`: double-factorial coefficients for f(s) = s + s²/2!.
+  - `TestGaussianUnitDerivative`: f′(0) = i case; g′(0) = −i; all coefficients pure imaginary Gaussian integers.
+  - `TestNegationSelfInverse`: f(s) = −s; double-inversion identity at digit-string level.
+  - `TestRoundTrip`: six series including double-inversion; digit-string identity check via `compose_native` directly.
+  - `TestInversionErrors`: f(0) ≠ 0, non-unit derivative, zero derivative, integer > 1 derivative, non-Gaussian derivative, zero order; all four Gaussian units accepted.
+
+## Recent regression totals
+
+- v0.8.0: 1003 passed, 6 xfailed.
+- v0.8.1: 1015 passed, 6 xfailed.
+- v0.9.0: 1026 passed, 6 xfailed.
+- v0.10.0: 1121 passed, 6 xfailed.

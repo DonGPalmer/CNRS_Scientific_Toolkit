@@ -127,13 +127,15 @@ def add_cnrs(a: str, b: str) -> str:
         d, carry_idx = ADDITION_TABLE[key]
         out.append(str(d))
 
-    # Drain carry
+    # Drain carry.
+    # The carry is always an element of the 14-state canonical set, so it
+    # must reach state 0 within 14 steps.  Guard is set to 20 for safety margin.
     drain_guard = 0
     while carry_idx != 0:
         d, carry_idx = ADDITION_TABLE[(carry_idx, 0, 0)]
         out.append(str(d))
         drain_guard += 1
-        if drain_guard > 1000:
+        if drain_guard > 20:
             raise RuntimeError("Carry did not drain in CNRS-A addition")
 
     # Reverse to MSB-first

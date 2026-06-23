@@ -98,3 +98,19 @@ The toolkit now supports direct coefficient-space composition and verification o
 ## v0.6.0 domain diagnostics
 
 `cnrs.cnrs_h_domain` provides conservative local radius/singularity metadata and last-term truncation indicators for supported CNRS-H jets.  These are diagnostics, not rigorous global convergence proofs or analytic-continuation theorems.
+
+# v0.10.0 Claim Status Addendum
+
+## Implemented and tested (v0.10.0)
+
+- **Carry-drain bound for addition:** the drain guard is provably correct at 20; the addition carry is always an element of the 14-state canonical set and drains in ≤ 14 steps.
+- **Carry-drain bound for multiplication:** empirically ≤ 12 steps for all inputs tested up to ~10³ digits; formal proof of the carry set for multiplication remains an open item.
+- **Dual-path CNRS-H adapter:** `CnrsHMode` auto-selects `CnrsHNative` for Gaussian-integer coefficients and `CnrsH` otherwise. `ScaleLaw`, `OdeSolution`, and `cnrs_solve_linear` expose `native` and `.native_mode`. Verified: values agree to machine precision (1e-12) across both paths; path propagates correctly through `derivative()` and `integral()`.
+- **Lagrange series inversion:** `invert_native` computes f(g(s)) = s in CNRS-A coefficient space. Verified at the digit-string level for: identity (f = s), logarithm (g_n = (−1)^{n−1}·(n−1)!, closed form), quadratic shift (double-factorial coefficients), Gaussian unit f′(0) = i, negation self-inverse, and six round-trip series. All `verify_inversion` results give `strings_match=True` and `max_error=0.0`.
+
+## Open items (v0.10.0)
+
+- Formal proof of the multiplication carry-drain bound (carry-set characterization for `_normalize_coeffs`).
+- `CnrsFormalState.compose` for the general case g(0) ≠ 0.
+- Native series evaluation at a CVal point (requires infinite/periodic CNRS-A series for n! denominators; current position: evaluation is a projection from the coefficient layer, not a CNRS-A operation).
+- Source-expression-free branch continuation via monodromy matrix coefficient transformation.

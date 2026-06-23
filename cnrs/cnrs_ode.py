@@ -77,6 +77,7 @@ import warnings
 from typing import Callable, Optional, Sequence, Union
 
 from .cnrs_h import CnrsH
+from .cnrs_h_mode import CnrsHMode
 
 # ---------------------------------------------------------------------------
 # Types
@@ -127,12 +128,27 @@ class OdeSolution:
         Approximate upper limit of reliable domain in nats.
     label : str
         Human-readable description of the ODE.
+    native : bool or None
+        None  → auto-select backend (native when coefficients are Gaussian
+                integers, fast path otherwise).
+        True  → force CNRS-A native arithmetic.
+        False → always use fast CnrsH path.
     """
 
-    def __init__(self, stream: CnrsH, s_max: float, label: str = ""):
-        self._stream = stream
+    def __init__(self, stream: CnrsH, s_max: float, label: str = "",
+                 native=None):
+        if isinstance(stream, CnrsHMode):
+            self._mode = stream
+        else:
+            self._mode = CnrsHMode.from_coeffs(list(stream.coeffs), native=native)
+        self._stream = self._mode   # backward-compat alias
         self._s_max = s_max
         self._label = label
+
+    @property
+    def native_mode(self) -> bool:
+        """True if CNRS-A native arithmetic (CnrsHNative) is active."""
+        return self._mode.native
 
     # ------------------------------------------------------------------
     # Core access
@@ -140,8 +156,8 @@ class OdeSolution:
 
     @property
     def coeffs(self):
-        """EGF coefficient tuple (c[0], c[1], ..., c[N-1])."""
-        return self._stream.coeffs
+        """EGF coefficient tuple (c[0], c[1], ..., c[N-1]) as Python complex."""
+        return self._mode.coeffs
 
     @property
     def s_max(self) -> float:
@@ -150,8 +166,10 @@ class OdeSolution:
 
     @property
     def cnrs_h(self) -> CnrsH:
-        """The underlying CnrsH stream."""
-        return self._stream
+        """The underlying CnrsH stream (fast path only; raises if native)."""
+        if self._mode.native:
+            return self._mode.backend.to_cnrs_h()
+        return self._mode.backend
 
     # ------------------------------------------------------------------
     # Evaluation
@@ -179,7 +197,7 @@ class OdeSolution:
                 "Increase `terms` or use a step-and-shift strategy.",
                 stacklevel=2,
             )
-        return self._stream.evaluate(s)
+        return self._mode.evaluate(s)
 
     # ------------------------------------------------------------------
     # Derivative
@@ -191,11 +209,13 @@ class OdeSolution:
 
         The derivative stream has one fewer coefficient than the original.
         """
-        return OdeSolution(
-            self._stream.differentiate(),
-            self._s_max,
-            label=f"d/ds [{self._label}]",
-        )
+        dmode = self._mode.differentiate()
+        sol = OdeSolution.__new__(OdeSolution)
+        sol._mode = dmode
+        sol._stream = dmode
+        sol._s_max = self._s_max
+        sol._label = f"d/ds [{self._label}]"
+        return sol
 
     # ------------------------------------------------------------------
     # Eigenvalue extraction
@@ -346,6 +366,7 @@ def cnrs_solve_linear(
     lam: _Scalar,
     y0: _Scalar = 1.0,
     terms: int = DEFAULT_TERMS,
+    native=None,
 ) -> OdeSolution:
     """
     Solve y' = λy, y(0) = y0 via CNRS-H coefficient recurrence.
@@ -363,6 +384,11 @@ def cnrs_solve_linear(
     lam : complex   Eigenvalue λ = α + iω.
     y0 : complex    Initial condition y(0).
     terms : int     Number of EGF coefficients (default 25).
+    native : bool or None
+        None  → auto-select backend (CnrsHNative when coefficients are
+                Gaussian integers, CnrsH otherwise).
+        True  → force CNRS-A native arithmetic.
+        False → always use the fast CnrsH path.
 
     Returns
     -------
@@ -376,7 +402,8 @@ def cnrs_solve_linear(
         c[n + 1] = lam * c[n]
     stream = CnrsH.from_list(c)
     s_max = _s_max(terms, abs(lam))
-    return OdeSolution(stream, s_max, label=f"y'=({lam})y, y(0)={y0}")
+    return OdeSolution(stream, s_max, label=f"y'=({lam})y, y(0)={y0}",
+                       native=native)
 
 
 def cnrs_solve_driven(

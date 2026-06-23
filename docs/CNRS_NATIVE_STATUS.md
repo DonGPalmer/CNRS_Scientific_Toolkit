@@ -69,3 +69,23 @@ v0.8.0 adds native `CVal` negation/subtraction, `CnrsHNative` coefficient calcul
 ## v0.8.1 theory-aligned consolidation
 
 v0.8.1 adds scoped normalization, structured division expansion reports, theorem-alignment registry support, and CNRS* state preservation operations. The key architectural distinction is that bounded addition normalization and general finite coefficient normalization are separate native routes.
+
+## v0.10.0 native-status update
+
+### New components
+
+| Component | Module | Status | Notes |
+|---|---|---|---|
+| Dual-path CNRS-H adapter | `cnrs.cnrs_h_mode` | `native_core` | Auto-selects `CnrsHNative` for Gaussian-integer coefficients; exposes uniform interface for `ScaleLaw` and `OdeSolution`. |
+| CNRS-H Lagrange inversion | `cnrs.cnrs_h_native.invert_native` | `native_finite` | Compositional inverse via Lagrange recurrence in CNRS-A coefficient space; Bell table built incrementally. |
+| Inversion verification | `cnrs.cnrs_h_native.verify_inversion` | `native_finite` | f(g(s)) = s checked at digit-string level; `strings_match` and `max_error` both reported. |
+
+### Carry-drain bounds
+
+Addition drain guard reduced from 1000 to 20: provably correct (carry always in 14-state set, ≤ 14 steps).
+
+Multiplication drain guard reduced from 1000 to 100: empirically grounded (≤ 12 steps for inputs to ~10³ digits); formal carry-set characterization remains open.
+
+### Architecture position (v0.10.0)
+
+The coefficient layer is the native layer. Evaluation at an ordinary complex point is a projection from coefficient space and is not claimed to be a CNRS-A operation. This is consistent with the mathematical fact that EGF term denominators (n! for n ≥ 2) are periodic in base z₀, making exact native evaluation require infinite CNRS-A series.
