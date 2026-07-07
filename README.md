@@ -654,3 +654,39 @@ The release does not add another mathematical workaround layer.  It clarifies
 which modules are intended to express CNRS internally and which modules support
 conversion, validation, comparison, or applications.  This keeps the Python
 research toolkit aligned with the formal CNRS proof-ladder work.
+
+
+## v0.10.1: Theorem-to-Implementation Alignment Release
+
+This release aligns the Toolkit more explicitly with the CNRS mathematical record.
+
+### Mathematical-to-software traceability
+
+The Toolkit now documents the path:
+
+```
+CNRS theorem
+    |
+algorithm
+    |
+implementation
+    |
+verification tests
+    |
+release
+```
+
+Core CNRS-A status:
+
+| Capability | Status |
+|---|---|
+| Canonical representation | Stable |
+| Addition | Theorem-aligned / implemented |
+| Subtraction | Theorem-aligned / implemented |
+| Multiplication | Closure-theorem aligned / implemented |
+| Division | Structured finite-periodic-approximate workflows |
+| CNRS-H calculus | Research implementation |
+| Metric completeness | Open research question |
+| e-base CNS theorem | Open research question |
+
+The Toolkit distinguishes mathematical results, constructive algorithms, computational verification, and experimental workflows.

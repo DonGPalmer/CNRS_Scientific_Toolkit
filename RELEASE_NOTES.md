@@ -1,3 +1,23 @@
+# v0.10.1 — Formal Alignment and Reproducibility Release
+
+v0.10.1 is a documentation and release-engineering update following the
+CNRS-A arithmetic closure work. It aligns the software repository with the
+mathematical record and improves reproducibility.
+
+## Added
+
+- theorem-to-implementation alignment documentation
+- explicit capability/status table
+- release verification guidance
+- clean research-release packaging
+- GitHub Actions test workflow
+
+## Changed
+
+- removed development cache artifacts from release package
+- clarified the distinction between proved operations, implemented algorithms,
+  computational validation, and open research questions
+
 # v0.10.0 — Dual-Path Arithmetic, Carry-Guard Tightening, and Lagrange Inversion
 
 v0.10.0 extends the v0.9.0 native core with three interconnected improvements:
