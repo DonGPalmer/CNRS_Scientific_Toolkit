@@ -3,6 +3,8 @@
 Thank you for considering a contribution to the CNRS Scientific Toolkit.
 
 This repository is an **open research-code package**. Contributions are welcome when they improve reproducibility, clarify the implementation, add well-scoped examples, or test existing claims. The project is not presented as a finished theory or production numerical library.
+Contributions should preserve the distinction between mathematical claims,
+implemented algorithms, and exploratory workflows.
 
 ## Development setup
 

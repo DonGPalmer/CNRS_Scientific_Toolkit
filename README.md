@@ -1,5 +1,55 @@
 # CNRS Scientific Toolkit
 
+## v0.10.1: Formal Alignment and Research Release
+
+v0.10.1 aligns the Toolkit more explicitly with the CNRS mathematical
+programme. The release establishes a traceable path:
+
+```
+CNRS theorem
+    |
+algorithm
+    |
+implementation
+    |
+verification tests
+    |
+software release
+```
+
+The purpose of this release is not to claim completion of CNRS. It documents
+the maturity boundary between implemented arithmetic, research workflows, and
+open mathematical questions.
+
+### Current capability status
+
+| Capability | Status |
+|---|---|
+| CNRS-A representation | Stable |
+| Canonical normalization | Stable |
+| Addition | Theorem-aligned / implemented |
+| Subtraction | Theorem-aligned / implemented |
+| Multiplication | Closure-theorem aligned / implemented |
+| Division | Structured finite/periodic/approximate workflows |
+| CNRS-H calculus | Research implementation |
+| Branch-aware workflows | Research implementation |
+| Metric completeness | Open research question |
+| e-base CNS theorem | Open research question |
+
+### Research software principles
+
+The Toolkit distinguishes:
+
+- mathematical theorem statements,
+- constructive algorithms,
+- software implementations,
+- computational verification,
+- exploratory scientific workflows.
+
+The Toolkit is the executable implementation layer of the CNRS programme.
+
+---
+
 ## v0.10.0: dual-path arithmetic, carry-guard tightening, and Lagrange inversion
 
 v0.10.0 builds on the v0.9.0 theory-aligned core with three additions to the
