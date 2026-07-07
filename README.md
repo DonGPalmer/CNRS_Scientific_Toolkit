@@ -1,5 +1,9 @@
 # CNRS Scientific Toolkit
 
+## v0.10.2: Verification and Release Engineering
+
+v0.10.2 improves reproducibility and release hygiene while preserving the theorem-to-implementation alignment introduced in v0.10.1.
+
 ## v0.10.1: Formal Alignment and Research Release
 
 v0.10.1 aligns the Toolkit more explicitly with the CNRS mathematical
