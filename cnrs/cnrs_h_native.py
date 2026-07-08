@@ -133,6 +133,18 @@ class CnrsHNative:
         return CnrsHNative((v,) + tuple(_ZERO_CVAL for _ in range(length - 1)))
 
     @staticmethod
+    def eigen_exponential(alpha: Union[int, complex, CVal] = 1, terms: int = 10) -> "CnrsHNative":
+        """Truncated native EGF for ``exp(alpha * s)``.
+
+        Coefficients are ``alpha**n`` and must remain Gaussian integers so
+        they can be represented exactly as :class:`CVal` objects.
+        """
+        if terms < 1:
+            raise ValueError("terms must be at least 1")
+        a = alpha.to_gaussian() if isinstance(alpha, CVal) else complex(alpha)
+        return CnrsHNative(tuple(_to_cval(a ** n) for n in range(terms)))
+
+    @staticmethod
     def from_cnrs_h(h: CnrsH) -> "CnrsHNative":
         """Convert a ``CnrsH`` to ``CnrsHNative``.
 

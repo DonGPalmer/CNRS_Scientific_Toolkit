@@ -119,6 +119,22 @@ class CnrsH:
         """
         return CnrsH(tuple(d for _ in range(terms)))
 
+    @staticmethod
+    def eigen_exponential(alpha: Number = 1, terms: int = 10) -> "CnrsH":
+        """Truncated EGF for ``exp(alpha * rho)``.
+
+        The EGF coefficients are ``alpha**n``. Consequently, within the
+        represented truncation, differentiation shifts the coefficients and
+        satisfies ``D(h_alpha) = alpha * h_alpha`` away from the final
+        truncation boundary.
+
+        This differs from :meth:`exponential`, whose argument is an overall
+        amplitude and which represents ``d * exp(rho)``.
+        """
+        if terms < 1:
+            raise ValueError("terms must be at least 1")
+        return CnrsH(tuple(alpha ** n for n in range(terms)))
+
     # ------------------------------------------------------------------
     # Core properties
     # ------------------------------------------------------------------

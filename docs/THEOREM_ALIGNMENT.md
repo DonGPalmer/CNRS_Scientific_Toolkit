@@ -36,3 +36,8 @@ The Toolkit does not claim completion of:
 - e-base CNS theorem
 - full analytic closure
 - physical interpretation of CNRS states
+
+
+## Status vocabulary
+
+See `STATUS_VOCABULARY_MAPPING.md` for the explicit mapping between Toolkit provenance labels and the five programme-level epistemic categories.

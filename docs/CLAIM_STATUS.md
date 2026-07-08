@@ -1,3 +1,25 @@
+# Claim Status — Current Release v0.10.3
+
+## Current validation baseline
+
+The independently observed pre-v0.10.3 baseline was `1126 passed, 6 xfailed`. After adding the v0.10.3 deterministic tests, release validation is `1128 passed, 6 xfailed`. Future branch results should be read from CI. The six expected failures are documented limitations in `tests/test_evaluate_limitations.py`, not hidden regressions.
+
+## Current implementation boundary
+
+**Established within current model / theorem-aligned:** finite Gaussian-integer CNRS-A representation, canonical encoding/decoding, addition, subtraction, finite multiplication by convolution plus general normalization, and structural CNRS-H differentiation/integration on represented coefficient strings.
+
+**Computationally verified:** arithmetic regression properties, native composition/inversion cases, dual-path CNRS-H agreement, and the independent audit recorded in `docs/audits/toolkit_audit_2026-07-07_v1.md`.
+
+**Derived or implemented with stated scope:** structured finite/periodic division workflows, rational-value objects, finite-order symbolic and branch-aware operations, CNRS-H local jets, domain diagnostics, and scientific demonstration workflows.
+
+**Open:** metric completeness, the e-base CNS theorem, complete analytic closure, general global branch uniqueness, and empirical validation of Scale Space or biological interpretations.
+
+See `docs/STATUS_VOCABULARY_MAPPING.md` for the mapping between software provenance labels and programme-level epistemic labels.
+
+---
+
+# Historical Claim-Status Records
+
 # v0.9.0 Claim Status Addendum
 
 `CnrsRationalValue` is a status-preserving representation layer for finite and periodic division outputs. It does not claim finite-string field closure for general division. Scientific workflow diagnostics quantify projection effects; they are diagnostic tools, not standalone physical claims.

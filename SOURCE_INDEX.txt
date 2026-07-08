@@ -1,4 +1,10 @@
-gitignore
+.gitattributes
+.github/workflows/tests.yml
+.gitignore
+.pytest_cache/.gitignore
+.pytest_cache/CACHEDIR.TAG
+.pytest_cache/README.md
+.pytest_cache/v/cache/nodeids
 CITATION.cff
 CONTRIBUTING.md
 LICENSE
@@ -7,6 +13,61 @@ README.md
 RELEASE_NOTES.md
 SOURCE_INDEX.txt
 cnrs/__init__.py
+cnrs/__pycache__/__init__.cpython-313.pyc
+cnrs/__pycache__/autodiff.cpython-313.pyc
+cnrs/__pycache__/cli.cpython-313.pyc
+cnrs/__pycache__/cnrs_add.cpython-313.pyc
+cnrs/__pycache__/cnrs_bio.cpython-313.pyc
+cnrs/__pycache__/cnrs_complex.cpython-313.pyc
+cnrs/__pycache__/cnrs_continuation.cpython-313.pyc
+cnrs/__pycache__/cnrs_div.cpython-313.pyc
+cnrs/__pycache__/cnrs_expansion.cpython-313.pyc
+cnrs/__pycache__/cnrs_expansion_verify.cpython-313.pyc
+cnrs/__pycache__/cnrs_float.cpython-313.pyc
+cnrs/__pycache__/cnrs_h.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_branch.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_bridge.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_chain.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_continuation.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_domain.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_jet.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_mode.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_native.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_path.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_taylor_model.cpython-313.pyc
+cnrs/__pycache__/cnrs_h_verify.cpython-313.pyc
+cnrs/__pycache__/cnrs_hstream.cpython-313.pyc
+cnrs/__pycache__/cnrs_hstream_ops.cpython-313.pyc
+cnrs/__pycache__/cnrs_interop.cpython-313.pyc
+cnrs/__pycache__/cnrs_layer2.cpython-313.pyc
+cnrs/__pycache__/cnrs_layer2_value.cpython-313.pyc
+cnrs/__pycache__/cnrs_layer3.cpython-313.pyc
+cnrs/__pycache__/cnrs_layer3_continuation.cpython-313.pyc
+cnrs/__pycache__/cnrs_layer3_ops.cpython-313.pyc
+cnrs/__pycache__/cnrs_layer4.cpython-313.pyc
+cnrs/__pycache__/cnrs_mul.cpython-313.pyc
+cnrs/__pycache__/cnrs_multiscale.cpython-313.pyc
+cnrs/__pycache__/cnrs_ode.cpython-313.pyc
+cnrs/__pycache__/cnrs_operator.cpython-313.pyc
+cnrs/__pycache__/cnrs_ops.cpython-313.pyc
+cnrs/__pycache__/cnrs_oscillator.cpython-313.pyc
+cnrs/__pycache__/cnrs_physics_check.cpython-313.pyc
+cnrs/__pycache__/cnrs_rational.cpython-313.pyc
+cnrs/__pycache__/cnrs_rational_verify.cpython-313.pyc
+cnrs/__pycache__/cnrs_rd_scale_exit.cpython-313.pyc
+cnrs/__pycache__/cnrs_regime.cpython-313.pyc
+cnrs/__pycache__/cnrs_repr.cpython-313.pyc
+cnrs/__pycache__/cnrs_scale.cpython-313.pyc
+cnrs/__pycache__/cnrs_scientific_state.cpython-313.pyc
+cnrs/__pycache__/cnrs_value.cpython-313.pyc
+cnrs/__pycache__/cnrs_verify.cpython-313.pyc
+cnrs/__pycache__/division.cpython-313.pyc
+cnrs/__pycache__/formal_state.cpython-313.pyc
+cnrs/__pycache__/native_status.cpython-313.pyc
+cnrs/__pycache__/normalization.cpython-313.pyc
+cnrs/__pycache__/rational_value.cpython-313.pyc
+cnrs/__pycache__/symbolic.cpython-313.pyc
+cnrs/__pycache__/theorem_alignment.cpython-313.pyc
 cnrs/autodiff.py
 cnrs/cli.py
 cnrs/cnrs_add.py
@@ -57,6 +118,12 @@ cnrs/cnrs_scientific_state.py
 cnrs/cnrs_value.py
 cnrs/cnrs_verify.py
 cnrs/core/__init__.py
+cnrs/core/__pycache__/__init__.cpython-313.pyc
+cnrs/core/__pycache__/arithmetic.cpython-313.pyc
+cnrs/core/__pycache__/base.cpython-313.pyc
+cnrs/core/__pycache__/branch.cpython-313.pyc
+cnrs/core/__pycache__/digits.cpython-313.pyc
+cnrs/core/__pycache__/value.cpython-313.pyc
 cnrs/core/arithmetic.py
 cnrs/core/base.py
 cnrs/core/branch.py
@@ -65,6 +132,14 @@ cnrs/core/value.py
 cnrs/division.py
 cnrs/formal_state.py
 cnrs/h/__init__.py
+cnrs/h/__pycache__/__init__.cpython-313.pyc
+cnrs/h/__pycache__/calculus.cpython-313.pyc
+cnrs/h/__pycache__/chain_rule.cpython-313.pyc
+cnrs/h/__pycache__/compose.cpython-313.pyc
+cnrs/h/__pycache__/domain.cpython-313.pyc
+cnrs/h/__pycache__/jet.cpython-313.pyc
+cnrs/h/__pycache__/series.cpython-313.pyc
+cnrs/h/__pycache__/taylor_model.cpython-313.pyc
 cnrs/h/calculus.py
 cnrs/h/chain_rule.py
 cnrs/h/compose.py
@@ -75,27 +150,49 @@ cnrs/h/path.py
 cnrs/h/series.py
 cnrs/h/taylor_model.py
 cnrs/native_status.py
+cnrs/normalization.py
+cnrs/rational_value.py
 cnrs/science/__init__.py
+cnrs/science/__pycache__/__init__.cpython-313.pyc
+cnrs/science/__pycache__/branch.cpython-313.pyc
+cnrs/science/__pycache__/observation.cpython-313.pyc
+cnrs/science/__pycache__/scale_law.cpython-313.pyc
+cnrs/science/__pycache__/state.cpython-313.pyc
+cnrs/science/__pycache__/three_workflows.cpython-313.pyc
+cnrs/science/__pycache__/workflow.cpython-313.pyc
 cnrs/science/branch.py
 cnrs/science/observation.py
 cnrs/science/scale_law.py
 cnrs/science/state.py
 cnrs/science/three_workflows.py
+cnrs/science/workflow.py
 cnrs/symbolic.py
+cnrs/theorem_alignment.py
 cnrs/validation/__init__.py
+cnrs/validation/__pycache__/__init__.cpython-313.pyc
+cnrs/validation/__pycache__/autodiff.cpython-313.pyc
+cnrs/validation/__pycache__/compare.cpython-313.pyc
+cnrs/validation/__pycache__/reference_complex.cpython-313.pyc
 cnrs/validation/autodiff.py
 cnrs/validation/compare.py
 cnrs/validation/reference_complex.py
 cnrs/workflows/__init__.py
+cnrs/workflows/__pycache__/__init__.cpython-313.pyc
+cnrs/workflows/__pycache__/oscillator.cpython-313.pyc
+cnrs/workflows/__pycache__/reaction_diffusion.cpython-313.pyc
+cnrs/workflows/__pycache__/scale_laws.cpython-313.pyc
 cnrs/workflows/oscillator.py
 cnrs/workflows/reaction_diffusion.py
 cnrs/workflows/scale_laws.py
 docs/API_OVERVIEW.md
+docs/API_STATUS.md
 docs/ARCHITECTURE.md
 docs/CLAIM_STATUS.md
 docs/CLI_QUICKSTART.md
 docs/CNRS_DIVISION_STATUS.md
+docs/CNRS_DIVISION_STRUCTURED_EXPANSIONS.md
 docs/CNRS_FORMAL_STATE.md
+docs/CNRS_FORMAL_STATE_PRESERVATION.md
 docs/CNRS_H_BRANCH_CONTINUATION.md
 docs/CNRS_H_BRANCH_STATE.md
 docs/CNRS_H_CHAIN_RULE_THEORY.md
@@ -105,12 +202,18 @@ docs/CNRS_H_PATH_CONTINUATION.md
 docs/CNRS_H_TAYLOR_MODELS.md
 docs/CNRS_NATIVE_STATUS.md
 docs/CNRS_NATIVE_STATUS_REGISTER.md
+docs/CNRS_NORMALIZATION_STATUS.md
+docs/CNRS_RATIONAL_VALUES.md
 docs/CNRS_SCIENTIFIC_STATE.md
+docs/CNRS_SCIENTIFIC_WORKFLOWS_V090.md
+docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md
 docs/EXAMPLE_SMOKE_STATUS.md
 docs/RESEARCH_STATUS.md
+docs/STATUS_VOCABULARY_MAPPING.md
 docs/SYMBOLIC_CALCULUS_QUICKSTART.md
 docs/TEST_STATUS.md
 docs/THEOREM_ALIGNMENT.md
+docs/audits/toolkit_audit_2026-07-07_v1.md
 examples/README.md
 examples/demo.py
 examples/quickstart_cnrs.py
@@ -127,6 +230,7 @@ examples/science_workflows/cnrs_h_taylor_model_demo.py
 examples/science_workflows/cnrs_multiscale_turing_window.py
 examples/science_workflows/cnrs_rd_scale_exit_demo.py
 examples/science_workflows/cnrs_scientific_state_demo.py
+examples/science_workflows/cnrs_v090_preservation_workflow_demo.py
 examples/science_workflows/cnrs_vs_scipy_benchmark.py
 examples/science_workflows/complex_scale_law.py
 examples/science_workflows/interference_three_workflows.py
@@ -139,6 +243,56 @@ examples/science_workflows/symbolic_integration_demo.py
 examples/science_workflows/symbolic_to_cnrs_h_demo.py
 examples/science_workflows/turing_scale_exit.py
 pyproject.toml
+tests/__pycache__/test_architecture_v060.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_arithmetic.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_autodiff_chain_rule.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_branch_symbolic.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cli.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_bio.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_complex.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_branch.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_bridge.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_chain_rule.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_continuation.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_domain.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_jet.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_mode_integrate_v010.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_native.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_native_compose.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_path.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_h_taylor_model.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_interop.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_multiscale.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_ode.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_oscillator.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_rd_scale_exit.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_regime.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_scale.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cnrs_scientific_state.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_cval_native_arithmetic.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_division_classification_v080.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_division_structured_v081.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_evaluate_limitations.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_expansion.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_formal_state_preservation_v081.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_formal_state_v080.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_independent_cross_validation_v0103.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_lagrange_inversion.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_native_status_v071.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_normalization_v081.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_physics.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_rational_all_cases.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_rational_arithmetic.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_rational_value_v090.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_science_toolkit.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_scientific_workflow_v090.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_stress_outside_normal.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_symbolic_diff.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_symbolic_integrate.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_tc_equations.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_theorem_alignment_v080.cpython-313-pytest-9.0.2.pyc
+tests/__pycache__/test_theorem_alignment_v081.cpython-313-pytest-9.0.2.pyc
 tests/test_architecture_v060.py
 tests/test_arithmetic.py
 tests/test_autodiff_chain_rule.py
@@ -153,6 +307,7 @@ tests/test_cnrs_h_chain_rule.py
 tests/test_cnrs_h_continuation.py
 tests/test_cnrs_h_domain.py
 tests/test_cnrs_h_jet.py
+tests/test_cnrs_h_mode_integrate_v010.py
 tests/test_cnrs_h_native.py
 tests/test_cnrs_h_native_compose.py
 tests/test_cnrs_h_path.py
@@ -167,65 +322,27 @@ tests/test_cnrs_scale.py
 tests/test_cnrs_scientific_state.py
 tests/test_cval_native_arithmetic.py
 tests/test_division_classification_v080.py
+tests/test_division_structured_v081.py
 tests/test_evaluate_limitations.py
 tests/test_expansion.py
+tests/test_formal_state_preservation_v081.py
 tests/test_formal_state_v080.py
+tests/test_independent_cross_validation_v0103.py
+tests/test_lagrange_inversion.py
 tests/test_native_status_v071.py
+tests/test_normalization_v081.py
 tests/test_physics.py
 tests/test_rational_all_cases.py
 tests/test_rational_arithmetic.py
+tests/test_rational_value_v090.py
 tests/test_science_toolkit.py
+tests/test_scientific_workflow_v090.py
+tests/test_stress_outside_normal.py
 tests/test_symbolic_diff.py
 tests/test_symbolic_integrate.py
 tests/test_tc_equations.py
 tests/test_theorem_alignment_v080.py
+tests/test_theorem_alignment_v081.py
 tools/audit_native_status.py
-
-
-## v0.8.1 theory-aligned core consolidation
-
-cnrs/normalization.py                         Scoped CNRS-A normalization routes: bounded addition, general finite coefficients, multiplication convolution.
-cnrs/theorem_alignment.py                     Registry mapping implementation features to theorem/status categories.
-docs/CNRS_NORMALIZATION_STATUS.md             Normalization scope documentation.
-docs/CNRS_DIVISION_STRUCTURED_EXPANSIONS.md   Prefix/period division expansion documentation.
-docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md       Theorem-alignment registry documentation.
-docs/CNRS_FORMAL_STATE_PRESERVATION.md        CNRS* state preservation documentation.
-tests/test_normalization_v081.py              Scoped normalization regression tests.
-tests/test_division_structured_v081.py        Structured division expansion tests.
-tests/test_formal_state_preservation_v081.py  CNRS* preservation operation tests.
-tests/test_theorem_alignment_v081.py          Theorem-alignment registry tests.
-
-
-## v0.9.0 native rational values and scientific workflows
-
-cnrs/rational_value.py                          CNRS rational/periodic value object preserving division status.
-cnrs/science/workflow.py                        Observation-preservation workflow reports and projection diagnostics.
-docs/CNRS_RATIONAL_VALUES.md                    Rational-value documentation.
-docs/CNRS_SCIENTIFIC_WORKFLOWS_V090.md          Scientific workflow documentation.
-tests/test_rational_value_v090.py               Rational-value status tests.
-tests/test_scientific_workflow_v090.py           Complex-state workflow tests.
-examples/science_workflows/cnrs_v090_preservation_workflow_demo.py  v0.9.0 preservation workflow demo.
-
-
-## v0.10.0 dual-path arithmetic, carry-guard tightening, and Lagrange inversion
-
-cnrs/cnrs_h_mode.py                             Dual-path CnrsHMode adapter: auto-selects CnrsHNative or CnrsH.
-tests/test_stress_outside_normal.py             Drain guard and dual-path architecture stress tests (31 tests).
-tests/test_lagrange_inversion.py                Native Lagrange inversion tests (57 tests).
-
-### Modified files
-
-cnrs/cnrs_add.py                                Carry drain guard tightened: 1000 → 20 (provably bounded by 14-state set).
-cnrs/cnrs_mul.py                                Carry drain guard tightened: 1000 → 100 (empirically ≤ 12 steps).
-cnrs/cnrs_h_native.py                           Added: invert_native, verify_inversion, InversionError, _GAUSSIAN_UNITS.
-cnrs/cnrs_scale.py                              ScaleLaw uses CnrsHMode; gains native parameter and native_mode property.
-cnrs/cnrs_ode.py                                OdeSolution uses CnrsHMode; cnrs_solve_linear gains native parameter.
-cnrs/cnrs_interop.py                            numpy_to_cnrsh fixed to return CnrsH for backward compatibility.
-cnrs/__init__.py                                Exports: InversionError, invert_native, verify_inversion, CnrsHMode, native_eligible.
-
-### Modified documentation
-
-docs/CNRS_H_NATIVE.md                           Updated for v0.10.0: Lagrange inversion, dual-path adapter, open items.
-docs/TEST_STATUS.md                             v0.10.0 test count (1120 passed, 6 xfailed) and new test descriptions.
-docs/CLAIM_STATUS.md                            v0.10.0 implemented/tested claims and open items.
-docs/CNRS_NATIVE_STATUS.md                      v0.10.0 component status entries and architecture position.
+tools/build_release.py
+tools/toolkit_audit_crossval.py

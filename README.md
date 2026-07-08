@@ -1,5 +1,17 @@
 # CNRS Scientific Toolkit
 
+## v0.10.3: Independent Validation and Metadata Synchronization
+
+v0.10.3 incorporates the July 7, 2026 independent audit into the permanent repository record. It adds an exact, independently written Gaussian-integer cross-validation harness, CI regression coverage, CNRS-H eigenfunction constructors, synchronized validation metadata, and normalized release text files. No new completeness claim is introduced.
+
+### v0.10.3 validation baseline
+
+- Release validation: `1128 passed, 6 xfailed`.
+- Current main-branch status: use the GitHub Actions test workflow; the count may increase as tests are added.
+- Independent audit: 15/15 checks passed in the supplied Session 72 harness.
+
+See `docs/audits/toolkit_audit_2026-07-07_v1.md`, `tools/toolkit_audit_crossval.py`, and `docs/TEST_STATUS.md`.
+
 ## v0.10.2: Verification and Release Engineering
 
 v0.10.2 improves reproducibility and release hygiene while preserving the theorem-to-implementation alignment introduced in v0.10.1.
