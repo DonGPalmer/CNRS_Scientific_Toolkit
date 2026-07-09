@@ -1,0 +1,351 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,hyperref,microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Argp}{\operatorname{Arg}}
+\newcommand{\Logp}{\operatorname{Log}}
+\newcommand{\wtC}{\widetilde{\C^{\times}}}
+\title{Branch-Indexed Multiplication and Logarithm Algebra\\on the Universal Cover of $\C^{\times}$}
+\author{Donald G. Palmer}
+\date{July 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We formalize the branch-index layer used in the Complex Numeric Representational System (CNRS) as a concrete model of the universal covering group of the nonzero complex numbers.  A lifted value is represented by a pair $(z,k)$ with $z\in\C^{\times}$ and $k\in\Z$, where the lifted argument is $\Argp z+2\pi k$.  We derive the exact branch-wrap cocycle governing multiplication, prove associativity, commutativity, inversion, and integer-power laws, and show that the lifted logarithm is a single-valued group isomorphism from the covering group to the additive complex plane.  We also distinguish this multiplicative algebra from addition: ordinary complex addition does not induce a canonical globally defined group law on the cover of $\C^{\times}$.  The resulting theorem package gives a precise mathematical foundation for CNRS branch-index multiplication and logarithmic bookkeeping while remaining independent of CNRS-A digit representation.
+\end{abstract}
+
+\section{Purpose and status}
+CNRS Layer 2 records the sheet of the complex logarithm by adjoining an integer branch index to a nonzero complex value.  The purpose of this note is to replace informal branch bookkeeping by a complete algebraic construction.
+
+The results are standard consequences of covering-space theory, but the explicit pair model, cocycle, and computational formulas are the structures required by CNRS.  The contribution here is therefore an exact alignment theorem between the CNRS branch-index representation and the universal covering group of $\C^{\times}$.
+
+Throughout, the principal argument is
+\[
+\Argp z\in(-\pi,\pi],
+\]
+and the principal logarithm is
+\[
+\Logp z=\ln|z|+i\Argp z.
+\]
+The point $z=0$ is excluded.
+
+\section{Two equivalent models of the cover}
+
+\begin{definition}[Angle model]
+Define
+\[
+\mathcal U=\R\times\R
+\]
+with group law
+\[
+(u,\theta)+(v,\phi)=(u+v,\theta+\phi)
+\]
+and covering map
+\[
+p(u,\theta)=e^{u+i\theta}\in\C^{\times}.
+\]
+\end{definition}
+
+This is the standard simply connected universal cover of $\C^{\times}$.
+
+\begin{definition}[Branch-index model]
+Define
+\[
+\wtC=\C^{\times}\times\Z.
+\]
+For $(z,k)\in\wtC$, its lifted argument and lifted logarithm are
+\[
+\Theta(z,k)=\Argp z+2\pi k,
+\qquad
+\widetilde{\operatorname{Log}}(z,k)=\ln|z|+i\Theta(z,k).
+\]
+\end{definition}
+
+\begin{proposition}
+The map
+\[
+F:\wtC\longrightarrow\mathcal U,
+\qquad
+F(z,k)=\bigl(\ln|z|,\Argp z+2\pi k\bigr)
+\]
+is a bijection.
+\end{proposition}
+
+\begin{proof}
+Injectivity follows because equality of the first coordinates gives equal moduli, while equality of lifted angles gives equal arguments modulo $2\pi$ and hence equal complex values; the principal-argument convention then forces equal branch indices.  For surjectivity, given $(u,\theta)$ let $z=e^{u+i\theta}$ and let
+\[
+k=\frac{\theta-\Argp z}{2\pi}\in\Z.
+\]
+Then $F(z,k)=(u,\theta)$.
+\end{proof}
+
+\section{The branch-wrap cocycle}
+
+\begin{definition}[Wrap cocycle]
+For $z,w\in\C^{\times}$ define
+\[
+\omega(z,w)=\frac{\Argp z+\Argp w-\Argp(zw)}{2\pi}.
+\]
+\end{definition}
+
+\begin{lemma}
+For all $z,w\in\C^{\times}$, $\omega(z,w)\in\Z$.  With the convention $\Argp\in(-\pi,\pi]$, one has
+\[
+\omega(z,w)\in\{-1,0,1\}.
+\]
+\end{lemma}
+
+\begin{proof}
+The two quantities $\Argp z+\Argp w$ and $\Argp(zw)$ represent the same angle modulo $2\pi$, so their difference is an integer multiple of $2\pi$.  Since the first lies in $(-2\pi,2\pi]$ and the second in $(-\pi,\pi]$, only the three displayed integers can occur.
+\end{proof}
+
+An explicit rule is
+\[
+\omega(z,w)=
+\begin{cases}
+ 1,&\Argp z+\Argp w>\pi,\\
+-1,&\Argp z+\Argp w\le -\pi,\\
+ 0,&\text{otherwise},
+\end{cases}
+\]
+where the lower boundary reflects the half-open principal interval.
+
+\begin{theorem}[Cocycle identity]
+For all $z,w,u\in\C^{\times}$,
+\[
+\omega(z,w)+\omega(zw,u)
+=
+\omega(w,u)+\omega(z,wu).
+\]
+\end{theorem}
+
+\begin{proof}
+Both sides equal
+\[
+\frac{\Argp z+\Argp w+\Argp u-\Argp(zwu)}{2\pi}
+\]
+after cancellation of the intermediate principal arguments.
+\end{proof}
+
+\section{Lifted multiplication}
+
+\begin{definition}[Branch-index multiplication]
+For $(z,k),(w,\ell)\in\wtC$, define
+\[
+(z,k)\odot(w,\ell)
+=
+\bigl(zw,\,k+\ell+\omega(z,w)\bigr).
+\]
+\end{definition}
+
+\begin{theorem}[Covering-group algebra]
+The set $(\wtC,\odot)$ is an abelian group.  Its identity is $(1,0)$, and the projection
+\[
+\pi:\wtC\to\C^{\times},\qquad \pi(z,k)=z
+\]
+is a surjective group homomorphism with kernel
+\[
+\ker\pi=\{(1,k):k\in\Z\}\cong\Z.
+\]
+\end{theorem}
+
+\begin{proof}
+Closure is immediate.  Associativity follows from the cocycle identity.  Commutativity follows from $zw=wz$ and symmetry of $\omega$.  Since $\Argp 1=0$, $(1,0)$ is an identity.  The projection is visibly a homomorphism and is surjective.  Its kernel is exactly the displayed set.
+\end{proof}
+
+\begin{proposition}[Inverse]
+Let $x=(z,k)$.  Then
+\[
+x^{-1}=
+\left(z^{-1},-k-\omega(z,z^{-1})\right).
+\]
+Equivalently, if $\Argp z\ne\pi$ then
+\[
+x^{-1}=(z^{-1},-k),
+\]
+while for negative real $z$ (so $\Argp z=\pi$),
+\[
+x^{-1}=(z^{-1},-k-1).
+\]
+\end{proposition}
+
+\begin{proof}
+The formula is forced by requiring the second component of $x\odot x^{-1}$ to vanish.  The boundary case occurs because $\Argp z=\Argp z^{-1}=\pi$, so $\omega(z,z^{-1})=1$.
+\end{proof}
+
+\begin{proposition}[Integer powers]
+For $n\in\Z$, the power $x^{\odot n}$ is uniquely defined by the group law and satisfies
+\[
+\Theta(x^{\odot n})=n\Theta(x),
+\qquad
+\pi(x^{\odot n})=z^n.
+\]
+Consequently
+\[
+x^{\odot n}
+=
+\left(z^n,\frac{n(\Argp z+2\pi k)-\Argp(z^n)}{2\pi}\right).
+\]
+\end{proposition}
+
+\section{The single-valued lifted logarithm}
+
+\begin{theorem}[Logarithm isomorphism]
+The lifted logarithm
+\[
+\widetilde{\operatorname{Log}}: (\wtC,\odot)\longrightarrow(\C,+),
+\qquad
+\widetilde{\operatorname{Log}}(z,k)=\ln|z|+i(\Argp z+2\pi k),
+\]
+is a group isomorphism.
+\end{theorem}
+
+\begin{proof}
+For $x=(z,k)$ and $y=(w,\ell)$,
+\begin{align*}
+\widetilde{\operatorname{Log}}(x\odot y)
+&=\ln|zw|+i\left(\Argp(zw)+2\pi(k+\ell+\omega(z,w))\right)\\
+&=\ln|z|+\ln|w|
++i\left(\Argp z+\Argp w+2\pi k+2\pi\ell\right)\\
+&=\widetilde{\operatorname{Log}}(x)+\widetilde{\operatorname{Log}}(y).
+\end{align*}
+Bijectivity follows from the earlier bijection $F$ and the identification $(u,\theta)\mapsto u+i\theta$.
+\end{proof}
+
+\begin{corollary}[Exact product law]
+For all $x,y\in\wtC$,
+\[
+\widetilde{\operatorname{Log}}(x\odot y)
+=
+\widetilde{\operatorname{Log}}(x)+\widetilde{\operatorname{Log}}(y)
+\]
+without an unspecified $2\pi i n$ term.
+\end{corollary}
+
+\begin{corollary}[Lifted exponential]
+Define
+\[
+\widetilde{\operatorname{Exp}}(a+ib)
+=
+\left(e^{a+ib},\frac{b-\Argp(e^{a+ib})}{2\pi}\right).
+\]
+Then
+\[
+\widetilde{\operatorname{Log}}\circ\widetilde{\operatorname{Exp}}=\operatorname{id}_{\C},
+\qquad
+\widetilde{\operatorname{Exp}}\circ\widetilde{\operatorname{Log}}=\operatorname{id}_{\wtC}.
+\]
+\end{corollary}
+
+Thus the familiar many-valued logarithm is replaced on the cover by a globally single-valued inverse of the exponential map.
+
+\section{Fractional powers}
+For $x\in\wtC$ and $a\in\C$, define the lifted power
+\[
+x^{[a]}=\widetilde{\operatorname{Exp}}\bigl(a\,\widetilde{\operatorname{Log}}x\bigr).
+\]
+This is single-valued on the cover.  It obeys
+\[
+x^{[a+b]}=x^{[a]}\odot x^{[b]},
+\]
+and for fixed $a$,
+\[
+(x\odot y)^{[a]}
+=
+\widetilde{\operatorname{Exp}}\left(a\widetilde{\operatorname{Log}}x+a\widetilde{\operatorname{Log}}y\right).
+\]
+When $a\in\Z$, this agrees with group powers.  Projecting to $\C^{\times}$ recovers one branch-selected value of the usual multivalued power.
+
+\section{Why addition is different}
+Multiplication preserves $\C^{\times}$ and is the group operation whose universal cover is being constructed.  Addition has three obstructions.
+
+First, $z+w$ may be zero, which lies outside $\C^{\times}$.  Second, a branch index records winding around zero under multiplication; it carries no canonical information about a path from $z$ and $w$ to $z+w$.  Third, any rule
+\[
+(z,k)\boxplus(w,\ell)=(z+w,m)
+\]
+requires a choice of $m$ that is not determined by the endpoint $z+w$ and the two individual sheet indices alone in a way compatible with arbitrary continuous deformations through the punctured plane.
+
+\begin{proposition}[No global lifted additive group]
+There is no everywhere-defined binary operation $\boxplus$ on $\wtC$ for which:
+\begin{enumerate}
+\item $\pi(x\boxplus y)=\pi(x)+\pi(y)$ for all $x,y$;
+\item $(\wtC,\boxplus)$ is a group;
+\item $\pi$ maps into $\C^{\times}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Choose $y$ with $\pi(y)=-\pi(x)$.  Then condition 1 requires $\pi(x\boxplus y)=0$, contradicting the codomain $\C^{\times}$.
+\end{proof}
+
+A partial lifted addition can be defined on pairs with $z+w\ne0$ after selecting a path or a branch convention, but it is not intrinsic to the universal covering group and should not be conflated with the multiplication law proved above.
+
+\section{CNRS interpretation}
+The branch-index layer can now be stated precisely:
+\begin{itemize}
+\item CNRS-A may represent the projected value $z$ numerically.
+\item The integer $k$ records the logarithmic sheet.
+\item Multiplication combines the projected values and updates $k$ by the wrap cocycle.
+\item The lifted logarithm is single-valued and additive.
+\item Inversion, powers, and roots are exact operations on the cover.
+\item Addition remains ordinary complex addition at the projected level and requires separate branch/path handling if a lifted result is desired.
+\end{itemize}
+
+The construction does not depend on the base $-2+i$ or on any unresolved CNRS completeness theorem.  It is a general topological-algebraic layer that can be paired with any exact or approximate representation of nonzero complex values.
+
+\section{Implementation specification}
+A computational implementation should store
+\[
+(z,k),\qquad z\ne0,
+\]
+with a single locked principal-argument convention.  It should expose:
+\begin{verbatim}
+wrap_index(z, w)
+lifted_multiply((z, k), (w, l))
+lifted_inverse((z, k))
+lifted_power_integer((z, k), n)
+lifted_log((z, k))
+lifted_exp(value)
+lifted_power((z, k), exponent)
+\end{verbatim}
+The implementation must test the branch-cut boundary, especially negative real inputs, because $\Argp(-r)=\pi$ rather than $-\pi$ under the convention used here.
+
+\section{Claim status and open questions}
+The covering-group, cocycle, inverse, power, and logarithm results are established mathematical results in the explicit CNRS pair model.  They complete the multiplicative/logarithmic algebra of the branch-index layer.
+
+The following remain separate questions:
+\begin{enumerate}
+\item integration of the pair model with canonical CNRS-A representations;
+\item exact branch-aware addition under specified path data;
+\item analytic continuation of CNRS-H functions on the cover;
+\item extension to matrices, operators, or fields with zeros and singularities;
+\item physical interpretation of branch indices in Scale Space applications.
+\end{enumerate}
+
+\section*{Conclusion}
+The CNRS branch index is not merely an auxiliary label.  With the wrap cocycle it gives an exact coordinate model of the universal covering group of $\C^{\times}$.  On this cover, multiplication is globally well defined, the logarithm is single-valued and additive, and inversion and powers have exact branch-aware formulas.  This closes the core Layer-2 multiplication/logarithm problem while showing precisely why addition belongs to a different structure.
+
+\section*{References}
+\begin{enumerate}
+\item L. V. Ahlfors, \emph{Complex Analysis}, 3rd ed., McGraw--Hill, 1979.
+\item O. Forster, \emph{Lectures on Riemann Surfaces}, Springer, 1981.
+\item A. Hatcher, \emph{Algebraic Topology}, Cambridge University Press, 2002.
+\item A. E. Bashirov and S. Norozpour, ``Riemann surface of complex logarithm and multiplicative calculus,'' arXiv:1610.00133, 2016.
+\end{enumerate}
+
+\section*{AI assistance declaration}
+Artificial-intelligence tools were used to organize the derivation, check formulas, prepare computational verification, and draft the manuscript.  The author remains responsible for the mathematical claims, interpretation, and final text.
+
+\end{document}

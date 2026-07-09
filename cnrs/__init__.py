@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.10.0"
+__version__ = "0.11.0"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
@@ -404,6 +404,14 @@ from .cnrs_rd_scale_exit import (
     scan_scale_exit_ladder,
 )
 
+
+# ── Metric/topological completeness and hybrid CNRS-A/CNRS-H (v0.11.0) ──
+from .topology import (
+    first_difference, symbolic_distance, beta_adic_absolute, beta_adic_distance,
+    evaluate_finite_digits, first_difference_isometry, coefficientwise_distance,
+)
+from .hybrid import CoefficientCodec, HybridSeries, hybrid_from_values
+
 # ── CNRS rational values and scientific workflow reports (v0.9.0) ────────────
 from .rational_value import CnrsRationalValue, rational_value, rational_batch
 from .science.workflow import (
@@ -534,8 +542,33 @@ __all__ = [
     "ladder_diffusion_law", "scalelaw_diffusion_law", "scan_scale_exit_ladder",
     "ObservationPreservationReport", "sample_state", "preservation_metrics",
     "build_preservation_report", "compare_state_pair",
+    # ── Metric/topological completeness
+    "first_difference", "symbolic_distance", "beta_adic_absolute",
+    "beta_adic_distance", "evaluate_finite_digits",
+    "first_difference_isometry", "coefficientwise_distance",
+    # ── Hybrid CNRS-A/CNRS-H
+    "CoefficientCodec", "HybridSeries", "hybrid_from_values",
 ]
 
 # ── v0.6.0 native architecture façades ───────────────────────────────────────
 # These packages make the CNRS-native hierarchy explicit while preserving the
 # historical flat import paths used by earlier releases.
+
+# v0.11.0 Gaussian-rational theorem APIs
+from .gaussian_valuation import (
+    TerminationAnalysis, analyze_termination, denominator_ideal_generator,
+    gaussian_valuation, minimal_laurent_offset,
+)
+from .canonical_periodic import (
+    CanonicalPeriodicExpansion, canonicalize_periodic, primitive_period,
+)
+
+# ── Exact branch-index multiplication / lifted logarithm ─────────────────────
+from .branch_algebra import LiftedComplex, principal_arg, branch_wrap
+
+# ── Formal CNRS-H / Hurwitz-series coefficient algebra ───────────────────────
+from .formal_h_algebra import (
+    hurwitz_product, derivative as formal_h_derivative,
+    integral as formal_h_integral, multiplicative_inverse as formal_h_inverse,
+    exponential_eigenfunction,
+)

@@ -16,13 +16,21 @@ def test_integer_rational_value_collapses_to_cval():
     assert x.structured_report()["label"] == "seven"
 
 
-def test_base_power_denominator_has_terminating_fractional_expansion():
+def test_one_fifth_has_shifted_periodic_expansion():
     x = rational_value(1, 5)
+    assert x.status == DivisionStatus.SHIFTED_PERIODIC_TAIL
+    assert not x.is_finite
+    assert x.has_periodic_tail
+    assert abs(x.exact_value() - (0.2 + 0j)) < 1e-12
+    with pytest.raises(ValueError):
+        x.finite_cval()
+
+
+def test_conjugate_base_numerator_gives_terminating_fractional_expansion():
+    x = rational_value((-2, -1), 5)
     assert x.status == DivisionStatus.TERMINATING_BASE_POWER
     assert x.is_finite
     assert not x.has_periodic_tail
-    assert abs(x.exact_value() - (0.2 + 0j)) < 1e-12
-    # It terminates as a fractional/base-power expansion, not as a Gaussian-integer CVal.
     with pytest.raises(ValueError):
         x.finite_cval()
 
@@ -60,5 +68,5 @@ def test_rational_batch_constructs_values():
     assert [v.status for v in vals] == [
         DivisionStatus.GAUSSIAN_INTEGER,
         DivisionStatus.PERIODIC_COPRIME_DENOMINATOR,
-        DivisionStatus.TERMINATING_BASE_POWER,
+        DivisionStatus.SHIFTED_PERIODIC_TAIL,
     ]

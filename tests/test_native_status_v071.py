@@ -40,7 +40,7 @@ def test_native_status_exported_from_flat_package():
     import cnrs
     from cnrs import NativeStatus, get_component_status
 
-    assert cnrs.__version__ == "0.10.0"
+    assert cnrs.__version__ == "0.11.0"
     assert NativeStatus.NATIVE_CORE.value == "native_core"
     assert get_component_status("CNRS-H calculus").is_native
 

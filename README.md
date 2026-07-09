@@ -1,12 +1,35 @@
 # CNRS Scientific Toolkit
 
+## v0.11.0: Rational Expansion and Scientific Workflow Validation
+
+v0.11.0 is the first capability release after the v0.10.x stabilization line. It deepens exact validation of Gaussian-rational division across terminating, periodic, and Laurent-periodic classes, removes the former Laurent `power_offset` ambiguity in `CnrsRational.evaluate()`, and adds independent reference checks for the principal scientific workflows.
+
+### v0.11.0 validation baseline
+
+- `1167 passed`
+- `0 xfailed`
+- `0 unexpected failures`
+
+The release preserves the Toolkit's status as an **open research-code package**. Validation establishes that the implementation reproduces its stated arithmetic and workflow equations within documented domains; it does not establish the broader physical interpretation of Scale Space or CNRS.
+
+### Main v0.11.0 changes
+
+- exact `evaluate()` behavior for finite, periodic, and Laurent-periodic rational expansions;
+- new `partial_sum()` API for diagnostic formal sums;
+- randomized exact division/classification cross-validation;
+- Gaussian-rational eventual-periodicity theorem integration and numerator-aware Gaussian-factor termination classification;
+- equivalent-fraction invariance and sampled period-minimality checks;
+- independent ODE, scale-law, biological-profile, oscillator, and SciPy interoperability checks;
+- formal audit records in `docs/audits/`;
+- synchronized package, CLI, citation, claim-status, and test-status metadata.
+
 ## v0.10.3: Independent Validation and Metadata Synchronization
 
 v0.10.3 incorporates the July 7, 2026 independent audit into the permanent repository record. It adds an exact, independently written Gaussian-integer cross-validation harness, CI regression coverage, CNRS-H eigenfunction constructors, synchronized validation metadata, and normalized release text files. No new completeness claim is introduced.
 
 ### v0.10.3 validation baseline
 
-- Release validation: `1128 passed, 6 xfailed`.
+- Release validation: `1167 passed`.
 - Current main-branch status: use the GitHub Actions test workflow; the count may increase as tests are added.
 - Independent audit: 15/15 checks passed in the supplied Session 72 harness.
 
@@ -756,3 +779,52 @@ Core CNRS-A status:
 | e-base CNS theorem | Open research question |
 
 The Toolkit distinguishes mathematical results, constructive algorithms, computational verification, and experimental workflows.
+
+### Gaussian-rational theorem support
+
+v0.11.0 includes exact ideal/valuation analysis and canonical periodic normalization for Gaussian rationals in base `-2+i`:
+
+```python
+from cnrs import analyze_termination, CanonicalPeriodicExpansion
+
+a = analyze_termination((1, 0), (5, 0))
+assert not a.terminates
+
+c = CanonicalPeriodicExpansion.from_gaussian_fraction((1, 0), (5, 0))
+print(c)  # canonical shifted eventually-periodic form
+```
+
+The implementation supports arbitrary Gaussian denominators, not only ordinary integer denominators.
+
+
+### Branch-index and formal CNRS-H algebra
+
+The v0.11.0 release includes an exact universal-cover multiplication API (`LiftedComplex`) with branch-wrap correction and a single-valued lifted logarithm. It also includes a formal Hurwitz-series coefficient algebra for CNRS-H. These are algebraic/formal results; analytic convergence is a separate question.
+
+### Metric/topological completeness and hybrid representation
+
+v0.11.0 now distinguishes symbolic, `beta`-adic, Laurent, coefficientwise, and ordinary complex topologies. The natural prefix metric on right-infinite CNRS-A digit strings is the metric induced by the `beta=-2+i` valuation; the corresponding completion is the local valuation ring at `(beta)`, topologically isomorphic to `Z_5`. Allowing finite negative offsets gives the associated local field, topologically isomorphic to `Q_5`. This is not the ordinary complex topology.
+
+```python
+from cnrs import symbolic_distance, beta_adic_distance, first_difference_isometry
+
+assert first_difference_isometry((1, 2, 3), (1, 2, 4))
+```
+
+The hybrid CNRS-A/CNRS-H layer transports the Hurwitz-series differential algebra through a canonical coefficient codec:
+
+```python
+from fractions import Fraction
+from cnrs import CoefficientCodec, HybridSeries
+
+codec = CoefficientCodec(
+    encode=lambda x: (x.numerator, x.denominator),
+    decode=lambda p: Fraction(*p),
+    zero=Fraction(0),
+    one=Fraction(1),
+)
+f = HybridSeries.from_values([Fraction(1), Fraction(2), Fraction(3)], codec)
+df = f.derivative()
+```
+
+Formal coefficientwise completeness is distinct from analytic convergence of the associated EGF in the ordinary complex norm.

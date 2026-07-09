@@ -13,11 +13,12 @@ and classifies the existing exact rational expansion machinery in
   3. Eventually periodic persistent denominator.
   4. Shifted periodic tail when base-power factors and persistent factors mix.
 
-For ordinary integer denominators, powers of the complex base ``z0`` enter as
-powers of its norm ``N(z0)=5``.  The implementation therefore distinguishes
-pure powers of five from denominators that have a residual factor coprime to
-five.  The expansion itself is delegated to ``gaussian_rational_to_cnrs``,
-which stores finite, z0-adic periodic, and Laurent-periodic outputs.
+For ordinary integer denominators, powers of five split in the Gaussian
+integers as ``5 = z0 * conjugate(z0)``.  Termination therefore cannot be
+decided from the integer denominator alone: for a reduced denominator
+``5**s``, the numerator must also cancel the full ``conjugate(z0)**s`` factor.
+The expansion itself is delegated to ``gaussian_rational_to_cnrs``, which
+stores finite, z0-adic periodic, and Laurent-periodic outputs.
 """
 
 from __future__ import annotations
@@ -28,6 +29,8 @@ from math import gcd
 from typing import Optional
 
 from .cnrs_rational import CnrsRational, gaussian_rational_to_cnrs
+from .gaussian_valuation import TerminationAnalysis, analyze_termination as analyze_gaussian_termination
+from .canonical_periodic import CanonicalPeriodicExpansion
 
 
 class DivisionStatus(str, Enum):
@@ -157,13 +160,19 @@ def _as_gaussian_integer_parts(numerator: complex | int | tuple[int, int]) -> tu
     return int(round(z.real)), int(round(z.imag))
 
 
+def _reduce_fraction(A: int, B: int, q: int) -> tuple[int, int, int]:
+    """Reduce ``(A+Bi)/q`` by the common rational-integer gcd."""
+    g = gcd(gcd(abs(A), abs(B)), abs(q)) or 1
+    return A // g, B // g, abs(q) // g
+
+
 def _reduce_denominator(A: int, B: int, q: int) -> int:
-    g = gcd(gcd(abs(A), abs(B)), abs(q))
-    return abs(q) // (g if g else 1)
+    """Backward-compatible helper returning only the reduced denominator."""
+    return _reduce_fraction(A, B, q)[2]
 
 
 def _factor_five(q: int) -> tuple[int, int]:
-    """Return (v5(q), q_without_factors_of_5)."""
+    """Return ``(v5(q), q_without_factors_of_5)``."""
     q = abs(q)
     exponent = 0
     while q and q % 5 == 0:
@@ -172,14 +181,31 @@ def _factor_five(q: int) -> tuple[int, int]:
     return exponent, q
 
 
+def _divide_by_z0bar_power_exact(A: int, B: int, exponent: int) -> tuple[int, int] | None:
+    """Divide ``A+Bi`` by ``conjugate(z0)**exponent`` exactly, if possible.
+
+    Here ``z0=-2+i`` and ``conjugate(z0)=-2-i``.  Division by the conjugate
+    is multiplication by ``z0`` followed by division by 5.
+    """
+    for _ in range(exponent):
+        nre = -2 * A - B
+        nim = A - 2 * B
+        if nre % 5 != 0 or nim % 5 != 0:
+            return None
+        A, B = nre // 5, nim // 5
+    return A, B
+
+
 def classify_denominator(
     numerator: complex | int | tuple[int, int],
     denominator: int = 1,
 ) -> DenominatorClassification:
     """Classify the reduced integer denominator for a Gaussian rational.
 
-    This function is intentionally conservative and theory-facing: it classifies
-    the denominator structure before constructing any expansion.
+    This function is numerator-aware.  In ``Z[i]``, ``5=z0*conjugate(z0)``,
+    so a reduced integer denominator that is a power of five terminates only
+    if the numerator cancels the conjugate-base factor required by the exact
+    Gaussian-integer criterion.
     """
     if denominator == 0:
         raise ZeroDivisionError("denominator must be nonzero")
@@ -191,15 +217,17 @@ def classify_denominator(
             numerator = -complex(numerator)
 
     A, B = _as_gaussian_integer_parts(numerator)
-    q = _reduce_denominator(A, B, denominator)
+    reduced_A, reduced_B, q = _reduce_fraction(A, B, denominator)
     v5, persistent = _factor_five(q)
 
     if q == 1:
         status = DivisionStatus.GAUSSIAN_INTEGER
-    elif persistent == 1:
-        status = DivisionStatus.TERMINATING_BASE_POWER
     elif v5 == 0:
         status = DivisionStatus.PERIODIC_COPRIME_DENOMINATOR
+    elif persistent == 1 and _divide_by_z0bar_power_exact(reduced_A, reduced_B, v5) is not None:
+        # A reduced denominator 5**v5 terminates only when the numerator
+        # cancels conjugate(z0)**v5.  Example: 1/5 does not terminate.
+        status = DivisionStatus.TERMINATING_BASE_POWER
     else:
         status = DivisionStatus.SHIFTED_PERIODIC_TAIL
 
@@ -272,6 +300,34 @@ def division_summary(
     return data
 
 
+
+
+def analyze_termination(
+    numerator: complex | int | tuple[int, int],
+    denominator: int | tuple[int, int] = 1,
+) -> TerminationAnalysis:
+    """Apply the general denominator-ideal/valuation termination theorem.
+
+    Unlike :func:`classify_denominator`, this accepts an arbitrary Gaussian
+    denominator and reports the reduced denominator-ideal generator, beta
+    valuations, residual obstruction, and exact minimal Laurent offset.
+    """
+    p = _as_gaussian_integer_parts(numerator)
+    q = (int(denominator), 0) if isinstance(denominator, int) else (int(denominator[0]), int(denominator[1]))
+    return analyze_gaussian_termination(p, q)
+
+
+def canonical_expansion(
+    numerator: complex | int | tuple[int, int],
+    denominator: int | tuple[int, int] = 1,
+    *,
+    max_steps: int = 100000,
+) -> CanonicalPeriodicExpansion:
+    """Return the canonical finite/eventually-periodic Laurent expansion."""
+    p = _as_gaussian_integer_parts(numerator)
+    q = (int(denominator), 0) if isinstance(denominator, int) else (int(denominator[0]), int(denominator[1]))
+    return CanonicalPeriodicExpansion.from_gaussian_fraction(p, q, max_steps=max_steps)
+
 __all__ = [
     "DivisionStatus",
     "DenominatorClassification",
@@ -281,4 +337,6 @@ __all__ = [
     "terminating_expansion",
     "periodic_expansion",
     "division_summary",
+    "analyze_termination",
+    "canonical_expansion",
 ]

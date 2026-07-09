@@ -87,9 +87,11 @@ class CnrsRationalValue:
     def finite_cval(self) -> CVal:
         """Return a CVal only for Gaussian-integer finite CNRS-A values.
 
-        Terminating base-power denominators such as 1/5 are finite CNRS-A
-        expansions with negative powers, but they are not Gaussian integers and
-        therefore cannot be represented by the finite integer ``CVal`` wrapper.
+        Some Gaussian rationals terminate after a finite negative-power shift,
+        but they are not Gaussian integers and therefore cannot be represented
+        by the finite integer ``CVal`` wrapper.  In particular, ``1/5`` does not
+        terminate because ``5=z0*conjugate(z0)`` and its numerator does not
+        cancel the conjugate-base factor.
         """
         if self.status != DivisionStatus.GAUSSIAN_INTEGER:
             raise ValueError(

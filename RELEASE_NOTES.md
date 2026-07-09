@@ -1,40 +1,69 @@
-# v0.10.3 — Independent Validation and Metadata Synchronization
+# v0.11.0 — Rational Expansion and Scientific Workflow Validation
 
-## Summary
+**Release date:** 2026-07-08
 
-v0.10.3 incorporates the July 7, 2026 independent Toolkit audit into the repository. The release does not introduce a new completeness claim or alter the core CNRS-A arithmetic algorithms. It strengthens independent verification, metadata accuracy, API clarity, and release hygiene.
+This release advances the Toolkit from the v0.10.x verification line to a substantive validation release. It introduces no claim of full CNRS completeness.
 
-## Added
+## Division and rational expansion
 
-- `docs/audits/toolkit_audit_2026-07-07_v1.md`: permanent audit record.
-- `tools/toolkit_audit_crossval.py`: standalone exact cross-validation harness with nonzero exit status on failure.
-- `tests/test_independent_cross_validation_v0103.py`: deterministic independent arithmetic and CNRS-H regression checks.
-- `CnrsH.eigen_exponential(alpha, terms)` and `CnrsHNative.eigen_exponential(alpha, terms)` for the EGF eigenfunction with coefficients `alpha**n`.
-- `docs/STATUS_VOCABULARY_MAPPING.md`: mapping between Toolkit provenance labels and the five programme-level epistemic labels.
-- `.gitattributes`: normalized LF text files.
+- Corrected `CnrsRational.evaluate()` so its default returns the exact represented value for finite, periodic, and Laurent-periodic classes.
+- Added `CnrsRational.partial_sum(n_digits)` for diagnostic finite formal sums that respect `power_offset`.
+- Removed six expected-failure markers associated with the former Laurent-periodic evaluation limitation.
+- Added randomized exact reconstruction tests using `fractions.Fraction`.
+- Added reduced-denominator classification checks, equivalent-fraction invariance, sampled period-minimality checks, long-period validation, and invalid-input tests.
+- Integrated the Gaussian-rational eventual-periodicity theorem for base `z0=-2+i`.
+- Corrected integer-denominator classification using Gaussian factorization: `5=z0*conjugate(z0)`. In particular, `1/5` is shifted-periodic, not terminating; a denominator `5**s` terminates only when the numerator cancels `conjugate(z0)**s`.
+- Added `docs/theory/GAUSSIAN_RATIONAL_PERIODICITY_THEOREM_V1.md` and theorem-specific regression tests.
 
-## Changed
+## Scientific workflow audit
 
-- Synchronized README and test-status metadata with the independently observed baseline of `1126 passed, 6 xfailed` before the v0.10.3 test additions.
-- Reorganized `docs/CLAIM_STATUS.md` so the current release status appears before historical records.
-- Clarified that `CnrsH.exponential(d, terms)` represents `d*exp(rho)`, while `eigen_exponential(alpha, terms)` represents `exp(alpha*rho)`.
-- Normalized Python and documentation line endings to LF.
-- Added SymPy to the development dependency set for independent CNRS-H reference checks.
+- Cross-validated first- and second-order CNRS-H ODE solutions against closed forms.
+- Cross-validated exponential scale laws.
+- Rechecked biological diffusion profiles, steady state, Jacobian, and Turing prerequisites.
+- Cross-validated linear complex oscillator behavior.
+- Compared the interoperability workflow with closed-form and SciPy reference solutions.
+- Added `docs/audits/SCIENTIFIC_WORKFLOW_AUDIT_V011.md`.
 
-## Independent audit result
+## Validation
 
-- Core arithmetic reference checks: passed.
-- CNRS-H calculus and composition spot-checks: passed.
-- Contamination sweep for recently corrected/refuted claims: clean.
-- Six expected failures remain documented in `tests/test_evaluate_limitations.py`; they are limitation markers, not hidden regressions.
+- `1167 passed`
+- `0 xfailed`
+- `0 unexpected failures`
 
-## Validation policy
+Warnings remain intentional domain diagnostics when existing tests deliberately evaluate truncated EGF models outside their estimated reliable range.
 
-Release validation: `1128 passed, 6 xfailed`. Future main-branch status should be taken from CI rather than from a permanently hand-maintained count.
+## Claim boundary
 
-## Open research boundaries
+The release establishes implementation agreement with the equations represented in the Toolkit. It does not prove metric completeness, the e-base theorem, or the physical applicability of exploratory Scale Space and biological workflows.
 
-- Metric completeness remains open.
-- The e-base CNS theorem remains open.
-- General analytic closure remains open.
-- The research-layer scientific workflows require a separate per-module audit.
+## Final theorem-alignment additions
+
+The final v0.11.0 package now includes the full Gaussian denominator-ideal and valuation API and canonical periodic normalization:
+
+- arbitrary Gaussian numerator and denominator support;
+- exact Gaussian gcd, divisibility, unit normalization, and beta valuation;
+- intrinsic denominator-ideal generator;
+- exact termination analysis and minimal Laurent offset;
+- canonical eventually periodic Laurent expansion;
+- least-preperiod cycle detection and primitive-period normalization;
+- exact semantic equality and deterministic serialization;
+- theorem papers and independent verification script.
+
+The special `1/5` behavior is now a corollary of the general Gaussian-ideal implementation rather than a standalone special case.
+
+
+## Branch-index and formal CNRS-H theorem alignment
+
+- Added `LiftedComplex` with the exact branch-wrap cocycle for multiplication on the universal cover of `C*`.
+- Added a single-valued lifted logarithm satisfying an exact product law.
+- Added formal Hurwitz-series coefficient operations for CNRS-H and exact theorem tests for Leibniz, integration, inversion, and exponential eigenfunctions.
+- Included both theorem papers and independent verification scripts under `docs/theory/` and `docs/audits/scripts/`.
+
+## Metric/topological completeness and hybrid theorem integration
+
+- Added `cnrs.topology` with exact symbolic-prefix and beta-adic distance utilities, finite-digit evaluation, the first-difference isometry check, and CNRS-H coefficientwise product distance.
+- Recorded the theorem that right-infinite CNRS-A strings complete to the valuation ring at `beta=-2+i` (`Z_5` topologically), while finite Laurent shifts give the corresponding local field (`Q_5` topologically).
+- Explicitly separated beta-adic convergence from ordinary complex convergence.
+- Added `cnrs.hybrid` with `CoefficientCodec` and `HybridSeries`, transporting canonical CNRS-A coefficient representations into the CNRS-H Hurwitz-series carrier.
+- Added theorem-aligned tests for ultrametricity, first-difference isometry, coefficientwise convergence, Hurwitz-product transport, Leibniz, integration, exponential eigenfunctions, and deterministic serialization.
+- Included both theorem papers and independent verification scripts under `docs/theory/` and `docs/audits/scripts/`.

@@ -1,0 +1,471 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\Zi}{\mathbb{Z}[i]}
+\newcommand{\Qi}{\mathbb{Q}(i)}
+\newcommand{\Ffive}{\mathbb{F}_5}
+\newcommand{\Norm}{\operatorname{N}}
+\newcommand{\val}{\operatorname{val}}
+\newcommand{\pre}{\operatorname{pre}}
+\newcommand{\per}{\operatorname{per}}
+\newcommand{\Can}{\operatorname{Can}}
+\newcommand{\Value}{\operatorname{Val}}
+
+\title{Canonical Periodic Normalization for Gaussian-Rational Expansions\\
+in Base $-2+i$}
+\author{Donald G. Palmer}
+\date{July 2026\\Working Paper v1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\beta=-2+i$ and $D=\{0,1,2,3,4\}$.  Every Gaussian rational admits an eventually periodic Laurent expansion in base $\beta$, but the same periodic digit stream can be presented noncanonically by adding leading zero positions, moving complete cycles into the prefix, or repeating a period block several times.  This paper defines and proves a canonical normalization theorem.  The normalization has four intrinsic components: the minimal Laurent offset determined by the $\beta$-valuation, the unique $\beta$-adic digit stream determined by successive residue selection modulo $(\beta)$, the least preperiod, and the primitive period beginning at the first cyclic state.  The resulting normal form is value-preserving, idempotent, and complete: two admissible eventually periodic Laurent strings represent the same element of $\mathbb Q(i)$ if and only if their canonical normal forms agree.  A nontrivial periodic zero tail is impossible in the canonical digit system, so there is no analogue of the real-radix ambiguity $0.999\ldots=1$ in the positive-power $\beta$-adic orientation.  A constructive exact algorithm is given, together with implications for the CNRS Scientific Toolkit.
+\end{abstract}
+
+\section{Introduction}
+
+The CNRS arithmetic layer uses
+\[
+\beta=-2+i,
+\qquad
+D=\{0,1,2,3,4\},
+\qquad
+\Norm(\beta)=5.
+\]
+The pair $(\beta,D)$ is a canonical number system for $\Zi$.  The rational extension produces finite, periodic, and shifted-periodic digit strings.  Existence of eventual periodicity is not by itself enough for a canonical numeral system: an eventually periodic stream can be displayed in many syntactic forms.  For example, a period block can be duplicated,
+\[
+\overline{c_0\cdots c_{T-1}}
+=
+\overline{c_0\cdots c_{T-1}c_0\cdots c_{T-1}},
+\]
+and one or more full periods can be moved from the repeating block into the prefix without changing the infinite stream.
+
+The aim of this paper is to distinguish the unique mathematical digit stream from its nonunique finite descriptions and to select a canonical finite record.  The normal form will consist of
+\[
+(\ell;\,a_0,\ldots,a_{\mu-1};\,c_0,\ldots,c_{T-1}),
+\]
+where $\ell$ is the minimal Laurent offset, $\mu$ is the least preperiod, and $T$ is the primitive period length.  A terminating value is recorded separately, with no artificial repeating zero block.
+
+The principal result is
+\[
+\boxed{
+\Value(R_1)=\Value(R_2)
+\iff
+\Can(R_1)=\Can(R_2)
+}
+\]
+for admissible eventually periodic Laurent representations.  Thus canonical normalization gives a decision procedure for equality at the representation level.
+
+\section{Algebraic and $\beta$-adic setting}
+
+\subsection{Residues modulo the base}
+
+Since
+\[
+\Zi/(\beta)\cong\Ffive,
+\]
+the digits $D$ form a complete residue system modulo $(\beta)$.  If $w=A+Bi$, then $i\equiv2\pmod\beta$, so reduction is given by
+\[
+\rho(w)=A+2B\pmod5.
+\]
+For every $w\in\Zi$ there is a unique $d\in D$ such that
+\[
+w\equiv d\pmod\beta.
+\]
+
+\subsection{Admissible Laurent streams}
+
+\begin{definition}[Laurent digit stream]
+A Laurent digit stream of offset $\ell\in\mathbb Z$ is a sequence $(d_n)_{n\ge0}$ with $d_n\in D$, formally written
+\[
+\sum_{n\ge0}d_n\beta^{\ell+n}.
+\]
+It is \emph{eventually periodic} if there exist $\mu\ge0$ and $T\ge1$ such that
+\[
+d_{n+T}=d_n\qquad(n\ge\mu).
+\]
+\end{definition}
+
+\begin{definition}[Algebraic value of an eventually periodic stream]
+For prefix $a_0,\ldots,a_{\mu-1}$ and period $c_0,\ldots,c_{T-1}$, define
+\begin{align*}
+\Value(\ell;a;c)
+&=
+\sum_{j=0}^{\mu-1}a_j\beta^{\ell+j}
++
+\frac{\sum_{j=0}^{T-1}c_j\beta^{\ell+\mu+j}}
+{1-\beta^T}.
+\end{align*}
+This belongs to $\Qi$ because $1-\beta^T\ne0$.
+\end{definition}
+
+The same expression is also valid in the completion of $\Qi$ at the prime $(\beta)$, where $|\beta|_{\beta}<1$.  The ordinary complex modulus is not the convergence topology for the infinite positive-power tail.
+
+\begin{definition}[Admissibility]
+An eventually periodic Laurent stream represents $x\in\Qi$ \emph{admissibly} if, after multiplying by $\beta^{-\ell}$, its digits are the successive canonical residues of the resulting $\beta$-integral value.  Equivalently, for every $m\ge1$,
+\[
+\beta^{-\ell}x\equiv\sum_{n=0}^{m-1}d_n\beta^n\pmod{\beta^m}
+\]
+in the localization at $(\beta)$.
+\end{definition}
+
+This condition excludes arbitrary periodic expressions that have the same complex closed form but do not give the canonical residue sequence.
+
+\section{Minimal Laurent offset}
+
+Let $v_\beta$ be the normalized valuation associated with the Gaussian prime $\beta$.
+
+\begin{definition}[Intrinsic offset]
+For $x\in\Qi^\times$, define
+\[
+\ell(x)=\min\{0,v_\beta(x)\},
+\qquad
+\nu(x)=-\ell(x)=\max\{0,-v_\beta(x)\}.
+\]
+For $x=0$, set $\ell(0)=0$.
+\end{definition}
+
+Thus $y=\beta^{-\ell(x)}x$ is integral at $(\beta)$ and $\ell(x)$ is the largest possible starting exponent after removal of redundant lowest-place zeros.
+
+\begin{theorem}[Minimal-offset theorem]
+Every admissible Laurent expansion of $x$ has offset at most $\ell(x)$.  There is a unique admissible digit stream beginning at offset $\ell(x)$.  Hence $\ell(x)$ is the canonical Laurent offset.
+\end{theorem}
+
+\begin{proof}
+If an expansion begins at exponent $r$, then $\beta^{-r}x$ is integral at $(\beta)$, so $v_\beta(x)-r\ge0$ and $r\le v_\beta(x)$.  Since offsets larger than $0$ are absorbed into leading zero digits in the standard representation convention, $r\le\min\{0,v_\beta(x)\}=\ell(x)$.
+
+For $r=\ell(x)$, the value $y=\beta^{-r}x$ is $\beta$-integral.  At each place the complete residue system $D$ supplies exactly one digit congruent to the current state modulo $(\beta)$.  Successive division by $\beta$ therefore gives a unique digit stream.
+\end{proof}
+
+\section{The deterministic state recurrence}
+
+Write the $\beta$-integral value $y=\beta^{-\ell(x)}x$ as
+\[
+y=\frac{P}{Q},
+\qquad P,Q\in\Zi,
+\qquad \gcd(P,Q)=1,
+\qquad \beta\nmid Q.
+\]
+Set $N_0=P$.  Because $Q$ is invertible modulo $(\beta)$, choose the unique $d_n\in D$ satisfying
+\[
+N_n\equiv d_nQ\pmod\beta.
+\]
+Then define
+\[
+N_{n+1}=\frac{N_n-d_nQ}{\beta}.
+\]
+The identity
+\[
+\frac{N_n}{Q}=d_n+\beta\frac{N_{n+1}}{Q}
+\]
+shows that the digits are the expansion digits of $y$.
+
+\begin{lemma}[Determinism]
+For fixed reduced $(P,Q)$ with $\beta\nmid Q$, the state $N_n$ uniquely determines both $d_n$ and $N_{n+1}$.
+\end{lemma}
+
+\begin{lemma}[Finite eventual state set]
+The orbit $(N_n)$ is bounded and therefore eventually periodic.
+\end{lemma}
+
+\begin{proof}
+Since $0\le d_n\le4$,
+\[
+|N_{n+1}|
+\le
+\frac{|N_n|+4|Q|}{\sqrt5}.
+\]
+Outside a sufficiently large disk the norm strictly decreases.  A bounded subset of $\Zi$ is finite, so a state repeats.
+\end{proof}
+
+\section{Least preperiod and primitive period}
+
+\begin{definition}[Entry time and cycle length]
+For the deterministic orbit $(N_n)$, define
+\[
+\mu=\min\{r\ge0:\exists T\ge1,\ N_{r+T}=N_r\},
+\]
+and then
+\[
+T=\min\{t\ge1:N_{\mu+t}=N_\mu\}.
+\]
+The digits $d_0,\ldots,d_{\mu-1}$ form the \emph{least prefix}; the digits $d_\mu,\ldots,d_{\mu+T-1}$ form the \emph{canonical period block}.
+\end{definition}
+
+\begin{proposition}[Primitive cycle]
+The canonical period block is primitive: it is not a proper power of a shorter digit word.
+\end{proposition}
+
+\begin{proof}
+If its digit word had a smaller period $t<T$, determinism would imply $N_{\mu+t}=N_\mu$, contradicting the minimality of $T$.
+\end{proof}
+
+\begin{proposition}[Fixed cycle phase]
+The phase of the canonical period is intrinsic.  It is the digit emitted by the first cyclic state $N_\mu$ and cannot be replaced by a nontrivial cyclic rotation without changing the prefix or the starting value.
+\end{proposition}
+
+\begin{proof}
+A cyclic rotation corresponds to beginning the cycle at a different state $N_{\mu+j}$.  The orbit from $N_0$ first reaches the cycle at $N_\mu$, so the state and emitted digit at that entry point fix the phase.
+\end{proof}
+
+\section{Uniqueness of the infinite digit stream}
+
+\begin{theorem}[$\beta$-adic digit uniqueness]
+Let $(d_n)$ and $(e_n)$ be digit streams in $D$ beginning at the same offset and representing the same element in the $(\beta)$-adic completion.  Then $d_n=e_n$ for every $n$.
+\end{theorem}
+
+\begin{proof}
+If the streams differ, let $k$ be the first differing position.  Their difference has the form
+\[
+\beta^{\ell+k}\left((d_k-e_k)+\beta u\right).
+\]
+Because $d_k$ and $e_k$ are distinct representatives of residues modulo $(\beta)$, $d_k-e_k\not\equiv0\pmod\beta$.  The parenthesized factor is therefore a $\beta$-adic unit, so the difference is nonzero, a contradiction.
+\end{proof}
+
+\begin{corollary}[No nontrivial periodic zero tail]
+No nonzero eventually periodic digit stream over $D$ represents zero in the admissible $\beta$-adic orientation.
+\end{corollary}
+
+\begin{remark}
+Consequently there is no analogue of $0.999\ldots=1$ within this orientation and digit convention.  The familiar real-radix ambiguity is an Archimedean negative-power phenomenon; the CNRS rational tail considered here is a positive-power expansion in the $(\beta)$-adic topology.
+\end{remark}
+
+\section{Canonical normalization theorem}
+
+\begin{definition}[Canonical periodic normal form]
+For $x\in\Qi$, its canonical normal form $\Can(x)$ is defined as follows.
+\begin{enumerate}[label=(\roman*)]
+\item Compute the intrinsic offset $\ell(x)$.
+\item Set $y=\beta^{-\ell(x)}x$ and reduce $y=P/Q$ in $\Zi$ with $\beta\nmid Q$.
+\item Generate the unique residue digits and states.
+\item If a zero state occurs, return the finite digit word with no period field.
+\item Otherwise return the least prefix followed by the primitive period beginning at the first cyclic state.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Canonical periodic normalization]
+The map $\Can$ has the following properties.
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{Existence:} every $x\in\Qi$ has a canonical finite or eventually periodic Laurent normal form;
+\item \textbf{value preservation:} $\Value(\Can(x))=x$;
+\item \textbf{idempotence:} $\Can(\Value(\Can(x)))=\Can(x)$;
+\item \textbf{uniqueness:} no two distinct canonical normal forms have the same value;
+\item \textbf{completeness:} for any admissible representations $R_1,R_2$,
+\[
+\Value(R_1)=\Value(R_2)
+\iff
+\Can(\Value(R_1))=\Can(\Value(R_2)).
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Existence follows from Gaussian-rational eventual periodicity and the minimal-offset theorem.  Value preservation follows from iterating the recurrence and applying the periodic-tail identity at the repeated state.  Idempotence follows because the reconstructed value has the same intrinsic valuation and deterministic state orbit.  For uniqueness, equal values have the same intrinsic offset and, after shifting, the same unique $\beta$-adic digit stream.  The least preperiod and least cycle length of a fixed eventually periodic stream are unique.  Completeness is the combination of value preservation and uniqueness.
+\end{proof}
+
+\section{Normalization of noncanonical descriptions}
+
+A finite description may be noncanonical in several ways:
+\begin{enumerate}
+\item the offset is lower than necessary and begins with zero digits;
+\item the displayed prefix contains one or more complete copies of the eventual cycle;
+\item the displayed period is a nonprimitive repetition of a shorter block;
+\item a terminating expansion is displayed with a repeating zero tail;
+\item numerator and denominator are not reduced in $\Zi$.
+\end{enumerate}
+
+The safest normalization algorithm does not attempt local string rewriting.  It evaluates the input exactly in $\Qi$ and re-expands deterministically.
+
+\begin{theorem}[Exact re-expansion normalizer]
+Let $R=(\ell;a;c)$ be any admissible eventually periodic Laurent description.  Compute
+\[
+x=
+\sum_{j=0}^{\mu-1}a_j\beta^{\ell+j}
++
+\frac{\sum_{j=0}^{T-1}c_j\beta^{\ell+\mu+j}}
+{1-\beta^T}
+\]
+exactly in $\Qi$.  Then the five-step construction of $\Can(x)$ removes every redundancy listed above and returns the unique canonical form.
+\end{theorem}
+
+\section{Algorithm}
+
+\subsection{Canonical expansion from a Gaussian rational}
+
+\begin{enumerate}
+\item Reduce $x=P/Q$ in $\Zi$.
+\item Compute $\ell=\min(0,v_\beta(P)-v_\beta(Q))$.
+\item Replace $x$ by $y=\beta^{-\ell}x$ and reduce again, obtaining $P_0/Q_0$ with $\beta\nmid Q_0$.
+\item Initialize $N=P_0$, an empty digit list, and a map from states to indices.
+\item If $N=0$, return a finite expansion.
+\item If $N$ has been seen at index $r$, return prefix digits before $r$ and period digits from $r$ onward.
+\item Record the current index for $N$.
+\item Choose the unique $d\in D$ satisfying $N\equiv dQ_0\pmod\beta$.
+\item Append $d$ and replace $N\leftarrow(N-dQ_0)/\beta$.
+\item Repeat from step 5.
+\end{enumerate}
+
+Because the first repeated state is used, the returned preperiod is least and the returned period is primitive.
+
+\subsection{Canonicalization of an existing periodic object}
+
+\begin{enumerate}
+\item Convert the prefix and period blocks to exact Gaussian integers.
+\item Construct the exact Gaussian rational using denominator $1-\beta^T$ and the power offset.
+\item Reduce the rational in $\Zi$.
+\item Apply the canonical-expansion algorithm above.
+\end{enumerate}
+
+This route is robust even when the supplied block is repeated many times or when the prefix has been extended by whole cycles.
+
+\section{Examples}
+
+\begin{example}[Duplicated period]
+If a canonical period is $(c_0,c_1,c_2)$, then the displayed block
+\[
+(c_0,c_1,c_2,c_0,c_1,c_2)
+\]
+has the same value but is not primitive.  Exact re-expansion detects the first repeated state after three steps and restores the length-three period.
+\end{example}
+
+\begin{example}[Cycle copied into the prefix]
+The descriptions
+\[
+(a_0,\ldots,a_{\mu-1};\overline{c_0,\ldots,c_{T-1}})
+\]
+and
+\[
+(a_0,\ldots,a_{\mu-1},c_0,\ldots,c_{T-1};
+\overline{c_0,\ldots,c_{T-1}})
+\]
+generate the same infinite stream.  The first cyclic state occurs at index $\mu$, so normalization removes the copied cycle from the prefix.
+\end{example}
+
+\begin{example}[Redundant Laurent place]
+If a description begins at $\ell-1$ with digit $0$, its numerical value is unchanged.  The valuation formula restores the larger canonical offset $\ell$.
+\end{example}
+
+\begin{example}[Terminating value]
+A finite Laurent value may be written with a tail $\overline{0}$.  The deterministic recurrence reaches the zero state, and the canonical form records termination rather than a period-one zero cycle.
+\end{example}
+
+\section{Toolkit consequences}
+
+The theorem suggests a dedicated normalization layer for the CNRS Scientific Toolkit.
+
+\subsection{Recommended public API}
+
+\begin{verbatim}
+canonicalize_rational(value) -> CanonicalCnrsRational
+canonicalize_periodic(prefix, period, power_offset) -> CanonicalCnrsRational
+is_canonical_periodic(value) -> bool
+\end{verbatim}
+
+A canonical object should expose
+\begin{verbatim}
+power_offset
+prefix_digits
+period_digits      # None for terminating values
+preperiod_length
+period_length
+is_terminating
+\end{verbatim}
+
+\subsection{Required invariants}
+
+The implementation should enforce:
+\begin{enumerate}
+\item no leading zero at the lowest represented power unless the entire value is zero;
+\item no repeated-zero period for a terminating value;
+\item first repeated state determines the period start;
+\item the period block is primitive;
+\item exact value round-trip;
+\item normalization idempotence;
+\item equality by canonical form agrees with exact Gaussian-rational equality.
+\end{enumerate}
+
+\subsection{Suggested tests}
+
+Property tests should generate random Gaussian rationals and verify:
+\[
+\Value(\Can(x))=x,
+\qquad
+\Can(\Value(\Can(x)))=\Can(x).
+\]
+They should also produce deliberately noncanonical descriptions by duplicating periods, copying cycles into prefixes, lowering offsets with zero digits, and multiplying numerator and denominator by common Gaussian factors.  All should normalize to the same object.
+
+\section{Scope and status}
+
+The results are established within the following setting:
+\begin{itemize}
+\item base $\beta=-2+i$;
+\item digit set $D=\{0,1,2,3,4\}$ as the complete residue system modulo $(\beta)$;
+\item admissible positive-power $\beta$-adic tails, with a finite Laurent offset;
+\item exact algebraic evaluation of eventually periodic tails in $\Qi$.
+\end{itemize}
+
+The paper does not claim ordinary complex convergence of the positive-power infinite series.  It also does not yet provide a closed formula for the minimal period length.  That period-length problem is controlled by the finite state orbit and is the next natural arithmetic question.
+
+\section{Conclusion}
+
+Gaussian-rational eventual periodicity gives existence, but canonical normalization requires three additional choices: the intrinsic Laurent offset, the first cyclic state, and the primitive cycle.  All three are forced by valuation and deterministic residue arithmetic.  The resulting normalization is not merely a formatting convention.  It is a complete invariant of admissible eventually periodic CNRS rational representations:
+\[
+\boxed{
+\Value(R_1)=\Value(R_2)
+\iff
+\Can(R_1)=\Can(R_2).
+}
+\]
+This closes the canonical-representation problem for the Gaussian-rational periodic layer, subject to the stated $\beta$-adic interpretation, and supplies a precise specification for a future Toolkit normalization API.
+
+\section*{AI assistance declaration}
+During preparation of this working paper, the author used AI assistance to explore the state-recurrence proof, formulate the normalization map, test edge cases, and prepare the manuscript.  The author remains responsible for the mathematical claims and scientific judgement.
+
+\begin{thebibliography}{9}
+
+\bibitem{KataiSzabo1975}
+I.~K\'atai and J.~Szab\'o,
+``Canonical number systems for complex integers,''
+\emph{Acta Scientiarum Mathematicarum}, vol.~37, pp.~255--260, 1975.
+
+\bibitem{Gilbert1984}
+W.~J.~Gilbert,
+``Arithmetic in complex bases,''
+\emph{Mathematics Magazine}, vol.~57, no.~2, pp.~77--81, 1984.
+
+\bibitem{Scheicher2014}
+K.~Scheicher, V.~F.~Sirvent, and P.~Surer,
+``Beta-expansions of $p$-adic numbers,''
+preprint, arXiv:1401.7530, 2014.
+
+\bibitem{Belhadef2023}
+R.~Belhadef and H.-A.~Esbelin,
+``Periodicity of $p$-adic expansion of rational number,''
+preprint, arXiv:2310.14869, 2023.
+
+\bibitem{PalmerTermination2026}
+D.~G.~Palmer,
+``Termination of Gaussian-rational expansions in base $-2+i$: denominator ideals, valuations, and minimal Laurent offset,''
+working paper, 2026.
+
+\end{thebibliography}
+
+\end{document}

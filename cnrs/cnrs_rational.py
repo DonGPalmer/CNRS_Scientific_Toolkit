@@ -340,16 +340,39 @@ class CnrsRational:
     # Evaluation
     # ------------------------------------------------------------------
 
-    def evaluate(self, n_frac: Optional[int] = None) -> complex:
-        """
-        Evaluate as a complex number.
+    def partial_sum(self, n_digits: Optional[int] = None) -> complex:
+        """Return the finite formal partial sum of the stored expansion.
 
-        For finite values (case 1): exact (uses cnrs_to_gaussian on the string).
-        For z0-adic values (cases 2-3): partial sum only; use z0_adic_value()
-        for the exact rational closed form.
+        For finite case-1 values this is the ordinary finite CNRS value.  For
+        periodic and Laurent-periodic z0-adic values this is *not* an
+        approximation converging in the ordinary complex norm, because
+        ``abs(z0) > 1``.  It is provided for diagnostics and respects
+        ``power_offset`` exactly.
         """
-        n = n_frac if n_frac is not None else len(self.frac_digits)
-        return cnrs_to_gaussian(self.to_str(max_frac=n))
+        n = len(self.frac_digits) if n_digits is None else max(0, int(n_digits))
+        if not self.is_z0_adic:
+            return cnrs_to_gaussian(self.to_str(max_frac=n))
+        return sum(
+            d * Z0 ** (self.power_offset + k)
+            for k, d in enumerate(self.frac_digits[:n])
+        )
+
+    def evaluate(self, n_frac: Optional[int] = None) -> complex:
+        """Evaluate the represented value as a Python ``complex``.
+
+        - Finite case-1 values are evaluated directly from their CNRS string.
+        - Periodic and Laurent-periodic z0-adic values are evaluated from the
+          exact rational closed form, including ``power_offset``.
+        - Passing ``n_frac`` requests a diagnostic finite partial sum; for
+          z0-adic values this does not imply convergence in the ordinary
+          complex norm.  Prefer :meth:`partial_sum` when that intent matters.
+
+        This v0.11.0 behavior removes the former Laurent-periodic ambiguity in
+        which ``evaluate()`` ignored ``power_offset``.
+        """
+        if self.is_z0_adic and n_frac is None:
+            return self.z0_adic_value_exact()
+        return self.partial_sum(n_frac)
 
     def exact_value(self) -> complex:
         """The exact complex value (A+Bi)/q as a Python complex."""

@@ -1,0 +1,394 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array,enumitem,hyperref,microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\F}{\mathbb F}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Zi}{\Z[i]}
+\newcommand{\Qi}{\Q(i)}
+\newcommand{\betaCN}{\beta}
+\newcommand{\Db}{\mathcal D}
+\newcommand{\Ob}{\mathcal O_\beta}
+\newcommand{\Kb}{K_\beta}
+\newcommand{\Hs}{\mathcal H}
+
+\title{\textbf{Metric and Topological Completeness in the CNRS Architecture}\\
+\large Symbolic, \texorpdfstring{$(-2+i)$}{(-2+i)}-Adic, Laurent, and CNRS-H Completions}
+\author{Donald G. Palmer}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The phrase ``metric completeness of CNRS'' is ambiguous unless the relevant representation space, metric, and value map are specified.  We separate four structures: the symbolic prefix space of digit strings, the $\beta$-adic completion for $\beta=-2+i$, the Laurent extension allowing finitely many negative powers, and the coefficientwise topology of CNRS-H Hurwitz series.  We prove that the full right-infinite digit space $\Db^{\N}$, $\Db=\{0,1,2,3,4\}$, is a compact complete ultrametric space; that its value map is an isometric homeomorphism onto the valuation ring $\Ob$ of the $\beta$-adic completion of $\Qi$; and that the finite-Laurent union is naturally the complete local field $\Kb$.  Since $5=\beta\overline\beta$ splits in $\Zi$, $\Kb\cong\Q_5$ and $\Ob\cong\Z_5$ as topological fields and rings, respectively.  Consequently, the $\beta$-adic completion is not and cannot be topologically isomorphic to the ordinary complex plane.  We also prove coefficientwise completeness for CNRS-H over any complete coefficient ring, while separating that formal result from analytic convergence of exponential generating functions.  These results resolve the metric-completeness question for the natural CNRS-A topology and replace an over-strong ``completion equals $\C$'' target by the correct local-completion statement.
+\end{abstract}
+
+\section{Introduction}
+
+CNRS uses the Gaussian base
+\[
+\beta=-2+i,\qquad N(\beta)=5,
+\]
+with digit alphabet
+\[
+\Db=\{0,1,2,3,4\}.
+\]
+Earlier CNRS work established finite Gaussian-integer representation, arithmetic algorithms, eventual periodicity for Gaussian rationals, a denominator-ideal termination criterion, and canonical periodic normalization.  The remaining completeness question was often phrased as whether the $(-2+i)$-adic completion of CNRS digit strings is isomorphic to $\C$.  That formulation conflates two incompatible topologies.
+
+The ordinary modulus on $\C$ is Archimedean.  The $\beta$-adic absolute value is non-Archimedean.  The resulting spaces differ in connectedness, compactness, and convergence.  The correct task is therefore not to force one completion to equal the other, but to identify each completion precisely and state which CNRS layer it governs.
+
+\section{The \texorpdfstring{$\beta$}{beta}-Adic Valuation}
+
+Let $K=\Qi$ and let $\beta=-2+i$.  Since $\beta$ is a Gaussian prime of norm $5$, every nonzero $x\in K$ has a unique valuation
+\[
+v_\beta(x)\in\Z
+\]
+defined by the exponent of $\beta$ in its Gaussian-prime factorization.  Set $v_\beta(0)=+\infty$.
+
+\begin{definition}
+The normalized $\beta$-adic absolute value and metric are
+\[
+|x|_\beta=5^{-v_\beta(x)},\qquad
+d_\beta(x,y)=|x-y|_\beta.
+\]
+\end{definition}
+
+\begin{proposition}
+The metric $d_\beta$ is an ultrametric:
+\[
+d_\beta(x,z)\le \max\{d_\beta(x,y),d_\beta(y,z)\}.
+\]
+\end{proposition}
+
+\begin{proof}
+The valuation satisfies
+\[
+v_\beta(a+b)\ge \min\{v_\beta(a),v_\beta(b)\}.
+\]
+Apply this to $x-z=(x-y)+(y-z)$ and exponentiate with base $5^{-1}$.
+\end{proof}
+
+Let $\Kb$ denote the completion of $K$ under $d_\beta$, and let
+\[
+\Ob=\{x\in\Kb:|x|_\beta\le1\}
+\]
+be its valuation ring.
+
+\begin{theorem}[Local identification]
+There are topological isomorphisms
+\[
+\Kb\cong\Q_5,\qquad \Ob\cong\Z_5.
+\]
+\end{theorem}
+
+\begin{proof}
+The rational prime $5$ splits in $\Zi$:
+\[
+5=\beta\overline\beta.
+\]
+The prime ideal $(\beta)$ has residue field
+\[
+\Zi/(\beta)\cong\F_5,
+\]
+so its residue degree and ramification index over $5$ are both $1$.  The completion of $K=\Q(i)$ at $(\beta)$ is therefore the degree-one extension of $\Q_5$, hence $\Q_5$.  Its valuation ring is correspondingly $\Z_5$.
+\end{proof}
+
+\section{Symbolic Digit Space}
+
+Let
+\[
+\Sigma=\Db^\N
+\]
+be the space of right-infinite digit strings $a=(a_0,a_1,\ldots)$.
+
+For distinct $a,b\in\Sigma$, define
+\[
+n(a,b)=\min\{n\ge0:a_n\ne b_n\},
+\]
+and put
+\[
+d_{\rm sym}(a,b)=5^{-n(a,b)},\qquad d_{\rm sym}(a,a)=0.
+\]
+
+\begin{theorem}[Symbolic completeness]
+$(\Sigma,d_{\rm sym})$ is a compact, complete ultrametric space.
+\end{theorem}
+
+\begin{proof}
+The ultrametric inequality follows because agreement of $a$ and $b$ through place $r-1$, and of $b$ and $c$ through place $r-1$, implies agreement of $a$ and $c$ through place $r-1$.
+
+Let $(a^{(m)})$ be Cauchy.  For each fixed $r$, there is $M_r$ such that all strings $a^{(m)}$ with $m\ge M_r$ agree in their first $r$ digits.  Define $a_r$ to be the eventually constant $r$th digit.  The resulting string $a\in\Sigma$ satisfies $a^{(m)}\to a$.  Thus $\Sigma$ is complete.
+
+Compactness follows either from a diagonal subsequence argument or from the fact that $\Sigma$ is a product of finite discrete compact spaces.
+\end{proof}
+
+\section{The Digit Value Map}
+
+Define the $\beta$-adic value map
+\[
+V_\beta:\Sigma\to\Ob,\qquad
+V_\beta(a)=\sum_{n=0}^\infty a_n\beta^n.
+\]
+The series converges in $\Kb$ because $|\beta^n|_\beta=5^{-n}\to0$.
+
+\begin{lemma}[First differing digit]
+If $a,b\in\Sigma$ first differ at position $r$, then
+\[
+v_\beta\!\left(V_\beta(a)-V_\beta(b)\right)=r.
+\]
+\end{lemma}
+
+\begin{proof}
+Factor
+\[
+V_\beta(a)-V_\beta(b)
+=\beta^r\left((a_r-b_r)+\beta u\right)
+\]
+for some $u\in\Ob$.  Since $a_r-b_r\in\{-4,\ldots,4\}\setminus\{0\}$, it is not divisible by $\beta$: indeed $(\beta)\cap\Z=(5)$, and no such nonzero difference is divisible by $5$.  The parenthesized factor is therefore a $\beta$-adic unit.
+\end{proof}
+
+\begin{theorem}[Isometric representation theorem]
+The value map
+\[
+V_\beta:(\Sigma,d_{\rm sym})\longrightarrow(\Ob,d_\beta)
+\]
+is an isometric homeomorphism.  In particular,
+\[
+d_\beta(V_\beta(a),V_\beta(b))=d_{\rm sym}(a,b).
+\]
+\end{theorem}
+
+\begin{proof}
+The lemma gives isometry and injectivity.  For surjectivity, let $x\in\Ob$.  Choose the unique digit $a_0\in\Db$ representing $x$ modulo $(\beta)$, then set
+\[
+x_1=\frac{x-a_0}{\beta}\in\Ob.
+\]
+Repeat:
+\[
+a_n\equiv x_n\pmod{\beta},\qquad
+x_{n+1}=\frac{x_n-a_n}{\beta}.
+\]
+This produces $x=\sum_{n\ge0}a_n\beta^n$.  Uniqueness follows from injectivity.  An isometry is continuous, and a bijective isometry has continuous inverse.
+\end{proof}
+
+\begin{corollary}[Metric completeness of CNRS-A strings]
+The natural right-infinite CNRS-A digit space is complete, and its completion is exactly the $\beta$-adic valuation ring $\Ob\cong\Z_5$.
+\end{corollary}
+
+This answers the natural metric-completeness question affirmatively, but the target is a local non-Archimedean ring, not the ordinary complex plane.
+
+\section{Laurent Extension}
+
+Define
+\[
+\Sigma_{\rm Laur}
+=
+\bigcup_{m\ge0}\beta^{-m}\Sigma,
+\]
+where two presentations are identified when they have the same $\beta$-adic value.
+
+\begin{theorem}[Laurent completion]
+The value map extends to an isometric identification
+\[
+\Sigma_{\rm Laur}\cong\Kb\cong\Q_5.
+\]
+Thus the finite-negative-offset CNRS-A completion is a complete non-Archimedean local field.
+\end{theorem}
+
+\begin{proof}
+Every nonzero $x\in\Kb$ has finite valuation $v_\beta(x)=-m$ for some integer $m$ after multiplying by a suitable power of $\beta$.  Hence $\beta^m x\in\Ob$ and has a unique digit expansion.  Conversely every finite Laurent shift lies in $\Kb$.  Compatibility of the metric follows from multiplicativity of $|\cdot|_\beta$.
+\end{proof}
+
+The eventually periodic Laurent strings previously proved to represent $\Qi$ form a countable dense subfield of $\Kb$.  General infinite strings represent the full local completion.
+
+\section{Why the Completion Is Not \texorpdfstring{$\C$}{C}}
+
+\begin{theorem}[Topological obstruction]
+Neither $\Ob$ nor $\Kb$ is homeomorphic, as a topological space, to $\C$.  Consequently, neither can be isomorphic to $\C$ as a topological ring or field.
+\end{theorem}
+
+\begin{proof}
+The ring $\Ob$ is compact and totally disconnected, while $\C$ is noncompact and connected.  The field $\Kb$ is locally compact and totally disconnected, while $\C$ is connected.  These properties are topological invariants.
+\end{proof}
+
+\begin{remark}
+The CNRS digit value map may be interpreted in several ways:
+\begin{enumerate}[label=(\roman*)]
+\item finite strings evaluate in $\Zi\subset\C$ and in $\Kb$;
+\item eventually periodic Laurent strings admit exact algebraic values in $\Qi\subset\C$ and also define elements of $\Kb$;
+\item arbitrary right-infinite positive-power strings converge naturally in $\Kb$, not in the ordinary complex norm.
+\end{enumerate}
+No contradiction arises.  These are distinct value maps or completions of related symbolic data.
+\end{remark}
+
+\section{Compatibility of Topologies}
+
+\begin{proposition}
+The identity map on $\Qi$ is not continuous from the $\beta$-adic topology to the ordinary complex topology, nor from the ordinary complex topology to the $\beta$-adic topology.
+\end{proposition}
+
+\begin{proof}
+The sequence $\beta^n$ converges to $0$ $\beta$-adically but satisfies
+\[
+|\beta^n|=(\sqrt5)^n\to\infty
+\]
+in the ordinary complex modulus.  Conversely, the rational sequence $5^{-n}$ converges to $0$ in the ordinary modulus, while
+\[
+|5^{-n}|_\beta=5^n\to\infty
+\]
+because $v_\beta(5)=1$.
+\end{proof}
+
+Thus a theorem proved in one topology cannot automatically be interpreted in the other.
+
+\section{CNRS-H Coefficientwise Completeness}
+
+Let $(R,d_R)$ be a complete metrizable topological ring.  The formal CNRS-H space is
+\[
+\Hs(R)=R^\N.
+\]
+Define the product metric
+\[
+d_H(a,b)
+=
+\sum_{n=0}^\infty 2^{-n-1}\min\{1,d_R(a_n,b_n)\}.
+\]
+
+\begin{theorem}[Coefficientwise completeness]
+If $R$ is complete, then $(\Hs(R),d_H)$ is complete.  The topology induced by $d_H$ is exactly coefficientwise convergence.
+\end{theorem}
+
+\begin{proof}
+A $d_H$-Cauchy sequence is Cauchy in every fixed coordinate.  Completeness of $R$ gives a coordinatewise limit $a_n$.  Given $\varepsilon>0$, choose $N$ so the metric tail beyond $N$ is less than $\varepsilon/2$.  Coordinatewise convergence in the first $N$ coordinates then makes the finite head less than $\varepsilon/2$.  Hence convergence occurs in $d_H$.
+\end{proof}
+
+\begin{proposition}[Continuity of formal operations]
+Addition, Hurwitz multiplication, differentiation by left shift, integration with fixed constant term, and every finite-order coefficient projection are continuous in the coefficientwise topology.
+\end{proposition}
+
+\begin{proof}
+Each output coefficient of addition or Hurwitz multiplication depends continuously on finitely many input coefficients.  The derivative shifts coordinates, and integration shifts them in the opposite direction.
+\end{proof}
+
+\begin{corollary}
+Taking $R=\Ob$, $R=\Kb$, or any complete discrete coefficient ring gives a complete formal CNRS-H algebra.
+\end{corollary}
+
+\section{Formal Completeness Versus Analytic Convergence}
+
+The coefficientwise completion does not by itself assert that
+\[
+\sum_{n\ge0}a_n\frac{\rho^n}{n!}
+\]
+converges as an ordinary complex function.  Analytic convergence requires a chosen embedding of coefficients into $\C$ and growth bounds such as
+\[
+\limsup_{n\to\infty}
+\left(\frac{|a_n|}{n!}\right)^{1/n}<\infty
+\]
+for a positive radius of convergence.
+
+Likewise, $\beta$-adic coefficient convergence and ordinary complex analytic convergence are different structures.  A later hybrid theorem must state which topology governs coefficient arithmetic and which governs function evaluation.
+
+\section{Completeness Status Register}
+
+\begin{center}
+\begin{tabular}{p{0.30\textwidth}p{0.30\textwidth}p{0.27\textwidth}}
+\toprule
+Space & Completion/result & Status \\
+\midrule
+Finite CNRS-A strings & Dense in $\Db^\N$ under prefix metric & Established \\
+Right-infinite CNRS-A strings & Compact complete; isometric to $\Ob\cong\Z_5$ & Established \\
+Finite-Laurent digit strings & Completion is $\Kb\cong\Q_5$ & Established \\
+Eventually periodic Laurent strings & Exactly Gaussian rationals within the algebraic value domain & Established by prior theorem \\
+Ordinary complex topology & Not equivalent to $\beta$-adic topology & Established \\
+CNRS-H coefficient sequences over complete $R$ & Complete in product topology & Established \\
+CNRS-H as analytic functions & Requires coefficient embedding and growth conditions & Separate / conditional \\
+Canonical admissible subspaces beyond full digit space & Closedness depends on the precise admissibility rule & Open where not already normalized \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Implications for the CNRS Programme}
+
+The former question
+\[
+\text{``Is the CNRS-A metric completion isomorphic to }\C\text{?''}
+\]
+has a definite negative answer.  The corrected result is stronger and more precise:
+\[
+\boxed{
+\Db^\N\cong\Ob\cong\Z_5,
+\qquad
+\Sigma_{\rm Laur}\cong\Kb\cong\Q_5.
+}
+\]
+
+This does not reduce CNRS to ordinary base-$5$ notation.  The digits multiply powers of the complex Gaussian base $\beta=-2+i$, and finite strings retain their exact Gaussian-integer values.  The theorem identifies the topology generated by extending those strings indefinitely toward positive powers.
+
+For the Toolkit, the practical requirements are:
+\begin{enumerate}
+\item label arbitrary positive-power infinite expansions as $\beta$-adic objects;
+\item reserve ordinary complex evaluation for finite or algebraically summable periodic Laurent forms;
+\item expose prefix/$\beta$-adic distance separately from ordinary complex distance;
+\item treat CNRS-H coefficient completeness separately from analytic convergence.
+\end{enumerate}
+
+\section{Conclusion}
+
+Metric completeness is not a single global property of all CNRS layers.  It is a family of precise results attached to specified spaces and topologies.  The natural CNRS-A symbolic metric is complete; its completion is the local valuation ring at $\beta$, isomorphic to $\Z_5$.  Allowing finite negative offsets yields the complete local field $\Q_5$.  These spaces are topologically incompatible with $\C$, although finite and eventually periodic representations continue to have exact Gaussian-integer or Gaussian-rational interpretations in the ordinary complex field.  CNRS-H is complete coefficientwise whenever its coefficient ring is complete, while analytic convergence remains an additional structure.  This topology separation closes the principal metric-completeness question and prepares the two-carrier CNRS-A/CNRS-H representation theorem.
+
+\section*{AI-Assistance Declaration}
+AI tools were used to assist with derivation checking, organization, drafting, and computational verification.  The author remains responsible for the mathematical claims, interpretation, and publication decisions.
+
+\begin{thebibliography}{9}
+\bibitem{Gouvea}
+F. Q. Gouv\^ea,
+\emph{$p$-adic Numbers: An Introduction},
+Springer.
+
+\bibitem{Neukirch}
+J. Neukirch,
+\emph{Algebraic Number Theory},
+Springer.
+
+\bibitem{Robert}
+A. M. Robert,
+\emph{A Course in $p$-adic Analysis},
+Springer.
+
+\bibitem{KataiSzabo}
+I. K\'atai and J. Szab\'o,
+Canonical number systems for complex integers,
+\emph{Acta Scientiarum Mathematicarum} 37 (1975), 255--260.
+
+\bibitem{PalmerPeriodicity}
+D. G. Palmer,
+Gaussian-rational periodicity in base $-2+i$,
+CNRS working theorem note, 2026.
+
+\bibitem{PalmerNormalization}
+D. G. Palmer,
+Canonical periodic normalization for CNRS,
+CNRS working theorem paper, 2026.
+
+\bibitem{PalmerH}
+D. G. Palmer,
+Formal CNRS-H algebra,
+CNRS working theorem paper, 2026.
+\end{thebibliography}
+
+\end{document}

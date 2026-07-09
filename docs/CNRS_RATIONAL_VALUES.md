@@ -19,7 +19,7 @@ print(x.status)
 print(x.structured_report())
 ```
 
-`CnrsRationalValue.finite_cval()` is intentionally restricted to Gaussian-integer quotients. A value such as `1/5` has a terminating base-power fractional expansion, but it is not a Gaussian integer and therefore cannot be collapsed into the finite-integer `CVal` wrapper.
+`CnrsRationalValue.finite_cval()` is intentionally restricted to Gaussian-integer quotients. A terminating negative-power value such as `(-2-i)/5 = z0^{-1}` is finite in the Laurent sense but is not a Gaussian integer and therefore cannot be collapsed into the finite-integer `CVal` wrapper. By contrast, `1/5` is shifted-periodic because `5=z0*conjugate(z0)` and the numerator does not cancel the conjugate-base factor.
 
 ## Status
 

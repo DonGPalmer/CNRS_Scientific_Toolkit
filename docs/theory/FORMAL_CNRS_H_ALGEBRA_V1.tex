@@ -1,0 +1,466 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Hurs}{\mathcal H}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\GI}{\mathbb Z[i]}
+\newcommand{\GQ}{\mathbb Q(i)}
+\newcommand{\coef}[2]{\left[#1\right]_{#2}}
+\newcommand{\Bell}{\mathrm B}
+\newcommand{\ev}{\operatorname{ev}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\CNRS}{\mathrm{CNRS}}
+
+\title{Formal CNRS-H Algebra:\\Hurwitz Series, Shift Calculus, Composition, and Native Complex Coefficients}
+\author{Donald G. Palmer}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+CNRS-H is the analytic layer of the Complex Numeric Representational System (CNRS).  Its central computational observation is that, when a formal exponential series is stored by its exponential-generating-function coefficients, differentiation becomes a left shift.  This paper places that observation on a precise algebraic foundation.  For a commutative coefficient ring $R$, we define the Hurwitz-series algebra $\Hurs(R)=R^{\N}$ with binomial-convolution product, prove that the shift operator is a derivation, characterize units, define integration, formal composition, and compositional inversion, and establish the product and chain rules intrinsically at the coefficient level.  When $R$ is a $\Q$-algebra, the construction is identified with the ordinary formal power-series ring through the exponential basis $\rho^n/n!$.  Exponential eigenvectors $E_\alpha=(\alpha^n)_{n\ge0}$ satisfy $D E_\alpha=\alpha E_\alpha$ and $E_\alpha E_\beta=E_{\alpha+\beta}$.  We then specify how canonical CNRS-A values can serve as the coefficient carrier, distinguish theorem-level algebra from finite-truncation implementation, and state the exact interface required for the later hybrid CNRS-A/CNRS-H representation theorem.
+\end{abstract}
+
+\section{Purpose and scope}
+
+CNRS-H is intended to support formal differentiation, integration, composition, and differential-equation workflows while retaining complex-valued coefficients in a CNRS-native representation.  The implementation already uses coefficient shifts and binomial convolution.  The purpose of this paper is to state the algebra independently of the code and to identify precisely which claims hold over an arbitrary commutative ring, which require a $\Q$-algebra, and which belong only to an analytic convergence layer.
+
+The main conclusions are:
+\begin{enumerate}[label=(\roman*)]
+\item the CNRS-H coefficient space is naturally a Hurwitz-series algebra;
+\item differentiation is exactly the left-shift derivation;
+\item integration is a right-shift right inverse, with the expected constant ambiguity;
+\item multiplication is binomial convolution;
+\item formal composition and the chain rule are governed by exponential Bell polynomials;
+\item compositional inversion exists exactly when the constant term vanishes and the linear coefficient is a unit;
+\item exponential sequences are eigenvectors of the shift derivation;
+\item canonical CNRS-A representations can be used as a coefficient encoding without changing the underlying algebra.
+\end{enumerate}
+
+No claim of analytic convergence is needed for these formal results.
+
+\section{Coefficient rings and notation}
+
+Throughout, $R$ denotes a commutative ring with identity.  In applications one may take
+\[
+R=\GI,\qquad R=\GQ,\qquad R=\C,
+\]
+or a ring of canonical CNRS-A encodings equipped with exact value-preserving arithmetic.
+
+Let
+\[
+\Hurs(R)=R^{\N}=\{a=(a_0,a_1,a_2,\ldots): a_n\in R\}.
+\]
+Elements of $\Hurs(R)$ will be called \emph{Hurwitz series} or \emph{CNRS-H coefficient sequences}.  The symbol $\rho$ is a formal analytic index, not the CNRS-A arithmetic base.
+
+When $R$ is a $\Q$-algebra, the sequence $a$ may be displayed as the exponential generating series
+\[
+\mathcal E(a)(\rho)=\sum_{n\ge0}a_n\frac{\rho^n}{n!}.
+\]
+Over a general ring, the sequence model is primary; the divided-power symbols $\rho^{[n]}$ may be used formally, with multiplication
+\[
+\rho^{[j]}\rho^{[k]}=\binom{j+k}{j}\rho^{[j+k]}.
+\]
+
+\section{The Hurwitz product}
+
+\begin{definition}[Binomial convolution]
+For $a,b\in\Hurs(R)$ define $a*b\in\Hurs(R)$ by
+\[
+(a*b)_n=\sum_{k=0}^{n}\binom{n}{k}a_k b_{n-k}.
+\]
+Define $\mathbf 0=(0,0,\ldots)$ and $\mathbf 1=(1,0,0,\ldots)$.
+\end{definition}
+
+\begin{theorem}[Hurwitz algebra]
+For every commutative ring $R$, the quadruple
+\[
+(\Hurs(R),+,*,\mathbf 1)
+\]
+is a commutative unital $R$-algebra under componentwise addition and scalar multiplication.
+\end{theorem}
+
+\begin{proof}
+Bilinearity and commutativity follow directly from the definition.  For associativity, the coefficient of index $n$ in $(a*b)*c$ is
+\[
+\sum_{r=0}^{n}\binom nr\left(\sum_{k=0}^{r}\binom rk a_k b_{r-k}\right)c_{n-r}.
+\]
+Using
+\[
+\binom nr\binom rk=\frac{n!}{k!(r-k)!(n-r)!},
+\]
+this is the symmetric multinomial sum over triples whose indices add to $n$.  The same sum is obtained from $a*(b*c)$.  The identity statement follows because only the $k=n$ or $k=0$ term survives as appropriate.
+\end{proof}
+
+\begin{proposition}[Exponential-series realization]
+If $R$ is a $\Q$-algebra, then
+\[
+\mathcal E:\Hurs(R)\longrightarrow R[[\rho]],\qquad
+\mathcal E(a)=\sum_{n\ge0}a_n\frac{\rho^n}{n!},
+\]
+is an $R$-algebra isomorphism.
+\end{proposition}
+
+\begin{proof}
+It is clearly an $R$-module isomorphism.  Multiplying two exponential series gives
+\[
+\sum_{n\ge0}\left(\sum_{k=0}^{n}\binom nk a_kb_{n-k}\right)\frac{\rho^n}{n!},
+\]
+which is exactly $\mathcal E(a*b)$.
+\end{proof}
+
+\section{Shift differentiation and integration}
+
+\begin{definition}[Shift derivation]
+Define
+\[
+D:\Hurs(R)\to\Hurs(R),\qquad
+D(a_0,a_1,a_2,\ldots)=(a_1,a_2,a_3,\ldots).
+\]
+\end{definition}
+
+\begin{theorem}[Leibniz rule]
+The operator $D$ is an $R$-linear derivation:
+\[
+D(a*b)=D(a)*b+a*D(b).
+\]
+\end{theorem}
+
+\begin{proof}
+At index $n$,
+\[
+D(a*b)_n=(a*b)_{n+1}
+=\sum_{k=0}^{n+1}\binom{n+1}{k}a_kb_{n+1-k}.
+\]
+Using Pascal's identity
+\[
+\binom{n+1}{k}=\binom nk+\binom n{k-1},
+\]
+and separating boundary terms gives exactly the index-$n$ coefficients of $a*D(b)$ and $D(a)*b$.
+\end{proof}
+
+\begin{corollary}
+If $R$ is a $\Q$-algebra, then
+\[
+\mathcal E(Da)=\frac{d}{d\rho}\mathcal E(a).
+\]
+\end{corollary}
+
+\begin{definition}[Formal integration]
+For $c\in R$, define
+\[
+J_c(a_0,a_1,a_2,\ldots)=(c,a_0,a_1,a_2,\ldots).
+\]
+\end{definition}
+
+\begin{proposition}[Fundamental identities]
+For all $a\in\Hurs(R)$ and $c\in R$,
+\[
+D(J_c a)=a,
+\]
+and
+\[
+J_{a_0}(Da)=a.
+\]
+More generally,
+\[
+J_0(Da)=a-a_0\mathbf 1.
+\]
+\end{proposition}
+
+Thus formal integration is a right inverse of differentiation and a left inverse after the integration constant is restored.
+
+\section{Units and multiplicative inversion}
+
+\begin{theorem}[Unit criterion]
+A Hurwitz series $a\in\Hurs(R)$ is a unit under $*$ if and only if $a_0$ is a unit in $R$.
+\end{theorem}
+
+\begin{proof}
+If $a*b=\mathbf1$, then $a_0b_0=1$, so $a_0$ is a unit.  Conversely, if $a_0$ is a unit, define $b_0=a_0^{-1}$ and recursively, for $n\ge1$,
+\[
+b_n=-a_0^{-1}\sum_{k=1}^{n}\binom nk a_kb_{n-k}.
+\]
+Then $(a*b)_n=0$ for every $n\ge1$ and $(a*b)_0=1$.
+\end{proof}
+
+\section{Exponential eigenvectors}
+
+\begin{definition}
+For $\alpha\in R$, define
+\[
+E_\alpha=(1,\alpha,\alpha^2,\alpha^3,\ldots).
+\]
+More generally, for $c\in R$, write $cE_\alpha=(c,c\alpha,c\alpha^2,\ldots)$.
+\end{definition}
+
+\begin{theorem}[Eigenvalue and addition laws]
+For all $\alpha,\beta\in R$,
+\[
+D(E_\alpha)=\alpha E_\alpha,
+\]
+and
+\[
+E_\alpha*E_\beta=E_{\alpha+\beta}.
+\]
+Hence
+\[
+E_\alpha^{*m}=E_{m\alpha}
+\]
+for every nonnegative integer $m$.
+\end{theorem}
+
+\begin{proof}
+The first identity is immediate from shifting $(\alpha^n)$.  For the second,
+\[
+(E_\alpha*E_\beta)_n
+=\sum_{k=0}^{n}\binom nk\alpha^k\beta^{n-k}
+=(\alpha+\beta)^n.
+\]
+\end{proof}
+
+When $R$ is a $\Q$-algebra, $\mathcal E(E_\alpha)=e^{\alpha\rho}$.  The theorem therefore gives the exact algebraic foundation of the CNRS-H exponential-eigenfunction constructor.
+
+\section{Formal composition}
+
+Composition is not defined for arbitrary pairs of formal series.  The inner series must have zero constant term so that every output coefficient depends on only finitely many input coefficients.
+
+\begin{definition}[Exponential partial Bell polynomials]
+For $n,k\ge0$, define $\Bell_{n,k}$ by
+\[
+\frac{1}{k!}\left(\sum_{m\ge1}x_m\frac{t^m}{m!}\right)^k
+=\sum_{n\ge k}\Bell_{n,k}(x_1,\ldots,x_{n-k+1})\frac{t^n}{n!}.
+\]
+The coefficients of $\Bell_{n,k}$ are integers.
+\end{definition}
+
+\begin{definition}[Hurwitz composition]
+Let $a,b\in\Hurs(R)$ with $b_0=0$.  Define $a\circ b$ by
+\[
+(a\circ b)_n
+=\sum_{k=0}^{n}a_k\Bell_{n,k}(b_1,\ldots,b_{n-k+1}).
+\]
+\end{definition}
+
+\begin{theorem}[Formal composition algebra]
+Composition is well defined whenever the inner sequence has zero constant term.  It satisfies
+\[
+(a\circ b)\circ c=a\circ(b\circ c)
+\]
+whenever $b_0=c_0=0$, and
+\[
+\mathbf x\circ b=b,
+\qquad
+\mathbf x=(0,1,0,0,\ldots).
+\]
+If $R$ is a $\Q$-algebra, then
+\[
+\mathcal E(a\circ b)=\mathcal E(a)\bigl(\mathcal E(b)(\rho)\bigr).
+\]
+\end{theorem}
+
+\begin{proof}
+Each coefficient is a finite polynomial in finitely many entries, so the operation is defined over every commutative ring.  Associativity and the identity law follow from the universal substitution law for formal divided-power series.  Over a $\Q$-algebra the statement follows directly from ordinary formal power-series composition under $\mathcal E$.
+\end{proof}
+
+\begin{theorem}[Chain rule]
+If $b_0=0$, then
+\[
+D(a\circ b)=(Da\circ b)*Db.
+\]
+\end{theorem}
+
+\begin{proof}
+This is the coefficient form of the Fa\`a di Bruno identity.  It can also be verified from the Bell-polynomial recurrence
+\[
+\Bell_{n+1,k}(x_1,\ldots)
+=\sum_{j=0}^{n-k+1}\binom nj x_{j+1}\Bell_{n-j,k-1}(x_1,\ldots).
+\]
+Substitution into the definition yields the Hurwitz product on the right-hand side.
+\end{proof}
+
+\section{Compositional inversion}
+
+\begin{theorem}[Formal inverse criterion]
+Let $b\in\Hurs(R)$.  There exists a unique $c\in\Hurs(R)$ satisfying
+\[
+b\circ c=\mathbf x
+\qquad\text{and}\qquad
+c\circ b=\mathbf x
+\]
+if and only if
+\[
+b_0=0
+\quad\text{and}\quad
+b_1\in R^\times.
+\]
+\end{theorem}
+
+\begin{proof}
+Necessity follows by inspecting the constant and linear coefficients.  For sufficiency, set $c_0=0$ and $c_1=b_1^{-1}$.  At each degree $n\ge2$, the coefficient of $c_n$ in $(b\circ c)_n$ is $b_1$, while all remaining terms depend only on $c_1,\ldots,c_{n-1}$.  Since $b_1$ is a unit, $c_n$ is determined uniquely.  The resulting one-sided inverse is automatically two-sided by associativity and uniqueness.
+\end{proof}
+
+\begin{remark}
+The theorem is ring-theoretic and does not require Lagrange inversion.  Closed coefficient formulas using divisions by integers require stronger assumptions, typically that $R$ be a $\Q$-algebra.
+\end{remark}
+
+\section{Differential equations in the formal algebra}
+
+The shift derivation turns constant-coefficient differential equations into coefficient recurrences.
+
+\begin{proposition}[First-order equation]
+For $\alpha,c\in R$, the unique solution of
+\[
+Df=\alpha f,
+\qquad f_0=c,
+\]
+is
+\[
+f=cE_\alpha.
+\]
+\end{proposition}
+
+\begin{proposition}[Inhomogeneous recurrence]
+Given $g\in\Hurs(R)$, $\alpha\in R$, and $f_0=c$, the equation
+\[
+Df=\alpha f+g
+\]
+is equivalent to
+\[
+f_{n+1}=\alpha f_n+g_n,
+\qquad n\ge0.
+\]
+Hence it has a unique formal solution over every commutative ring.
+\end{proposition}
+
+Higher-order constant-coefficient equations likewise reduce to finite-width recurrences.  This is the precise formal meaning of the CNRS-H ODE layer.  Numerical convergence of a truncated evaluation is a separate question.
+
+\section{CNRS-A coefficient carrier}
+
+Let $A$ be a set of canonical CNRS-A representations and let
+\[
+V_A:A\to R
+\]
+be a bijective value map onto a coefficient ring $R$ for which exact addition and multiplication are implemented.  For the currently established arithmetic domain, one may take $R=\GI$ for finite coefficients or $R=\GQ$ when canonical Gaussian-rational representations are included.
+
+\begin{definition}[Encoded Hurwitz sequence]
+An encoded CNRS-H object is a sequence
+\[
+\widehat a=(\widehat a_0,\widehat a_1,\ldots),\qquad \widehat a_n\in A,
+\]
+with value
+\[
+V_H(\widehat a)=(V_A(\widehat a_n))_{n\ge0}\in\Hurs(R).
+\]
+\end{definition}
+
+\begin{theorem}[Coefficientwise transport]
+If $V_A$ is a bijection and the encoded arithmetic operations are transported from $R$, then $V_H$ is a bijection and transports the full Hurwitz algebra structure from $\Hurs(R)$ to the encoded sequence space.  In particular, addition, Hurwitz multiplication, shift differentiation, integration, and all coefficient-polynomial operations are exact.
+\end{theorem}
+
+\begin{proof}
+Apply $V_A$ componentwise.  Every operation defined above uses only finitely many additions and multiplications in each coefficient, together with inversion of explicitly required units.  Exact coefficient arithmetic therefore commutes with the value map.
+\end{proof}
+
+This theorem is representational: CNRS-A changes how coefficients are encoded, not the abstract Hurwitz algebra.  It is nevertheless structurally important because it identifies the arithmetic carrier required by the later hybrid theorem.
+
+\section{Finite truncations and implementation discipline}
+
+For $N\ge1$, define the truncation
+\[
+\tau_N(a)=(a_0,\ldots,a_{N-1}).
+\]
+The quotient algebra modulo coefficients of degree $\ge N$ is finite-dimensional.  Addition, multiplication, differentiation, and composition can therefore be implemented exactly to order $N$.
+
+Several distinctions must remain explicit:
+\begin{enumerate}
+\item \textbf{Formal identity:} equality of all coefficients in $\Hurs(R)$.
+\item \textbf{Truncated identity:} equality only through degree $N-1$.
+\item \textbf{Analytic evaluation:} substitution of a numerical value for $\rho$ and convergence in a normed coefficient field.
+\item \textbf{Numerical approximation:} finite-precision evaluation of a truncation.
+\end{enumerate}
+
+The formal algebra proves the first kind of statement.  The Toolkit tests the second and, in selected domains, the third and fourth.  No analytic conclusion follows from formal correctness alone.
+
+\section{Claim-status register}
+
+\begin{longtable}{p{0.53\textwidth}p{0.37\textwidth}}
+\toprule
+Claim & Status \\
+\midrule
+$\Hurs(R)$ with binomial convolution is a commutative unital algebra & Established within current model \\
+Shift $D$ is a derivation & Established within current model \\
+Right-shift integration identities & Established within current model \\
+Unit criterion $a_0\in R^\times$ & Established within current model \\
+Bell-polynomial composition for inner constant term zero & Established within current model \\
+Chain rule and formal inverse criterion & Established within current model \\
+Exponential eigenfunction law & Established within current model \\
+Transport through exact canonical CNRS-A coefficients & Established within the stated coefficient domain \\
+Analytic convergence for arbitrary CNRS-H objects & Open; requires topology and growth hypotheses \\
+Completeness of the chosen coefficient ring/topology & Deferred to the metric/topological completeness paper \\
+Physical interpretation of CNRS-H workflows & Conditional or speculative by application \\
+\bottomrule
+\end{longtable}
+
+\section{Consequences for the CNRS programme}
+
+The formal result supports a layered architecture:
+\[
+\boxed{
+\text{CNRS-A coefficient arithmetic}
+\quad+\quad
+\text{CNRS-H Hurwitz-series algebra}
+}
+\]
+The two layers perform different jobs.  CNRS-A supplies canonical complex coefficients.  CNRS-H supplies the analytic order, shift derivation, binomial product, and formal composition structure.  This finding favors a two-carrier architecture over the requirement that one positional base perform both arithmetic and analytic roles.
+
+The next theoretical tasks are:
+\begin{enumerate}
+\item define and compare the symbolic, $(-2+i)$-adic, coefficientwise, and analytic topologies;
+\item prove the relevant completeness statements;
+\item state the hybrid CNRS-A/CNRS-H representation theorem over the resulting completed coefficient domain.
+\end{enumerate}
+
+\section{Conclusion}
+
+CNRS-H is formally a Hurwitz-series algebra.  Its differentiation-as-shift rule is not merely a computational analogy: it is an exact derivation law under binomial convolution.  Integration, multiplication, units, composition, the chain rule, compositional inversion, exponential eigenfunctions, and constant-coefficient differential equations all follow within one coherent coefficient algebra.  Canonical CNRS-A values may be transported into this structure coefficientwise, yielding a precise mathematical interface between the arithmetic and analytic layers of CNRS while keeping their roles distinct.
+
+\begin{thebibliography}{9}
+\bibitem{Comtet}
+L. Comtet, \emph{Advanced Combinatorics}, Reidel, 1974.
+
+\bibitem{Roman}
+S. Roman, \emph{The Umbral Calculus}, Academic Press, 1984.
+
+\bibitem{FaadiBruno}
+F. Fa\`a di Bruno, ``Sullo sviluppo delle funzioni,'' \emph{Annali di Scienze Matematiche e Fisiche}, 1855.
+
+\bibitem{Kruchinin}
+D. V. Kruchinin, ``Integer properties of a composition of exponential generating functions,'' arXiv:1211.2100, 2012.
+
+\bibitem{PalmerToolkit}
+D. G. Palmer, \emph{CNRS Scientific Toolkit}, v0.11.0, 2026.
+\end{thebibliography}
+
+\section*{AI-assistance declaration}
+During preparation of this manuscript, the author used AI assistance to organize the formal algebra, check coefficient identities, prepare verification code, and draft the manuscript.  The author remains responsible for the mathematical claims, presentation, and scientific judgement.
+
+\end{document}

@@ -1,0 +1,608 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\Zi}{\mathbb{Z}[i]}
+\newcommand{\Qi}{\mathbb{Q}(i)}
+\newcommand{\Ffive}{\mathbb{F}_5}
+\newcommand{\betaCNRS}{\beta}
+\newcommand{\vpi}{v_{\pi}}
+\newcommand{\Norm}{\operatorname{N}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\supp}{\operatorname{Supp}}
+
+\title{Termination of Gaussian-Rational Expansions in Base $-2+i$:\\
+Denominator Ideals, Valuations, and Minimal Laurent Offset}
+\author{Donald G. Palmer}
+\date{July 2026\\Working Paper v1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\beta=-2+i$ and $D=\{0,1,2,3,4\}$.  The pair $(\beta,D)$ is a canonical number system for the Gaussian integers: every element of $\mathbb Z[i]$ has a unique finite positional expansion in nonnegative powers of $\beta$.  This paper determines exactly which Gaussian rationals possess finite \emph{Laurent} expansions, in which finitely many negative powers are also permitted.  For $x\in\mathbb Q(i)$, the following conditions are proved equivalent: (i) $x$ has a finite Laurent $(\beta,D)$-expansion; (ii) $x$ belongs to the localization $\mathbb Z[i][\beta^{-1}]$; (iii) the reduced denominator ideal of $x$ is a power of the prime ideal $(\beta)$; and (iv) every Gaussian-prime denominator valuation of $x$ vanishes except possibly the valuation at a prime associate of $\beta$.  The minimal Laurent offset is shown to be the negative part of the $\beta$-valuation of $x$, equivalently the uncancelled $\beta$-valuation of any numerator-denominator presentation.  Several consequences for ordinary integer denominators are derived.  In particular, because $5=\beta\overline\beta$, a denominator $5^m$ does not by itself imply termination: $P/5^m$ terminates precisely when $\overline\beta^{\,m}$ divides $P$ in $\mathbb Z[i]$.  This corrects a denominator-only classification rule and supplies an ideal-theoretic foundation for the finite, periodic, and shifted-periodic rational classes used by the CNRS Scientific Toolkit.
+\end{abstract}
+
+\section{Introduction}
+
+The Complex Numeric Representational System (CNRS) uses the Gaussian-integer base
+\[
+\beta=-2+i,
+\qquad
+D=\{0,1,2,3,4\}.
+\]
+The norm of the base is
+\[
+\Norm(\beta)=\beta\overline\beta=5.
+\]
+The classical canonical-number-system result for this base states that each Gaussian integer has a unique finite expansion
+\[
+A=\sum_{k=0}^{n}d_k\beta^k,
+\qquad d_k\in D.
+\]
+This finite Gaussian-integer representation is the arithmetic foundation of CNRS-A.
+
+When division is introduced, Gaussian rationals need not have finite expansions in nonnegative powers.  Three cases naturally appear:
+\begin{enumerate}[label=(\roman*)]
+\item a finite expansion in nonnegative powers;
+\item a finite Laurent expansion, requiring finitely many negative powers;
+\item a nonterminating but eventually periodic expansion, possibly with a finite Laurent offset.
+\end{enumerate}
+The purpose of this paper is to settle the boundary between the first two finite cases and the genuinely periodic case.
+
+The answer is controlled not by ordinary integer divisibility alone, but by prime-ideal factorization in $\Zi$.  The distinction is essential because the rational prime $5$ splits:
+\[
+5=\beta\overline\beta=(-2+i)(-2-i),
+\]
+and the two factors are nonassociate Gaussian primes.  Thus a denominator $5^m$ contains both the base prime and its conjugate.  Only the base-prime part can be absorbed by shifting the radix point finitely.  Any uncancelled conjugate-base factor forces a nonterminating expansion.
+
+The main theorem is the exact localization criterion
+\[
+\boxed{
+ x\text{ has a finite Laurent expansion}
+ \iff
+ x\in\Zi[\beta^{-1}].
+}
+\]
+The paper gives equivalent ideal and valuation statements, proves the formula for the minimal Laurent offset, and derives implementable divisibility tests.
+
+\section{Gaussian-integer preliminaries}
+
+\subsection{The ring $\Zi$}
+
+The Gaussian integers form a Euclidean domain with norm
+\[
+\Norm(a+bi)=a^2+b^2.
+\]
+Consequently $\Zi$ is a principal ideal domain and a unique factorization domain.  Its units are
+\[
+\Zi^{\times}=\{1,-1,i,-i\}.
+\]
+Two Gaussian integers are \emph{associates} if they differ by a unit.
+
+The field of fractions of $\Zi$ is $\Qi$.  Every $x\in\Qi$ can be written as $P/Q$ with $P,Q\in\Zi$ and $Q\neq0$.  A presentation is \emph{reduced} if $P$ and $Q$ have no common nonunit Gaussian divisor, equivalently if the ideal $(P,Q)$ is the unit ideal.
+
+\subsection{The base prime}
+
+Set
+\[
+\beta=-2+i,
+\qquad
+\overline\beta=-2-i.
+\]
+Since $\Norm(\beta)=5$ is a rational prime, $\beta$ and $\overline\beta$ are Gaussian primes.  They are not associates.  Indeed, the quotients $\beta/\overline\beta$ and $\overline\beta/\beta$ are not Gaussian units.
+
+The principal ideal $(\beta)$ has index $5$ in $\Zi$, and
+\[
+\Zi/(\beta)\cong\Ffive.
+\]
+From $\beta=-2+i\equiv0\pmod\beta$ one obtains
+\[
+i\equiv2\pmod\beta.
+\]
+Therefore
+\[
+a+bi\equiv a+2b\pmod\beta.
+\]
+In particular,
+\begin{equation}
+\beta\mid(a+bi)
+\iff
+a+2b\equiv0\pmod5.
+\label{eq:beta-divisibility}
+\end{equation}
+Similarly, modulo $\overline\beta$ one has $i\equiv-2\equiv3\pmod5$, so
+\begin{equation}
+\overline\beta\mid(a+bi)
+\iff
+a-2b\equiv0\pmod5.
+\label{eq:betabar-divisibility}
+\end{equation}
+These congruences provide exact integer-arithmetic tests for the two primes above $5$.
+
+\subsection{Gaussian-prime valuations}
+
+For a Gaussian prime $\pi$, let $v_\pi$ denote the normalized discrete valuation on $\Qi^\times$, defined first on nonzero Gaussian integers by
+\[
+v_\pi(A)=\max\{m\ge0:\pi^m\mid A\},
+\]
+and extended to fractions by
+\[
+v_\pi(P/Q)=v_\pi(P)-v_\pi(Q).
+\]
+The value is independent of the chosen fraction presentation.
+
+Only finitely many valuations of a fixed nonzero $x\in\Qi$ are nonzero.  The denominator support of $x$ is
+\[
+\supp_-(x)=\{(\pi):v_\pi(x)<0\}.
+\]
+
+\section{Finite and Laurent CNRS expansions}
+
+\begin{definition}[Finite standard expansion]
+A finite standard $(\beta,D)$-expansion is an expression
+\[
+x=\sum_{k=0}^{n}d_k\beta^k,
+\qquad d_k\in D.
+\]
+\end{definition}
+
+\begin{definition}[Finite Laurent expansion]
+A finite Laurent $(\beta,D)$-expansion is an expression
+\[
+x=\sum_{k=-m}^{n}d_k\beta^k,
+\qquad d_k\in D,
+\qquad m,n\ge0.
+\]
+The least possible $m$ is called the \emph{minimal Laurent offset} and is denoted $\lambda_\beta(x)$.
+\end{definition}
+
+Leading and trailing zero digits are ignored when determining the least offset.
+
+\begin{proposition}[Finite Gaussian-integer representation]
+Every $A\in\Zi$ has a unique finite standard expansion in base $\beta=-2+i$ with digit set $D=\{0,1,2,3,4\}$.
+\end{proposition}
+
+\begin{remark}
+This is the established canonical-number-system input used in this paper.  The new results concern extension from $\Zi$ to $\Qi$ and do not reprove the full Gaussian-integer CNS theorem.
+\end{remark}
+
+\section{Localization characterization}
+
+Let
+\[
+\Zi[\beta^{-1}]
+=
+\left\{\frac{A}{\beta^m}:A\in\Zi,\ m\ge0\right\}
+\]
+be the localization of $\Zi$ obtained by inverting the powers of $\beta$.
+
+\begin{theorem}[Localization theorem]
+For $x\in\Qi$, the following are equivalent:
+\begin{enumerate}[label=(\alph*)]
+\item $x$ has a finite Laurent $(\beta,D)$-expansion;
+\item $x\in\Zi[\beta^{-1}]$;
+\item there exists $m\ge0$ such that $\beta^m x\in\Zi$.
+\end{enumerate}
+\label{thm:localization}
+\end{theorem}
+
+\begin{proof}
+Suppose first that
+\[
+x=\sum_{k=-m}^{n}d_k\beta^k.
+\]
+Multiplying by $\beta^m$ gives
+\[
+\beta^m x=\sum_{k=-m}^{n}d_k\beta^{k+m}\in\Zi.
+\]
+Thus (a) implies (c), and (c) is equivalent to (b) by the definition of localization.
+
+Conversely, suppose $x=A/\beta^m$ with $A\in\Zi$.  By the Gaussian-integer CNS theorem,
+\[
+A=\sum_{j=0}^{n}d_j\beta^j
+\]
+for digits $d_j\in D$.  Therefore
+\[
+x=\sum_{j=0}^{n}d_j\beta^{j-m},
+\]
+which is a finite Laurent expansion.  Hence (b) implies (a).
+\end{proof}
+
+This theorem already gives a complete algebraic criterion.  The remainder of the paper converts it into denominator-ideal and valuation forms.
+
+\section{Reduced denominator ideals}
+
+\subsection{Denominator ideal of a Gaussian rational}
+
+\begin{definition}[Intrinsic denominator ideal]
+For $x\in\Qi$, define
+\[
+\mathfrak d(x)=\{a\in\Zi:ax\in\Zi\}.
+\]
+This is a nonzero integral ideal of $\Zi$.
+\end{definition}
+
+If $x=P/Q$ is reduced, then
+\begin{equation}
+\mathfrak d(x)=(Q).
+\label{eq:denominator-ideal}
+\end{equation}
+Indeed, $Qx=P\in\Zi$, so $(Q)\subseteq\mathfrak d(x)$.  Conversely, if $ax\in\Zi$, then $Q\mid aP$; coprimality of $P$ and $Q$ implies $Q\mid a$.
+
+\begin{theorem}[Denominator-ideal termination criterion]
+For $x\in\Qi$, the following are equivalent:
+\begin{enumerate}[label=(\alph*)]
+\item $x$ has a finite Laurent $(\beta,D)$-expansion;
+\item $\mathfrak d(x)=(\beta)^m$ for some $m\ge0$;
+\item the only prime ideal that may divide $\mathfrak d(x)$ is $(\beta)$.
+\end{enumerate}
+If $x=P/Q$ is reduced, these are further equivalent to
+\begin{enumerate}[label=(\alph*),resume]
+\item $Q=u\beta^m$ for some unit $u\in\{\pm1,\pm i\}$ and $m\ge0$.
+\end{enumerate}
+\label{thm:ideal-criterion}
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:localization}, $x$ terminates Laurent-finitely exactly when $\beta^m x\in\Zi$ for some $m$.  This is equivalent to $\beta^m\in\mathfrak d(x)$, or in ideal language
+\[
+(\beta)^m\subseteq\mathfrak d(x).
+\]
+Because $\mathfrak d(x)$ is an integral ideal in a PID, this means its prime-ideal factorization is supported only at $(\beta)$.  Hence
+\[
+\mathfrak d(x)=(\beta)^r
+\]
+for some $0\le r\le m$.  Conversely, if $\mathfrak d(x)=(\beta)^r$, then $\beta^r x\in\Zi$, so $x$ has a finite Laurent expansion.
+
+For a reduced presentation, Equation~\eqref{eq:denominator-ideal} gives $(Q)=(\beta)^m$.  Equality of principal ideals is equivalent to $Q=u\beta^m$ for a unit $u$.
+\end{proof}
+
+\begin{remark}[Ideal-divisibility convention]
+Some texts write $\mathfrak a\mid\mathfrak b$ when $\mathfrak b\subseteq\mathfrak a$.  To avoid reversal ambiguity, the theorem is stated using equality and prime support rather than the phrase ``the denominator ideal divides a power of $(\beta)$.''
+\end{remark}
+
+\section{Valuation criterion}
+
+\begin{theorem}[Valuation form]
+For nonzero $x\in\Qi$, the following are equivalent:
+\begin{enumerate}[label=(\alph*)]
+\item $x$ has a finite Laurent $(\beta,D)$-expansion;
+\item $v_\pi(x)\ge0$ for every Gaussian prime $\pi$ not associate to $\beta$;
+\item the negative valuation support satisfies
+\[
+\supp_-(x)\subseteq\{(\beta)\}.
+\]
+\end{enumerate}
+\label{thm:valuation}
+\end{theorem}
+
+\begin{proof}
+The localization $\Zi[\beta^{-1}]$ consists exactly of those field elements whose prime factorization may have negative exponent only at primes made invertible in the localization, namely the primes associate to $\beta$.  Combine this standard localization property with Theorem~\ref{thm:localization}.
+\end{proof}
+
+For an arbitrary, not necessarily reduced, presentation $x=P/Q$, the criterion becomes explicit.
+
+\begin{corollary}[Presentation-level test]
+Let $x=P/Q$ with nonzero $P,Q\in\Zi$.  Then $x$ has a finite Laurent expansion if and only if
+\begin{equation}
+v_\pi(Q)-v_\pi(P)\le0
+\quad
+\text{for every Gaussian prime }\pi\not\sim\beta.
+\label{eq:all-other-valuations}
+\end{equation}
+\end{corollary}
+
+Thus all non-base denominator factors must cancel against the numerator.
+
+\section{Minimal Laurent offset}
+
+\begin{theorem}[Minimal offset theorem]
+Let $x\in\Qi^\times$ have a finite Laurent $(\beta,D)$-expansion.  Then
+\begin{equation}
+\boxed{
+\lambda_\beta(x)=\max\{0,-v_\beta(x)\}.
+}
+\label{eq:min-offset-intrinsic}
+\end{equation}
+Equivalently, for any presentation $x=P/Q$,
+\begin{equation}
+\boxed{
+\lambda_\beta(x)
+=
+\max\{0,v_\beta(Q)-v_\beta(P)\}.
+}
+\label{eq:min-offset-pq}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Set
+\[
+\nu=\max\{0,-v_\beta(x)\}.
+\]
+Then $v_\beta(\beta^\nu x)\ge0$.  Since termination implies all other prime valuations of $x$ are already nonnegative, every Gaussian-prime valuation of $\beta^\nu x$ is nonnegative.  Therefore $\beta^\nu x\in\Zi$.  The Gaussian-integer CNS theorem then yields a finite standard expansion for $\beta^\nu x$, and division by $\beta^\nu$ yields a finite Laurent expansion of offset at most $\nu$.
+
+Suppose an expansion existed with offset $m<\nu$.  Then $\beta^m x\in\Zi$, so
+\[
+v_\beta(\beta^m x)=m+v_\beta(x)\ge0.
+\]
+But $m< -v_\beta(x)=\nu$ gives $m+v_\beta(x)<0$, a contradiction.  Hence the least offset is exactly $\nu$.
+\end{proof}
+
+\begin{corollary}[Standard finite expansion]
+A Gaussian rational has a finite expansion using only nonnegative powers of $\beta$ if and only if it is a Gaussian integer.
+\end{corollary}
+
+\begin{proof}
+A nonnegative-power finite expansion lies in $\Zi$.  Conversely every Gaussian integer has such an expansion by the CNS theorem.
+\end{proof}
+
+\section{The split prime $5$ and ordinary denominators}
+
+The rational prime $5$ is special because it splits exactly into the base and its conjugate:
+\[
+5=\beta\overline\beta.
+\]
+Consequently
+\[
+5^m=\beta^m\overline\beta^{\,m}.
+\]
+A denominator-only test that treats $5^m$ as a base power is therefore incorrect.
+
+\begin{theorem}[Power-of-five denominator criterion]
+Let $P\in\Zi$ and $m\ge0$.  Then
+\[
+\frac{P}{5^m}
+\]
+has a finite Laurent base-$\beta$ expansion if and only if
+\begin{equation}
+\overline\beta^{\,m}\mid P.
+\label{eq:power-five-criterion}
+\end{equation}
+When this holds, write $P=\overline\beta^{\,m}A$.  Then
+\[
+\frac{P}{5^m}=\frac{A}{\beta^m},
+\]
+and the minimal Laurent offset is
+\[
+\lambda_\beta(P/5^m)=\max\{0,m-v_\beta(A)\}.
+\]
+\end{theorem}
+
+\begin{proof}
+At the prime $\overline\beta$,
+\[
+v_{\overline\beta}(5^m)=m.
+\]
+The valuation criterion requires
+\[
+v_{\overline\beta}(P)-m\ge0,
+\]
+which is equivalent to Equation~\eqref{eq:power-five-criterion}.  Once that factor cancels, only powers of $\beta$ may remain in the denominator.  The offset formula follows from Theorem~6.1.
+\end{proof}
+
+\begin{example}
+The fraction $1/5$ does not terminate.  Its denominator has one $\overline\beta$ factor and its numerator has none.
+\end{example}
+
+\begin{example}
+Since
+\[
+\frac{\overline\beta}{5}=\frac1\beta,
+\]
+the fraction
+\[
+\frac{-2-i}{5}
+\]
+terminates with minimal Laurent offset $1$.
+\end{example}
+
+\begin{example}
+Because
+\[
+\beta^2=3-4i,
+\qquad
+\overline\beta^{\,2}=3+4i,
+\]
+one has
+\[
+\frac{3+4i}{25}=\frac1{\beta^2}.
+\]
+This terminates with minimal Laurent offset $2$, whereas $1/25$ does not terminate.
+\end{example}
+
+\subsection{General positive integer denominators}
+
+Let $q\in\mathbb Z_{>0}$.  Its factorization in $\Zi$ is determined by the standard splitting law:
+\begin{itemize}
+\item $2$ ramifies as a unit times $(1+i)^2$;
+\item each rational prime $p\equiv1\pmod4$ splits into two nonassociate conjugate Gaussian primes;
+\item each rational prime $p\equiv3\pmod4$ remains Gaussian prime.
+\end{itemize}
+Only the prime $\beta$ may survive in a terminating reduced denominator.  Thus every prime factor of $q$ other than the $\beta$ component of $5$ must be cancelled by the Gaussian numerator.
+
+\begin{corollary}[Integer-denominator classification]
+Let $x=P/q$ with $P\in\Zi$ and $q\in\mathbb Z_{>0}$.  Then $x$ has a finite Laurent expansion if and only if, after Gaussian-prime cancellation, the remaining denominator is associate to a power of $\beta$.
+\end{corollary}
+
+For a reduced fraction with $P$ and the rational integer $q$ coprime in $\Zi$, this can occur only when $q=1$.  Indeed, every nontrivial rational integer denominator contains either a non-base Gaussian prime or, in the case of a power of $5$, both $\beta$ and $\overline\beta$.
+
+\section{Constructive termination algorithm}
+
+The theorems yield an exact algorithm for deciding termination and computing the minimal offset.
+
+\subsection{Abstract valuation algorithm}
+
+Given $x=P/Q$:
+\begin{enumerate}
+\item Cancel the Gaussian gcd of $P$ and $Q$.
+\item Factor the reduced denominator in $\Zi$.
+\item If any prime factor is not associate to $\beta$, declare the expansion nonterminating.
+\item Otherwise write the denominator as $u\beta^m$ and return minimal offset $m$.
+\item Encode the Gaussian integer $u^{-1}P$ canonically and shift its digit positions by $-m$.
+\end{enumerate}
+
+\subsection{Factorization-free repeated-divisibility algorithm}
+
+Full Gaussian factorization is unnecessary when only termination is required.  After cancelling a Gaussian gcd:
+\begin{enumerate}
+\item Repeatedly test whether $\beta$ divides $Q$ using Equation~\eqref{eq:beta-divisibility}.
+\item Each time it does, replace $Q$ by $Q/\beta$ and increment $m$.
+\item At the end, termination holds exactly when the remaining $Q$ is a unit.
+\end{enumerate}
+
+This procedure works because the fraction has already been reduced.  It directly computes the exponent of the base prime in the reduced denominator.
+
+\subsection{Numerator-aware power-of-five shortcut}
+
+For a presentation $P/5^m$, one may avoid a general Gaussian gcd by repeatedly dividing $P$ by $\overline\beta$, using Equation~\eqref{eq:betabar-divisibility}.  Termination requires at least $m$ successful divisions.  After cancelling those factors, the resulting value has denominator $\beta^m$ before any additional cancellation by $\beta$ factors in the remaining numerator.
+
+\section{Canonicality and uniqueness}
+
+\begin{theorem}[Uniqueness at minimal offset]
+Let $x$ have a finite Laurent expansion and let $m=\lambda_\beta(x)$.  Then the finite digit string representing $\beta^m x\in\Zi$ is unique.  Consequently the finite Laurent expansion of $x$ with minimal offset $m$ is unique up to leading and trailing zeros.
+\end{theorem}
+
+\begin{proof}
+The Gaussian integer $\beta^m x$ has a unique finite standard $(\beta,D)$-expansion.  Shifting every exponent downward by $m$ gives the unique minimal-offset Laurent expansion of $x$.
+\end{proof}
+
+\begin{remark}
+Nonminimal Laurent writings can be created by adding zero positions to the right, but they do not alter the canonical minimal-offset representation.  Infinite eventually periodic representations may introduce additional equivalences; those belong to the separate periodic-normalization problem.
+\end{remark}
+
+\section{Relation to eventual periodicity}
+
+The termination theorem partitions Gaussian rationals into two classes.
+
+\begin{enumerate}
+\item If the reduced denominator ideal is a power of $(\beta)$, the expansion terminates Laurent-finitely.
+\item If the reduced denominator has any other prime-ideal factor, the expansion cannot terminate.  The Gaussian-rational periodicity theorem then places it in an eventually periodic, possibly shifted-periodic, class.
+\end{enumerate}
+
+Thus the ideal factorization gives the exact finite/nonfinite boundary, while the finite-state recurrence for the coprime denominator gives eventual periodicity beyond that boundary.
+
+\section{Implications for the CNRS Scientific Toolkit}
+
+The mathematical classifier should accept the full Gaussian rational, not merely an ordinary integer denominator.  A correct classification pipeline is:
+The classifier first performs
+\[
+(P,Q)
+\longrightarrow
+\text{Gaussian gcd reduction}
+\longrightarrow
+\text{reduced denominator ideal}.
+\]
+It then assigns the reduced value to one of four classes:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Class & Criterion \\
+\midrule
+finite standard & $Q$ is a unit, \\
+finite Laurent & $Q\sim\beta^m$ with $m>0$, \\
+eventually periodic & $\gcd(Q,\beta)=1$, \\
+shifted eventually periodic & $v_\beta(Q)>0$ and other factors remain. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The last two labels describe the form after separating the base-prime power from the persistent denominator.  If
+\[
+Q=u\beta^mQ_0,
+\qquad
+\gcd(Q_0,\beta)=1,
+\]
+then $m$ is the Laurent shift and $Q_0$ governs the periodic recurrence.  The expansion terminates exactly when $Q_0$ is a unit.
+
+This classification is numerator-aware because reduction may remove factors of $Q$, including conjugate-base factors.  The examples $1/5$ and $\overline\beta/5$ demonstrate why denominator-only logic cannot be correct.
+
+\section{Scope and epistemic status}
+
+The results in this paper are algebraic results over the Euclidean domain $\Zi$, conditional only on the established canonical-number-system theorem for Gaussian integers in base $-2+i$ with digits $0$ through $4$.  Within that setting, the localization, ideal, valuation, and minimal-offset theorems are proved.
+
+The paper does not claim ordinary complex convergence for right-infinite positive-power series.  Eventual periodic tails are evaluated algebraically, or interpreted in an appropriate non-Archimedean completion.  The distinction between Archimedean convergence, $\beta$-adic convergence, and formal periodic-tail evaluation remains essential.
+
+\section{Conclusions}
+
+The finite-expansion theory for Gaussian rationals in base $-2+i$ is completely characterized by localization at the base prime.  For $x\in\Qi$,
+\[
+\boxed{
+ x\text{ has a finite Laurent expansion}
+ \iff
+ x\in\Zi[(-2+i)^{-1}].
+}
+\]
+Equivalently, the reduced denominator ideal must be a power of $(-2+i)$, and every other Gaussian-prime denominator valuation must vanish.  When termination holds, the minimal number of negative digit positions is
+\[
+\boxed{
+\lambda_{-2+i}(x)=\max\{0,-v_{-2+i}(x)\}.
+}
+\]
+The splitting
+\[
+5=(-2+i)(-2-i)
+\]
+shows why ordinary denominator powers of $5$ require numerator-aware treatment.  Specifically,
+\[
+\frac{P}{5^m}\text{ terminates}
+\iff
+(-2-i)^m\mid P.
+\]
+These results supply the ideal-theoretic basis for exact Toolkit classification and complete the termination component of the Gaussian-rational expansion programme.
+
+\section*{Acknowledgement and AI-assistance declaration}
+During preparation of this working paper, the author used AI assistance to organize the argument, check algebraic implications, draft the manuscript, and prepare computationally implementable formulations.  The author remains responsible for the mathematical claims, interpretation, and decision to circulate the work.  Independent specialist review is encouraged.
+
+\begin{thebibliography}{9}
+
+\bibitem{KataiSzabo1975}
+I.~K\'atai and J.~Szab\'o,
+``Canonical number systems for complex integers,''
+\emph{Acta Scientiarum Mathematicarum}, vol.~37, pp.~255--260, 1975.
+
+\bibitem{Gilbert1984}
+W.~J.~Gilbert,
+``Arithmetic in complex bases,''
+\emph{Mathematics Magazine}, vol.~57, no.~2, pp.~77--81, 1984.
+
+\bibitem{Brzicova2016}
+M.~Brzicov\'a, C.~Frougny, E.~Pelantov\'a, and M.~Svobodov\'a,
+``On-line algorithms for multiplication and division in real and complex numeration systems,''
+preprint, arXiv:1610.08309, 2016.
+
+\bibitem{Rossi2025}
+L.~Rossi,
+``Digit expansions in rational and algebraic basis,''
+preprint, arXiv:2505.14150, 2025.
+
+\bibitem{Samuel}
+P.~Samuel,
+\emph{Algebraic Theory of Numbers}.
+Paris: Hermann, 1970.
+
+\bibitem{IrelandRosen}
+K.~Ireland and M.~Rosen,
+\emph{A Classical Introduction to Modern Number Theory}, 2nd ed.
+New York: Springer, 1990.
+
+\end{thebibliography}
+
+\end{document}

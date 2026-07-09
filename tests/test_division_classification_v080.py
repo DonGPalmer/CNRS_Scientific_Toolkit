@@ -14,11 +14,18 @@ def test_gaussian_integer_status():
     assert c.terminates
 
 
-def test_terminating_base_power_status():
+def test_one_fifth_is_shifted_periodic_not_terminating():
     c = classify_denominator(1, 5)
-    assert c.status == DivisionStatus.TERMINATING_BASE_POWER
+    assert c.status == DivisionStatus.SHIFTED_PERIODIC_TAIL
     assert c.base_power_exponent == 1
     assert c.persistent_denominator == 1
+    assert not c.terminates
+
+
+def test_conjugate_base_factor_cancels_to_terminating_shift():
+    # (-2-i)/5 = 1/(-2+i) = z0^{-1}.
+    c = classify_denominator((-2, -1), 5)
+    assert c.status == DivisionStatus.TERMINATING_BASE_POWER
     assert c.terminates
 
 
@@ -37,8 +44,15 @@ def test_shifted_periodic_tail_status():
 
 
 def test_expand_division_terminating_round_trip():
-    r = expand_division(1, 5, max_frac=200)
+    r = expand_division((-2, -1), 5, max_frac=200)
     assert r.terminates
+    assert r.round_trip_ok()
+
+
+def test_expand_one_fifth_shifted_periodic_round_trip():
+    r = expand_division(1, 5, max_frac=200)
+    assert r.status == DivisionStatus.SHIFTED_PERIODIC_TAIL
+    assert r.has_periodic_tail if hasattr(r, "has_periodic_tail") else r.classification.has_periodic_tail
     assert r.round_trip_ok()
 
 
@@ -50,7 +64,8 @@ def test_expand_division_periodic_round_trip():
 
 
 def test_helper_rejects_wrong_kind():
-    terminating_expansion(1, 5)
+    terminating_expansion((-2, -1), 5)
+    periodic_expansion(1, 5)
     periodic_expansion(1, 2)
     try:
         terminating_expansion(1, 2)
