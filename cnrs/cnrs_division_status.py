@@ -1,25 +1,25 @@
+"""Legacy compatibility API for CNRS-A division classification.
+
+The authoritative theorem-aligned implementation is :mod:`cnrs.division`.
+This module remains available for compatibility with v0.8.x callers, but its
+classification now delegates to ``cnrs.division.classify_denominator``.
+
+Since ``5 = beta * conjugate(beta)`` for ``beta = -2+i``, a denominator
+``5**s`` does not imply termination by itself.  Termination requires the
+numerator to cancel ``conjugate(beta)**s`` after reduction.  In particular,
+``1/5`` and ``1/25`` are shifted eventually periodic, while
+``conjugate(beta)/5 = 1/beta`` terminates.
 """
-cnrs.cnrs_division_status
-=========================
-
-Theory-aligned division classification for CNRS-A.
-
-This module does not claim finite field closure of CNRS-A digit strings.  It
-classifies Gaussian-rational division into the cases used in the main CNRS
-architecture paper and wraps the existing exact ``cnrs_rational`` expansion
-machinery when an explicit expansion is requested.
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
 from math import gcd
 from typing import Any
+import warnings
 
-from .cnrs_rational import gaussian_rational_to_cnrs, CnrsRational
-
-Z0_PAIR = (-2, 1)
+from .cnrs_rational import CnrsRational, gaussian_rational_to_cnrs
+from .division import DivisionStatus, classify_denominator
 
 
 class DivisionKind(str, Enum):
@@ -41,11 +41,17 @@ class DivisionClassification:
 
     @property
     def terminates(self) -> bool:
-        return self.kind in {DivisionKind.GAUSSIAN_INTEGER, DivisionKind.TERMINATING_Z0_POWER}
+        return self.kind in {
+            DivisionKind.GAUSSIAN_INTEGER,
+            DivisionKind.TERMINATING_Z0_POWER,
+        }
 
     @property
     def has_periodic_tail(self) -> bool:
-        return self.kind in {DivisionKind.EVENTUALLY_PERIODIC, DivisionKind.SHIFTED_EVENTUALLY_PERIODIC}
+        return self.kind in {
+            DivisionKind.EVENTUALLY_PERIODIC,
+            DivisionKind.SHIFTED_EVENTUALLY_PERIODIC,
+        }
 
 
 @dataclass(frozen=True)
@@ -86,44 +92,76 @@ def _reduce(A: int, B: int, q: int) -> tuple[int, int, int]:
         raise ZeroDivisionError("denominator cannot be zero")
     if q < 0:
         A, B, q = -A, -B, -q
-    g = gcd(gcd(abs(A), abs(B)), abs(q))
-    if g > 1:
-        return A // g, B // g, q // g
-    return A, B, q
+    g = gcd(gcd(abs(A), abs(B)), abs(q)) or 1
+    return A // g, B // g, q // g
 
 
-def classify_division(numerator: complex | int, denominator: int = 1) -> DivisionClassification:
-    """Classify a Gaussian rational numerator / integer denominator.
+_STATUS_MAP = {
+    DivisionStatus.GAUSSIAN_INTEGER: DivisionKind.GAUSSIAN_INTEGER,
+    DivisionStatus.TERMINATING_BASE_POWER: DivisionKind.TERMINATING_Z0_POWER,
+    DivisionStatus.PERIODIC_COPRIME_DENOMINATOR: DivisionKind.EVENTUALLY_PERIODIC,
+    DivisionStatus.SHIFTED_PERIODIC_TAIL: DivisionKind.SHIFTED_EVENTUALLY_PERIODIC,
+}
 
-    The current public API covers the same denominator convention as
-    ``gaussian_rational_to_cnrs``: Gaussian-integer numerator over ordinary
-    integer denominator.  Integer denominators divisible by 5 correspond to a
-    finite ``z0``-power shift followed by a coprime periodic problem.
+_STATUS_NOTES = {
+    DivisionStatus.GAUSSIAN_INTEGER:
+        "Reduced denominator is 1.",
+    DivisionStatus.TERMINATING_BASE_POWER:
+        "The reduced numerator cancels the required conjugate-base factor; "
+        "the remaining denominator is a pure beta power.",
+    DivisionStatus.PERIODIC_COPRIME_DENOMINATOR:
+        "Reduced denominator is coprime to 5; the expansion has an eventually "
+        "periodic beta-adic tail.",
+    DivisionStatus.SHIFTED_PERIODIC_TAIL:
+        "A beta-power shift is present, but an uncancelled denominator factor "
+        "forces an eventually periodic tail.",
+}
+
+
+def classify_division(
+    numerator: complex | int,
+    denominator: int = 1,
+) -> DivisionClassification:
+    """Classify a Gaussian rational over an ordinary integer denominator.
+
+    Deprecated compatibility wrapper.  New code should call
+    :func:`cnrs.division.classify_denominator` directly.
     """
+    warnings.warn(
+        "cnrs.cnrs_division_status.classify_division is deprecated; use "
+        "cnrs.division.classify_denominator instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
 
     A, B = _as_gaussian_int(numerator)
-    A, B, q = _reduce(A, B, int(denominator))
-    reduced = complex(A, B)
-    if q == 1:
-        return DivisionClassification(complex(numerator), int(denominator), reduced, q, DivisionKind.GAUSSIAN_INTEGER, 0, "Reduced denominator is 1.")
+    reduced_A, reduced_B, reduced_q = _reduce(A, B, int(denominator))
+    authoritative = classify_denominator((A, B), int(denominator))
 
-    shift = 0
-    qq = q
-    while qq % 5 == 0:
-        shift += 1
-        qq //= 5
-
-    if qq == 1:
-        return DivisionClassification(complex(numerator), int(denominator), reduced, q, DivisionKind.TERMINATING_Z0_POWER, shift, "Integer denominator is a power of 5 = z0*z0bar; represented by finite z0/Laurent shift in existing rational layer.")
-    if shift:
-        return DivisionClassification(complex(numerator), int(denominator), reduced, q, DivisionKind.SHIFTED_EVENTUALLY_PERIODIC, shift, "Power-of-5 factor gives a finite shift; coprime remainder gives periodic tail.")
-    return DivisionClassification(complex(numerator), int(denominator), reduced, q, DivisionKind.EVENTUALLY_PERIODIC, 0, "Reduced denominator is coprime to 5; expansion has an eventually periodic z0-adic tail.")
+    return DivisionClassification(
+        numerator=complex(numerator),
+        denominator=int(denominator),
+        reduced_numerator=complex(reduced_A, reduced_B),
+        reduced_denominator=reduced_q,
+        kind=_STATUS_MAP[authoritative.status],
+        z0_power_shift=authoritative.base_power_exponent,
+        note=_STATUS_NOTES[authoritative.status],
+    )
 
 
-def division_expansion(numerator: complex | int, denominator: int = 1, *, max_frac: int = 200) -> CnrsDivisionExpansion:
-    """Return theory classification plus the exact existing CNRS rational expansion."""
+def division_expansion(
+    numerator: complex | int,
+    denominator: int = 1,
+    *,
+    max_frac: int = 200,
+) -> CnrsDivisionExpansion:
+    """Return compatibility classification plus the exact rational expansion."""
     classification = classify_division(numerator, denominator)
-    expansion = gaussian_rational_to_cnrs(numerator, denominator, max_frac=max_frac)
+    expansion = gaussian_rational_to_cnrs(
+        numerator,
+        denominator,
+        max_frac=max_frac,
+    )
     return CnrsDivisionExpansion(classification, expansion)
 
 
