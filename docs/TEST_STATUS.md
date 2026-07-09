@@ -1,8 +1,15 @@
-# Test Status — v0.11.0
+# Test Status — v0.11.1
+
+
+## v0.11.1 patch validation
+
+- Corrected deprecated division-status compatibility API.
+- Added cross-API consistency and power-of-five regression tests.
+- `1182 passed`, `0 failed` on 2026-07-08.
 
 Release validation on 2026-07-08:
 
-- `1167 passed`
+- `1182 passed`
 - `0 xfailed`
 - `0 unexpected failures`
 

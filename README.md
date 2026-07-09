@@ -1,5 +1,18 @@
 # CNRS Scientific Toolkit
 
+## v0.11.1: Division Classification Consistency Patch
+
+v0.11.1 preserves the v0.11.0 mathematics and scientific workflows while adding a corrected compatibility wrapper for the legacy division-status API. The compatibility classifier now delegates to the numerator-aware theorem-aligned implementation, and new regression tests prevent powers of five from being misclassified as automatically terminating.
+
+### v0.11.1 validation baseline
+
+- `1182 passed`
+- `0 failed`
+- Full source package build completed successfully.
+
+See `RELEASE_NOTES.md` for the complete change record.
+
+
 ## v0.11.0: Rational Expansion and Scientific Workflow Validation
 
 v0.11.0 is the first capability release after the v0.10.x stabilization line. It deepens exact validation of Gaussian-rational division across terminating, periodic, and Laurent-periodic classes, removes the former Laurent `power_offset` ambiguity in `CnrsRational.evaluate()`, and adds independent reference checks for the principal scientific workflows.

@@ -1,8 +1,8 @@
-# Claim Status — Current Release v0.11.0
+# Claim Status — Current Release v0.11.1
 
 ## Current validation
 
-`1167 passed`, `0 xfailed`, `0 unexpected failures` on 2026-07-08.
+`1182 passed`, `0 failed`, `0 xfailed`, `0 unexpected failures` on 2026-07-08.
 
 ## Established within current model
 

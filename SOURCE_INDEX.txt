@@ -1,9 +1,9 @@
-# CNRS Scientific Toolkit v0.11.0 source index
-# Generated after metric/topological and hybrid theorem integration.
+# CNRS Scientific Toolkit v0.11.1 source index
+# Complete source release; generated after the division-classification consistency patch.
 
-gitattributes
-github/workflows/tests.yml
-gitignore
+.gitattributes
+.github/workflows/tests.yml
+.gitignore
 CITATION.cff
 CONTRIBUTING.md
 LICENSE
@@ -21,6 +21,7 @@ cnrs/cnrs_bio.py
 cnrs/cnrs_complex.py
 cnrs/cnrs_continuation.py
 cnrs/cnrs_div.py
+cnrs/cnrs_division_status.py
 cnrs/cnrs_expansion.py
 cnrs/cnrs_expansion_verify.py
 cnrs/cnrs_float.py
@@ -216,8 +217,10 @@ tests/test_cnrs_regime.py
 tests/test_cnrs_scale.py
 tests/test_cnrs_scientific_state.py
 tests/test_cval_native_arithmetic.py
+tests/test_division_api_consistency_v0111.py
 tests/test_division_classification_v080.py
 tests/test_division_deep_validation_v011.py
+tests/test_division_status_compat_v0111.py
 tests/test_division_structured_v081.py
 tests/test_evaluate_limitations.py
 tests/test_expansion.py

@@ -1,3 +1,45 @@
+# v0.11.1 — Division Classification Consistency Patch
+
+v0.11.1 is a corrective patch to the v0.11.0 rational-expansion release. It aligns the retained v0.8.x compatibility classifier with the theorem-aligned public division API and adds cross-API regression protection.
+
+## Fixed
+
+- Added a corrected, deprecated compatibility module at `cnrs.cnrs_division_status`.
+- Made `classify_division()` numerator-aware by delegating to `cnrs.division.classify_denominator()`.
+- Ensured powers of five are not treated as automatically terminating.
+- Added regression tests for `1/5`, `1/25`, `conjugate(beta)/5`, and `conjugate(beta)^2/25`.
+- Added cross-API consistency tests covering Gaussian-integer, terminating, periodic, shifted-periodic, negative-denominator, and equivalent-fraction cases.
+- Clarified that a finite Laurent offset does not by itself imply a terminating expansion.
+
+## Mathematical correction retained
+
+For `beta = -2+i`,
+
+```text
+5 = beta * conjugate(beta).
+```
+
+A reduced denominator `5**s` produces a terminating Laurent expansion only when the reduced numerator cancels `conjugate(beta)**s`. Therefore:
+
+- `1/5` is shifted eventually periodic;
+- `1/25` is shifted eventually periodic;
+- `conjugate(beta)/5 = 1/beta` terminates;
+- `conjugate(beta)**2/25 = 1/beta**2` terminates.
+
+## Compatibility
+
+`cnrs.cnrs_division_status` is retained only for compatibility and emits `DeprecationWarning`. New code should use:
+
+```python
+from cnrs.division import classify_denominator
+```
+
+## Validation
+
+Final validation: `1182 passed`, `0 failed`. Build and distribution metadata checks completed successfully.
+
+---
+
 # v0.11.0 — Rational Expansion and Scientific Workflow Validation
 
 **Release date:** 2026-07-08

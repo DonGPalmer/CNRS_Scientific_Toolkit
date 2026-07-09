@@ -1,4 +1,4 @@
-# API Status — v0.11.0
+# API Status — v0.11.1
 
 ## Stable research interfaces
 
@@ -50,3 +50,7 @@
 - CNRS-H coefficientwise completeness over a complete coefficient ring: **established within current model**.
 - Hybrid CNRS-A/CNRS-H differential-algebra representation theorem: **established within current model**, conditional on a canonical coefficient codec for the selected ring.
 - Ordinary complex analytic convergence: separate and dependent on coefficient embedding and growth bounds.
+
+## v0.11.1 compatibility correction
+
+The optional legacy module `cnrs.cnrs_division_status` is retained as a deprecated compatibility wrapper. Its `classify_division()` function delegates to the numerator-aware `cnrs.division.classify_denominator()` implementation. New code should use `cnrs.division` directly.
