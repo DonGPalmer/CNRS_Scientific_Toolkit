@@ -335,15 +335,6 @@ The long-term goal of the project is not to provide a finished theory, but to de
 
 As with many research programs, future work may modify, replace, or extend individual components while preserving useful mathematical or computational ideas that emerge from the investigation.
 
-<!-- AI-ASSISTANCE-ACKNOWLEDGEMENT:START -->
-## AI Assistance and Authorship
-
-The CNRS Scientific Toolkit was developed principally in dialogue with ChatGPT (OpenAI), directed by the author. Claude (Anthropic) also contributed to its development, and was used to audit the implementation and cross-validate its results against the CNRS papers. Neither system is an author. Use of AI assistance is acknowledged in accordance with standard scholarly practice.
-
-Further information and contributor guidance are provided in
-[`docs/AI_ASSISTANCE.md`](docs/AI_ASSISTANCE.md).
-<!-- AI-ASSISTANCE-ACKNOWLEDGEMENT:END -->
-
 ## Repository
 
 **GitHub:** https://github.com/DonGPalmer/CNRS_Scientific_Toolkit  

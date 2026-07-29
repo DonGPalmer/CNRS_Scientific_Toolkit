@@ -80,17 +80,3 @@ Public releases should update:
 - relevant files in `docs/`
 
 Generated files such as `__pycache__/` and `.pytest_cache/` should not be committed.
-
-<!-- AI-ASSISTED-CONTRIBUTIONS:START -->
-## AI-assisted contributions
-
-Material use of AI tools in a contribution should be disclosed in the pull
-request or accompanying change record. The human contributor remains
-responsible for reviewing generated material, running the relevant tests,
-verifying citations and technical claims, and complying with the repository
-license and contribution requirements.
-
-AI systems must not be listed as authors or human contributors. The Toolkit's
-project-level acknowledgement is recorded in
-[`docs/AI_ASSISTANCE.md`](docs/AI_ASSISTANCE.md).
-<!-- AI-ASSISTED-CONTRIBUTIONS:END -->

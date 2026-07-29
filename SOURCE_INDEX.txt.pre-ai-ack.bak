@@ -251,4 +251,3 @@ tests/test_topology_v011.py
 tools/audit_native_status.py
 tools/build_release.py
 tools/toolkit_audit_crossval.py
-docs/AI_ASSISTANCE.md — AI assistance, authorship acknowledgement, scope, and contributor guidance.
