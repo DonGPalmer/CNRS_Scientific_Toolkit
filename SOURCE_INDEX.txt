@@ -1,6 +1,9 @@
-# CNRS Scientific Toolkit v0.11.1 source index
-# Complete source release; generated after the division-classification consistency patch.
+# CNRS Scientific Toolkit v0.12.1 source index
+# Complete source release; documentation synchronized with CNRS Problem 4 Version 12.
+# Validation: 1206 passed, 0 failed, 917 documented warnings (2026-08-04).
+# Files listed: 264
 
+SOURCE_INDEX.txt
 .gitattributes
 .github/workflows/tests.yml
 .gitignore
@@ -10,8 +13,11 @@ LICENSE
 NOTICE
 README.md
 RELEASE_NOTES.md
-SOURCE_INDEX.txt
+RELEASE_NOTES_v0.11.2.md
+RELEASE_NOTES_v0.12.0.md
+RELEASE_NOTES_v0.12.1.md
 cnrs/__init__.py
+cnrs/algebraic_curve.py
 cnrs/autodiff.py
 cnrs/branch_algebra.py
 cnrs/canonical_periodic.py
@@ -74,6 +80,7 @@ cnrs/division.py
 cnrs/formal_h_algebra.py
 cnrs/formal_state.py
 cnrs/gaussian_valuation.py
+cnrs/generalized_branch.py
 cnrs/h/__init__.py
 cnrs/h/calculus.py
 cnrs/h/chain_rule.py
@@ -88,6 +95,7 @@ cnrs/hybrid.py
 cnrs/native_status.py
 cnrs/normalization.py
 cnrs/rational_value.py
+cnrs/riemann_surface.py
 cnrs/science/__init__.py
 cnrs/science/branch.py
 cnrs/science/observation.py
@@ -125,6 +133,7 @@ docs/CNRS_H_TAYLOR_MODELS.md
 docs/CNRS_NATIVE_STATUS.md
 docs/CNRS_NATIVE_STATUS_REGISTER.md
 docs/CNRS_NORMALIZATION_STATUS.md
+docs/CNRS_P4_REFERENCE_STATUS.md
 docs/CNRS_RATIONAL_VALUES.md
 docs/CNRS_SCIENTIFIC_STATE.md
 docs/CNRS_SCIENTIFIC_WORKFLOWS_V090.md
@@ -132,7 +141,9 @@ docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md
 docs/CNRS_TOPOLOGY_AND_HYBRID.md
 docs/EXAMPLE_SMOKE_STATUS.md
 docs/GAUSSIAN_RATIONAL_THEOREMS.md
+docs/GENERALIZED_BRANCH_OBJECTS.md
 docs/RESEARCH_STATUS.md
+docs/RIEMANN_SURFACE_GLOBAL_MODEL.md
 docs/STATUS_VOCABULARY_MAPPING.md
 docs/SYMBOLIC_CALCULUS_QUICKSTART.md
 docs/TEST_STATUS.md
@@ -160,7 +171,9 @@ docs/theory/TERMINATION_DENOMINATOR_IDEALS_V1.pdf
 docs/theory/TERMINATION_DENOMINATOR_IDEALS_V1.tex
 examples/README.md
 examples/demo.py
+examples/generalized_branch_demo.py
 examples/quickstart_cnrs.py
+examples/riemann_surface_demo.py
 examples/scale_integration.py
 examples/science_workflows/branch_aware_symbolic_demo.py
 examples/science_workflows/chain_rule_scale_law.py
@@ -187,6 +200,7 @@ examples/science_workflows/symbolic_integration_demo.py
 examples/science_workflows/symbolic_to_cnrs_h_demo.py
 examples/science_workflows/turing_scale_exit.py
 pyproject.toml
+tests/test_algebraic_curve.py
 tests/test_architecture_v060.py
 tests/test_arithmetic.py
 tests/test_autodiff_chain_rule.py
@@ -228,6 +242,7 @@ tests/test_formal_h_algebra_v011.py
 tests/test_formal_state_preservation_v081.py
 tests/test_formal_state_v080.py
 tests/test_gaussian_rational_periodicity_theorem_v011.py
+tests/test_generalized_branch.py
 tests/test_hybrid_representation_v011.py
 tests/test_independent_cross_validation_v0103.py
 tests/test_lagrange_inversion.py
@@ -237,6 +252,7 @@ tests/test_physics.py
 tests/test_rational_all_cases.py
 tests/test_rational_arithmetic.py
 tests/test_rational_value_v090.py
+tests/test_riemann_surface.py
 tests/test_science_toolkit.py
 tests/test_scientific_workflow_crossval_v011.py
 tests/test_scientific_workflow_v090.py
@@ -251,4 +267,3 @@ tests/test_topology_v011.py
 tools/audit_native_status.py
 tools/build_release.py
 tools/toolkit_audit_crossval.py
-docs/AI_ASSISTANCE.md — AI assistance, authorship acknowledgement, scope, and contributor guidance.

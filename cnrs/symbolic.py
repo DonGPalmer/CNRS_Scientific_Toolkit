@@ -480,14 +480,16 @@ class Pow(Binary):
 
     branch: int = 0
     branch_state: BranchState = DEFAULT_BRANCH_STATE
+    branch_key: str | None = None
     symbol = "^"
 
-    def __init__(self, left: Any, right: Any, branch: int = 0, branch_state: BranchState | None = None):
+    def __init__(self, left: Any, right: Any, branch: int = 0, branch_state: BranchState | None = None, branch_key: str | None = None):
         object.__setattr__(self, "left", sympify(left))
         object.__setattr__(self, "right", sympify(right))
         b = int(branch)
         object.__setattr__(self, "branch", b)
         object.__setattr__(self, "branch_state", _branch_state_for("pow", b, branch_state))
+        object.__setattr__(self, "branch_key", None if branch_key is None else str(branch_key))
 
     def diff(self, var: str | Var) -> Expr:
         u, v = self.left, self.right
@@ -495,7 +497,7 @@ class Pow(Binary):
         if _is_const(v):
             exponent = _as_complex_value(v.value)
             return Const(exponent) * (u ** Const(exponent - 1)) * du
-        return self * (dv * Log(u, branch=self.branch, branch_state=self.branch_state) + v * du / u)
+        return self * (dv * Log(u, branch=self.branch, branch_state=self.branch_state, branch_key=self.branch_key) + v * du / u)
 
     def simplify(self) -> Expr:
         a, b = self.left.simplify(), self.right.simplify()
@@ -513,7 +515,7 @@ class Pow(Binary):
             if abs(base) == 0:
                 return Const(base ** exponent)
             return Const(cmath.exp(exponent * ad.branch_log(base, self.branch)))
-        return Pow(a, b, branch=self.branch, branch_state=self.branch_state)
+        return Pow(a, b, branch=self.branch, branch_state=self.branch_state, branch_key=self.branch_key)
 
     def eval(self, env: Env | None = None, *, L: int = DEFAULT_L) -> Any:
         a = self.left.eval(env, L=L)
@@ -529,14 +531,15 @@ class Pow(Binary):
         return CnrsComplex(cmath.exp(exponent * ad.branch_log(base, self.branch)), L=_combine_L(a, b, default=L))
 
     def substitute(self, mapping: Mapping[str, Any]) -> Expr:
-        return Pow(self.left.substitute(mapping), self.right.substitute(mapping), branch=self.branch, branch_state=self.branch_state)
+        return Pow(self.left.substitute(mapping), self.right.substitute(mapping), branch=self.branch, branch_state=self.branch_state, branch_key=self.branch_key)
 
     def __str__(self) -> str:
         suffix = f"; branch={self.branch}" if self.branch else ""
-        return f"({self.left}^{self.right}{suffix})"
+        key = f"; key={self.branch_key}" if self.branch_key else ""
+        return f"({self.left}^{self.right}{suffix}{key})"
 
     def __repr__(self) -> str:
-        return f"Pow({self.left!r}, {self.right!r}, branch={self.branch})"
+        return f"Pow({self.left!r}, {self.right!r}, branch={self.branch}, branch_key={self.branch_key!r})"
 
 
 # ---------------------------------------------------------------------------
@@ -581,13 +584,15 @@ class Exp(Unary):
 class Log(Unary):
     branch: int = 0
     branch_state: BranchState = DEFAULT_BRANCH_STATE
+    branch_key: str | None = None
     name = "log"
 
-    def __init__(self, arg: Any, branch: int = 0, branch_state: BranchState | None = None):
+    def __init__(self, arg: Any, branch: int = 0, branch_state: BranchState | None = None, branch_key: str | None = None):
         object.__setattr__(self, "arg", sympify(arg))
         b = int(branch)
         object.__setattr__(self, "branch", b)
         object.__setattr__(self, "branch_state", _branch_state_for("log", b, branch_state))
+        object.__setattr__(self, "branch_key", None if branch_key is None else str(branch_key))
 
     def diff(self, var: str | Var) -> Expr:
         return self.arg.diff(var) / self.arg
@@ -600,7 +605,7 @@ class Log(Unary):
                 raise ZeroDivisionError("log singular at zero")
             return Const(ad.branch_log(z, self.branch))
         # Conservative: do not simplify log(exp(x)) globally over complex values.
-        return Log(a, branch=self.branch, branch_state=self.branch_state)
+        return Log(a, branch=self.branch, branch_state=self.branch_state, branch_key=self.branch_key)
 
     def eval(self, env: Env | None = None, *, L: int = DEFAULT_L) -> Any:
         v = self.arg.eval(env, L=L)
@@ -612,14 +617,15 @@ class Log(Unary):
         return CnrsComplex(ad.branch_log(z, self.branch), L=_combine_L(v, default=L))
 
     def substitute(self, mapping: Mapping[str, Any]) -> Expr:
-        return Log(self.arg.substitute(mapping), branch=self.branch, branch_state=self.branch_state)
+        return Log(self.arg.substitute(mapping), branch=self.branch, branch_state=self.branch_state, branch_key=self.branch_key)
 
     def __str__(self) -> str:
         suffix = f"_{self.branch}" if self.branch else ""
-        return f"log{suffix}({self.arg})"
+        key = f"[{self.branch_key}]" if self.branch_key else ""
+        return f"log{suffix}{key}({self.arg})"
 
     def __repr__(self) -> str:
-        return f"Log({self.arg!r}, branch={self.branch})"
+        return f"Log({self.arg!r}, branch={self.branch}, branch_key={self.branch_key!r})"
 
 
 class Sin(Unary):
@@ -683,16 +689,18 @@ class Tan(Unary):
 class Sqrt(Unary):
     branch: int = 0
     branch_state: BranchState = DEFAULT_BRANCH_STATE
+    branch_key: str | None = None
     name = "sqrt"
 
-    def __init__(self, arg: Any, branch: int = 0, branch_state: BranchState | None = None):
+    def __init__(self, arg: Any, branch: int = 0, branch_state: BranchState | None = None, branch_key: str | None = None):
         object.__setattr__(self, "arg", sympify(arg))
         b = int(branch)
         object.__setattr__(self, "branch", b)
         object.__setattr__(self, "branch_state", _branch_state_for("sqrt", b, branch_state))
+        object.__setattr__(self, "branch_key", None if branch_key is None else str(branch_key))
 
     def diff(self, var: str | Var) -> Expr:
-        return self.arg.diff(var) / (Const(2) * Sqrt(self.arg, branch=self.branch, branch_state=self.branch_state))
+        return self.arg.diff(var) / (Const(2) * Sqrt(self.arg, branch=self.branch, branch_state=self.branch_state, branch_key=self.branch_key))
 
     def simplify(self) -> Expr:
         a = self.arg.simplify()
@@ -700,7 +708,7 @@ class Sqrt(Unary):
             # Mirror autodiff convention: sqrt is exp(0.5 * log_branch(z)).
             z = _as_complex_value(a.value)
             return Const(cmath.exp(0.5 * ad.branch_log(z, self.branch)))
-        return Sqrt(a, branch=self.branch, branch_state=self.branch_state)
+        return Sqrt(a, branch=self.branch, branch_state=self.branch_state, branch_key=self.branch_key)
 
     def eval(self, env: Env | None = None, *, L: int = DEFAULT_L) -> Any:
         v = self.arg.eval(env, L=L)
@@ -710,14 +718,15 @@ class Sqrt(Unary):
         return CnrsComplex(cmath.exp(0.5 * ad.branch_log(z, self.branch)), L=_combine_L(v, default=L))
 
     def substitute(self, mapping: Mapping[str, Any]) -> Expr:
-        return Sqrt(self.arg.substitute(mapping), branch=self.branch, branch_state=self.branch_state)
+        return Sqrt(self.arg.substitute(mapping), branch=self.branch, branch_state=self.branch_state, branch_key=self.branch_key)
 
     def __str__(self) -> str:
         suffix = f"_{self.branch}" if self.branch else ""
-        return f"sqrt{suffix}({self.arg})"
+        key = f"[{self.branch_key}]" if self.branch_key else ""
+        return f"sqrt{suffix}{key}({self.arg})"
 
     def __repr__(self) -> str:
-        return f"Sqrt({self.arg!r}, branch={self.branch})"
+        return f"Sqrt({self.arg!r}, branch={self.branch}, branch_key={self.branch_key!r})"
 
 
 
@@ -864,8 +873,8 @@ def exp(x: Any) -> Expr:
     return Exp(x)
 
 
-def log(x: Any, branch: int = 0, branch_state: BranchState | None = None) -> Expr:
-    return Log(x, branch=branch, branch_state=branch_state)
+def log(x: Any, branch: int = 0, branch_state: BranchState | None = None, branch_key: str | None = None) -> Expr:
+    return Log(x, branch=branch, branch_state=branch_state, branch_key=branch_key)
 
 
 def sin(x: Any) -> Expr:
@@ -880,12 +889,12 @@ def tan(x: Any) -> Expr:
     return Tan(x)
 
 
-def sqrt(x: Any, branch: int = 0, branch_state: BranchState | None = None) -> Expr:
-    return Sqrt(x, branch=branch, branch_state=branch_state)
+def sqrt(x: Any, branch: int = 0, branch_state: BranchState | None = None, branch_key: str | None = None) -> Expr:
+    return Sqrt(x, branch=branch, branch_state=branch_state, branch_key=branch_key)
 
 
-def pow_branch(base: Any, exponent: Any, branch: int = 0, branch_state: BranchState | None = None) -> Expr:
-    return Pow(base, exponent, branch=branch, branch_state=branch_state)
+def pow_branch(base: Any, exponent: Any, branch: int = 0, branch_state: BranchState | None = None, branch_key: str | None = None) -> Expr:
+    return Pow(base, exponent, branch=branch, branch_state=branch_state, branch_key=branch_key)
 
 
 def diff(expr: Any, var: str | Var) -> Expr:

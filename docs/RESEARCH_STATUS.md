@@ -25,6 +25,13 @@ The toolkit is not presented as:
 
 Inclusion of a module, example, or algorithm does **not** imply that the associated scientific hypothesis has been experimentally validated.
 
+
+## Current mathematical reference boundary
+
+The current package incorporates theorem-aligned results for Gaussian-rational periodicity and termination, canonical periodic normalization, formal CNRS-H algebra, natural beta-adic metric completeness, and the conditional hybrid CNRS-A/CNRS-H representation. These results are scoped to their stated algebraic, beta-adic, coefficientwise, or formal domains. Ordinary complex analytic convergence and a single canonical representation for every ordinary complex value remain separate questions.
+
+The canonical Problem 4 reference is Version 12, DOI `10.5281/zenodo.21791909`; see `CNRS_P4_REFERENCE_STATUS.md`.
+
 ## Current maturity levels
 
 The package contains several maturity levels.

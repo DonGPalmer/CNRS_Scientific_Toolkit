@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cnrs"
-version = "0.11.1"
-description = "CNRS Scientific Toolkit: complex-base arithmetic, CNRS-float, rational representations, CNRS-H calculus, ODEs, scale laws, biological scale dynamics, complex oscillators, NumPy/SciPy interoperability, multi-scale SS physics engine, and scale-regime detection, and first-order chain-rule automatic differentiation, minimal symbolic differentiation/integration, explicit branch-aware symbolic calculus, a lightweight CLI, and a first symbolic-to-CNRS-H coefficient-calculus bridge, local CNRS-H jets with expansion points, lightweight convergence/domain diagnostics, CNRS-H branch-state propagation, and native-status classification, scoped CNRS-A normalisation, theorem-alignment registry, structured division expansions, and formal-state preservation, native rational values, and complex-state preservation workflows"
+version = "0.12.1"
+description = "CNRS Scientific Toolkit: theorem-aligned CNRS-A arithmetic, Gaussian-rational normalization, CNRS-H Hurwitz calculus, topology and hybrid representations, branch-aware symbolic workflows, finite monodromy surfaces, algebraic-curve branch detection, and scientific research workflows"
 authors = [
     { name = "Donald G. Palmer", email = "dgpalmer@nul1.com" }
 ]
@@ -16,6 +16,7 @@ dependencies = ["numpy>=1.24"]
 
 [project.optional-dependencies]
 dev = ["pytest>=7", "scipy>=1.10", "sympy>=1.12"]
+algebraic = ["sympy>=1.12"]
 interop = ["scipy>=1.10"]
 data = ["pandas>=2"]
 scale = ["numpy>=1.24"]

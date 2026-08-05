@@ -1,36 +1,42 @@
-# Test Status — v0.11.1
+# Test Status — v0.12.1
 
+## Release validation
 
-## v0.11.1 patch validation
+Validation run on 2026-08-04:
 
-- Corrected deprecated division-status compatibility API.
-- Added cross-API consistency and power-of-five regression tests.
-- `1182 passed`, `0 failed` on 2026-07-08.
+```text
+1206 passed, 0 failed
+```
 
-Release validation on 2026-07-08:
+The suite reports 917 retained reliable-domain warnings from selected biological, oscillator, and scale-law tests. Warnings are not silently suppressed because they identify evaluations outside estimated local reliability ranges.
 
-- `1182 passed`
-- `0 xfailed`
-- `0 unexpected failures`
+## Principal validation groups
 
-## New validation groups
-
-- exact division and Gaussian-rational reconstruction;
-- denominator classification and equivalent-fraction invariance;
-- periodic and Laurent-periodic evaluation;
-- sampled period minimality;
+- finite CNRS-A encoding, normalization, arithmetic, and transducer behavior;
+- exact Gaussian-rational reconstruction across finite, periodic, and Laurent-periodic classes;
+- numerator-aware denominator ideals, valuations, termination, and minimal Laurent offsets;
+- canonical periodic normalization, idempotence, semantic equality, and serialization;
+- branch-wrap algebra and formal CNRS-H identities;
+- symbolic/beta-adic distance, first-difference isometry, and hybrid coefficient transport;
+- finite-sheet permutation, path-word, monodromy, transport, connectivity, and atlas checks;
+- algebraic-curve parsing, resultant/discriminant construction, finite branch detection, numerical fallback, unbranched cases, and repeated-component rejection;
 - ODE, scale-law, biological, oscillator, and interoperability cross-validation.
 
-The warning stream consists primarily of documented domain warnings for truncated EGF evaluations outside estimated reliable intervals. Warnings are not silently suppressed because they are part of the scientific-domain safety behavior.
+## Scope of test evidence
 
-- Includes 11 theorem-specific tests for ideal/valuation termination and canonical periodic normalization.
+A passing test establishes agreement between the implementation and the encoded theorem, algorithm, or reference equation over the tested domain. It does not by itself prove:
 
+- ordinary complex analytic convergence for arbitrary infinite series;
+- certified global numerical continuation;
+- correctness outside documented reliable domains;
+- physical or biological applicability of exploratory workflows.
 
-## v0.11.0 topology and hybrid additions
+## Reproduction
 
-- Symbolic prefix space and beta-adic valuation-ring completeness: **established within current model**.
-- Finite-Laurent completion as the local field at `beta=-2+i`: **established within current model**.
-- Identification with ordinary complex topology: **disproved**; the topologies are incompatible.
-- CNRS-H coefficientwise completeness over a complete coefficient ring: **established within current model**.
-- Hybrid CNRS-A/CNRS-H differential-algebra representation theorem: **established within current model**, conditional on a canonical coefficient codec for the selected ring.
-- Ordinary complex analytic convergence: separate and dependent on coefficient embedding and growth bounds.
+From the package root:
+
+```bash
+python -m pytest -q
+```
+
+See `CNRS_P4_REFERENCE_STATUS.md`, `CLAIM_STATUS.md`, and `EXAMPLE_SMOKE_STATUS.md` for the surrounding claim and workflow boundaries.

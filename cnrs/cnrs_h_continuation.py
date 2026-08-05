@@ -238,3 +238,90 @@ __all__ = [
     "shift_symbolic_branches",
     "continued_jet_from_symbolic",
 ]
+
+# ---------------------------------------------------------------------------
+# Generalized node-specific branch continuation (v0.11.2 extension)
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class GeneralizedContinuationRebuildResult:
+    """CNRS-H jet rebuild driven by a node-specific branch registry."""
+
+    original_expr: sy.Expr
+    continued_expr: sy.Expr
+    original_jet: CnrsHJet
+    continued_jet: CnrsHJet
+    original_registry: Any
+    continued_registry: Any
+    transitions: tuple[Any, ...]
+    note: str
+
+    @property
+    def coeff_changed(self) -> bool:
+        return self.original_jet.max_coeff_error(self.continued_jet) > 0
+
+    @property
+    def max_coeff_delta(self) -> float:
+        return self.original_jet.max_coeff_error(self.continued_jet)
+
+
+def continued_jet_from_branch_registry(
+    expr: Any,
+    var: str | sy.Var = "s",
+    *,
+    center: complex | float | int = 0,
+    order: int = 12,
+    path: ContinuationPath,
+    registry: Any,
+    env: Mapping[str, Any] | None = None,
+    L: int = 18,
+    description: str = "",
+    strict: bool = True,
+) -> GeneralizedContinuationRebuildResult:
+    """Rebuild a local jet using node-specific generalized branch objects.
+
+    ``registry`` is a :class:`cnrs.generalized_branch.BranchRegistry`.  The
+    import is local to keep the original continuation layer usable without
+    introducing a hard module cycle.
+    """
+    from .generalized_branch import continue_symbolic_with_registry
+
+    e = sy.sympify(expr)
+    result = continue_symbolic_with_registry(e, path, registry, strict=strict)
+    original = jet_from_symbolic(
+        e, var, center=center, order=order, env=env, L=L,
+        description=description or str(e),
+    )
+    continued = jet_from_symbolic(
+        result.continued_expr, var, center=center, order=order, env=env, L=L,
+        description=description or str(result.continued_expr),
+    )
+    note = result.summary()
+    continued = CnrsHJet(
+        continued.series,
+        center=continued.center,
+        var=continued.var,
+        radius_hint=continued.radius_hint,
+        domain=continued.domain,
+        truncation_error=continued.truncation_error,
+        branch_state=continued.branch_state,
+        branch_note=note,
+        path_history=original.path_history + (note,),
+        description=continued.description,
+    )
+    return GeneralizedContinuationRebuildResult(
+        e,
+        result.continued_expr,
+        original,
+        continued,
+        result.original_registry,
+        result.continued_registry,
+        result.transitions,
+        note,
+    )
+
+
+__all__ += [
+    "GeneralizedContinuationRebuildResult",
+    "continued_jet_from_branch_registry",
+]

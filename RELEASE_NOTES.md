@@ -1,3 +1,11 @@
+# v0.12.1 — Algebraic-Curve Branch Detection and P4 Documentation Synchronization
+
+See `RELEASE_NOTES_v0.12.1.md`. Adds polynomial algebraic-curve intake and finite branch-point detection, synchronizes current documentation with the canonical Problem 4 Version 12 record, updates citation metadata to v0.12.1, and records the validated baseline of `1206 passed, 0 failed`.
+
+# v0.12.0 — Finite Global Riemann-Surface Layer
+
+See `RELEASE_NOTES_v0.12.0.md`. Adds finite sheets, ordered path words, noncommuting monodromy permutations, lifted transport, and atlas overlap checks.
+
 # v0.11.1 — Division Classification Consistency Patch
 
 v0.11.1 is a corrective patch to the v0.11.0 rational-expansion release. It aligns the retained v0.8.x compatibility classifier with the theorem-aligned public division API and adds cross-API regression protection.
@@ -109,15 +117,3 @@ The special `1/5` behavior is now a corollary of the general Gaussian-ideal impl
 - Added `cnrs.hybrid` with `CoefficientCodec` and `HybridSeries`, transporting canonical CNRS-A coefficient representations into the CNRS-H Hurwitz-series carrier.
 - Added theorem-aligned tests for ultrametricity, first-difference isometry, coefficientwise convergence, Hurwitz-product transport, Leibniz, integration, exponential eigenfunctions, and deterministic serialization.
 - Included both theorem papers and independent verification scripts under `docs/theory/` and `docs/audits/scripts/`.
-
-<!-- AI-ACK-DOC-UPDATE:START -->
-## Unreleased — documentation
-
-- Added a standardized AI-assistance and authorship acknowledgement to
-  `README.md`.
-- Added `docs/AI_ASSISTANCE.md` with the project acknowledgement, scope, and
-  contributor guidance.
-- Added AI-assisted contribution guidance to `CONTRIBUTING.md`.
-- No software behavior, mathematical result, validation baseline, or release
-  version is changed by this documentation update.
-<!-- AI-ACK-DOC-UPDATE:END -->

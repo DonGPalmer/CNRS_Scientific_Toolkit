@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.11.1"
+__version__ = "0.12.1"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
@@ -108,6 +108,18 @@ from .cnrs_layer2 import Layer2
 from .cnrs_layer2_value import L2Val
 from .cnrs_layer3 import L3Value
 from .cnrs_layer4 import L4Value, L4State
+
+
+# ── Algebraic curves and automatic finite branch-point analysis ─────────────
+from .algebraic_curve import (
+    AlgebraicCurveError,
+    RamificationPoint,
+    BranchPoint as AlgebraicBranchPoint,
+    BranchAnalysis,
+    AlgebraicCurve,
+    algebraic_curve,
+    finite_branch_points,
+)
 
 # ── Scientific toolkit — complex interface ────────────────────────────────────
 
@@ -571,4 +583,19 @@ from .formal_h_algebra import (
     hurwitz_product, derivative as formal_h_derivative,
     integral as formal_h_integral, multiplicative_inverse as formal_h_inverse,
     exponential_eigenfunction,
+)
+
+# ── Generalized node-specific branch objects ────────────────────────────────
+from .generalized_branch import (
+    GeneralizedBranchError,
+    BranchObject,
+    BranchTransition,
+    BranchRegistry,
+    GeneralizedContinuationResult,
+    apply_branch_registry,
+    continue_symbolic_with_registry,
+)
+from .cnrs_h_continuation import (
+    GeneralizedContinuationRebuildResult,
+    continued_jet_from_branch_registry,
 )

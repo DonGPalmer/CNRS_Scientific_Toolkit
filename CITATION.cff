@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "CNRS Scientific Toolkit"
-message: "If you use this software, please cite the repository and the project documentation."
+message: "If you use this software, please cite the Toolkit concept DOI. For Problem 4 completeness or closure claims, also cite the canonical Problem 4 Version 12 record listed in the documentation."
 type: software
 authors:
   - family-names: Palmer
@@ -9,5 +9,9 @@ authors:
 repository-code: "https://github.com/DonGPalmer/CNRS_Scientific_Toolkit"
 url: "https://www.nul1.com/"
 license: Apache-2.0
-version: "0.11.1"
-date-released: 2026-07-08
+version: "0.12.1"
+date-released: 2026-08-04
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.20574852"
+    description: "CNRS Scientific Toolkit concept DOI"

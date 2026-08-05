@@ -81,3 +81,17 @@ from .taylor_model import (
 )
 
 __all__ = [name for name in globals() if not name.startswith("_")]
+
+from ..generalized_branch import (
+    GeneralizedBranchError,
+    BranchObject,
+    BranchTransition,
+    BranchRegistry,
+    GeneralizedContinuationResult,
+    apply_branch_registry,
+    continue_symbolic_with_registry,
+)
+from ..cnrs_h_continuation import (
+    GeneralizedContinuationRebuildResult,
+    continued_jet_from_branch_registry,
+)

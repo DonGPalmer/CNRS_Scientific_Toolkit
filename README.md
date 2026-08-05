@@ -1,5 +1,35 @@
 # CNRS Scientific Toolkit
 
+## v0.12.1 — Algebraic-Curve Branch Detection and P4 Documentation Synchronization
+
+v0.12.1 combines the finite global Riemann-surface layer introduced in v0.12.0 with polynomial algebraic-curve intake and finite branch-point detection. The optional algebraic layer accepts a squarefree relation `P(z,w)=0`, constructs `P_w` and `Res_w(P,P_w)`, and verifies finite ramification points satisfying `P=P_w=0`.
+
+This documentation-synchronized package also aligns the repository's current-status files with the latest CNRS Problem 4 record. The canonical programme reference is:
+
+> Donald G. Palmer, *Partial Operational Completeness of a Positional Number System for Complex Numbers*, Version 12, Zenodo, 2026. DOI: `10.5281/zenodo.21791909`.
+
+The bundled P4-supporting theorem records cover Gaussian-rational eventual periodicity, denominator-ideal termination, canonical periodic normalization, formal CNRS-H algebra, metric/topological completeness, and the hybrid CNRS-A/CNRS-H representation theorem. See [`docs/CNRS_P4_REFERENCE_STATUS.md`](docs/CNRS_P4_REFERENCE_STATUS.md).
+
+### v0.12.1 validation baseline
+
+```text
+1206 passed, 0 failed
+```
+
+The suite reports 917 warnings from selected biological, oscillator, and scale-law tests; these are documented reliable-domain diagnostics, not test failures.
+
+See `RELEASE_NOTES_v0.12.1.md`, `docs/CLAIM_STATUS.md`, and `docs/TEST_STATUS.md` for the exact capability and claim boundaries.
+
+## v0.12.0 — Finite Global Riemann-Surface Layer
+
+v0.12.0 added explicit finite sheets, branch generators, ordered path words, noncommuting monodromy permutations, lifted path transport, connected-component analysis, and local atlas overlap checks. See `docs/RIEMANN_SURFACE_GLOBAL_MODEL.md` and `RELEASE_NOTES_v0.12.0.md`.
+
+## v0.11.2 — Generalized Node-Specific Branch Objects
+
+v0.11.2 added stable symbolic branch keys and a generalized branch registry so separate branch points update only their associated `log`, `sqrt`, or `pow` nodes. It preserves the v0.11.1 aggregate API for backward compatibility and adds representation-invariance tests for `sqrt(z(z-1))` versus `sqrt(z)*sqrt(z-1)`.
+
+Historical validation baseline: `1190 passed, 0 failed`. See `docs/GENERALIZED_BRANCH_OBJECTS.md` and `RELEASE_NOTES_v0.11.2.md`.
+
 ## v0.11.1: Division Classification Consistency Patch
 
 v0.11.1 preserves the v0.11.0 mathematics and scientific workflows while adding a corrected compatibility wrapper for the legacy division-status API. The compatibility classifier now delegates to the numerator-aware theorem-aligned implementation, and new regression tests prevent powers of five from being misclassified as automatically terminating.
@@ -85,7 +115,8 @@ open mathematical questions.
 | Division | Structured finite/periodic/approximate workflows |
 | CNRS-H calculus | Research implementation |
 | Branch-aware workflows | Research implementation |
-| Metric completeness | Open research question |
+| Natural CNRS-A beta-adic metric completeness | Established within current model; completion is `Z_5`/`Q_5`, not `C` |
+| Ordinary complex analytic convergence | Separate open analytic question |
 | e-base CNS theorem | Open research question |
 
 ### Research software principles
@@ -335,20 +366,11 @@ The long-term goal of the project is not to provide a finished theory, but to de
 
 As with many research programs, future work may modify, replace, or extend individual components while preserving useful mathematical or computational ideas that emerge from the investigation.
 
-<!-- AI-ASSISTANCE-ACKNOWLEDGEMENT:START -->
-## AI Assistance and Authorship
-
-The CNRS Scientific Toolkit was developed principally in dialogue with ChatGPT (OpenAI), directed by the author. Claude (Anthropic) also contributed to its development, and was used to audit the implementation and cross-validate its results against the CNRS papers. Neither system is an author. Use of AI assistance is acknowledged in accordance with standard scholarly practice.
-
-Further information and contributor guidance are provided in
-[`docs/AI_ASSISTANCE.md`](docs/AI_ASSISTANCE.md).
-<!-- AI-ASSISTANCE-ACKNOWLEDGEMENT:END -->
-
 ## Repository
 
 **GitHub:** https://github.com/DonGPalmer/CNRS_Scientific_Toolkit  
 **Programme landing page:** https://www.nul1.com  
-**Zenodo:** https://doi.org/10.5281/zenodo.19797882  
+**Zenodo concept DOI:** https://doi.org/10.5281/zenodo.20574852  
 **ORCID:** https://orcid.org/0000-0003-4335-5533
 
 ## What is included
@@ -476,13 +498,13 @@ Branch metadata is preserved through expression construction, substitution, diff
 
 ## Test status
 
-Current validation status:
+Current v0.12.1 validation status:
 
 ```text
-1121 passed, 6 xfailed
+1206 passed, 0 failed
 ```
 
-The 6 expected failures document known representational limits, including transcendental numbers and long-period rationals. They are not regressions.
+The warning stream contains documented reliable-domain diagnostics from selected scientific-workflow tests. These warnings are retained because they identify evaluations outside estimated local reliability ranges.
 
 See [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md), [`docs/API_OVERVIEW.md`](docs/API_OVERVIEW.md), [`docs/TEST_STATUS.md`](docs/TEST_STATUS.md), [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md), [`docs/EXAMPLE_SMOKE_STATUS.md`](docs/EXAMPLE_SMOKE_STATUS.md), [`docs/CLI_QUICKSTART.md`](docs/CLI_QUICKSTART.md), and [`docs/SYMBOLIC_CALCULUS_QUICKSTART.md`](docs/SYMBOLIC_CALCULUS_QUICKSTART.md) for details.
 
@@ -594,6 +616,7 @@ The symbolic layer currently supports `+`, `-`, `*`, `/`, powers, `exp`, `log`, 
 - [`docs/RESEARCH_STATUS.md`](docs/RESEARCH_STATUS.md) — research-code status and maturity levels.
 - [`docs/API_OVERVIEW.md`](docs/API_OVERVIEW.md) — compact module map.
 - [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md) — tested/practical/open claim boundaries.
+- [`docs/CNRS_P4_REFERENCE_STATUS.md`](docs/CNRS_P4_REFERENCE_STATUS.md) — canonical Problem 4 citation and supporting theorem map.
 - [`docs/TEST_STATUS.md`](docs/TEST_STATUS.md) — test-suite status.
 - [`docs/EXAMPLE_SMOKE_STATUS.md`](docs/EXAMPLE_SMOKE_STATUS.md) — runnable example status.
 
@@ -797,7 +820,8 @@ Core CNRS-A status:
 | Multiplication | Closure-theorem aligned / implemented |
 | Division | Structured finite-periodic-approximate workflows |
 | CNRS-H calculus | Research implementation |
-| Metric completeness | Open research question |
+| Natural CNRS-A beta-adic metric completeness | Established within current model; completion is `Z_5`/`Q_5`, not `C` |
+| Ordinary complex analytic convergence | Separate open analytic question |
 | e-base CNS theorem | Open research question |
 
 The Toolkit distinguishes mathematical results, constructive algorithms, computational verification, and experimental workflows.
@@ -850,3 +874,33 @@ df = f.derivative()
 ```
 
 Formal coefficientwise completeness is distinct from analytic convergence of the associated EGF in the ordinary complex norm.
+
+## Finite global Riemann-surface model (v0.12.0)
+
+`cnrs.riemann_surface` represents finite branched covers using explicit sheets, branch-locus generators, ordered path words, and monodromy permutations. Unlike winding-vector-only continuation, it preserves loop order and therefore supports noncommuting finite monodromy. See `docs/RIEMANN_SURFACE_GLOBAL_MODEL.md` and `examples/riemann_surface_demo.py`.
+
+## Algebraic curves and finite branch-point detection (v0.12.1)
+
+The optional algebraic layer accepts a polynomial relation `P(z,w)=0` and
+computes candidate finite branch points of the projection `(z,w) -> z` from
+
+```text
+P(z,w) = 0,
+dP/dw(z,w) = 0.
+```
+
+```python
+from cnrs.algebraic_curve import finite_branch_points
+
+analysis = finite_branch_points("w**2 - z*(z-1)")
+print(analysis.finite_branch_values)  # (0, 1)
+```
+
+The result includes the resultant, discriminant where available, projected
+branch values, ramification points, multiplicities, numerical residuals, and
+warnings. Exact SymPy calculations are used where possible, with an explicit
+numerical fallback. Install with `pip install cnrs[algebraic]`.
+
+Current boundary: finite branch values only. Points at infinity, normalization,
+Puiseux charts, automatic monodromy, and certified continuation remain future
+stages.
