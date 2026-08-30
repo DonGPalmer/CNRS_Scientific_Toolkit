@@ -56,7 +56,7 @@ THEOREM_REGISTRY: tuple[TheoremRecord, ...] = (
         "Python topology utilities provide finite theorem-aligned metric/isometry witnesses; the Toolkit does not claim a runtime Z_5/Q_5 object or Lean-extracted implementation.",
         formal_system="Lean 4 / Mathlib 4.33.0",
         formal_source="formal/lean/CnrsQ2",
-        formal_status="Lean-verified mathematical theorem",
+        formal_status="Lean-verified dense beta-place embedding/completion witness",
     ),
     TheoremRecord(
         "CNRS Q2 unique beta-adic digit expansion",
@@ -66,7 +66,7 @@ THEOREM_REGISTRY: tuple[TheoremRecord, ...] = (
         "This is a completion-level formal theorem. Current Python expansion utilities are independently implemented and do not constitute a refinement proof or a general runtime Z_5 infinite-stream implementation.",
         formal_system="Lean 4 / Mathlib 4.33.0",
         formal_source="formal/lean/CnrsQ2/CnrsQ2/DigitExpansion.lean",
-        formal_status="Lean-verified mathematical theorem",
+        formal_status="Lean-verified valuation-ring digit-expansion theorem",
     ),
     TheoremRecord(
         "Scoped addition normalisation",

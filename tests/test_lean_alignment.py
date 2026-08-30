@@ -87,12 +87,15 @@ def test_formal_sources_have_no_sorry_tokens():
 
 
 def test_q2_theorem_registry_carries_formal_metadata():
-    for name in (
-        "CNRS Q2 beta-adic completion",
-        "CNRS Q2 unique beta-adic digit expansion",
-    ):
+    expected = {
+        "CNRS Q2 beta-adic completion":
+            "Lean-verified dense beta-place embedding/completion witness",
+        "CNRS Q2 unique beta-adic digit expansion":
+            "Lean-verified valuation-ring digit-expansion theorem",
+    }
+    for name, formal_status in expected.items():
         record = get_theorem_record(name)
         assert record.status == TheoremStatus.THEOREM_BACKED
         assert record.formal_system == "Lean 4 / Mathlib 4.33.0"
         assert record.formal_source and record.formal_source.startswith("formal/lean/CnrsQ2")
-        assert record.formal_status == "Lean-verified mathematical theorem"
+        assert record.formal_status == formal_status
