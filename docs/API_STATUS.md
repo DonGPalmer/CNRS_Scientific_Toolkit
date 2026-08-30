@@ -30,7 +30,7 @@
 
 ## Topology and hybrid APIs
 
-- `symbolic_distance`, `beta_adic_distance`, and `first_difference_isometry`: theorem-aligned finite witnesses for the natural CNRS-A ultrametric structure.
+- `symbolic_distance`, `beta_adic_distance`, and `first_difference_isometry`: theorem-aligned finite witnesses for the natural CNRS-A ultrametric structure. The underlying Q2 completion theorem is Lean-verified; these Python utilities remain independently implemented finite witnesses.
 - `CoefficientCodec` and `HybridSeries`: exact transport of finite Hurwitz-series operations through a caller-supplied canonical coefficient codec.
 
 These APIs do not identify beta-adic convergence with ordinary complex convergence.

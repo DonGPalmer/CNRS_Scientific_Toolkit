@@ -4,6 +4,8 @@
 
 `1206 passed`, `0 failed` on 2026-08-04. The suite reports 917 retained reliable-domain warnings from selected pre-existing scientific-workflow tests.
 
+Post-v0.12.1 Lean-integration tree: `1211 passed`, `0 failed` on 2026-08-30, with the same 917 warnings. The five additional tests guard formal-source identity and theorem-alignment metadata rather than adding new arithmetic behavior.
+
 ## Established within current model
 
 - finite Gaussian-integer encoding and decoding;
@@ -12,7 +14,7 @@
 - numerator-aware denominator-ideal classification for arbitrary Gaussian numerator/denominator pairs;
 - minimal Laurent-offset analysis and canonical periodic normalization;
 - formal CNRS-H Hurwitz-series coefficient algebra and finite-truncation operations;
-- natural symbolic-prefix and beta-adic completeness of CNRS-A strings, with completion topologically `Z_5` and finite-Laurent field topologically `Q_5`;
+- natural symbolic-prefix and beta-adic completeness of CNRS-A strings, with completion topologically `Z_5` and finite-Laurent field topologically `Q_5`; the Q2 ring/field completion core and unique beta-adic digit expansion are machine-checked in Lean 4;
 - coefficientwise CNRS-H completeness over a complete coefficient ring;
 - hybrid CNRS-A/CNRS-H representation transport, conditional on a canonical coefficient codec for the selected ring;
 - finite-sheet monodromy, lifted path transport, and atlas consistency for explicitly supplied finite covers;
@@ -37,7 +39,7 @@
 - automatic compact algebraic Riemann-surface construction including infinity, singular normalization, Puiseux charts, and certified continuation;
 - general physical necessity or empirical advantage of CNRS over standard complex representation.
 
-The natural beta-adic completeness question is no longer listed as open. It is distinct from ordinary complex analytic convergence, which remains a separate problem.
+The natural beta-adic completeness question is no longer listed as open. Selected Q2 completion and digit-expansion statements are machine-checked under `formal/lean/CnrsQ2/`; this formal theorem evidence does not by itself certify the independently implemented Python routines. Beta-adic completeness remains distinct from ordinary complex analytic convergence.
 
 ## Canonical Problem 4 reference
 

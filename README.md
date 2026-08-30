@@ -18,6 +18,12 @@ The bundled P4-supporting theorem records cover Gaussian-rational eventual perio
 
 The suite reports 917 warnings from selected biological, oscillator, and scale-law tests; these are documented reliable-domain diagnostics, not test failures.
 
+### Lean formal verification (post-v0.12.1 integration)
+
+Selected CNRS Q2 beta-adic completion and digit-expansion claims are machine-checked in Lean 4 under `formal/lean/CnrsQ2/`. Lean verification runs in an independent GitHub Actions workflow and is not folded into the historical v0.12.1 Python baseline above. The Python Toolkit remains an independently implemented theorem-aligned computational layer; see [`docs/LEAN_FORMALIZATION_ALIGNMENT.md`](docs/LEAN_FORMALIZATION_ALIGNMENT.md) for the exact theorem-to-software crosswalk and scope boundary.
+
+Post-integration Python validation of this merged tree on 2026-08-30: `1211 passed, 0 failed` with the same 917 documented reliable-domain warnings. The five added tests are repository guards for the formal-source manifest, theorem crosswalk, and formal-proof metadata; they do not alter arithmetic behavior.
+
 See `RELEASE_NOTES_v0.12.1.md`, `docs/CLAIM_STATUS.md`, and `docs/TEST_STATUS.md` for the exact capability and claim boundaries.
 
 ## v0.12.0 — Finite Global Riemann-Surface Layer
@@ -380,7 +386,8 @@ cnrs/                  Core CNRS implementation and scientific modules
 cnrs/science/          Scientific workflow helpers and observation maps
 examples/              Runnable CNRS and scientific workflow examples
 tests/                 Pytest test suite
-docs/                  Research status, API overview, claim/test status, and example-smoke status
+docs/                  Research status, API overview, claim/test status, and formal-alignment records
+formal/                Machine-checked formalizations and formal-verification metadata
 README.md              Project overview and quick start
 RELEASE_NOTES.md       Release history
 CITATION.cff           Citation metadata
@@ -617,6 +624,8 @@ The symbolic layer currently supports `+`, `-`, `*`, `/`, powers, `exp`, `log`, 
 - [`docs/API_OVERVIEW.md`](docs/API_OVERVIEW.md) — compact module map.
 - [`docs/CLAIM_STATUS.md`](docs/CLAIM_STATUS.md) — tested/practical/open claim boundaries.
 - [`docs/CNRS_P4_REFERENCE_STATUS.md`](docs/CNRS_P4_REFERENCE_STATUS.md) — canonical Problem 4 citation and supporting theorem map.
+- [`docs/THEOREM_ALIGNMENT.md`](docs/THEOREM_ALIGNMENT.md) — theorem-to-implementation status map.
+- [`docs/LEAN_FORMALIZATION_ALIGNMENT.md`](docs/LEAN_FORMALIZATION_ALIGNMENT.md) — machine-checked Q2 theorem-to-software crosswalk and verification boundary.
 - [`docs/TEST_STATUS.md`](docs/TEST_STATUS.md) — test-suite status.
 - [`docs/EXAMPLE_SMOKE_STATUS.md`](docs/EXAMPLE_SMOKE_STATUS.md) — runnable example status.
 

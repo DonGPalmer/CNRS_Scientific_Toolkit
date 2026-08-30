@@ -1,3 +1,13 @@
+# Unreleased — Lean Q2 Formal-Verification Integration
+
+- Added the governed CNRS Q2 Lean 4 project under `formal/lean/CnrsQ2/`, pinned to Lean 4 v4.33.0 and Mathlib v4.33.0.
+- Added an independent `.github/workflows/lean.yml` build lane; Lean results remain separate from the v0.12.1 Python release baseline.
+- Added `docs/LEAN_FORMALIZATION_ALIGNMENT.md` with the theorem-to-software crosswalk and explicit refinement boundary.
+- Extended `cnrs.theorem_alignment.TheoremRecord` with optional formal-proof metadata and registered the Q2 beta-adic completion and unique digit-expansion theorems.
+- Added repository guards for governed Lean source identity, theorem names, and formal metadata.
+- No Python arithmetic algorithm was changed by this integration.
+- Post-integration Python validation: `1211 passed, 0 failed`, with 917 retained reliable-domain warnings. The actual Lean `lake build` is assigned to the independent GitHub Actions lane; the governed Lean manifest records the previously clean-built unchanged proof code.
+
 # v0.12.1 — Algebraic-Curve Branch Detection and P4 Documentation Synchronization
 
 See `RELEASE_NOTES_v0.12.1.md`. Adds polynomial algebraic-curve intake and finite branch-point detection, synchronizes current documentation with the canonical Problem 4 Version 12 record, updates citation metadata to v0.12.1, and records the validated baseline of `1206 passed, 0 failed`.

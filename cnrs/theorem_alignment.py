@@ -35,6 +35,9 @@ class TheoremRecord:
     status: TheoremStatus
     statement: str
     implementation_note: str = ""
+    formal_system: str | None = None
+    formal_source: str | None = None
+    formal_status: str | None = None
 
 
 THEOREM_REGISTRY: tuple[TheoremRecord, ...] = (
@@ -43,7 +46,27 @@ THEOREM_REGISTRY: tuple[TheoremRecord, ...] = (
         "cnrs.cnrs_repr",
         TheoremStatus.THEOREM_BACKED,
         "Gaussian integers have finite canonical CNRS-A representations in base z0=-2+i.",
-        "Implemented by greedy digit extraction and canonical formatting.",
+        "Implemented by greedy digit extraction and canonical formatting. Lean verifies selected base/primality and residue-digit foundations, not this entire executable routine.",
+    ),
+    TheoremRecord(
+        "CNRS Q2 beta-adic completion",
+        "cnrs.topology",
+        TheoremStatus.THEOREM_BACKED,
+        "For beta=-2+i, the natural beta-adic completion is represented concretely at ring level by Z_5 and at field level by Q_5, with beta mapped to norm 1/5.",
+        "Python topology utilities provide finite theorem-aligned metric/isometry witnesses; the Toolkit does not claim a runtime Z_5/Q_5 object or Lean-extracted implementation.",
+        formal_system="Lean 4 / Mathlib 4.33.0",
+        formal_source="formal/lean/CnrsQ2",
+        formal_status="Lean-verified mathematical theorem",
+    ),
+    TheoremRecord(
+        "CNRS Q2 unique beta-adic digit expansion",
+        "cnrs.topology",
+        TheoremStatus.THEOREM_BACKED,
+        "Every x in Z_5 has a unique Fin 5 digit sequence whose beta-power partial sums converge to x.",
+        "This is a completion-level formal theorem. Current Python expansion utilities are independently implemented and do not constitute a refinement proof or a general runtime Z_5 infinite-stream implementation.",
+        formal_system="Lean 4 / Mathlib 4.33.0",
+        formal_source="formal/lean/CnrsQ2/CnrsQ2/DigitExpansion.lean",
+        formal_status="Lean-verified mathematical theorem",
     ),
     TheoremRecord(
         "Scoped addition normalisation",
@@ -150,12 +173,13 @@ def get_theorem_record(name_or_module: str) -> TheoremRecord:
 def theorem_alignment_table(records: Iterable[TheoremRecord] | None = None) -> str:
     rows = list(records if records is not None else THEOREM_REGISTRY)
     lines = [
-        "| Result | Module | Status | Statement |",
-        "|---|---|---|---|",
+        "| Result | Module | Status | Formal verification | Statement |",
+        "|---|---|---|---|---|",
     ]
     for item in rows:
         statement = item.statement.replace("|", "\\|")
-        lines.append(f"| {item.name} | `{item.module}` | {item.status.value} | {statement} |")
+        formal = (item.formal_status or "").replace("|", "\\|")
+        lines.append(f"| {item.name} | `{item.module}` | {item.status.value} | {formal} | {statement} |")
     return "\n".join(lines)
 
 

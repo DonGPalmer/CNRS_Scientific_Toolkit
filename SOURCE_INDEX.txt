@@ -1,10 +1,13 @@
-# CNRS Scientific Toolkit v0.12.1 source index
-# Complete source release; documentation synchronized with CNRS Problem 4 Version 12.
-# Validation: 1206 passed, 0 failed, 917 documented warnings (2026-08-04).
-# Files listed: 264
+# CNRS Scientific Toolkit v0.12.1 + Lean Q2 formal-verification integration source index
+# Complete v0.12.1 source tree plus post-release Lean integration; documentation synchronized with CNRS Problem 4 Version 12.
+# Historical v0.12.1 Python baseline: 1206 passed, 0 failed, 917 documented warnings (2026-08-04).
+# Merged-tree Python validation: 1211 passed, 0 failed, 917 documented warnings (2026-08-30).
+# Lean: governed Q2 v3 source integrated; GitHub Actions performs the pinned Lean/Mathlib lake build independently.
+# Files listed: 281
 
 SOURCE_INDEX.txt
 .gitattributes
+.github/workflows/lean.yml
 .github/workflows/tests.yml
 .gitignore
 CITATION.cff
@@ -142,6 +145,7 @@ docs/CNRS_TOPOLOGY_AND_HYBRID.md
 docs/EXAMPLE_SMOKE_STATUS.md
 docs/GAUSSIAN_RATIONAL_THEOREMS.md
 docs/GENERALIZED_BRANCH_OBJECTS.md
+docs/LEAN_FORMALIZATION_ALIGNMENT.md
 docs/RESEARCH_STATUS.md
 docs/RIEMANN_SURFACE_GLOBAL_MODEL.md
 docs/STATUS_VOCABULARY_MAPPING.md
@@ -199,6 +203,19 @@ examples/science_workflows/symbolic_chain_rule_demo.py
 examples/science_workflows/symbolic_integration_demo.py
 examples/science_workflows/symbolic_to_cnrs_h_demo.py
 examples/science_workflows/turing_scale_exit.py
+formal/README.md
+formal/lean/CnrsQ2/CnrsQ2.lean
+formal/lean/CnrsQ2/CnrsQ2/Basic.lean
+formal/lean/CnrsQ2/CnrsQ2/Density.lean
+formal/lean/CnrsQ2/CnrsQ2/DigitAlphabet.lean
+formal/lean/CnrsQ2/CnrsQ2/DigitExpansion.lean
+formal/lean/CnrsQ2/CnrsQ2/Embedding.lean
+formal/lean/CnrsQ2/CnrsQ2/FieldLevel.lean
+formal/lean/CnrsQ2/CnrsQ2/HenselRoot.lean
+formal/lean/CnrsQ2/MANIFEST.md
+formal/lean/CnrsQ2/README.md
+formal/lean/CnrsQ2/lakefile.toml
+formal/lean/CnrsQ2/lean-toolchain
 pyproject.toml
 tests/test_algebraic_curve.py
 tests/test_architecture_v060.py
@@ -246,6 +263,7 @@ tests/test_generalized_branch.py
 tests/test_hybrid_representation_v011.py
 tests/test_independent_cross_validation_v0103.py
 tests/test_lagrange_inversion.py
+tests/test_lean_alignment.py
 tests/test_native_status_v071.py
 tests/test_normalization_v081.py
 tests/test_physics.py
@@ -266,4 +284,5 @@ tests/test_theorem_alignment_v081.py
 tests/test_topology_v011.py
 tools/audit_native_status.py
 tools/build_release.py
+tools/check_lean_alignment.py
 tools/toolkit_audit_crossval.py

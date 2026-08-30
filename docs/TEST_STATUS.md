@@ -10,6 +10,12 @@ Validation run on 2026-08-04:
 
 The suite reports 917 retained reliable-domain warnings from selected biological, oscillator, and scale-law tests. Warnings are not silently suppressed because they identify evaluations outside estimated local reliability ranges.
 
+## Independent Lean verification lane
+
+The post-v0.12.1 repository includes `formal/lean/CnrsQ2/` and `.github/workflows/lean.yml`. Lean/Mathlib verification is reported independently from the historical `1206 passed` Python release baseline. Repository-level pytest guards check that the governed Lean manifest, theorem names, and theorem-registry metadata remain synchronized; GitHub Actions performs the actual `lake build`.
+
+Merged-tree validation on 2026-08-30: `1211 passed, 0 failed`, with 917 retained warnings. The increase from 1206 to 1211 is exactly five repository-level Lean-integration guards. Lean itself was not re-run in the packaging environment; the pinned GitHub workflow performs `lake build`.
+
 ## Principal validation groups
 
 - finite CNRS-A encoding, normalization, arithmetic, and transducer behavior;
