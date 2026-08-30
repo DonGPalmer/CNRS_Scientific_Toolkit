@@ -1,0 +1,64 @@
+name: Lean formal verification
+
+on:
+  push:
+    paths:
+      - 'formal/lean/**'
+      - '.github/workflows/lean.yml'
+  pull_request:
+    paths:
+      - 'formal/lean/**'
+      - '.github/workflows/lean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cnrs-q2:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: formal/lean/CnrsQ2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Verify pinned Lean toolchain
+        run: lean --version
+
+      - name: Fetch Mathlib v4.33.0
+        run: |
+          mkdir -p .lake/packages
+          if [ ! -d .lake/packages/mathlib ]; then
+            git clone --depth 1 --branch v4.33.0 https://github.com/leanprover-community/mathlib4 .lake/packages/mathlib
+          fi
+
+      - name: Fetch targeted Mathlib cache
+        run: |
+          lake exe cache get \
+            Mathlib.NumberTheory.Padics.PadicNumbers \
+            Mathlib.NumberTheory.Zsqrtd.GaussianInt \
+            Mathlib.RingTheory.DedekindDomain.AdicValuation \
+            Mathlib.NumberTheory.Padics.Hensel \
+            Mathlib.NumberTheory.Padics.RingHoms \
+            Mathlib.Data.ZMod.Basic \
+            Mathlib.Analysis.Normed.Group.Ultra
+
+      - name: Verify governed source manifest
+        run: python ../../../tools/check_lean_alignment.py
+
+      - name: Build CnrsQ2
+        run: lake build
+
+      - name: Reject sorry tokens in maintained source
+        run: |
+          if grep -R -n -P '\b(?:sorry|sorryAx)\b' --include='*.lean' CnrsQ2 CnrsQ2.lean; then
+            echo 'Unexpected sorry/sorryAx token found.' >&2
+            exit 1
+          fi
