@@ -1,7 +1,7 @@
 # CnrsQ2 Lean project — manifest
 
-State: **Phase-5C certified finite-left carrier compile candidate** (August 30, 2026)
-Base verified state: Phase-5B Q2b(iv) metric core, GitHub Actions `cnrs-q2` PASS (`Upload 5B`)
+State: **Phase-5D raw finite-left carrier compile candidate** (August 30, 2026)
+Base verified state: Phases 1–5B have pinned GitHub Actions `cnrs-q2` PASS; Phase 5C repository guards are green and its source remains in the working tree.
 Toolchain: `leanprover/lean4:v4.33.0` | Mathlib: `v4.33.0`
 
 ## Build and proof state
@@ -9,11 +9,13 @@ Toolchain: `leanprover/lean4:v4.33.0` | Mathlib: `v4.33.0`
 - Phases 1–4 are the governed v3 source.
 - Phase 5A (`FieldDigitExpansion.lean`) passed the pinned GitHub Actions `lake build`; it proves the nonzero field-level finite-negative-index expansion Q2b(iii).
 - Phase 5B (`DigitIsometry.lean`) passed the pinned GitHub Actions `lake build`; it proves the first-differing-digit norm theorem and integer-shifted field formula, the metric core of Q2b(iv).
-- This candidate adds `CnrsQ2/FiniteLeftCarrier.lean` and imports it from `CnrsQ2.lean`.
-- The Phase-5C target is a certified normalized finite-left carrier with a bijective evaluation map onto `ℚ_[5]`, plus the manuscript-style first-difference isometry on each fixed valuation stratum.
-- The new source contains no `sorry` or `sorryAx` tokens.
-- This Phase-5C candidate is **not yet a governed v4 snapshot**. Its new Lean code requires the pinned GitHub Actions `lake build` before promotion.
-- Removing convergence/normalization certificates from the raw carrier syntax and proving the finite-support `= R_A` converse remain later targets.
+- Phase 5C (`FiniteLeftCarrier.lean`) packages a certified normalized finite-left carrier and a bijective evaluation map; its Python/formal-tree guards are green in the current repository state.
+- This Phase-5D candidate adds `CnrsQ2/RawFiniteLeftCarrier.lean` and imports it from `CnrsQ2.lean`.
+- Phase 5D proves convergence for every raw `ℕ → Fin 5` stream from the existing uniform tail bound and completeness of `ℤ_[5]`; it then removes convergence/normalization certificates from finite-left syntax.
+- The Phase-5D targets are: raw evaluation bijective onto `ℚ_[5]`; exact nonzero norm from the integer shift; same-shift first-difference norm; and unequal-shift ultrametric max formula.
+- The new source contains no proof placeholders.
+- This Phase-5D candidate is **not yet a governed v4 snapshot**. Its new Lean code requires the pinned GitHub Actions `lake build` before promotion.
+- The finite-support `= R_A` converse remains separate because it still requires a formal finite CNS expansion theorem for Gaussian integers.
 
 ## Contents and SHA-256
 
@@ -22,7 +24,7 @@ Toolchain: `leanprover/lean4:v4.33.0` | Mathlib: `v4.33.0`
 | `README.md` | 6,485 | `af38e6cc876dbf96…` |
 | `lakefile.toml` | 177 | `9a7871914e10bb6b…` |
 | `lean-toolchain` | 25 | `302cd63c54178885…` |
-| `CnrsQ2.lean` | 1,567 | `45bb97eeca541d54…` |
+| `CnrsQ2.lean` | 1,857 | `407b63e43a57decf…` |
 | `CnrsQ2/Basic.lean` | 1,824 | `f8c23159944b12dc…` |
 | `CnrsQ2/DigitAlphabet.lean` | 2,085 | `67b8dcec516be649…` |
 | `CnrsQ2/HenselRoot.lean` | 1,855 | `9a4e582e52ded681…` |
@@ -33,6 +35,7 @@ Toolchain: `leanprover/lean4:v4.33.0` | Mathlib: `v4.33.0`
 | `CnrsQ2/FieldDigitExpansion.lean` | 8,761 | `0518ad6e9d97b490…` |
 | `CnrsQ2/DigitIsometry.lean` | 5,052 | `92201078a61f23bb…` |
 | `CnrsQ2/FiniteLeftCarrier.lean` | 7,643 | `53372c46d5ffb798…` |
+| `CnrsQ2/RawFiniteLeftCarrier.lean` | 13,539 | `907963bb5914d3b3…` |
 
 ## Project structure convention
 

@@ -17,9 +17,12 @@ CNRS Q2 formalization — umbrella file.
   FiniteLeftCarrier: certified normalized finite-left carrier, bijective
               evaluation map onto ℚ_[5], and fixed-valuation-stratum
               first-difference isometry.
+  RawFiniteLeftCarrier: Phase 5D removes convergence/normalization certificates:
+              every raw digit stream converges automatically; raw finite-left
+              evaluation is bijective onto ℚ_[5]; same-shift and cross-shift
+              norm formulas give the full first-difference metric split.
 
-Removing convergence certificates from the raw syntax and the finite-support
-= R_A converse remain separate later targets.
+The finite-support = R_A converse remains a separate later target.
 -/
 import CnrsQ2.Basic
 import CnrsQ2.DigitAlphabet
@@ -32,3 +35,4 @@ import CnrsQ2.FieldDigitExpansion
 
 import CnrsQ2.DigitIsometry
 import CnrsQ2.FiniteLeftCarrier
+import CnrsQ2.RawFiniteLeftCarrier
