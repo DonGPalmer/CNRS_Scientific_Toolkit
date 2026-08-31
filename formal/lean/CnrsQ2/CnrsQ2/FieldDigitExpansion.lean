@@ -3,12 +3,12 @@ CNRS Q2 formalization — Phase 5 (August 30, 2026): field-level digit carrier.
 
 This module extends the valuation-ring expansion theorem from `DigitExpansion`
 to nonzero elements of ℚ_[5].  For x ≠ 0 we normalize by the exact p-adic
-valuation v(x), obtain a unit of ℤ_[5], expand that unit uniquely in powers of
-π = image(β), and scale back by π^v(x).  The result is the concrete form of
-thm:q2_digit_carrier(iii): finitely many negative-index digits, with the first
-occupied digit at the valuation index and nonzero.
+valuation v(x), obtain a norm-one element of ℤ_[5], expand that element uniquely
+in powers of π = image(β), and scale back by π^v(x).  The result is the concrete
+form of thm:q2_digit_carrier(iii): finitely many negative-index digits, with the
+first occupied digit at the valuation index and nonzero.
 
-This first Phase-5 increment deliberately stops at the field-carrier
+This Phase-5A increment deliberately stops at the field-carrier
 existence/uniqueness theorem.  The first-differing-digit isometry theorem for
 thm:q2_digit_carrier(iv) is a separate follow-on increment after this module
 has passed the pinned GitHub Lean build.
@@ -31,7 +31,10 @@ noncomputable def pi5Q : ℚ_[5] := (pi5 : ℚ_[5])
 
 /-- The field norm of the chosen β-uniformizer is exactly 1/5. -/
 theorem norm_pi5Q : ‖pi5Q‖ = (5 : ℝ)⁻¹ := by
-  simpa [pi5Q, PadicInt.norm_def] using norm_pi5
+  calc
+    ‖pi5Q‖ = ‖(pi5 : ℚ_[5])‖ := by rfl
+    _ = ‖pi5‖ := (PadicInt.norm_def (z := pi5)).symm
+    _ = (5 : ℝ)⁻¹ := norm_pi5
 
 /-- The chosen field uniformizer is nonzero. -/
 theorem pi5Q_ne_zero : pi5Q ≠ 0 := by
@@ -43,18 +46,27 @@ theorem pi5Q_ne_zero : pi5Q ≠ 0 := by
 /-- Integer powers of the chosen β-uniformizer have the expected norm. -/
 theorem norm_pi5Q_zpow (n : ℤ) :
     ‖pi5Q ^ n‖ = (5 : ℝ) ^ (-n) := by
-  rw [norm_zpow, norm_pi5Q, inv_zpow']
+  rw [norm_zpow, norm_pi5Q]
+  exact inv_zpow' (5 : ℝ) n
+
+/-- The raw normalized representative π^{-v(x)}x in the field. -/
+noncomputable def rawFieldUnit (x : ℚ_[5]) : ℚ_[5] :=
+  pi5Q ^ (-Padic.valuation x) * x
+
+/-- For nonzero x, the raw normalized representative has norm exactly one. -/
+theorem norm_rawFieldUnit (x : ℚ_[5]) (hx : x ≠ 0) :
+    ‖rawFieldUnit x‖ = 1 := by
+  rw [rawFieldUnit, _root_.norm_mul, norm_pi5Q_zpow,
+      Padic.norm_eq_zpow_neg_valuation hx]
+  simp only [neg_neg]
+  change (5 : ℝ) ^ (Padic.valuation x) * (5 : ℝ) ^ (-Padic.valuation x) = 1
+  rw [mul_comm]
+  exact zpow_neg_mul_zpow_self (Padic.valuation x) (by norm_num : (5 : ℝ) ≠ 0)
 
 /-- The normalized valuation-ring representative of a nonzero p-adic field
     element: π^{-v(x)}x has norm 1, hence lies in ℤ_[5]. -/
 noncomputable def fieldUnit (x : ℚ_[5]) (hx : x ≠ 0) : ℤ_[5] :=
-  ⟨pi5Q ^ (-Padic.valuation x) * x, by
-    have h5 : (5 : ℝ) ≠ 0 := by norm_num
-    rw [_root_.norm_mul, norm_pi5Q_zpow,
-        Padic.norm_eq_zpow_neg_valuation hx]
-    simp only [neg_neg]
-    rw [← zpow_add₀ h5, add_neg_cancel, zpow_zero]
-    norm_num⟩
+  ⟨rawFieldUnit x, by rw [norm_rawFieldUnit x hx]⟩
 
 @[simp]
 theorem coe_fieldUnit (x : ℚ_[5]) (hx : x ≠ 0) :
@@ -64,18 +76,19 @@ theorem coe_fieldUnit (x : ℚ_[5]) (hx : x ≠ 0) :
     the metric sense: its norm is exactly 1. -/
 theorem norm_fieldUnit (x : ℚ_[5]) (hx : x ≠ 0) :
     ‖fieldUnit x hx‖ = 1 := by
-  have h5 : (5 : ℝ) ≠ 0 := by norm_num
-  rw [PadicInt.norm_def, coe_fieldUnit, _root_.norm_mul,
-      norm_pi5Q_zpow, Padic.norm_eq_zpow_neg_valuation hx]
-  simp only [neg_neg]
-  rw [← zpow_add₀ h5, add_neg_cancel, zpow_zero]
+  rw [PadicInt.norm_def, coe_fieldUnit]
+  exact norm_rawFieldUnit x hx
 
 /-- Scaling the normalized valuation-ring representative back by π^{v(x)}
     recovers x exactly. -/
 theorem fieldUnit_reconstruct (x : ℚ_[5]) (hx : x ≠ 0) :
     pi5Q ^ (Padic.valuation x) * (fieldUnit x hx : ℚ_[5]) = x := by
-  rw [coe_fieldUnit, ← mul_assoc, ← zpow_add₀ pi5Q_ne_zero,
-      add_neg_cancel, zpow_zero, one_mul]
+  rw [coe_fieldUnit, ← mul_assoc]
+  have hpow :
+      pi5Q ^ (Padic.valuation x) * pi5Q ^ (-Padic.valuation x) = 1 := by
+    rw [mul_comm]
+    exact zpow_neg_mul_zpow_self (Padic.valuation x) pi5Q_ne_zero
+  rw [hpow, one_mul]
 
 /-! ### Step 2: the leading digit of a normalized nonzero field element -/
 
@@ -114,8 +127,8 @@ noncomputable def fieldPartialSum (n : ℤ) (d : ℕ → Fin 5) (N : ℕ) : ℚ_
 /-- Multiplying a field partial sum by π^{-n} removes its integer shift. -/
 theorem unscale_fieldPartialSum (n : ℤ) (d : ℕ → Fin 5) (N : ℕ) :
     pi5Q ^ (-n) * fieldPartialSum n d N = (partialSum d N : ℚ_[5]) := by
-  rw [fieldPartialSum, ← mul_assoc, ← zpow_add₀ pi5Q_ne_zero,
-      neg_add_cancel, zpow_zero, one_mul]
+  rw [fieldPartialSum, ← mul_assoc,
+      zpow_neg_mul_zpow_self n pi5Q_ne_zero, one_mul]
 
 /-- Coercing the canonical ℤ_[5] partial sums into ℚ_[5] preserves their
     convergence. -/
@@ -123,7 +136,10 @@ theorem tendsto_coe_partialSum_digitSeq (u : ℤ_[5]) :
     Filter.Tendsto
       (fun N => (partialSum (digitSeq u) N : ℚ_[5]))
       Filter.atTop (nhds (u : ℚ_[5])) := by
-  simpa [Function.comp_def] using
+  change Filter.Tendsto
+    (Subtype.val ∘ partialSum (digitSeq u))
+    Filter.atTop (nhds (Subtype.val u))
+  exact
     (PadicInt.isOpenEmbedding_coe.continuous.tendsto u).comp
       (tendsto_partialSum_digitSeq u)
 
@@ -133,9 +149,15 @@ theorem tendsto_fieldPartialSum_digitSeq (x : ℚ_[5]) (hx : x ≠ 0) :
     Filter.Tendsto
       (fieldPartialSum (Padic.valuation x) (digitSeq (fieldUnit x hx)))
       Filter.atTop (nhds x) := by
+  change Filter.Tendsto
+    (fun N =>
+      pi5Q ^ (Padic.valuation x) *
+        (partialSum (digitSeq (fieldUnit x hx)) N : ℚ_[5]))
+    Filter.atTop (nhds x)
   have hcoe := tendsto_coe_partialSum_digitSeq (fieldUnit x hx)
   have hscaled := Filter.Tendsto.const_mul (pi5Q ^ (Padic.valuation x)) hcoe
-  simpa [fieldPartialSum, fieldUnit_reconstruct x hx] using hscaled
+  rw [fieldUnit_reconstruct x hx] at hscaled
+  exact hscaled
 
 /-- Uniqueness: any digit stream converging to x with the canonical valuation
     shift is the canonical digit stream of the normalized valuation-ring unit. -/
@@ -146,14 +168,25 @@ theorem fieldDigitSeq_unique (x : ℚ_[5]) (hx : x ≠ 0) (f : ℕ → Fin 5)
     f = digitSeq (fieldUnit x hx) := by
   have hunscaledRaw :=
     Filter.Tendsto.const_mul (pi5Q ^ (-Padic.valuation x)) hf
-  have hunscaled : Filter.Tendsto
-      (fun N => (partialSum f N : ℚ_[5])) Filter.atTop
-      (nhds (fieldUnit x hx : ℚ_[5])) := by
-    simpa [unscale_fieldPartialSum, coe_fieldUnit] using hunscaledRaw
+  have hfun :
+      (fun N =>
+        pi5Q ^ (-Padic.valuation x) *
+          fieldPartialSum (Padic.valuation x) f N)
+        = (fun N => (partialSum f N : ℚ_[5])) := by
+    funext N
+    exact unscale_fieldPartialSum (Padic.valuation x) f N
+  rw [hfun] at hunscaledRaw
+  have hlim :
+      pi5Q ^ (-Padic.valuation x) * x = (fieldUnit x hx : ℚ_[5]) :=
+    (coe_fieldUnit x hx).symm
+  rw [hlim] at hunscaledRaw
   have hz5 : Filter.Tendsto (partialSum f) Filter.atTop
       (nhds (fieldUnit x hx)) := by
     apply (PadicInt.isOpenEmbedding_coe.tendsto_nhds_iff).mpr
-    simpa [Function.comp_def] using hunscaled
+    change Filter.Tendsto
+      (fun N => (partialSum f N : ℚ_[5]))
+      Filter.atTop (nhds (fieldUnit x hx : ℚ_[5]))
+    exact hunscaledRaw
   exact digitSeq_unique (fieldUnit x hx) f hz5
 
 /-- **Q2b(iii), field-level capstone.** Every nonzero x : ℚ_[5] has a unique
@@ -170,6 +203,5 @@ theorem exists_unique_field_digit_expansion (x : ℚ_[5]) (hx : x ≠ 0) :
     ⟨tendsto_fieldPartialSum_digitSeq x hx,
       fieldUnit_first_digit_ne_zero x hx⟩,
     fun f hf => fieldDigitSeq_unique x hx f hf.1⟩
-
 
 end CnrsQ2

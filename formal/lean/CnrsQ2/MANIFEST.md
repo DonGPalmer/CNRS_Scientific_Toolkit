@@ -28,7 +28,7 @@ Toolchain: `leanprover/lean4:v4.33.0` | Mathlib: `v4.33.0`
 | `CnrsQ2/Density.lean` | 1,745 | `e3014aa7c5a49aa9…` |
 | `CnrsQ2/FieldLevel.lean` | 3,223 | `0de71a6c56368937…` |
 | `CnrsQ2/DigitExpansion.lean` | 14,845 | `2f2c916d9a5f4905…` |
-| `CnrsQ2/FieldDigitExpansion.lean` | 7,734 | `b5a28c2c873a8789…` |
+| `CnrsQ2/FieldDigitExpansion.lean` | 8,761 | `0518ad6e9d97b490…` |
 
 ## Project structure convention
 
