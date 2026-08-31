@@ -14,10 +14,12 @@ CNRS Q2 formalization — umbrella file.
   DigitIsometry: Q2b(iv) metric core: the norm is determined exactly by the
               first differing canonical digit, with the corresponding
               integer-shifted field formula.
+  FiniteLeftCarrier: certified normalized finite-left carrier, bijective
+              evaluation map onto ℚ_[5], and fixed-valuation-stratum
+              first-difference isometry.
 
-Packaging the metric theorem as a global evaluation-map isometry on an
-explicit finite-left carrier, and the finite-support = R_A converse, remain
-separate later targets.
+Removing convergence certificates from the raw syntax and the finite-support
+= R_A converse remain separate later targets.
 -/
 import CnrsQ2.Basic
 import CnrsQ2.DigitAlphabet
@@ -29,3 +31,4 @@ import CnrsQ2.DigitExpansion
 import CnrsQ2.FieldDigitExpansion
 
 import CnrsQ2.DigitIsometry
+import CnrsQ2.FiniteLeftCarrier

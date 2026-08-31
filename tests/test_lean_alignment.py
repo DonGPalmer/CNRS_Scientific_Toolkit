@@ -27,6 +27,7 @@ EXPECTED_MODULES = {
     "DigitExpansion.lean",
     "FieldDigitExpansion.lean",
     "DigitIsometry.lean",
+    "FiniteLeftCarrier.lean",
 }
 
 EXPECTED_THEOREMS = {
