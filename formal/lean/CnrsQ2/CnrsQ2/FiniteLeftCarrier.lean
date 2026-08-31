@@ -46,28 +46,30 @@ theorem NonzeroFiniteLeftDigits.digits_eq_canonical (s : NonzeroFiniteLeftDigits
 /-- Two certified nonzero carriers with the same field value are equal. -/
 theorem NonzeroFiniteLeftDigits.ext_value {s t : NonzeroFiniteLeftDigits}
     (h : s.value = t.value) : s = t := by
-  have hshift : s.shift = t.shift := by
-    calc
-      s.shift = Padic.valuation s.value := s.normalized
-      _ = Padic.valuation t.value := congrArg Padic.valuation h
-      _ = t.shift := t.normalized.symm
-  have hs := s.digits_eq_canonical
-  have ht := t.digits_eq_canonical
-  have hdigits : s.digits = t.digits := by
-    calc
-      s.digits = digitSeq (fieldUnit s.value s.value_ne_zero) := hs
-      _ = digitSeq (fieldUnit t.value t.value_ne_zero) := by
-        cases h
-        rfl
-      _ = t.digits := ht.symm
   cases s with
   | mk sshift sdigits slead svalue sne sconv snorm =>
     cases t with
     | mk tshift tdigits tlead tvalue tne tconv tnorm =>
-      simp only at hshift hdigits h
+      simp only at h
+      subst tvalue
+      have hshift : sshift = tshift := by
+        calc
+          sshift = Padic.valuation svalue := snorm
+          _ = tshift := tnorm.symm
+      have hunit : fieldUnit svalue sne = fieldUnit svalue tne := by
+        apply Subtype.ext
+        rfl
+      have hdigits : sdigits = tdigits := by
+        calc
+          sdigits = digitSeq (fieldUnit svalue sne) :=
+            NonzeroFiniteLeftDigits.digits_eq_canonical
+              ⟨sshift, sdigits, slead, svalue, sne, sconv, snorm⟩
+          _ = digitSeq (fieldUnit svalue tne) := congrArg digitSeq hunit
+          _ = tdigits :=
+            (NonzeroFiniteLeftDigits.digits_eq_canonical
+              ⟨tshift, tdigits, tlead, svalue, tne, tconv, tnorm⟩).symm
       subst tshift
       subst tdigits
-      subst tvalue
       rfl
 
 /-- The canonical certified nonzero carrier attached to x ≠ 0. -/
