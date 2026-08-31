@@ -25,6 +25,7 @@ namespace CnrsQ2
 
 /-- A normalized nonzero finite-left β-adic digit string together with its
     certified field value. -/
+@[ext]
 structure NonzeroFiniteLeftDigits where
   shift : ℤ
   digits : ℕ → Fin 5
@@ -46,39 +47,14 @@ theorem NonzeroFiniteLeftDigits.digits_eq_canonical (s : NonzeroFiniteLeftDigits
 /-- Two certified nonzero carriers with the same field value are equal. -/
 theorem NonzeroFiniteLeftDigits.ext_value {s t : NonzeroFiniteLeftDigits}
     (h : s.value = t.value) : s = t := by
-  cases s with
-  | mk sshift sdigits slead svalue sne sconv snorm =>
-    cases t with
-    | mk tshift tdigits tlead tvalue tne tconv tnorm =>
-      simp only at h
-      subst tvalue
-      have hshift : sshift = tshift := by
-        calc
-          sshift = Padic.valuation svalue := snorm
-          _ = tshift := tnorm.symm
-      have hunit : fieldUnit svalue sne = fieldUnit svalue tne := by
-        apply Subtype.ext
-        rfl
-      have hdigits : sdigits = tdigits := by
-        calc
-          sdigits = digitSeq (fieldUnit svalue sne) :=
-            NonzeroFiniteLeftDigits.digits_eq_canonical
-              ⟨sshift, sdigits, slead, svalue, sne, sconv, snorm⟩
-          _ = digitSeq (fieldUnit svalue tne) := congrArg digitSeq hunit
-          _ = tdigits :=
-            (NonzeroFiniteLeftDigits.digits_eq_canonical
-              ⟨tshift, tdigits, tlead, svalue, tne, tconv, tnorm⟩).symm
-      subst tshift
-      subst tdigits
-      have hlead : slead = tlead := Subsingleton.elim _ _
-      have hne : sne = tne := Subsingleton.elim _ _
-      have hconv : sconv = tconv := Subsingleton.elim _ _
-      have hnorm : snorm = tnorm := Subsingleton.elim _ _
-      cases hlead
-      cases hne
-      cases hconv
-      cases hnorm
-      rfl
+  have hshift : s.shift = t.shift := by
+    rw [s.normalized, t.normalized, h]
+  have hdigits : s.digits = t.digits := by
+    rw [s.digits_eq_canonical, t.digits_eq_canonical, h]
+  apply NonzeroFiniteLeftDigits.ext
+  · exact hshift
+  · exact hdigits
+  · exact h
 
 /-- The canonical certified nonzero carrier attached to x ≠ 0. -/
 noncomputable def canonicalNonzeroFiniteLeftDigits (x : ℚ_[5]) (hx : x ≠ 0) :
@@ -97,17 +73,19 @@ inductive FiniteLeftDigitCarrier where
   | nonzero : NonzeroFiniteLeftDigits → FiniteLeftDigitCarrier
 
 /-- Evaluation of the certified digit carrier in ℚ_[5]. -/
-def finiteLeftEval : FiniteLeftDigitCarrier → ℚ_[5]
+noncomputable def finiteLeftEval : FiniteLeftDigitCarrier → ℚ_[5]
   | .zero => 0
   | .nonzero s => s.value
 
 /-- Canonical carrier attached to any p-adic field element. -/
-noncomputable def canonicalFiniteLeftCarrier (x : ℚ_[5]) : FiniteLeftDigitCarrier :=
-  if hx : x = 0 then .zero else .nonzero (canonicalNonzeroFiniteLeftDigits x hx)
+noncomputable def canonicalFiniteLeftCarrier (x : ℚ_[5]) : FiniteLeftDigitCarrier := by
+  classical
+  exact if hx : x = 0 then .zero else .nonzero (canonicalNonzeroFiniteLeftDigits x hx)
 
 /-- Evaluation of the canonical carrier recovers the original field element. -/
 theorem finiteLeftEval_canonical (x : ℚ_[5]) :
     finiteLeftEval (canonicalFiniteLeftCarrier x) = x := by
+  classical
   by_cases hx : x = 0
   · simp [canonicalFiniteLeftCarrier, finiteLeftEval, hx]
   · simp [canonicalFiniteLeftCarrier, finiteLeftEval, hx,

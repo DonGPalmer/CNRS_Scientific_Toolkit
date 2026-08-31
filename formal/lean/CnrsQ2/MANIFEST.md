@@ -34,7 +34,7 @@ Toolchain: `leanprover/lean4:v4.33.0` | Mathlib: `v4.33.0`
 | `CnrsQ2/DigitExpansion.lean` | 14,845 | `2f2c916d9a5f4905…` |
 | `CnrsQ2/FieldDigitExpansion.lean` | 8,761 | `0518ad6e9d97b490…` |
 | `CnrsQ2/DigitIsometry.lean` | 5,052 | `92201078a61f23bb…` |
-| `CnrsQ2/FiniteLeftCarrier.lean` | 8,125 | `d3ce99f68a1cbe9d…` |
+| `CnrsQ2/FiniteLeftCarrier.lean` | 7,199 | `1fb442478feb4469…` |
 | `CnrsQ2/RawFiniteLeftCarrier.lean` | 13,539 | `907963bb5914d3b3…` |
 
 ## Project structure convention
