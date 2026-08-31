@@ -70,6 +70,14 @@ theorem NonzeroFiniteLeftDigits.ext_value {s t : NonzeroFiniteLeftDigits}
               ⟨tshift, tdigits, tlead, svalue, tne, tconv, tnorm⟩).symm
       subst tshift
       subst tdigits
+      have hlead : slead = tlead := Subsingleton.elim _ _
+      have hne : sne = tne := Subsingleton.elim _ _
+      have hconv : sconv = tconv := Subsingleton.elim _ _
+      have hnorm : snorm = tnorm := Subsingleton.elim _ _
+      cases hlead
+      cases hne
+      cases hconv
+      cases hnorm
       rfl
 
 /-- The canonical certified nonzero carrier attached to x ≠ 0. -/
