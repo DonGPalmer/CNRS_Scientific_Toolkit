@@ -26,6 +26,7 @@ EXPECTED_MODULES = {
     "FieldLevel.lean",
     "DigitExpansion.lean",
     "FieldDigitExpansion.lean",
+    "DigitIsometry.lean",
 }
 
 EXPECTED_THEOREMS = {

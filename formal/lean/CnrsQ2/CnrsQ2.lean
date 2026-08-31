@@ -11,9 +11,13 @@ CNRS Q2 formalization — umbrella file.
               normalized at its exact p-adic valuation, expanded uniquely
               in the same digits, then scaled back; the leading digit is
               nonzero, so only finitely many negative-index digits occur.
+  DigitIsometry: Q2b(iv) metric core: the norm is determined exactly by the
+              first differing canonical digit, with the corresponding
+              integer-shifted field formula.
 
-The stronger global evaluation-map isometry and finite-support = R_A converse
-are separate later targets and are not asserted by this umbrella comment.
+Packaging the metric theorem as a global evaluation-map isometry on an
+explicit finite-left carrier, and the finite-support = R_A converse, remain
+separate later targets.
 -/
 import CnrsQ2.Basic
 import CnrsQ2.DigitAlphabet
@@ -23,3 +27,5 @@ import CnrsQ2.Density
 import CnrsQ2.FieldLevel
 import CnrsQ2.DigitExpansion
 import CnrsQ2.FieldDigitExpansion
+
+import CnrsQ2.DigitIsometry
