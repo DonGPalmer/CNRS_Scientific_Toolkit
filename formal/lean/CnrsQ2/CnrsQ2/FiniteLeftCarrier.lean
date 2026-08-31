@@ -49,8 +49,17 @@ theorem NonzeroFiniteLeftDigits.ext_value {s t : NonzeroFiniteLeftDigits}
     (h : s.value = t.value) : s = t := by
   have hshift : s.shift = t.shift := by
     rw [s.normalized, t.normalized, h]
+  have hunit : fieldUnit s.value s.value_ne_zero =
+      fieldUnit t.value t.value_ne_zero := by
+    apply Subtype.ext
+    change rawFieldUnit s.value = rawFieldUnit t.value
+    rw [h]
   have hdigits : s.digits = t.digits := by
-    rw [s.digits_eq_canonical, t.digits_eq_canonical, h]
+    calc
+      s.digits = digitSeq (fieldUnit s.value s.value_ne_zero) :=
+        s.digits_eq_canonical
+      _ = digitSeq (fieldUnit t.value t.value_ne_zero) := congrArg digitSeq hunit
+      _ = t.digits := t.digits_eq_canonical.symm
   apply NonzeroFiniteLeftDigits.ext
   · exact hshift
   · exact hdigits
