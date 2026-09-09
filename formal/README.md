@@ -1,34 +1,62 @@
-# Formal verification
+# CNRS Scientific Toolkit — Formal Verification
 
-This directory contains machine-checkable formalizations that support specific mathematical claims used by the CNRS Scientific Toolkit.
+Status date: 2026-09-09  
+Coverage boundary: governed Lean work through CNRSProblem2 P2-L8
 
-## Current formal project
+## Purpose
 
-`formal/lean/CnrsQ2/` formalizes the CNRS Q2 beta-adic metric-completion and digit-expansion results for the Gaussian base
+This documentation connects the CNRS Scientific Toolkit to the separately governed Lean 4 formalization programme. It distinguishes mathematical proof, executable software, tests, and research hypotheses.
 
-`beta = -2 + i`, with `N(beta) = 5` and digit alphabet `{0,1,2,3,4}`.
+The evidence chain is:
 
-The project is pinned to Lean 4 `v4.33.0` and Mathlib `v4.33.0`. Its governed programme source is the CNRS Q2 Lean project maintained under the SSC programme archive; this repository copy is the software-distribution and CI copy. The checked-in `CnrsQ2/` tree is the governed v3 source tree rather than a rewritten Python-facing variant.
+`CNRS claim → Lean statement → machine-checked proof → software contract → Python implementation → tests`
 
-### Verification boundary
+A Lean theorem verifies the mathematical statement encoded in Lean. It does not automatically verify an independently written Python routine. Unless a refinement theorem is provided, the accurate status is **Lean-verified mathematical theorem with a separately tested, theorem-aligned implementation**.
 
-The Lean project machine-checks, among other items:
+## Current verified foundation
 
-- `beta` has norm 5 and is prime in the Gaussian integers;
-- the five digits give the required residue representatives modulo `beta`;
-- an injective dense embedding of the Gaussian integers into `Z_5` carrying `beta` to norm `1/5`;
-- the corresponding field-level embedding into `Q_5`;
-- unique one-step digit extraction/reduction in `Z_5`;
-- existence and uniqueness of the infinite `Fin 5` digit expansion with convergent partial sums.
+The governed programme currently includes:
 
-This does **not** by itself prove that every Toolkit algorithm is a refinement of the Lean construction. The crosswalk in `docs/LEAN_FORMALIZATION_ALIGNMENT.md` records which software components are direct implementation targets, contextual companions, or still require a refinement proof.
+- `CNRSCore`: shared Gaussian-base, digit, normalization, finiteness, and transducer foundations;
+- `CnrsQ2`: beta-adic completion and unique digit expansions;
+- `CNRSArithmetic`: exact arithmetic, state bounds, periodicity and finite-state multiplication boundaries through Phase F;
+- `CNRSProblem1`: finite representation, termination, periodicity, and negabinary specialisation through P1-L7;
+- `CNRSProblem2`: lifted logarithmic coordinates, branch serialization, finite Laurent values, finite Hurwitz algebra, branch-labelled operations, transport, and orbit normal forms through P2-L8.
 
-### Build
+All four governed endpoints listed in `PROVENANCE.json` passed their authoritative GitHub Actions certification. The P2-L8 endpoint includes three successful builds of 3,050 jobs, including a clean network-disabled rebuild.
 
-From `formal/lean/CnrsQ2/`:
+## Currently vendored Lean project
+
+`formal/lean/CnrsQ2/` remains the Toolkit's directly buildable Lean source snapshot. It formalizes the Q2 beta-adic metric-completion and digit-expansion results for `β = -2+i`, with `N(β)=5` and digit alphabet `{0,1,2,3,4}`. The project is pinned to Lean 4.33.0 and its resolved Mathlib version.
+
+From `formal/lean/CnrsQ2/` run:
 
 ```bash
 lake build
 ```
 
-The GitHub workflow `.github/workflows/lean.yml` runs this independently of the Python test suite.
+The workflow `.github/workflows/lean.yml` builds this project independently of the Python test suite. The newer governed `CNRSCore`, `CNRSArithmetic`, `CNRSProblem1`, and `CNRSProblem2` projects are documented here but are not yet vendored into this Toolkit branch.
+
+## Evidence vocabulary
+
+| Label | Meaning |
+|---|---|
+| Lean-verified | A theorem is present in the governed source and compiles under the pinned toolchain. |
+| Theorem-aligned | Software is designed or tested against the theorem's contract, without an end-to-end refinement proof. |
+| Computationally verified | Tests or independent calculations support the implementation within a stated domain. |
+| Conditional | A conclusion is proved or implemented under explicit hypotheses. |
+| Open | The current governed theory does not establish the claim. |
+
+Do not describe the whole Toolkit as “formally verified.” Selected mathematical claims are Lean-verified; Python components remain separately tested unless explicitly linked by a refinement proof.
+
+## Documents
+
+- `docs/GOVERNED_THEOREM_INVENTORY.md` — governed projects, milestones, and principal theorem families;
+- `docs/TOOLKIT_LEAN_CROSSWALK.md` — Toolkit claims and modules mapped to formal evidence;
+- `docs/FORMAL_SCOPE_AND_OPEN_PROBLEMS.md` — proved scope, exclusions, and research frontier;
+- `docs/GOVERNANCE_AND_REPRODUCIBILITY.md` — authority model and reproduction procedure;
+- `PROVENANCE.json` — machine-readable authoritative identities.
+
+## Release status
+
+These are documentation-stage records through P2-L8. They do not vendor the current Lean projects into a new Toolkit release. The exact consolidated Lean source snapshot should be added only after the compatibility bridge, capstone interface, cross-problem certification, and consolidated release certification are complete.
