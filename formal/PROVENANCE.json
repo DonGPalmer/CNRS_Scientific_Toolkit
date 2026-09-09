@@ -1,0 +1,75 @@
+{
+  "schema": "cnrs-toolkit-lean-provenance-v1",
+  "status_date": "2026-09-09",
+  "documentation_state": "governed-through-p2-l8",
+  "toolchain": {
+    "lean": "4.33.0",
+    "lean_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "note": "Each authoritative project retains its own resolved Mathlib manifest."
+  },
+  "source_repository": "DonGPalmer/SSC_Formal_Methods_CI",
+  "projects": [
+    {
+      "name": "CNRSCore/CnrsQ2 migration",
+      "branch": "cnrsq2-core-migration-authoritative",
+      "commit": "85007b340ab669dab8b9915e4f6a6064ff72b8f7",
+      "tree": "db61d8954f961f993d71d8f17c1ce74cfdbf45ce",
+      "workflow_run": 33588271674,
+      "workflow_conclusion": "success",
+      "artifact_id": 9830923099,
+      "artifact_name": "CnrsQ2-Core-migration-authoritative-GREEN",
+      "artifact_size_bytes": 410823,
+      "artifact_sha256": "1051a4f2c51f5fe1f54556b8484fb0ce97be4fbd8227edaa1c06c35e3e09057b"
+    },
+    {
+      "name": "CNRSArithmetic through Phase F",
+      "branch": "cnrsarithmetic-phase-f-online-multiplication-impossibility-authoritative",
+      "commit": "df064adff8266899880b15a9c2125826810eb083",
+      "tree": "6086a0840e948b0084e342a3b1951e96412a1cf0",
+      "workflow_run": 33991091084,
+      "workflow_conclusion": "success",
+      "artifact_id": 9976733222,
+      "artifact_name": "CNRSArithmetic-PhaseF-authoritative-live-evidence",
+      "artifact_size_bytes": 83481,
+      "artifact_sha256": "83ec0cc6cf6d7834d29e2cd5736fdaa774ec17846fc4b70bcbfe8b26cbda0b8a"
+    },
+    {
+      "name": "CNRSProblem1 through P1-L7",
+      "branch": "cnrsproblem1-p1-l7-negabinary-authoritative",
+      "commit": "8a770684f6cfc91cbf7363ca3848c802d9cc4548",
+      "tree": "c3352487cd3e68d2c105a139a6852c4964c8e13f",
+      "workflow_run": 33972298002,
+      "workflow_conclusion": "success",
+      "artifact_id": 9971398183,
+      "artifact_name": "CNRSProblem1-P1-L7-negabinary-authoritative-evidence",
+      "artifact_size_bytes": 42726,
+      "artifact_sha256": "516655155ba7edf1f52665155ed6bea603efeeae9b29b5186a903feb7d616fa7"
+    },
+    {
+      "name": "CNRSProblem2 through P2-L8",
+      "branch": "cnrsproblem2-p2-l8-authoritative-live",
+      "commit": "612e0d66ef9ea676f8c2d3a0c8a8c59106c4d5d1",
+      "tree": "69aca636157f333e2b3f117e6024d3814ff8efc2",
+      "workflow_run": 34310987625,
+      "workflow_job": 102337432932,
+      "workflow_conclusion": "success",
+      "artifact_id": 10088500633,
+      "artifact_name": "CNRSProblem2-P2-L8-authoritative-live",
+      "artifact_size_bytes": 47701,
+      "artifact_sha256": "591d09e2a9367a8ac037f4bfc8d5e6a17c33988ed4afc3b51d3523850fce7a7f",
+      "build_jobs_each": 3050,
+      "build_count": 3
+    }
+  ],
+  "integration": {
+    "lean_source_vendored_for_new_release": false,
+    "python_runtime_modified": false,
+    "release_status": "documentation-stage",
+    "next_formal_steps": [
+      "P2 compatibility bridge",
+      "P2 integrated codec/API capstone",
+      "cross-problem certification",
+      "consolidated Lean release certification"
+    ]
+  }
+}
