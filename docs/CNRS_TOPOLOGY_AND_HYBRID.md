@@ -1,4 +1,4 @@
-# CNRS Topology and Hybrid Representation — v0.12.1
+# CNRS Topology and Hybrid Representation — v0.13.0
 
 ## Topology separation
 

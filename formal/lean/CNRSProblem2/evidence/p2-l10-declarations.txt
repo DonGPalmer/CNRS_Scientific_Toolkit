@@ -1,0 +1,28 @@
+24:def antideriv (c : R) (x : FiniteHurwitz R) : FiniteHurwitz R :=
+28:@[simp] theorem coeff_antideriv_zero (c : R) (x : FiniteHurwitz R) :
+32:@[simp] theorem coeff_antideriv_succ (c : R) (x : FiniteHurwitz R) (n : ℕ) :
+43:@[simp] theorem deriv_antideriv (c : R) (x : FiniteHurwitz R) :
+50:@[simp] theorem antideriv_coeff_zero_deriv (x : FiniteHurwitz R) :
+57:theorem antideriv_injective (c : R) :
+65:theorem eq_iff_deriv_eq_and_coeff_zero_eq (x y : FiniteHurwitz R) :
+82:noncomputable def antiderivFiniteHurwitzCode
+87:@[simp] theorem antiderivFiniteHurwitzCode_encode
+93:theorem antiderivFiniteHurwitzCode_eq_some_iff
+103:@[simp] theorem antiderivFiniteHurwitzCode_eq_none_iff
+110:theorem value_antiderivFiniteHurwitzCode
+118:@[simp] theorem derivCode_antiderivCode_encode
+125:@[simp] theorem antiderivCode_derivCode_encode
+133:def antiderivBranchedFiniteHurwitz
+138:@[simp] theorem antiderivBranchedFiniteHurwitz_value
+143:@[simp] theorem antiderivBranchedFiniteHurwitz_branch
+147:@[simp] theorem deriv_antideriv_branched
+154:@[simp] theorem antideriv_coeff_deriv_branched
+162:noncomputable def antiderivBranchedFiniteHurwitzCode
+169:@[simp] theorem antiderivBranchedFiniteHurwitzCode_encode
+177:theorem antiderivBranchedFiniteHurwitzCode_eq_some_iff
+188:@[simp] theorem antiderivBranchedFiniteHurwitzCode_eq_none_iff
+195:theorem rawValue_antiderivBranchedFiniteHurwitzCode
+204:@[simp] theorem antiderivBranchedFiniteHurwitz_shift
+211:@[simp] theorem antiderivBranchedFiniteHurwitz_attach
+217:@[simp] theorem antiderivBranchedFiniteHurwitzCode_encodeAttached
+225:@[simp] theorem relativeBranch_antideriv_pair

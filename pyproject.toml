@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cnrs"
-version = "0.12.1"
+version = "0.13.0"
 description = "CNRS Scientific Toolkit: theorem-aligned CNRS-A arithmetic, Gaussian-rational normalization, CNRS-H Hurwitz calculus, topology and hybrid representations, branch-aware symbolic workflows, finite monodromy surfaces, algebraic-curve branch detection, and scientific research workflows"
 authors = [
     { name = "Donald G. Palmer", email = "dgpalmer@nul1.com" }

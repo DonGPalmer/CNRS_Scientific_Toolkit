@@ -1,4 +1,10 @@
-# Test Status — v0.12.1
+# Test Status — v0.13.0 Release Candidate
+
+## Candidate validation
+
+`1214 passed, 4 skipped, 0 failed` on 2026-09-11. The run reported 922
+warnings: retained reliable-domain diagnostics and pytest deprecation
+warnings.
 
 ## Release validation
 
@@ -12,7 +18,11 @@ The suite reports 917 retained reliable-domain warnings from selected biological
 
 ## Independent Lean verification lane
 
-The post-v0.12.1 repository includes `formal/lean/CnrsQ2/` and `.github/workflows/lean.yml`. Lean/Mathlib verification is reported independently from the historical `1206 passed` Python release baseline. Repository-level pytest guards check that the governed Lean manifest, theorem names, and theorem-registry metadata remain synchronized; GitHub Actions performs the actual `lake build`.
+The v0.13.0 candidate includes six projects under `formal/lean/` and a
+six-project matrix in `.github/workflows/lean.yml`. Repository-level guards
+verify the exact capstone checksum inventory, project identities, theorem
+boundaries and proof-marker policy. GitHub Actions performs the actual
+`lake build` for each project.
 
 Merged-tree validation on 2026-08-30: `1211 passed, 0 failed`, with 917 retained warnings. The increase from 1206 to 1211 is exactly five repository-level Lean-integration guards. Lean itself was not re-run in the packaging environment; the pinned GitHub workflow performs `lake build`.
 

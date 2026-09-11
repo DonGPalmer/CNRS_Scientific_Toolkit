@@ -1,4 +1,4 @@
-# API Status — v0.12.1
+# API Status — v0.13.0
 
 ## Stable research interfaces
 
@@ -48,7 +48,7 @@ The legacy module `cnrs.cnrs_division_status` remains a deprecated compatibility
 
 - certified arbitrary infinite-stream arithmetic;
 - unrestricted analytic closure and rigorous global remainder bounds;
-- automatic monodromy discovery in v0.12.1;
+- automatic monodromy discovery;
 - singular-curve normalization, infinity analysis, Puiseux charts, and certified continuation;
 - a canonical global representation API for all ordinary complex values.
 

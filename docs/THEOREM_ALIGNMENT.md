@@ -1,4 +1,4 @@
-# CNRS Theorem-to-Implementation Alignment — v0.12.1 + Lean integration
+# CNRS Theorem-to-Implementation Alignment — v0.13.0 Capstone Integration
 
 ## Purpose
 
@@ -15,7 +15,7 @@ The CNRS Scientific Toolkit separates:
 
 | Area | Mathematical status | Principal software |
 |---|---|---|
-| Gaussian-integer representation | Established external CNS foundation and programme formalization; selected `beta=-2+i` base/primality and residue-digit foundations Lean-verified | `cnrs.core`, `cnrs.cnrs_value` |
+| Gaussian-integer representation | Established external CNS foundation and programme formalization; the finite Gaussian foundation is Lean-verified in CNRSCore/CnrsQ2 | `cnrs.core`, `cnrs.cnrs_value` |
 | Addition and subtraction | Closure result / derived closure | arithmetic and normalization modules |
 | Multiplication | Closure theorem with constructive normalization | multiplication modules |
 | Gaussian-rational eventual periodicity | Established within current model | `cnrs.cnrs_rational`, `cnrs.division` |
@@ -23,7 +23,10 @@ The CNRS Scientific Toolkit separates:
 | Canonical periodic normalization | Established within current model | `cnrs.canonical_periodic` |
 | Natural symbolic/beta-adic completeness | Established within current model; Q2 completion and unique beta-adic digit-expansion core Lean-verified; completion is local (`Z_5`/`Q_5` topologically), not `C` | `cnrs.topology` |
 
-Machine-checked Q2 details and the exact theorem-to-implementation boundary are recorded in [`LEAN_FORMALIZATION_ALIGNMENT.md`](LEAN_FORMALIZATION_ALIGNMENT.md). **Lean-verified** applies to the encoded mathematical theorem; it does not automatically certify the independently implemented Python routine.
+Machine-checked capstone details and the exact theorem-to-implementation boundary
+are recorded in [`LEAN_FORMALIZATION_ALIGNMENT.md`](LEAN_FORMALIZATION_ALIGNMENT.md).
+**Lean-verified** applies to the encoded mathematical theorem; it does not
+automatically certify the independently implemented Python routine.
 
 ## CNRS-H and hybrid alignment
 
@@ -54,4 +57,7 @@ The Toolkit does not claim completion of:
 
 ## Reference map
 
-See `CNRS_P4_REFERENCE_STATUS.md` for the canonical Problem 4 Version 12 citation and the bundled theorem records. See `LEAN_FORMALIZATION_ALIGNMENT.md` for the Q2 Lean crosswalk and `STATUS_VOCABULARY_MAPPING.md` for provenance and epistemic-status terminology.
+See `CNRS_P4_REFERENCE_STATUS.md` for the canonical public Problem 4 Version
+12 citation and the bundled theorem records. See
+`LEAN_FORMALIZATION_ALIGNMENT.md` for the six-project capstone crosswalk and
+`STATUS_VOCABULARY_MAPPING.md` for provenance and epistemic-status terminology.

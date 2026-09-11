@@ -1,0 +1,35 @@
+⚠ [3034/3052] Replayed CnrsQ2.GaussianCNS
+warning: CnrsQ2/GaussianCNS.lean:38:36: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3038/3052] Replayed CNRSCore.Finiteness
+warning: CNRSCore/Finiteness.lean:192:5: Variable name `hx` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hx
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CNRSCore/Finiteness.lean:193:10: Variable name `h1` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h1
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CNRSCore/Finiteness.lean:195:10: Variable name `h2` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h2
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [3041/3052] Built CNRSProblem2.BranchCover (2.3s)
+✔ [3042/3052] Built CNRSProblem2.CanonicalLiftedLog (4.2s)
+✔ [3043/3052] Built CNRSProblem2.BranchSerialization (2.4s)
+✔ [3044/3052] Built CNRSProblem2.FiniteLaurentValueCodec (6.4s)
+✔ [3045/3052] Built CNRSProblem2.FiniteHurwitz (6.1s)
+✔ [3046/3052] Built CNRSProblem2.BranchedFiniteHurwitz (4.9s)
+✔ [3047/3052] Built CNRSProblem2.BranchTransport (2.6s)
+✔ [3048/3052] Built CNRSProblem2.BranchOrbit (2.7s)
+✔ [3049/3052] Built CNRSProblem2.CNRSIntegration (2.3s)
+✔ [3050/3052] Built CNRSProblem2.FiniteHurwitzAntiderivative (3.7s)
+✔ [3051/3052] Built CNRSProblem2 (1.9s)
+Build completed successfully (3052 jobs).

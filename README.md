@@ -1,5 +1,26 @@
 # CNRS Scientific Toolkit
 
+## v0.13.0 — CNRS Lean Capstone Alignment
+
+v0.13.0 vendors the exact six-project CNRS-LEAN-CAPSTONE source snapshot and
+synchronizes formal provenance, theorem inventories, scope boundaries and the
+independent Lean CI lane through CNRSArithmetic Phase F, CNRSProblem1 P1-L7,
+and CNRSProblem2 P2-L10.
+
+The certified upstream identity is commit
+`07e776b4e1d7d09513394a4b676516eb51e4c597`, workflow run
+`34534566879`, artifact `10175389923`, and artifact SHA-256
+`840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21`.
+
+This synchronization adds no claim that the independently written Python
+runtime is Lean-extracted or end-to-end formally verified. See
+[`docs/LEAN_FORMALIZATION_ALIGNMENT.md`](docs/LEAN_FORMALIZATION_ALIGNMENT.md)
+and [`formal/README.md`](formal/README.md).
+
+Candidate Python validation: `1214 passed, 4 skipped, 0 failed`; 922 reported
+warnings include retained reliable-domain diagnostics and pytest deprecation
+warnings.
+
 ## v0.12.1 — Algebraic-Curve Branch Detection and P4 Documentation Synchronization
 
 v0.12.1 combines the finite global Riemann-surface layer introduced in v0.12.0 with polynomial algebraic-curve intake and finite branch-point detection. The optional algebraic layer accepts a squarefree relation `P(z,w)=0`, constructs `P_w` and `Res_w(P,P_w)`, and verifies finite ramification points satisfying `P=P_w=0`.
@@ -505,10 +526,10 @@ Branch metadata is preserved through expression construction, substitution, diff
 
 ## Test status
 
-Current v0.12.1 validation status:
+Current v0.13.0 candidate validation status:
 
 ```text
-1206 passed, 0 failed
+1214 passed, 4 skipped, 0 failed
 ```
 
 The warning stream contains documented reliable-domain diagnostics from selected scientific-workflow tests. These warnings are retained because they identify evaluations outside estimated local reliability ranges.

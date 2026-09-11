@@ -1,0 +1,5 @@
+P2-L10 does not introduce analytic, path, or contour integration,
+convergence, infinite Hurwitz series or arbitrary streams, inferred constants
+of integration, factorial division, unequal-branch arithmetic, or streaming
+of integration, factorial division, unequal-branch arithmetic, or streaming
+`CNRSIntegration` project, the Toolkit, or Scale Space code.

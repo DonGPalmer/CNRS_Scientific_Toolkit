@@ -1,12 +1,11 @@
-# CNRS Scientific Toolkit v0.12.1 + Lean Q2 formal-verification integration source index
-# Complete v0.12.1 source tree plus post-release Lean integration; documentation synchronized with CNRS Problem 4 Version 12.
-# Historical v0.12.1 Python baseline: 1206 passed, 0 failed, 917 documented warnings (2026-08-04).
-# Merged-tree Python validation: 1211 passed, 0 failed, 917 documented warnings (2026-08-30).
-# Lean: governed Q2 v3 source integrated; GitHub Actions performs the pinned Lean/Mathlib lake build independently.
-# Files listed: 281
+# CNRS Scientific Toolkit v0.13.0 release-candidate source index
+# Complete tracked candidate tree synchronized with the certified six-project CNRS-LEAN-CAPSTONE.
+# Candidate Python validation: 1214 passed, 4 skipped, 0 failed, 922 warnings (2026-09-11).
+# Lean: six projects, 79 Lean source files, exact checksum and proof-hygiene guard, all matrix builds successful.
+# Files listed: 411
 
-SOURCE_INDEX.txt
 .gitattributes
+.github/workflows/build-lean433-offline-runtime-v4.yml
 .github/workflows/lean.yml
 .github/workflows/tests.yml
 .gitignore
@@ -19,6 +18,8 @@ RELEASE_NOTES.md
 RELEASE_NOTES_v0.11.2.md
 RELEASE_NOTES_v0.12.0.md
 RELEASE_NOTES_v0.12.1.md
+RELEASE_NOTES_v0.13.0.md
+SOURCE_INDEX.txt
 cnrs/__init__.py
 cnrs/algebraic_curve.py
 cnrs/autodiff.py
@@ -34,6 +35,7 @@ cnrs/cnrs_division_status.py
 cnrs/cnrs_expansion.py
 cnrs/cnrs_expansion_verify.py
 cnrs/cnrs_float.py
+cnrs/cnrs_formal_state.py
 cnrs/cnrs_global_constraints.py
 cnrs/cnrs_global_solver.py
 cnrs/cnrs_h.py
@@ -117,6 +119,7 @@ cnrs/workflows/__init__.py
 cnrs/workflows/oscillator.py
 cnrs/workflows/reaction_diffusion.py
 cnrs/workflows/scale_laws.py
+docs/AI_ASSISTANCE.md
 docs/API_OVERVIEW.md
 docs/API_STATUS.md
 docs/ARCHITECTURE.md
@@ -133,6 +136,7 @@ docs/CNRS_H_DOMAIN_DIAGNOSTICS.md
 docs/CNRS_H_NATIVE.md
 docs/CNRS_H_PATH_CONTINUATION.md
 docs/CNRS_H_TAYLOR_MODELS.md
+docs/CNRS_NATIVE_COEFFICIENT_CALCULUS.md
 docs/CNRS_NATIVE_STATUS.md
 docs/CNRS_NATIVE_STATUS_REGISTER.md
 docs/CNRS_NORMALIZATION_STATUS.md
@@ -151,6 +155,7 @@ docs/RIEMANN_SURFACE_GLOBAL_MODEL.md
 docs/STATUS_VOCABULARY_MAPPING.md
 docs/SYMBOLIC_CALCULUS_QUICKSTART.md
 docs/TEST_STATUS.md
+docs/TEST_STATUS_V0.11.1.md
 docs/THEOREM_ALIGNMENT.md
 docs/audits/DIVISION_RATIONAL_VALIDATION_V011.md
 docs/audits/SCIENTIFIC_WORKFLOW_AUDIT_V011.md
@@ -160,6 +165,7 @@ docs/audits/scripts/formal_cnrs_h_algebra_verify_v1.py
 docs/audits/scripts/hybrid_cnrs_a_cnrs_h_representation_verify_v1.py
 docs/audits/scripts/metric_topological_completeness_verify_v1.py
 docs/audits/toolkit_audit_2026-07-07_v1.md
+docs/release/V0.11.0_POST_RELEASE_NOTE.md
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.pdf
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.tex
 docs/theory/CANONICAL_PERIODIC_NORMALIZATION_V1.pdf
@@ -203,17 +209,139 @@ examples/science_workflows/symbolic_chain_rule_demo.py
 examples/science_workflows/symbolic_integration_demo.py
 examples/science_workflows/symbolic_to_cnrs_h_demo.py
 examples/science_workflows/turing_scale_exit.py
+formal/PROVENANCE.json
 formal/README.md
+formal/capstone/CNRS_LEAN_CAPSTONE_AUDIT.md
+formal/capstone/FINAL_VERDICT.txt
+formal/capstone/SHA256SUMS.txt
+formal/docs/FORMAL_SCOPE_AND_OPEN_PROBLEMS.md
+formal/docs/GOVERNANCE_AND_REPRODUCIBILITY.md
+formal/docs/GOVERNED_THEOREM_INVENTORY.md
+formal/docs/TOOLKIT_LEAN_CROSSWALK.md
+formal/lean/CNRSArithmetic/CNRSArithmetic.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/AdditionCarrySet.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/AdditionCorrectness.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/AdditionStep.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/AdditionTransducer.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/Base.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/Digits.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionCycleCatalogue.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionCycleClassification.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionCycleEnumeration.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionDecisionWitness.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionMinimalPeriod.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionOrbitPeriodicity.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionOutcomeMachine.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionOutcomeRepresentativeIntegrity.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionStateBounds.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/DivisionTermination.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/ExactDivisionRecurrence.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/Finiteness.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/FixedMultiplier.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/FixedMultiplierK2.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/FixedMultiplierK3.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/FixedMultiplierK4.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/FixedMultiplierKi.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/FixedMultiplierStep.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/FixedMultiplierTransducer.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/Normalization.lean
+formal/lean/CNRSArithmetic/CNRSArithmetic/OnlineMultiplicationImpossibility.lean
+formal/lean/CNRSArithmetic/lake-manifest.json
+formal/lean/CNRSArithmetic/lakefile.toml
+formal/lean/CNRSArithmetic/lean-toolchain
+formal/lean/CNRSCore/CNRSCore.lean
+formal/lean/CNRSCore/CNRSCore/Base.lean
+formal/lean/CNRSCore/CNRSCore/Digits.lean
+formal/lean/CNRSCore/CNRSCore/FiniteWords.lean
+formal/lean/CNRSCore/CNRSCore/Finiteness.lean
+formal/lean/CNRSCore/CNRSCore/QuotientStep.lean
+formal/lean/CNRSCore/lake-manifest.json
+formal/lean/CNRSCore/lakefile.toml
+formal/lean/CNRSCore/lean-toolchain
+formal/lean/CNRSIntegration/CNRSIntegration.lean
+formal/lean/CNRSIntegration/CNRSIntegration/AdditionBridge.lean
+formal/lean/CNRSIntegration/lake-manifest.json
+formal/lean/CNRSIntegration/lakefile.toml
+formal/lean/CNRSIntegration/lean-toolchain
+formal/lean/CNRSProblem1/CNRSProblem1.lean
+formal/lean/CNRSProblem1/CNRSProblem1/Admissibility.lean
+formal/lean/CNRSProblem1/CNRSProblem1/AlternatingOrder.lean
+formal/lean/CNRSProblem1/CNRSProblem1/Classification.lean
+formal/lean/CNRSProblem1/CNRSProblem1/Cylinders.lean
+formal/lean/CNRSProblem1/CNRSProblem1/EndpointOrbits.lean
+formal/lean/CNRSProblem1/CNRSProblem1/Framework.lean
+formal/lean/CNRSProblem1/CNRSProblem1/FullRealization.lean
+formal/lean/CNRSProblem1/CNRSProblem1/Iteration.lean
+formal/lean/CNRSProblem1/CNRSProblem1/ModifiedUpper.lean
+formal/lean/CNRSProblem1/CNRSProblem1/NegabinaryNormalization.lean
+formal/lean/CNRSProblem1/CNRSProblem1/OrbitLanguage.lean
+formal/lean/CNRSProblem1/CNRSProblem1/Periodicity.lean
+formal/lean/CNRSProblem1/CNRSProblem1/QuadraticBases.lean
+formal/lean/CNRSProblem1/CNRSProblem1/QuadraticLatticePeriodicity.lean
+formal/lean/CNRSProblem1/CNRSProblem1/ReferenceSystems.lean
+formal/lean/CNRSProblem1/CNRSProblem1/SeriesRealization.lean
+formal/lean/CNRSProblem1/lake-manifest.json
+formal/lean/CNRSProblem1/lakefile.toml
+formal/lean/CNRSProblem1/lean-toolchain
+formal/lean/CNRSProblem2/CNRSProblem2.lean
+formal/lean/CNRSProblem2/CNRSProblem2/BranchCover.lean
+formal/lean/CNRSProblem2/CNRSProblem2/BranchOrbit.lean
+formal/lean/CNRSProblem2/CNRSProblem2/BranchSerialization.lean
+formal/lean/CNRSProblem2/CNRSProblem2/BranchTransport.lean
+formal/lean/CNRSProblem2/CNRSProblem2/BranchedFiniteHurwitz.lean
+formal/lean/CNRSProblem2/CNRSProblem2/CNRSIntegration.lean
+formal/lean/CNRSProblem2/CNRSProblem2/CanonicalLiftedLog.lean
+formal/lean/CNRSProblem2/CNRSProblem2/FiniteHurwitz.lean
+formal/lean/CNRSProblem2/CNRSProblem2/FiniteHurwitzAntiderivative.lean
+formal/lean/CNRSProblem2/CNRSProblem2/FiniteLaurentValueCodec.lean
+formal/lean/CNRSProblem2/MANIFEST.md
+formal/lean/CNRSProblem2/P2_L10_THEOREM_BOUNDARY_FROZEN.md
+formal/lean/CNRSProblem2/P2_L3_THEOREM_BOUNDARY_FROZEN.md
+formal/lean/CNRSProblem2/P2_L4_THEOREM_BOUNDARY_FROZEN.md
+formal/lean/CNRSProblem2/P2_L5_THEOREM_BOUNDARY_FROZEN.md
+formal/lean/CNRSProblem2/P2_L6_THEOREM_BOUNDARY_FROZEN.md
+formal/lean/CNRSProblem2/P2_L7_THEOREM_BOUNDARY_FROZEN.md
+formal/lean/CNRSProblem2/P2_L8_THEOREM_BOUNDARY_FROZEN.md
+formal/lean/CNRSProblem2/P2_L9_THEOREM_BOUNDARY_FROZEN.md
+formal/lean/CNRSProblem2/README.md
+formal/lean/CNRSProblem2/evidence/authoritative-commit.txt
+formal/lean/CNRSProblem2/evidence/authoritative-delta-from-candidate.txt
+formal/lean/CNRSProblem2/evidence/authoritative-warning-gate.log
+formal/lean/CNRSProblem2/evidence/clean-offline-build.log
+formal/lean/CNRSProblem2/evidence/dependency-gate.log
+formal/lean/CNRSProblem2/evidence/exact-delta-from-p2-l9.txt
+formal/lean/CNRSProblem2/evidence/exclusion-gate.log
+formal/lean/CNRSProblem2/evidence/lake-version.txt
+formal/lean/CNRSProblem2/evidence/lean-version.txt
+formal/lean/CNRSProblem2/evidence/normal-build.log
+formal/lean/CNRSProblem2/evidence/p2-l10-authoritative-identity-gate.log
+formal/lean/CNRSProblem2/evidence/p2-l10-baseline-gate.log
+formal/lean/CNRSProblem2/evidence/p2-l10-declaration-gate.log
+formal/lean/CNRSProblem2/evidence/p2-l10-declarations.txt
+formal/lean/CNRSProblem2/evidence/post-build-sha256.txt
+formal/lean/CNRSProblem2/evidence/pre-build-sha256.txt
+formal/lean/CNRSProblem2/evidence/proof-gate.log
+formal/lean/CNRSProblem2/evidence/q2-artifact-sha256.log
+formal/lean/CNRSProblem2/evidence/upstream-gate.log
+formal/lean/CNRSProblem2/lake-manifest.json
+formal/lean/CNRSProblem2/lakefile.toml
+formal/lean/CNRSProblem2/lean-toolchain
 formal/lean/CnrsQ2/CnrsQ2.lean
 formal/lean/CnrsQ2/CnrsQ2/Basic.lean
 formal/lean/CnrsQ2/CnrsQ2/Density.lean
 formal/lean/CnrsQ2/CnrsQ2/DigitAlphabet.lean
 formal/lean/CnrsQ2/CnrsQ2/DigitExpansion.lean
+formal/lean/CnrsQ2/CnrsQ2/DigitIsometry.lean
 formal/lean/CnrsQ2/CnrsQ2/Embedding.lean
+formal/lean/CnrsQ2/CnrsQ2/FieldDigitExpansion.lean
 formal/lean/CnrsQ2/CnrsQ2/FieldLevel.lean
+formal/lean/CnrsQ2/CnrsQ2/FiniteLeftIsometry.lean
+formal/lean/CnrsQ2/CnrsQ2/FiniteSupportCarrierIntegration.lean
+formal/lean/CnrsQ2/CnrsQ2/FiniteSupportRA.lean
+formal/lean/CnrsQ2/CnrsQ2/GaussianCNS.lean
 formal/lean/CnrsQ2/CnrsQ2/HenselRoot.lean
-formal/lean/CnrsQ2/MANIFEST.md
-formal/lean/CnrsQ2/README.md
+formal/lean/CnrsQ2/CnrsQ2/StreamCompletion.lean
+formal/lean/CnrsQ2/lake-manifest.json
 formal/lean/CnrsQ2/lakefile.toml
 formal/lean/CnrsQ2/lean-toolchain
 pyproject.toml
@@ -252,6 +380,7 @@ tests/test_division_api_consistency_v0111.py
 tests/test_division_classification_v080.py
 tests/test_division_deep_validation_v011.py
 tests/test_division_status_compat_v0111.py
+tests/test_division_status_v080.py
 tests/test_division_structured_v081.py
 tests/test_evaluate_limitations.py
 tests/test_expansion.py

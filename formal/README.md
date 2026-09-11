@@ -1,34 +1,58 @@
-# Formal verification
+# CNRS Scientific Toolkit — Formal Verification
 
-This directory contains machine-checkable formalizations that support specific mathematical claims used by the CNRS Scientific Toolkit.
+Status date: 2026-09-11  
+Coverage boundary: governed CNRS-LEAN-CAPSTONE
 
-## Current formal project
+The Toolkit vendors the exact six-project Lean source snapshot certified by
+CNRS-LEAN-CAPSTONE. The evidence chain remains:
 
-`formal/lean/CnrsQ2/` formalizes the CNRS Q2 beta-adic metric-completion and digit-expansion results for the Gaussian base
+`CNRS claim → Lean statement → proof → software contract → Python implementation → tests`
 
-`beta = -2 + i`, with `N(beta) = 5` and digit alphabet `{0,1,2,3,4}`.
+Lean verifies the mathematical statements encoded in the vendored projects.
+It does not automatically verify the independently written Python runtime.
 
-The project is pinned to Lean 4 `v4.33.0` and Mathlib `v4.33.0`. Its governed programme source is the CNRS Q2 Lean project maintained under the SSC programme archive; this repository copy is the software-distribution and CI copy. The checked-in `CnrsQ2/` tree is the governed v3 source tree rather than a rewritten Python-facing variant.
+## Vendored projects
 
-### Verification boundary
+- `CNRSCore` — finite Gaussian foundation;
+- `CnrsQ2` — beta-adic completion and digit expansion;
+- `CNRSArithmetic` — E1–E11 and Phase F;
+- `CNRSIntegration` — Addition Bridge;
+- `CNRSProblem1` — P1-L1 through P1-L7;
+- `CNRSProblem2` — P2-L1 through P2-L10.
 
-The Lean project machine-checks, among other items:
+Each project is directly buildable from `formal/lean/<project>/` with its
+certified `lakefile.toml`, `lake-manifest.json`, and `lean-toolchain`.
 
-- `beta` has norm 5 and is prime in the Gaussian integers;
-- the five digits give the required residue representatives modulo `beta`;
-- an injective dense embedding of the Gaussian integers into `Z_5` carrying `beta` to norm `1/5`;
-- the corresponding field-level embedding into `Q_5`;
-- unique one-step digit extraction/reduction in `Z_5`;
-- existence and uniqueness of the infinite `Fin 5` digit expansion with convergent partial sums.
+## Certified identity
 
-This does **not** by itself prove that every Toolkit algorithm is a refinement of the Lean construction. The crosswalk in `docs/LEAN_FORMALIZATION_ALIGNMENT.md` records which software components are direct implementation targets, contextual companions, or still require a refinement proof.
+See `PROVENANCE.json` and `capstone/SHA256SUMS.txt`. The consolidated source
+is commit `07e776b4e1d7d09513394a4b676516eb51e4c597`, artifact
+`10175389923`, SHA-256
+`840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21`.
 
-### Build
+The certification records 79 Lean files, 14,341 source lines, all six normal
+and clean network-disabled builds passing (CNRSCore 3,015; CnrsQ2 3,037;
+CNRSArithmetic 3,043; CNRSIntegration 3,046; CNRSProblem1 8,723;
+CNRSProblem2 3,052; total 23,916), byte-stable source, and no `sorry`,
+`sorryAx`, `admit`, added axiom, or unsafe declaration.
 
-From `formal/lean/CnrsQ2/`:
+In the Toolkit layout, the supported checksum and proof-hygiene verification
+command is:
 
 ```bash
-lake build
+python tools/check_lean_alignment.py
 ```
 
-The GitHub workflow `.github/workflows/lean.yml` runs this independently of the Python test suite.
+The upstream checksum inventory retains its original `./release/...` paths;
+the Toolkit verifier maps those paths to the vendored `formal/lean/...` tree.
+
+## Scope
+
+The verified boundary is the finite CNRS kernel. It excludes arbitrary
+infinite-series serialization, analytic continuation or path reconstruction,
+unequal-branch arithmetic, unrestricted streaming multiplication or division,
+and a general representation theorem for all complex numbers.
+
+Do not describe the complete Toolkit as formally verified. Use
+**Lean-verified mathematical theorem** and **separately tested,
+theorem-aligned Python implementation** where appropriate.

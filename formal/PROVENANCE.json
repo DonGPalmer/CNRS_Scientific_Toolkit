@@ -1,0 +1,49 @@
+{
+  "schema": "cnrs-toolkit-lean-provenance-v2",
+  "status_date": "2026-09-11",
+  "documentation_state": "CNRS-LEAN-CAPSTONE governed and GREEN",
+  "toolchain": {"lean": "4.33.0", "lean_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17", "note": "Each vendored project retains its certified resolved Mathlib manifest."},
+  "source_repository": "DonGPalmer/SSC_Formal_Methods_CI",
+  "consolidated_release": {
+    "name": "CNRS-LEAN-CAPSTONE",
+    "branch": "cnrs-lean-consolidated-release-candidate",
+    "commit": "07e776b4e1d7d09513394a4b676516eb51e4c597",
+    "tree": "fd61bac37369f8e3020d70141c565a4fba414a98",
+    "workflow_run": 34534566879,
+    "workflow_job": 103063055916,
+    "workflow_conclusion": "success",
+    "artifact_id": 10175389923,
+    "artifact_size_bytes": 225289,
+    "artifact_sha256": "840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21",
+    "lean_source_files": 79,
+    "lean_source_lines": 14341,
+    "build_jobs": {
+      "CNRSCore": 3015,
+      "CnrsQ2": 3037,
+      "CNRSArithmetic": 3043,
+      "CNRSIntegration": 3046,
+      "CNRSProblem1": 8723,
+      "CNRSProblem2": 3052,
+      "total": 23916
+    },
+    "normal_builds": 6,
+    "clean_network_disabled_builds": 6,
+    "proof_hygiene": "no sorry, sorryAx, admit, added axiom, or unsafe declaration",
+    "byte_stable": true
+  },
+  "projects": [
+    {"name": "CNRSCore", "boundary": "v1 finite-Gaussian foundation"},
+    {"name": "CnrsQ2", "boundary": "v5 on CNRSCore"},
+    {"name": "CNRSArithmetic", "boundary": "E1-E11 and Phase F"},
+    {"name": "CNRSIntegration", "boundary": "E1 Addition Bridge"},
+    {"name": "CNRSProblem1", "boundary": "P1-L1 through P1-L7"},
+    {"name": "CNRSProblem2", "boundary": "P2-L1 through P2-L10"}
+  ],
+  "integration": {
+    "lean_source_vendored_for_release": true,
+    "python_runtime_modified": false,
+    "release_target": "v0.13.0",
+    "release_status": "candidate preparation",
+    "next_formal_campaign": "P3-L1 finite-support convolution multiplication with evaluation theorem"
+  }
+}

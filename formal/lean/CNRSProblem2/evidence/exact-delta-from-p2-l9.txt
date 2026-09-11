@@ -1,0 +1,6 @@
+A	.github/workflows/cnrsproblem2-p2-l10-authoritative.yml
+A	CNRSProblem2/CNRSProblem2/FiniteHurwitzAntiderivative.lean
+A	CNRSProblem2/P2_L10_THEOREM_BOUNDARY_FROZEN.md
+M	CNRSProblem2/CNRSProblem2.lean
+M	CNRSProblem2/MANIFEST.md
+M	CNRSProblem2/README.md
