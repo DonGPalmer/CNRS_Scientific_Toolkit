@@ -25,8 +25,12 @@ certified capstone artifact.
 
 ## Toolkit verification
 
-1. Verify `formal/capstone/SHA256SUMS.txt` against the vendored files.
-2. Run `python tools/check_lean_alignment.py`.
+1. Run `python tools/check_lean_alignment.py` from the repository root. This
+   is the supported Toolkit-layout verification command: it remaps the
+   upstream inventory's preserved `./release/...` paths to
+   `formal/lean/...` and verifies every checksum.
+2. Confirm the command reports the exact six-project, 79-file inventory and a
+   clean proof-marker gate.
 3. Run the Python suite independently.
 4. Build all six Lean projects in the Lean workflow.
 5. Confirm no forbidden proof markers and no source drift.
@@ -35,4 +39,3 @@ certified capstone artifact.
 Python and Lean results remain separate. A Toolkit release may report both,
 but it must not describe the independently written Python runtime as
 Lean-extracted or end-to-end formally verified.
-

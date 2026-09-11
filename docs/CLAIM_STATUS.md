@@ -6,8 +6,8 @@ The v0.13.0 candidate vendors the exact governed CNRS-LEAN-CAPSTONE source:
 six projects, 79 Lean files and the P2-L1–P2-L10 chain. Toolkit candidate
 validation is recorded separately from the upstream capstone certification.
 
-Candidate Python validation on 2026-09-11: `1218 passed, 0 failed`, with 921
-warnings (retained reliable-domain diagnostics plus four pytest deprecation
+Candidate Python validation on 2026-09-11: `1214 passed, 4 skipped, 0 failed`,
+with 922 warnings (retained reliable-domain diagnostics and pytest deprecation
 warnings).
 
 `1206 passed`, `0 failed` on 2026-08-04. The suite reports 917 retained reliable-domain warnings from selected pre-existing scientific-workflow tests.

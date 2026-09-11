@@ -17,7 +17,15 @@
     "artifact_sha256": "840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21",
     "lean_source_files": 79,
     "lean_source_lines": 14341,
-    "build_jobs_each": 3042,
+    "build_jobs": {
+      "CNRSCore": 3015,
+      "CnrsQ2": 3037,
+      "CNRSArithmetic": 3043,
+      "CNRSIntegration": 3046,
+      "CNRSProblem1": 8723,
+      "CNRSProblem2": 3052,
+      "total": 23916
+    },
     "normal_builds": 6,
     "clean_network_disabled_builds": 6,
     "proof_hygiene": "no sorry, sorryAx, admit, added axiom, or unsafe declaration",
@@ -39,4 +47,3 @@
     "next_formal_campaign": "P3-L1 finite-support convolution multiplication with evaluation theorem"
   }
 }
-

@@ -2,8 +2,9 @@
 
 ## Candidate validation
 
-`1218 passed, 0 failed` on 2026-09-11. The run reported 921 warnings:
-retained reliable-domain diagnostics and four pytest deprecation warnings.
+`1214 passed, 4 skipped, 0 failed` on 2026-09-11. The run reported 922
+warnings: retained reliable-domain diagnostics and pytest deprecation
+warnings.
 
 ## Release validation
 

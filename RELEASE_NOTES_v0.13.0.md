@@ -24,8 +24,10 @@ Commit `07e776b4e1d7d09513394a4b676516eb51e4c597`, tree
 `840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21`.
 
 The upstream certification records 79 Lean files, 14,341 lines, six normal and
-six clean network-disabled builds, 3,042 jobs per project build, byte-stable
-source and clean proof-hygiene gates.
+six clean network-disabled builds, byte-stable source and clean proof-hygiene
+gates. The certified build counts are CNRSCore 3,015; CnrsQ2 3,037;
+CNRSArithmetic 3,043; CNRSIntegration 3,046; CNRSProblem1 8,723; and
+CNRSProblem2 3,052 jobs, totaling 23,916 across the six-project pass.
 
 ## Runtime impact
 
@@ -33,9 +35,9 @@ No Python arithmetic behavior is changed solely by this synchronization.
 Python remains independently implemented and theorem-aligned, not
 Lean-extracted.
 
-Candidate Python validation: `1218 passed, 0 failed`. The 921 warnings
-comprise the retained reliable-domain diagnostics plus four pytest
-deprecation warnings.
+Candidate Python validation: `1214 passed, 4 skipped, 0 failed`. The 922
+warnings comprise retained reliable-domain diagnostics and pytest deprecation
+warnings.
 
 ## Scope boundary
 

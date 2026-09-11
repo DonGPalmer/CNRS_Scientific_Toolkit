@@ -31,8 +31,20 @@ is commit `07e776b4e1d7d09513394a4b676516eb51e4c597`, artifact
 `840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21`.
 
 The certification records 79 Lean files, 14,341 source lines, all six normal
-and clean network-disabled builds passing at 3,042 jobs, byte-stable source,
-and no `sorry`, `sorryAx`, `admit`, added axiom, or unsafe declaration.
+and clean network-disabled builds passing (CNRSCore 3,015; CnrsQ2 3,037;
+CNRSArithmetic 3,043; CNRSIntegration 3,046; CNRSProblem1 8,723;
+CNRSProblem2 3,052; total 23,916), byte-stable source, and no `sorry`,
+`sorryAx`, `admit`, added axiom, or unsafe declaration.
+
+In the Toolkit layout, the supported checksum and proof-hygiene verification
+command is:
+
+```bash
+python tools/check_lean_alignment.py
+```
+
+The upstream checksum inventory retains its original `./release/...` paths;
+the Toolkit verifier maps those paths to the vendored `formal/lean/...` tree.
 
 ## Scope
 
@@ -44,4 +56,3 @@ and a general representation theorem for all complex numbers.
 Do not describe the complete Toolkit as formally verified. Use
 **Lean-verified mathematical theorem** and **separately tested,
 theorem-aligned Python implementation** where appropriate.
-

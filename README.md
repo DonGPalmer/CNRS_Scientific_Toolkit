@@ -17,8 +17,8 @@ runtime is Lean-extracted or end-to-end formally verified. See
 [`docs/LEAN_FORMALIZATION_ALIGNMENT.md`](docs/LEAN_FORMALIZATION_ALIGNMENT.md)
 and [`formal/README.md`](formal/README.md).
 
-Candidate Python validation: `1218 passed, 0 failed`; 921 reported warnings
-include retained reliable-domain diagnostics and four pytest deprecation
+Candidate Python validation: `1214 passed, 4 skipped, 0 failed`; 922 reported
+warnings include retained reliable-domain diagnostics and pytest deprecation
 warnings.
 
 ## v0.12.1 — Algebraic-Curve Branch Detection and P4 Documentation Synchronization
@@ -529,7 +529,7 @@ Branch metadata is preserved through expression construction, substitution, diff
 Current v0.13.0 candidate validation status:
 
 ```text
-1218 passed, 0 failed
+1214 passed, 4 skipped, 0 failed
 ```
 
 The warning stream contains documented reliable-domain diagnostics from selected scientific-workflow tests. These warnings are retained because they identify evaluations outside estimated local reliability ranges.

@@ -9,7 +9,8 @@
   prohibited proof markers.
 - Updated package and citation metadata to v0.13.0.
 - No Python arithmetic algorithm was changed by this synchronization.
-- Candidate Python validation: `1218 passed, 0 failed`, with 921 warnings.
+- Candidate Python validation: `1214 passed, 4 skipped, 0 failed`, with 922
+  warnings.
 
 See `RELEASE_NOTES_v0.13.0.md`.
 
