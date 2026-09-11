@@ -1,0 +1,24 @@
+⚠ [3037/3052] Replayed CnrsQ2.GaussianCNS
+warning: CnrsQ2/GaussianCNS.lean:38:36: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [3041/3052] Replayed CNRSCore.Finiteness
+warning: CNRSCore/Finiteness.lean:192:5: Variable name `hx` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hx
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CNRSCore/Finiteness.lean:193:10: Variable name `h1` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h1
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CNRSCore/Finiteness.lean:195:10: Variable name `h2` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h2
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Build completed successfully (3052 jobs).

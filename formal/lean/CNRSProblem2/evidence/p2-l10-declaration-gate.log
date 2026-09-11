@@ -1,0 +1,85 @@
+CNRSProblem2.FiniteHurwitz.antideriv.{u_1} {R : Type u_1} [CommRing R] (c : R) (x : CNRSProblem2.FiniteHurwitz R) :
+  CNRSProblem2.FiniteHurwitz R
+CNRSProblem2.FiniteHurwitz.coeff_antideriv_zero.{u_1} {R : Type u_1} [CommRing R] (c : R)
+  (x : CNRSProblem2.FiniteHurwitz R) : (CNRSProblem2.FiniteHurwitz.antideriv c x).coeff 0 = c
+CNRSProblem2.FiniteHurwitz.coeff_antideriv_succ.{u_1} {R : Type u_1} [CommRing R] (c : R)
+  (x : CNRSProblem2.FiniteHurwitz R) (n : ℕ) : (CNRSProblem2.FiniteHurwitz.antideriv c x).coeff (n + 1) = x.coeff n
+CNRSProblem2.FiniteHurwitz.deriv_antideriv.{u_1} {R : Type u_1} [CommRing R] (c : R)
+  (x : CNRSProblem2.FiniteHurwitz R) : (CNRSProblem2.FiniteHurwitz.antideriv c x).deriv = x
+CNRSProblem2.FiniteHurwitz.antideriv_coeff_zero_deriv.{u_1} {R : Type u_1} [CommRing R]
+  (x : CNRSProblem2.FiniteHurwitz R) : CNRSProblem2.FiniteHurwitz.antideriv (x.coeff 0) x.deriv = x
+CNRSProblem2.FiniteHurwitz.antideriv_injective.{u_1} {R : Type u_1} [CommRing R] (c : R) :
+  Function.Injective (CNRSProblem2.FiniteHurwitz.antideriv c)
+CNRSProblem2.FiniteHurwitz.eq_iff_deriv_eq_and_coeff_zero_eq.{u_1} {R : Type u_1} [CommRing R]
+  (x y : CNRSProblem2.FiniteHurwitz R) : x = y ↔ x.deriv = y.deriv ∧ x.coeff 0 = y.coeff 0
+CNRSProblem2.antiderivFiniteHurwitzCode (c : ↥CNRSProblem2.RAValue) (a : CNRSProblem2.FiniteHurwitzCode) :
+  Option CNRSProblem2.FiniteHurwitzCode
+CNRSProblem2.antiderivFiniteHurwitzCode_encode (c : ↥CNRSProblem2.RAValue) (x : CNRSProblem2.FiniteHurwitzValue) :
+  CNRSProblem2.antiderivFiniteHurwitzCode c (CNRSProblem2.encodeFiniteHurwitz x) =
+    some (CNRSProblem2.encodeFiniteHurwitz (CNRSProblem2.FiniteHurwitz.antideriv c x))
+CNRSProblem2.antiderivFiniteHurwitzCode_eq_some_iff {c : ↥CNRSProblem2.RAValue} {a b : CNRSProblem2.FiniteHurwitzCode} :
+  CNRSProblem2.antiderivFiniteHurwitzCode c a = some b ↔
+    ∃ x,
+      CNRSProblem2.decodeFiniteHurwitz a = some x ∧
+        b = CNRSProblem2.encodeFiniteHurwitz (CNRSProblem2.FiniteHurwitz.antideriv c x)
+CNRSProblem2.antiderivFiniteHurwitzCode_eq_none_iff (c : ↥CNRSProblem2.RAValue) (a : CNRSProblem2.FiniteHurwitzCode) :
+  CNRSProblem2.antiderivFiniteHurwitzCode c a = none ↔ CNRSProblem2.decodeFiniteHurwitz a = none
+CNRSProblem2.value_antiderivFiniteHurwitzCode {c : ↥CNRSProblem2.RAValue} {a b : CNRSProblem2.FiniteHurwitzCode}
+  (h : CNRSProblem2.antiderivFiniteHurwitzCode c a = some b) : b.value = CNRSProblem2.FiniteHurwitz.antideriv c a.value
+CNRSProblem2.derivCode_antiderivCode_encode (c : ↥CNRSProblem2.RAValue) (x : CNRSProblem2.FiniteHurwitzValue) :
+  (CNRSProblem2.antiderivFiniteHurwitzCode c (CNRSProblem2.encodeFiniteHurwitz x)).bind
+      CNRSProblem2.derivFiniteHurwitzCode =
+    some (CNRSProblem2.encodeFiniteHurwitz x)
+CNRSProblem2.antiderivCode_derivCode_encode (x : CNRSProblem2.FiniteHurwitzValue) :
+  (CNRSProblem2.derivFiniteHurwitzCode (CNRSProblem2.encodeFiniteHurwitz x)).bind
+      (CNRSProblem2.antiderivFiniteHurwitzCode (x.coeff 0)) =
+    some (CNRSProblem2.encodeFiniteHurwitz x)
+CNRSProblem2.antiderivBranchedFiniteHurwitz (c : ↥CNRSProblem2.RAValue) (x : CNRSProblem2.BranchedFiniteHurwitzValue) :
+  CNRSProblem2.BranchedFiniteHurwitzValue
+CNRSProblem2.antiderivBranchedFiniteHurwitz_value (c : ↥CNRSProblem2.RAValue)
+  (x : CNRSProblem2.BranchedFiniteHurwitzValue) :
+  (CNRSProblem2.antiderivBranchedFiniteHurwitz c x).1 = CNRSProblem2.FiniteHurwitz.antideriv c x.1
+CNRSProblem2.antiderivBranchedFiniteHurwitz_branch (c : ↥CNRSProblem2.RAValue)
+  (x : CNRSProblem2.BranchedFiniteHurwitzValue) : (CNRSProblem2.antiderivBranchedFiniteHurwitz c x).2 = x.2
+CNRSProblem2.deriv_antideriv_branched (c : ↥CNRSProblem2.RAValue) (x : CNRSProblem2.BranchedFiniteHurwitzValue) :
+  (CNRSProblem2.FiniteHurwitz.deriv (CNRSProblem2.antiderivBranchedFiniteHurwitz c x).1,
+      (CNRSProblem2.antiderivBranchedFiniteHurwitz c x).2) =
+    x
+CNRSProblem2.antideriv_coeff_deriv_branched (x : CNRSProblem2.BranchedFiniteHurwitzValue) :
+  CNRSProblem2.antiderivBranchedFiniteHurwitz (x.1.coeff 0) (CNRSProblem2.FiniteHurwitz.deriv x.1, x.2) = x
+CNRSProblem2.antiderivBranchedFiniteHurwitzCode (c : ↥CNRSProblem2.RAValue)
+  (a : CNRSProblem2.BranchedFiniteHurwitzCode) : Option CNRSProblem2.BranchedFiniteHurwitzCode
+CNRSProblem2.antiderivBranchedFiniteHurwitzCode_encode (c : ↥CNRSProblem2.RAValue)
+  (x : CNRSProblem2.BranchedFiniteHurwitzValue) :
+  CNRSProblem2.antiderivBranchedFiniteHurwitzCode c (CNRSProblem2.encodeBranchedFiniteHurwitz x) =
+    some (CNRSProblem2.encodeBranchedFiniteHurwitz (CNRSProblem2.antiderivBranchedFiniteHurwitz c x))
+CNRSProblem2.antiderivBranchedFiniteHurwitzCode_eq_some_iff {c : ↥CNRSProblem2.RAValue}
+  {a b : CNRSProblem2.BranchedFiniteHurwitzCode} :
+  CNRSProblem2.antiderivBranchedFiniteHurwitzCode c a = some b ↔
+    ∃ x,
+      CNRSProblem2.decodeBranchedFiniteHurwitz a = some x ∧
+        b = CNRSProblem2.encodeBranchedFiniteHurwitz (CNRSProblem2.antiderivBranchedFiniteHurwitz c x)
+CNRSProblem2.antiderivBranchedFiniteHurwitzCode_eq_none_iff (c : ↥CNRSProblem2.RAValue)
+  (a : CNRSProblem2.BranchedFiniteHurwitzCode) :
+  CNRSProblem2.antiderivBranchedFiniteHurwitzCode c a = none ↔ CNRSProblem2.decodeBranchedFiniteHurwitz a = none
+CNRSProblem2.rawValue_antiderivBranchedFiniteHurwitzCode {c : ↥CNRSProblem2.RAValue}
+  {a b : CNRSProblem2.BranchedFiniteHurwitzCode} (h : CNRSProblem2.antiderivBranchedFiniteHurwitzCode c a = some b) :
+  b.rawValue = CNRSProblem2.antiderivBranchedFiniteHurwitz c a.rawValue
+CNRSProblem2.antiderivBranchedFiniteHurwitz_shift (m : ℤ) (c : ↥CNRSProblem2.RAValue)
+  (x : CNRSProblem2.BranchedFiniteHurwitzValue) :
+  CNRSProblem2.antiderivBranchedFiniteHurwitz c (CNRSProblem2.shiftBranchedFiniteHurwitz m x) =
+    CNRSProblem2.shiftBranchedFiniteHurwitz m (CNRSProblem2.antiderivBranchedFiniteHurwitz c x)
+CNRSProblem2.antiderivBranchedFiniteHurwitz_attach (c : ↥CNRSProblem2.RAValue) (p : CNRSProblem2.BranchPoint)
+  (x : CNRSProblem2.FiniteHurwitzValue) :
+  CNRSProblem2.antiderivBranchedFiniteHurwitz c (CNRSProblem2.attachFiniteHurwitz p x) =
+    CNRSProblem2.attachFiniteHurwitz p (CNRSProblem2.FiniteHurwitz.antideriv c x)
+CNRSProblem2.antiderivBranchedFiniteHurwitzCode_encodeAttached (c : ↥CNRSProblem2.RAValue)
+  (p : CNRSProblem2.BranchPoint) (x : CNRSProblem2.FiniteHurwitzValue) :
+  CNRSProblem2.antiderivBranchedFiniteHurwitzCode c (CNRSProblem2.encodeAttachedFiniteHurwitz p x) =
+    some (CNRSProblem2.encodeAttachedFiniteHurwitz p (CNRSProblem2.FiniteHurwitz.antideriv c x))
+CNRSProblem2.relativeBranch_antideriv_pair (c d : ↥CNRSProblem2.RAValue)
+  (x y : CNRSProblem2.BranchedFiniteHurwitzValue) :
+  CNRSProblem2.relativeBranch
+      (CNRSProblem2.antiderivBranchedFiniteHurwitz c x, CNRSProblem2.antiderivBranchedFiniteHurwitz d y) =
+    CNRSProblem2.relativeBranch (x, y)
+frozen theorem-declaration gate: PASS

@@ -1,0 +1,5 @@
+fb0b2f23a7c4ea60898daae3f39d58dc55686f98  accepted P2-L10 candidate commit
+317e69186db1613f958acc5254032ca949338cd5  exact complete candidate tree
+be9f20f49e3878d639ec09b742c2c88e8afe66a9  exact authoritative P2-L9 commit
+4484945f2a46cca87e1eeab185d3b69fbbed201e  exact complete P2-L9 tree
+candidate, P2-L9 baseline, and authoritative delta gate: PASS
