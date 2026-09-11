@@ -1,4 +1,4 @@
-# Gaussian-Rational Theorem Support — v0.12.1
+# Gaussian-Rational Theorem Support — v0.13.0
 
 The Toolkit encodes three linked results for base `beta = -2+i`:
 

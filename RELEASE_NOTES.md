@@ -1,4 +1,19 @@
-# Unreleased — Lean Q2 Formal-Verification Integration
+# v0.13.0 — CNRS Lean Capstone Alignment
+
+- Vendored the exact six-project CNRS-LEAN-CAPSTONE source snapshot.
+- Replaced the Q2-only verification workflow with a six-project matrix build.
+- Added exact capstone provenance, checksum inventory, audit and final verdict.
+- Extended the reader-facing inventory and Toolkit crosswalk through P1-L7,
+  CNRSArithmetic Phase F and P2-L10.
+- Added repository guards for the 79-file certified source inventory and
+  prohibited proof markers.
+- Updated package and citation metadata to v0.13.0.
+- No Python arithmetic algorithm was changed by this synchronization.
+- Candidate Python validation: `1218 passed, 0 failed`, with 921 warnings.
+
+See `RELEASE_NOTES_v0.13.0.md`.
+
+# Historical post-v0.12.1 Q2 integration
 
 - Added the governed CNRS Q2 Lean 4 project under `formal/lean/CnrsQ2/`, pinned to Lean 4 v4.33.0 and Mathlib v4.33.0.
 - Added an independent `.github/workflows/lean.yml` build lane; Lean results remain separate from the v0.12.1 Python release baseline.

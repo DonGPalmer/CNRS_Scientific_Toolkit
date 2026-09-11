@@ -1,42 +1,32 @@
 # CNRS Toolkit–Lean Claim Crosswalk
 
-Status date: 2026-09-09  
-Formal boundary: governed Lean work through P2-L8
+Status date: 2026-09-11  
+Formal boundary: CNRS-LEAN-CAPSTONE
 
 | Toolkit claim or capability | Toolkit area | Lean evidence | Alignment status |
 |---|---|---|---|
-| Gaussian base `-2+i` has norm 5 and supports the five residue digits | core/digit modules | `CNRSCore`, `CnrsQ2` | Lean-verified mathematical contract; Python separately tested |
-| Natural beta-adic completion and unique digit sequences | topology layer | `CnrsQ2` completion and digit-expansion theorem families | Lean-verified in `ℤ₅`/`ℚ₅`; not ordinary-complex convergence |
-| Exact finite addition and division recurrence | arithmetic/normalization modules | `CNRSArithmetic` E1–E2 | Lean-verified model; implementation not Lean-extracted |
-| Bounded deterministic states imply eventual periodicity | rational/periodic modules | `CNRSArithmetic` E3–E9 and `CNRSProblem1` | Lean-verified under frozen hypotheses |
-| Outcome classification and canonical representatives | arithmetic classification utilities | `CNRSArithmetic` E10–E11 | Lean-verified model; software alignment remains test-based |
-| General online multiplication cannot be supplied by the frozen finite-state model | transducer diagnostics | `CNRSArithmetic` Phase F | Lean-verified impossibility boundary; not a claim that multiplication is impossible by all methods |
-| Finite Laurent coefficients represent `ℤ[i][(-2+i)⁻¹]` | rational/value codec | `CNRSProblem2.FiniteLaurentValueCodec` | Lean-verified carrier, codec, normalization, and fail-closed operations |
-| Formal CNRS-H finite-truncation multiplication uses binomial convolution | CNRS-H algebra modules | `CNRSProblem2.FiniteHurwitz` | Lean-verified for finite support |
-| CNRS-H differentiation is coefficient shift and obeys Leibniz | CNRS-H calculus | `FiniteHurwitz` derivative theorems | Lean-verified for finite support; right-shift integration and infinite analytic realization are separate |
-| Branch-labelled finite-Hurwitz states serialize canonically | branch/hybrid state modules | `BranchedFiniteHurwitz` plus P2-L3 codecs | Lean-verified representation contract |
-| Invalid or noncanonical serialized operation inputs fail explicitly | codec-facing operations | P2-L4, P2-L5, and P2-L6 `Option` operation theorem families | Lean-verified fail-closed contract |
-| Common branch transport preserves values and operation behavior | branch algebra | `BranchTransport` | Lean-verified common-shift equivariance |
-| Relative branch classifies diagonal branch-pair orbits | branch/surface helpers | `BranchOrbit` | Lean-verified finite pair-state result; not a general Riemann-surface constructor |
-| Python scientific examples reproduce stated equations | examples/workflows | no end-to-end Lean refinement | Computationally verified only within documented test domains |
-| Scale Space physical interpretation | scientific applications | no current Lean derivation | Open/conditional research |
+| Base `-2+i`, norm 5 and five residue digits | core/digits | CNRSCore; CnrsQ2 | Lean-verified contract; Python separately tested |
+| Natural beta-adic completion and unique digits | topology | CnrsQ2 | Lean-verified in `Z_5/Q_5`; not ordinary-complex convergence |
+| Finite addition and exact division recurrence | arithmetic | CNRSArithmetic E1–E2; CNRSIntegration | Lean-verified model; Python not extracted |
+| Bounded-state periodicity and classified outcomes | rational/periodic | CNRSArithmetic E3–E11; CNRSProblem1 | Lean-verified under frozen hypotheses |
+| Frozen finite-state model cannot supply unrestricted online multiplication | transducer diagnostics | CNRSArithmetic Phase F | Verified obstruction for that model, not for every method |
+| Problem 1 negative-base and quadratic cases | representation modules | CNRSProblem1 P1-L1–L7 | Lean-verified within explicit bases/hypotheses |
+| Finite Laurent carrier and canonical codec | rational/value codec | CNRSProblem2 P2-L4 | Lean-verified, fail-closed operations |
+| Finite Hurwitz product, derivative and Leibniz law | CNRS-H | CNRSProblem2 P2-L5 | Lean-verified for finite support |
+| Explicit branch labels and equal-branch arithmetic | branch state | CNRSProblem2 P2-L6–L8 | Lean-verified partial-operation policy |
+| Canonical branch-point attachment | branch integration | CNRSProblem2 P2-L9 | Lean-verified metadata bridge; no path reconstruction |
+| Finite antiderivative/derivative reversal | CNRS-H calculus | CNRSProblem2 P2-L10 | Lean-verified finite coefficient law |
+| Python scientific examples | workflows | no end-to-end refinement | Computationally verified within documented domains |
+| Scale Space physical interpretation | applications | no current Lean derivation | Conditional/open research |
 
 ## Required wording
 
-Use “Lean-verified mathematical theorem” for the formal statements. Use “theorem-aligned implementation” where Python realizes the same intended contract but is connected only by design review and tests.
+Use **Lean-verified mathematical theorem**, **theorem-aligned
+implementation**, **computationally verified**, and **open** as distinct
+evidence levels. Do not call the entire Python Toolkit formally verified.
 
-Do not infer any of the following from this crosswalk:
+## Deliberate exclusions
 
-- that Lean has verified the Python interpreter or runtime;
-- that a finite-support result automatically applies to infinite series;
-- that beta-adic convergence is ordinary complex analytic convergence;
-- that branch metadata reconstructs an analytic continuation path;
-- that a diagnostic or impossibility theorem supplies a new algorithm.
-
-## Crosswalk gaps to close before consolidated release
-
-1. Prove the P2 compatibility bridge to the earlier `BranchPoint` and canonical lifted-coordinate interfaces.
-2. Provide one integrated P2 codec/API capstone.
-3. Prove explicit overlap agreements among `CNRSCore`, `CNRSArithmetic`, `CNRSProblem1`, and `CNRSProblem2`.
-4. Add property tests whose fixtures are generated from frozen Lean theorem examples where practical.
-5. Decide which Python APIs are sufficiently aligned to be labelled theorem-aligned rather than merely computationally verified.
+The crosswalk does not infer infinite-series serialization, analytic continuation,
+winding-path recovery, unequal-branch arithmetic, unrestricted
+streaming multiplication/division, or a universal complex representation.

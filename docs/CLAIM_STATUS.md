@@ -1,6 +1,14 @@
-# Claim Status — Current Release v0.12.1
+# Claim Status — v0.13.0 Release Candidate
 
 ## Current validation
+
+The v0.13.0 candidate vendors the exact governed CNRS-LEAN-CAPSTONE source:
+six projects, 79 Lean files and the P2-L1–P2-L10 chain. Toolkit candidate
+validation is recorded separately from the upstream capstone certification.
+
+Candidate Python validation on 2026-09-11: `1218 passed, 0 failed`, with 921
+warnings (retained reliable-domain diagnostics plus four pytest deprecation
+warnings).
 
 `1206 passed`, `0 failed` on 2026-08-04. The suite reports 917 retained reliable-domain warnings from selected pre-existing scientific-workflow tests.
 
@@ -39,8 +47,14 @@ Post-v0.12.1 Lean-integration tree: `1211 passed`, `0 failed` on 2026-08-30, wit
 - automatic compact algebraic Riemann-surface construction including infinity, singular normalization, Puiseux charts, and certified continuation;
 - general physical necessity or empirical advantage of CNRS over standard complex representation.
 
-The natural beta-adic completeness question is no longer listed as open. Selected Q2 completion and digit-expansion statements are machine-checked under `formal/lean/CnrsQ2/`; this formal theorem evidence does not by itself certify the independently implemented Python routines. Beta-adic completeness remains distinct from ordinary complex analytic convergence.
+The natural beta-adic completeness question is no longer listed as open.
+Selected mathematical results across the six vendored projects are
+Lean-verified; this formal evidence does not by itself certify the
+independently implemented Python routines. Beta-adic completeness remains
+distinct from ordinary complex analytic convergence.
 
 ## Canonical Problem 4 reference
 
-See `CNRS_P4_REFERENCE_STATUS.md`. The canonical record is Donald G. Palmer, *Partial Operational Completeness of a Positional Number System for Complex Numbers*, Version 12, DOI `10.5281/zenodo.21791909`.
+See `CNRS_P4_REFERENCE_STATUS.md`. The cited public record remains Version 12,
+DOI `10.5281/zenodo.21791909`; the synchronized programme working paper is
+Version 16 pending any later public deposit.

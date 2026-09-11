@@ -38,7 +38,7 @@ theorem toPadic_injective : Function.Injective toPadic :=
 
 /-- The image of β under the embedding. -/
 lemma toPadic_beta : toPadic beta = sqrtNegOne - 2 := by
-  simp only [toPadic, beta, Zsqrtd.lift_apply_apply, rootPack]
+  simp only [toPadic, beta, CNRSCore.beta, Zsqrtd.lift_apply_apply, rootPack]
   push_cast
   ring
 

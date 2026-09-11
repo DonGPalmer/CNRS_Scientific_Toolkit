@@ -1,105 +1,63 @@
-"""Repository-level guards for the Lean/CNRS theorem-alignment layer.
-
-These tests do not execute Lean. Lean runs in its own GitHub Actions job.
-They protect the maintained formal-source identity, theorem crosswalk, and
-Python theorem-registry metadata from silent drift.
-"""
+"""Repository guards for the CNRS-LEAN-CAPSTONE alignment layer."""
 from __future__ import annotations
 
-import hashlib
-import re
+import json
+import subprocess
+import sys
 from pathlib import Path
 
 from cnrs.theorem_alignment import TheoremStatus, get_theorem_record
 
 ROOT = Path(__file__).resolve().parents[1]
-LEAN_ROOT = ROOT / "formal" / "lean" / "CnrsQ2"
-MODULE_ROOT = LEAN_ROOT / "CnrsQ2"
-ALIGNMENT = ROOT / "docs" / "LEAN_FORMALIZATION_ALIGNMENT.md"
-
-EXPECTED_MODULES = {
-    "Basic.lean",
-    "DigitAlphabet.lean",
-    "HenselRoot.lean",
-    "Embedding.lean",
-    "Density.lean",
-    "FieldLevel.lean",
-    "DigitExpansion.lean",
-    "FieldDigitExpansion.lean",
-    "DigitIsometry.lean",
-    "FiniteLeftCarrier.lean",
-    "RawFiniteLeftCarrier.lean",
-}
-
-EXPECTED_THEOREMS = {
-    "norm_beta": "Basic.lean",
-    "prime_beta": "Basic.lean",
-    "digit_bijective": "DigitAlphabet.lean",
-    "padicInt_is_beta_adic_completion": "Density.lean",
-    "padic_is_beta_adic_completion_field": "FieldLevel.lean",
-    "exists_unique_digitP": "DigitExpansion.lean",
-    "exists_unique_reduction": "DigitExpansion.lean",
-    "partialSum_digitSeq_spec": "DigitExpansion.lean",
-    "tendsto_partialSum_digitSeq": "DigitExpansion.lean",
-    "digitSeq_unique": "DigitExpansion.lean",
-    "exists_unique_digit_expansion": "DigitExpansion.lean",
-}
-
-MANIFEST_ROW = re.compile(
-    r"^\| `(?P<path>[^`]+)` \| (?P<bytes>[0-9,]+) \| `(?P<prefix>[0-9a-f]{16})…` \|$"
+FORMAL = ROOT / "formal"
+PROJECTS = (
+    "CNRSCore", "CnrsQ2", "CNRSArithmetic",
+    "CNRSIntegration", "CNRSProblem1", "CNRSProblem2",
 )
-SORRY_TOKEN = re.compile(r"\b(?:sorry|sorryAx)\b")
 
 
-def test_formal_project_files_present():
-    assert (LEAN_ROOT / "lakefile.toml").is_file()
-    assert (LEAN_ROOT / "lean-toolchain").is_file()
-    assert (LEAN_ROOT / "CnrsQ2.lean").is_file()
-    assert (LEAN_ROOT / "MANIFEST.md").is_file()
-    assert EXPECTED_MODULES == {p.name for p in MODULE_ROOT.glob("*.lean")}
+def test_capstone_alignment_guard():
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "check_lean_alignment.py")],
+        capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "PASS CNRS-LEAN-CAPSTONE" in result.stdout
 
 
-def test_crosswalk_references_real_theorems():
-    alignment_text = ALIGNMENT.read_text(encoding="utf-8")
-    for theorem, filename in EXPECTED_THEOREMS.items():
-        source = (MODULE_ROOT / filename).read_text(encoding="utf-8")
-        assert theorem in source, f"{theorem} missing from {filename}"
-        assert theorem in alignment_text, f"{theorem} missing from crosswalk"
+def test_capstone_provenance():
+    data = json.loads((FORMAL / "PROVENANCE.json").read_text())
+    release = data["consolidated_release"]
+    assert release["commit"] == "07e776b4e1d7d09513394a4b676516eb51e4c597"
+    assert release["tree"] == "fd61bac37369f8e3020d70141c565a4fba414a98"
+    assert release["workflow_run"] == 34534566879
+    assert release["workflow_job"] == 103063055916
+    assert release["artifact_id"] == 10175389923
+    assert release["lean_source_files"] == 79
+    assert [p["name"] for p in data["projects"]] == list(PROJECTS)
 
 
-def test_governed_manifest_matches_checked_in_formal_tree():
-    rows = {}
-    for line in (LEAN_ROOT / "MANIFEST.md").read_text(encoding="utf-8").splitlines():
-        match = MANIFEST_ROW.match(line)
-        if match:
-            rows[match.group("path")] = (
-                int(match.group("bytes").replace(",", "")),
-                match.group("prefix"),
-            )
-    assert rows, "No source rows parsed from Lean MANIFEST.md"
-    for rel, (expected_bytes, expected_prefix) in rows.items():
-        path = LEAN_ROOT / rel
-        data = path.read_bytes()
-        assert len(data) == expected_bytes, f"byte-size drift: {rel}"
-        assert hashlib.sha256(data).hexdigest().startswith(expected_prefix), f"hash drift: {rel}"
+def test_capstone_theorem_boundaries_documented():
+    inventory = (FORMAL / "docs" / "GOVERNED_THEOREM_INVENTORY.md").read_text()
+    crosswalk = (FORMAL / "docs" / "TOOLKIT_LEAN_CROSSWALK.md").read_text()
+    for marker in ("P1-L1–L7", "P2-L1–L10", "Phase F"):
+        assert marker in inventory
+    for source in ("CNRSIntegration.lean", "FiniteHurwitzAntiderivative.lean"):
+        assert source in inventory
+    for exclusion in (
+        "infinite-series serialization", "analytic continuation",
+        "unequal-branch arithmetic", "streaming multiplication/division",
+    ):
+        assert exclusion in crosswalk
 
 
-def test_formal_sources_have_no_sorry_tokens():
-    for path in [LEAN_ROOT / "CnrsQ2.lean", *MODULE_ROOT.glob("*.lean")]:
-        text = path.read_text(encoding="utf-8")
-        assert not SORRY_TOKEN.search(text), f"sorry token found in {path.relative_to(ROOT)}"
-
-
-def test_q2_theorem_registry_carries_formal_metadata():
-    expected_formal_status = {
-        "CNRS Q2 beta-adic completion":
-            "Lean-verified dense beta-place embedding/completion witness",
-        "CNRS Q2 unique beta-adic digit expansion":
-            "Lean-verified valuation-ring digit-expansion theorem",
-    }
-    for name, expected_status in expected_formal_status.items():
+def test_q2_registry_retains_formal_metadata():
+    for name in (
+        "CNRS Q2 beta-adic completion",
+        "CNRS Q2 unique beta-adic digit expansion",
+    ):
         record = get_theorem_record(name)
         assert record.status == TheoremStatus.THEOREM_BACKED
         assert record.formal_system == "Lean 4 / Mathlib 4.33.0"
         assert record.formal_source and record.formal_source.startswith("formal/lean/CnrsQ2")
-        assert record.formal_status == expected_status
+

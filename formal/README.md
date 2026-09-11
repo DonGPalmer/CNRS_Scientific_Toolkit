@@ -1,62 +1,47 @@
 # CNRS Scientific Toolkit — Formal Verification
 
-Status date: 2026-09-09  
-Coverage boundary: governed Lean work through CNRSProblem2 P2-L8
+Status date: 2026-09-11  
+Coverage boundary: governed CNRS-LEAN-CAPSTONE
 
-## Purpose
+The Toolkit vendors the exact six-project Lean source snapshot certified by
+CNRS-LEAN-CAPSTONE. The evidence chain remains:
 
-This documentation connects the CNRS Scientific Toolkit to the separately governed Lean 4 formalization programme. It distinguishes mathematical proof, executable software, tests, and research hypotheses.
+`CNRS claim → Lean statement → proof → software contract → Python implementation → tests`
 
-The evidence chain is:
+Lean verifies the mathematical statements encoded in the vendored projects.
+It does not automatically verify the independently written Python runtime.
 
-`CNRS claim → Lean statement → machine-checked proof → software contract → Python implementation → tests`
+## Vendored projects
 
-A Lean theorem verifies the mathematical statement encoded in Lean. It does not automatically verify an independently written Python routine. Unless a refinement theorem is provided, the accurate status is **Lean-verified mathematical theorem with a separately tested, theorem-aligned implementation**.
+- `CNRSCore` — finite Gaussian foundation;
+- `CnrsQ2` — beta-adic completion and digit expansion;
+- `CNRSArithmetic` — E1–E11 and Phase F;
+- `CNRSIntegration` — Addition Bridge;
+- `CNRSProblem1` — P1-L1 through P1-L7;
+- `CNRSProblem2` — P2-L1 through P2-L10.
 
-## Current verified foundation
+Each project is directly buildable from `formal/lean/<project>/` with its
+certified `lakefile.toml`, `lake-manifest.json`, and `lean-toolchain`.
 
-The governed programme currently includes:
+## Certified identity
 
-- `CNRSCore`: shared Gaussian-base, digit, normalization, finiteness, and transducer foundations;
-- `CnrsQ2`: beta-adic completion and unique digit expansions;
-- `CNRSArithmetic`: exact arithmetic, state bounds, periodicity and finite-state multiplication boundaries through Phase F;
-- `CNRSProblem1`: finite representation, termination, periodicity, and negabinary specialisation through P1-L7;
-- `CNRSProblem2`: lifted logarithmic coordinates, branch serialization, finite Laurent values, finite Hurwitz algebra, branch-labelled operations, transport, and orbit normal forms through P2-L8.
+See `PROVENANCE.json` and `capstone/SHA256SUMS.txt`. The consolidated source
+is commit `07e776b4e1d7d09513394a4b676516eb51e4c597`, artifact
+`10175389923`, SHA-256
+`840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21`.
 
-All four governed endpoints listed in `PROVENANCE.json` passed their authoritative GitHub Actions certification. The P2-L8 endpoint includes three successful builds of 3,050 jobs, including a clean network-disabled rebuild.
+The certification records 79 Lean files, 14,341 source lines, all six normal
+and clean network-disabled builds passing at 3,042 jobs, byte-stable source,
+and no `sorry`, `sorryAx`, `admit`, added axiom, or unsafe declaration.
 
-## Currently vendored Lean project
+## Scope
 
-`formal/lean/CnrsQ2/` remains the Toolkit's directly buildable Lean source snapshot. It formalizes the Q2 beta-adic metric-completion and digit-expansion results for `β = -2+i`, with `N(β)=5` and digit alphabet `{0,1,2,3,4}`. The project is pinned to Lean 4.33.0 and its resolved Mathlib version.
+The verified boundary is the finite CNRS kernel. It excludes arbitrary
+infinite-series serialization, analytic continuation or path reconstruction,
+unequal-branch arithmetic, unrestricted streaming multiplication or division,
+and a general representation theorem for all complex numbers.
 
-From `formal/lean/CnrsQ2/` run:
+Do not describe the complete Toolkit as formally verified. Use
+**Lean-verified mathematical theorem** and **separately tested,
+theorem-aligned Python implementation** where appropriate.
 
-```bash
-lake build
-```
-
-The workflow `.github/workflows/lean.yml` builds this project independently of the Python test suite. The newer governed `CNRSCore`, `CNRSArithmetic`, `CNRSProblem1`, and `CNRSProblem2` projects are documented here but are not yet vendored into this Toolkit branch.
-
-## Evidence vocabulary
-
-| Label | Meaning |
-|---|---|
-| Lean-verified | A theorem is present in the governed source and compiles under the pinned toolchain. |
-| Theorem-aligned | Software is designed or tested against the theorem's contract, without an end-to-end refinement proof. |
-| Computationally verified | Tests or independent calculations support the implementation within a stated domain. |
-| Conditional | A conclusion is proved or implemented under explicit hypotheses. |
-| Open | The current governed theory does not establish the claim. |
-
-Do not describe the whole Toolkit as “formally verified.” Selected mathematical claims are Lean-verified; Python components remain separately tested unless explicitly linked by a refinement proof.
-
-## Documents
-
-- `docs/GOVERNED_THEOREM_INVENTORY.md` — governed projects, milestones, and principal theorem families;
-- `docs/TOOLKIT_LEAN_CROSSWALK.md` — Toolkit claims and modules mapped to formal evidence;
-- `docs/FORMAL_SCOPE_AND_OPEN_PROBLEMS.md` — proved scope, exclusions, and research frontier;
-- `docs/GOVERNANCE_AND_REPRODUCIBILITY.md` — authority model and reproduction procedure;
-- `PROVENANCE.json` — machine-readable authoritative identities.
-
-## Release status
-
-These are documentation-stage records through P2-L8. They do not vendor the current Lean projects into a new Toolkit release. The exact consolidated Lean source snapshot should be added only after the compatibility bridge, capstone interface, cross-problem certification, and consolidated release certification are complete.
