@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.13.1"
+__version__ = "0.14.0"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
@@ -426,6 +426,22 @@ from .hybrid import CoefficientCodec, HybridSeries, hybrid_from_values
 
 # ── CNRS rational values and scientific workflow reports (v0.9.0) ────────────
 from .rational_value import CnrsRationalValue, rational_value, rational_batch
+from .streaming_division import (
+    CnrsDivisionStream,
+    CycleWitness,
+    DivisionResolution,
+    DivisionSearchLimitError,
+    DivisionStreamStatus,
+    stream_division,
+)
+from .witnesses import (
+    DIVISION_ALGORITHM,
+    DIVISION_WITNESS_SCHEMA,
+    DivisionWitness,
+    WitnessValidationError,
+    division_witness,
+    validate_division_witness,
+)
 from .science.workflow import (
     ObservationPreservationReport,
     sample_state,
@@ -449,6 +465,11 @@ __all__ = [
     "DivisionStatus", "DenominatorClassification", "CnrsDivisionExpansion",
     "classify_denominator", "expand_division", "terminating_expansion", "periodic_expansion",
     "CnrsRationalValue", "rational_value", "rational_batch",
+    # ── Exact streaming division and witnesses (v0.14.0)
+    "CnrsDivisionStream", "CycleWitness", "DivisionResolution",
+    "DivisionSearchLimitError", "DivisionStreamStatus", "stream_division",
+    "DIVISION_ALGORITHM", "DIVISION_WITNESS_SCHEMA", "DivisionWitness",
+    "WitnessValidationError", "division_witness", "validate_division_witness",
     # ── Calculus
     "CnrsH", "CnrsHNative", "NonGaussianCoefficientError", "InversionError",
     "compose_native", "invert_native", "verify_inversion",

@@ -20,7 +20,7 @@ import time
 import tracemalloc
 from typing import Callable
 
-from cnrs.division import canonical_expansion, expand_division
+from cnrs.division import canonical_expansion
 from cnrs.streaming_division import stream_division
 from cnrs.witnesses import division_witness, validate_division_witness
 
@@ -96,6 +96,18 @@ def exact_parity(p: tuple[int, int], q: tuple[int, int]) -> None:
     assert streamed.exact_value_fractions() == traditional.exact_value_fractions()
 
 
+def materialized_take(
+    p: tuple[int, int], q: tuple[int, int], count: int
+) -> tuple[int, ...]:
+    """Resolve traditionally, then materialize the requested logical prefix."""
+    expansion = canonical_expansion(p, q)
+    digits = list(expansion.prefix)
+    if expansion.period:
+        while len(digits) < count:
+            digits.extend(expansion.period)
+    return tuple(digits[:count])
+
+
 def measure(
     name: str,
     operation: Callable[[], object],
@@ -145,14 +157,11 @@ def main() -> int:
                 lambda p=p, q=q, count=count: stream_division(p, q).take(count),
                 args.warmups, args.repetitions, args.memory_repetitions,
             ))
-            if q[1] == 0:
-                case_records.append(measure(
-                    f"traditional_expand_{count}",
-                    lambda p=p, q=q, count=count: expand_division(
-                        p, q[0], max_frac=max(500, count)
-                    ),
-                    args.warmups, args.repetitions, args.memory_repetitions,
-                ))
+            case_records.append(measure(
+                f"traditional_expand_{count}",
+                lambda p=p, q=q, count=count: materialized_take(p, q, count),
+                args.warmups, args.repetitions, args.memory_repetitions,
+            ))
         case_records.append(measure(
             "stream_resolve",
             lambda p=p, q=q: stream_division(p, q).resolve(),

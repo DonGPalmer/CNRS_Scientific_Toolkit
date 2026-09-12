@@ -1,7 +1,6 @@
 # v0.14.0 release activation checklist
 
-Status: NOT AUTHORIZED FOR RELEASE  
-Use only after implementation and acceptance are complete.
+Status: IMPLEMENTATION AND LOCAL ACCEPTANCE COMPLETE; CI/AUDIT HOLD
 
 ## Documents supplied in this package
 
@@ -13,34 +12,30 @@ Use only after implementation and acceptance are complete.
 - synchronized architecture, API, division, claim, test, theorem-alignment,
   Lean-alignment, acceptance, and performance documents under docs/
 
-## Non-document release files to update from the final candidate
+## Completed non-document release updates
 
-- pyproject.toml: set project version to 0.14.0;
-- cnrs/__init__.py: set __version__ to 0.14.0 and export approved new APIs;
-- default regression tests that assert the package version;
-- distribution metadata generated from the final tree;
-- SOURCE_INDEX.txt regenerated from git ls-files.
+- pyproject.toml identifies 0.14.0;
+- cnrs/__init__.py identifies 0.14.0 and exports the approved APIs;
+- version-regression tests identify 0.14.0;
+- wheel and source distributions build and install successfully;
+- SOURCE_INDEX.txt is regenerated from the candidate tree.
 
-## Evidence that cannot be prepared honestly in advance
+## Evidence completed locally
 
-- final Python passed/skipped/warning counts;
-- GitHub Actions run and job identities;
-- candidate commit and tree;
-- wheel and source-distribution names, sizes, and SHA-256 values;
-- installed-wheel smoke-test result;
-- performance JSON/CSV results and reviewed comparisons;
-- GitHub Release URL and Zenodo version DOI.
+- regression: 1214 passed, 4 skipped, 922 warnings;
+- dedicated acceptance: 19 passed;
+- measured source commit/tree recorded in performance evidence;
+- wheel and source-distribution names, sizes, and SHA-256 values recorded;
+- both clean installation smoke tests pass;
+- performance JSON/CSV and summary are retained.
 
-These values must be added only after they exist. No bracketed INSERT markers
-are used in the supplied documents; pending evidence is stated explicitly.
+GitHub Actions run/job identities, audited public candidate commit/tree,
+GitHub Release URL, release date, and Zenodo version DOI remain pending.
 
 ## Release sequence
 
-1. Implement the frozen APIs.
-2. Make the acceptance and regression suites GREEN.
-3. Run all six Lean jobs and the alignment guard.
-4. Execute and review the frozen performance protocol.
-5. Build and install-test the wheel and source distribution.
-6. Regenerate SOURCE_INDEX.txt and synchronize all exact counts and identities.
-7. Obtain an independent audit of the immutable candidate.
-8. Governed merge, tag, GitHub Release, and Zenodo publication.
+1. Upload the implementation candidate branch and open a draft pull request.
+2. Confirm Python CI and all six Lean jobs are GREEN.
+3. Obtain an independent audit of the immutable candidate.
+4. Synchronize final public commit, run identities, date, and release assets.
+5. Governed merge, tag, GitHub Release, and Zenodo publication.

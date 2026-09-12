@@ -1,5 +1,5 @@
 {
-  "schema": "cnrs-toolkit-lean-provenance-v3",
+  "schema": "cnrs-toolkit-lean-provenance-v4",
   "status_date": "2026-09-12",
   "documentation_state": "CNRS-LEAN-CAPSTONE governed and GREEN",
   "toolchain": {
@@ -63,9 +63,13 @@
   ],
   "integration": {
     "lean_source_vendored_for_release": true,
-    "python_runtime_modified": false,
-    "release_target": "v0.13.1",
-    "release_status": "released",
+    "python_runtime_modified": true,
+    "release_target": "v0.14.0",
+    "release_status": "implementation candidate; local gates GREEN; GitHub CI and audit pending",
+    "python_addition": "exact Gaussian-rational streaming division and deterministic witness validation",
+    "formal_boundary_changed": false,
+    "measured_source_commit": "939bbecf4cc6fa76b25c543c5459634cdf9f0a86",
+    "measured_source_tree": "e670990ee0783a254011af803d0e7c0ebb2566c7",
     "next_formal_campaign": "P3-L1 finite-support convolution multiplication with evaluation theorem"
   },
   "public_release": {

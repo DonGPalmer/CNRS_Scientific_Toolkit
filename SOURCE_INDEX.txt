@@ -1,11 +1,11 @@
-# CNRS Scientific Toolkit v0.14.0 planned release source index
-# PREIMPLEMENTATION INVENTORY — not a certification of files not yet implemented.
-# Baseline: v0.13.1 tracked release tree (412 files).
-# Adds the frozen v0.14.0 document, acceptance, benchmark, and planned module paths.
-# Expected final tracked files if no further paths are added: 426
-# Regenerate from the exact candidate with: git ls-files | LC_ALL=C sort
-# Replace this provisional header with exact test, CI, commit, tree, and artifact
-# identities only after the candidate is complete and independently audited.
+# CNRS Scientific Toolkit v0.14.0 implementation-candidate source index
+# Generated from the candidate Git index on 2026-09-12.
+# Files listed: 431
+# Regression: 1214 passed, 4 skipped, 0 failed, 922 warnings.
+# Dedicated v0.14.0 acceptance: 19 passed.
+# Lean alignment guard: PASS; six projects and exactly 79 Lean files.
+# GitHub CI and independent audit identities remain pending.
+# Regenerate from the exact public candidate with: git ls-files | LC_ALL=C sort
 
 .gitattributes
 .github/workflows/build-lean433-offline-runtime-v4.yml
@@ -25,8 +25,10 @@ RELEASE_NOTES_v0.13.0.md
 RELEASE_NOTES_v0.13.1.md
 RELEASE_NOTES_v0.14.0.md
 SOURCE_INDEX.txt
+V014_FREEZE_AMENDMENT_2026-09-12.md
 V014_FREEZE_MANIFEST.json
 V014_INSTALLATION_AND_FREEZE_RECORD.md
+V014_RELEASE_ACTIVATION_CHECKLIST.md
 V014_SHA256SUMS.txt
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py
@@ -174,6 +176,7 @@ docs/V014_ACCEPTANCE_TEST_PLAN.md
 docs/V014_ARCHITECTURE_FREEZE.md
 docs/V014_CLAIM_BOUNDARY.md
 docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md
+docs/V014_PERFORMANCE_RESULTS.md
 docs/V014_STREAMING_DIVISION_API_CONTRACT.md
 docs/audits/DIVISION_RATIONAL_VALIDATION_V011.md
 docs/audits/SCIENTIFIC_WORKFLOW_AUDIT_V011.md
@@ -433,4 +436,5 @@ tools/audit_native_status.py
 tools/build_release.py
 tools/check_lean_alignment.py
 tools/toolkit_audit_crossval.py
-
+v014_performance_results.json
+v014_performance_summary.csv

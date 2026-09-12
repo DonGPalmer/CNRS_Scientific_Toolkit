@@ -6,12 +6,20 @@ on:
       - 'formal/**'
       - 'tools/check_lean_alignment.py'
       - 'tests/test_lean_alignment.py'
+      - 'cnrs/streaming_division.py'
+      - 'cnrs/witnesses.py'
+      - 'acceptance/v014/**'
+      - 'docs/LEAN_FORMALIZATION_ALIGNMENT.md'
       - '.github/workflows/lean.yml'
   pull_request:
     paths:
       - 'formal/**'
       - 'tools/check_lean_alignment.py'
       - 'tests/test_lean_alignment.py'
+      - 'cnrs/streaming_division.py'
+      - 'cnrs/witnesses.py'
+      - 'acceptance/v014/**'
+      - 'docs/LEAN_FORMALIZATION_ALIGNMENT.md'
       - '.github/workflows/lean.yml'
   workflow_dispatch:
 

@@ -14,3 +14,5 @@ jobs:
           python-version: '3.11'
       - run: pip install -e .[dev]
       - run: pytest -q
+      - name: v0.14.0 streaming-division acceptance contract
+        run: pytest -q acceptance/v014

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "CNRS Scientific Toolkit"
-message: "CNRS means Complex Numeric Representation System. This v0.14.0 candidate freezes exact Gaussian-rational streaming-division contracts; implementation and release validation remain pending. Python is independently implemented."
+message: "CNRS means Complex Numeric Representation System. This v0.14.0 candidate implements exact Gaussian-rational streaming division and deterministic witnesses. Python is independently implemented and theorem-aligned; governed release remains pending."
 type: software
 authors:
   - family-names: Palmer
@@ -15,4 +15,3 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.20574852"
     description: "CNRS Scientific Toolkit concept DOI"
-

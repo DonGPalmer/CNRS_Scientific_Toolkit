@@ -1,9 +1,16 @@
 # Test Status — v0.14.0 candidate
 
-The frozen v0.14.0 acceptance suite is intentionally RED before implementation.
-Final Python counts, performance results, CI identities, distribution checksums,
-and audit identities are pending and must be inserted only from the exact
-release candidate. The v0.13.1 release baseline follows unchanged.
+Local candidate validation on 2026-09-12:
+
+- regression suite: `1214 passed, 4 skipped, 0 failed`, 922 warnings;
+- v0.14.0 acceptance suite: `19 passed`;
+- source-alignment guard: PASS, six Lean projects and 79 Lean files;
+- wheel and source distribution build: PASS;
+- clean installation smoke tests for both distributions: PASS;
+- 30-case equal-output timing/memory benchmark: PASS.
+
+GitHub Actions run identities and independent audit identity remain pending.
+The v0.13.1 release baseline follows unchanged.
 
 # Test Status — v0.13.1 Release
 
@@ -69,4 +76,3 @@ python -m pytest -q
 ```
 
 See `CNRS_P4_REFERENCE_STATUS.md`, `CLAIM_STATUS.md`, and `EXAMPLE_SMOKE_STATUS.md` for the surrounding claim and workflow boundaries.
-

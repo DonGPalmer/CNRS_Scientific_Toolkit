@@ -2,11 +2,12 @@
 
 ## v0.14.0 candidate — Streaming Division and Formal–Runtime Witness Alignment
 
-**Status: architecture and contracts frozen; implementation and release validation pending.**
+**Status: implementation candidate; local Python, acceptance, alignment, benchmark,
+and distribution gates GREEN; GitHub CI and independent audit pending.**
 
 CNRS means **Complex Numeric Representation System**.
 
-The v0.14.0 development target adds exact Gaussian-rational streaming division,
+The v0.14.0 candidate adds exact Gaussian-rational streaming division,
 bounded state resolution, and deterministic division witnesses. The existing
 materialized division API remains supported without signature changes.
 
@@ -30,11 +31,17 @@ See:
 - `docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md`;
 - `RELEASE_NOTES_v0.14.0.md`.
 
-No v0.14.0 release claim is authorized until the implementation, acceptance
-suite, regression suite, Lean matrix, distributions, performance evidence, and
-independent candidate audit are GREEN.
+Local candidate validation records `1214 passed, 4 skipped, 0 failed` with
+922 warnings in the historical regression suite, plus `19 passed` in the
+v0.14.0 acceptance suite. The source-alignment guard and clean wheel/source
+installation smoke tests pass. Performance results are reported as
+environment-specific measurements in
+`docs/V014_PERFORMANCE_RESULTS.md`; no universal speed claim is made.
 
-# CNRS Scientific Toolkit
+GitHub CI and an independent audit of the uploaded candidate remain required
+before governed merge or release.
+
+## Release history
 
 ## v0.13.1 — Public Lean Release and Provenance Synchronization
 
@@ -989,4 +996,3 @@ numerical fallback. Install with `pip install cnrs[algebraic]`.
 Current boundary: finite branch values only. Points at infinity, normalization,
 Puiseux charts, automatic monodromy, and certified continuation remain future
 stages.
-
