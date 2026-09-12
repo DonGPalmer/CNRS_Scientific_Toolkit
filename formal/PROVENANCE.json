@@ -65,7 +65,7 @@
     "lean_source_vendored_for_release": true,
     "python_runtime_modified": false,
     "release_target": "v0.13.1",
-    "release_status": "candidate preparation",
+    "release_status": "released",
     "next_formal_campaign": "P3-L1 finite-support convolution multiplication with evaluation theorem"
   },
   "public_release": {
