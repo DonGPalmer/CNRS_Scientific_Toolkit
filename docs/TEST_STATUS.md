@@ -1,3 +1,10 @@
+# Test Status — v0.14.0 candidate
+
+The frozen v0.14.0 acceptance suite is intentionally RED before implementation.
+Final Python counts, performance results, CI identities, distribution checksums,
+and audit identities are pending and must be inserted only from the exact
+release candidate. The v0.13.1 release baseline follows unchanged.
+
 # Test Status — v0.13.1 Release
 
 ## v0.13.1 release validation
@@ -62,3 +69,4 @@ python -m pytest -q
 ```
 
 See `CNRS_P4_REFERENCE_STATUS.md`, `CLAIM_STATUS.md`, and `EXAMPLE_SMOKE_STATUS.md` for the surrounding claim and workflow boundaries.
+

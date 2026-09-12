@@ -1,3 +1,14 @@
+# CNRS Scientific Toolkit Architecture — v0.14.0 candidate
+
+v0.14.0 adds two planned layers above the existing exact Gaussian arithmetic:
+`cnrs.streaming_division` owns lazy replayable iteration and bounded
+resolution; `cnrs.witnesses` owns stable serialization and independent
+revalidation. Existing materialized division and canonical-periodic modules
+remain authoritative compatibility and parity layers.
+
+See `V014_ARCHITECTURE_FREEZE.md` for the frozen component and dependency
+boundary. The historical architecture record follows.
+
 # CNRS Scientific Toolkit Architecture — v0.6.0
 
 v0.6.0 is an architecture-consolidation release.  It keeps the established
@@ -100,3 +111,4 @@ v0.8.0 adds native `CVal` negation/subtraction, `CnrsHNative` coefficient calcul
 ## v0.8.1 theory-aligned consolidation
 
 v0.8.1 adds scoped normalization, structured division expansion reports, theorem-alignment registry support, and CNRS* state preservation operations. The key architectural distinction is that bounded addition normalization and general finite coefficient normalization are separate native routes.
+

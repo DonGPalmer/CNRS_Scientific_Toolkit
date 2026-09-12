@@ -1,3 +1,10 @@
+# CNRS-A structured and streaming division expansions
+
+The v0.14.0 candidate preserves the materialized structured expansion API below
+and freezes a replayable streaming API. A resolved stream must reproduce the
+canonical power offset, prefix, primitive period, and exact value. See
+`V014_STREAMING_DIVISION_API_CONTRACT.md`.
+
 # CNRS-A Structured Division Expansions
 
 v0.8.1 expands the division API from status classification to structured
@@ -23,3 +30,4 @@ It reports whether a reduced denominator is:
   occur.
 
 Sharp minimal carry-state counts remain an open/theory-side question.
+

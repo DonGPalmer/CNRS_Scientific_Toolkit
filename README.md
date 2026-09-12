@@ -1,11 +1,47 @@
 # CNRS Scientific Toolkit
 
+## v0.14.0 candidate — Streaming Division and Formal–Runtime Witness Alignment
+
+**Status: architecture and contracts frozen; implementation and release validation pending.**
+
+CNRS means **Complex Numeric Representation System**.
+
+The v0.14.0 development target adds exact Gaussian-rational streaming division,
+bounded state resolution, and deterministic division witnesses. The existing
+materialized division API remains supported without signature changes.
+
+The frozen scope is deliberately narrow:
+
+- lazy, replayable CNRS digit streams for exact Gaussian-rational inputs;
+- explicit terminating, eventually-periodic, and limit-reached outcomes;
+- exact parity with the established canonical periodic representation;
+- deterministic, JSON-safe witnesses that are independently recomputed during validation;
+- reproducible time and peak-memory comparison with traditional materialized processing.
+
+A search limit is an operational result, not evidence of aperiodicity.
+The Python runtime remains independently implemented and theorem-aligned; it is
+not Lean-extracted or end-to-end formally verified.
+
+See:
+- `docs/V014_ARCHITECTURE_FREEZE.md`;
+- `docs/V014_STREAMING_DIVISION_API_CONTRACT.md`;
+- `docs/V014_CLAIM_BOUNDARY.md`;
+- `docs/V014_ACCEPTANCE_TEST_PLAN.md`;
+- `docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md`;
+- `RELEASE_NOTES_v0.14.0.md`.
+
+No v0.14.0 release claim is authorized until the implementation, acceptance
+suite, regression suite, Lean matrix, distributions, performance evidence, and
+independent candidate audit are GREEN.
+
+# CNRS Scientific Toolkit
+
 ## v0.13.1 — Public Lean Release and Provenance Synchronization
 
 v0.13.1 is a documentation and provenance patch connecting the six-project
 CNRS-LEAN-CAPSTONE snapshot vendored in v0.13.0 with its governed public
 publication as [CNRS Lean v1.0.3](https://github.com/DonGPalmer/CNRS_Lean/releases/tag/v1.0.3),
-commit \`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f\`.
+commit `ce56a7359f494d29bab8e9bea6c3ea596f8fd62f`.
 
 The public Lean release is archived at Zenodo under version DOI
 [10.5281/zenodo.22727725](https://doi.org/10.5281/zenodo.22727725) and concept
@@ -953,3 +989,4 @@ numerical fallback. Install with `pip install cnrs[algebraic]`.
 Current boundary: finite branch values only. Points at infinity, normalization,
 Puiseux charts, automatic monodromy, and certified continuation remain future
 stages.
+

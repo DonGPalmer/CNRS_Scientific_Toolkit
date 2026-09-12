@@ -1,3 +1,10 @@
+# CNRS theorem-alignment registry — v0.14.0 candidate note
+
+Streaming division may be registered as theorem-aligned only after exact parity,
+witness validation, and a named mapping to the governed formal concepts pass.
+The registry must not describe the Python stream or witness implementation as
+Lean-extracted or Lean-verified.
+
 # CNRS Theorem-Alignment Registry
 
 `cnrs.theorem_alignment` records the proof/status role of core toolkit
@@ -39,3 +46,4 @@ Current Q2 records:
 | `beta=-2+i` base/primality and residue-digit foundation | Lean-verified mathematical theorem | `Basic.lean`, `DigitAlphabet.lean` | supports the mathematical contract used by finite CNRS-A base/digit code; it is not by itself a proof of every finite-encoding routine |
 
 Use **Lean-verified mathematical theorem** only for claims actually encoded in the maintained Lean project. Keep implementation status separate as theorem-aligned and/or computationally tested unless a refinement proof connects executable Python to Lean. See `LEAN_FORMALIZATION_ALIGNMENT.md` for the theorem-level crosswalk.
+

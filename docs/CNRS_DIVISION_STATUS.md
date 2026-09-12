@@ -1,3 +1,9 @@
+# CNRS-A division status — v0.14.0 candidate
+
+v0.14.0 preserves the released materialized classification and adds a separate
+stream-resolution status: terminating, eventually periodic, or limit reached.
+Limit reached reports only exhaustion of the caller's bound.
+
 # CNRS-A division status (v0.8.1)
 
 CNRS-A finite digit strings are closed under addition, negation, subtraction, and multiplication. General division is different: it is not finite-string field closure.
@@ -28,3 +34,4 @@ For `z0=-2+i`,
 ```
 
 Therefore a pure rational-integer power of five is not sufficient for termination. For a reduced fraction `(A+Bi)/5^s`, termination occurs exactly when `conjugate(z0)^s` divides `A+Bi` in `Z[i]`. Thus `1/5` is shifted-periodic, while `(-2-i)/5 = z0^{-1}` terminates. See `docs/theory/GAUSSIAN_RATIONAL_PERIODICITY_THEOREM_V1.md`.
+

@@ -1,3 +1,14 @@
+# API Status — v0.14.0 candidate
+
+The v0.13.1 interfaces below remain the current released API. The frozen
+v0.14.0 additions are `cnrs.streaming_division` and `cnrs.witnesses`.
+They are not released until the v0.14.0 acceptance gates pass.
+
+Frozen public additions: `stream_division`, `CnrsDivisionStream`,
+`DivisionResolution`, `DivisionStreamStatus`, `CycleWitness`,
+`DivisionWitness`, `division_witness`, and
+`validate_division_witness`. See `V014_STREAMING_DIVISION_API_CONTRACT.md`.
+
 # API Status — v0.13.0
 
 ## Stable research interfaces
@@ -53,3 +64,4 @@ The legacy module `cnrs.cnrs_division_status` remains a deprecated compatibility
 - a canonical global representation API for all ordinary complex values.
 
 See `CNRS_P4_REFERENCE_STATUS.md` for the current Problem 4 citation and theorem map.
+

@@ -1,3 +1,13 @@
+# Claim Status — v0.14.0 candidate
+
+v0.14.0 is not yet a released capability. Architecture and contracts are
+frozen for exact Gaussian-rational streaming division. No timing advantage,
+universal search bound, arbitrary infinite-stream closure, or Lean verification
+of the Python runtime is claimed. `LIMIT_REACHED` is not a mathematical
+nonperiodicity result.
+
+The released baseline and its established claims follow.
+
 # Claim Status — v0.13.1 Release
 
 CNRS means **Complex Numeric Representation System**.
@@ -10,7 +20,7 @@ governed public publication of that certified formal package. The private
 capstone identity remains the certification authority; the public repository
 and Zenodo record provide public access and citation.
 
-The v0.13.0 Python release validation was \`1214 passed, 4 skipped, 0 failed\`,
+The v0.13.0 Python release validation was `1214 passed, 4 skipped, 0 failed`,
 with 922 warnings (retained reliable-domain diagnostics and pytest deprecation
 warnings). Final v0.13.1 validation is `1214 passed, 4 skipped, 0 failed`,
 with the same 922 warnings. All six Lean matrix builds completed successfully.
@@ -63,3 +73,4 @@ distinct from ordinary complex analytic convergence.
 See `CNRS_P4_REFERENCE_STATUS.md`. The cited public record remains Version 12,
 DOI `10.5281/zenodo.21791909`; the synchronized programme working paper is
 Version 16 pending any later public deposit.
+

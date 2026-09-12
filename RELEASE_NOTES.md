@@ -1,11 +1,27 @@
+# v0.14.0 candidate — Streaming Division and Formal–Runtime Witness Alignment
+
+- Frozen the v0.14.0 architecture, API contracts, claim boundaries, acceptance
+  tests, and performance-comparison protocol before implementation.
+- Targeted exact Gaussian-rational lazy digit streaming with replayable iteration.
+- Defined bounded resolution states: terminating, eventually periodic, and
+  limit reached.
+- Defined deterministic division witnesses and independent witness validation.
+- Preserved all v0.13.1 materialized division interfaces.
+- Prohibited treating a search limit as proof of aperiodicity.
+- Added candidate acceptance and benchmark harnesses.
+- Implementation, final test counts, distribution identities, DOI, and measured
+  performance results remain pending.
+
+See `RELEASE_NOTES_v0.14.0.md`.
+
 # v0.13.1 — Public Lean Release and Provenance Synchronization
 
 - Linked the vendored CNRS-LEAN-CAPSTONE snapshot to its governed public
   publication as CNRS Lean v1.0.3.
 - Recorded public repository commit
-  \`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f\`, Zenodo version DOI
-  \`10.5281/zenodo.22727725\`, and Zenodo concept DOI
-  \`10.5281/zenodo.22726349\`.
+  `ce56a7359f494d29bab8e9bea6c3ea596f8fd62f`, Zenodo version DOI
+  `10.5281/zenodo.22727725`, and Zenodo concept DOI
+  `10.5281/zenodo.22726349`.
 - Retained the private capstone commit, workflow, artifact, and checksum as the
   authoritative certification provenance.
 - Standardized CNRS as **Complex Numeric Representation System**.
@@ -16,7 +32,7 @@
 - Final Python validation: `1214 passed, 4 skipped, 0 failed`, with 922 warnings.
 - All six Lean project matrix builds completed successfully.
 
-See \`RELEASE_NOTES_v0.13.1.md\`.
+See `RELEASE_NOTES_v0.13.1.md`.
 
 # v0.13.0 — CNRS Lean Capstone Alignment
 
@@ -163,3 +179,4 @@ The special `1/5` behavior is now a corollary of the general Gaussian-ideal impl
 - Added `cnrs.hybrid` with `CoefficientCodec` and `HybridSeries`, transporting canonical CNRS-A coefficient representations into the CNRS-H Hurwitz-series carrier.
 - Added theorem-aligned tests for ultrametricity, first-difference isometry, coefficientwise convergence, Hurwitz-product transport, Leibniz, integration, exponential eigenfunctions, and deterministic serialization.
 - Included both theorem papers and independent verification scripts under `docs/theory/` and `docs/audits/scripts/`.
+

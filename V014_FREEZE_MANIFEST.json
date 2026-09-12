@@ -1,0 +1,117 @@
+{
+  "schema": "cnrs-toolkit-preimplementation-freeze-v2",
+  "release": "0.14.0",
+  "freeze_date": "2026-09-12",
+  "status": "FROZEN_FOR_IMPLEMENTATION",
+  "baseline": {
+    "release": "0.13.1",
+    "commit": "e7f8424a967292a36643bb5fa8206ccb1d3f8fcd",
+    "tree": "c2364123aef02514bc242c8ea0796dc7d7c1cdde"
+  },
+  "release_title": "CNRS Scientific Toolkit v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment",
+  "implementation_included": false,
+  "repository_facing_documents_included": true,
+  "acceptance_state": "EXPECTED_RED_PREIMPLEMENTATION",
+  "files": [
+    {
+      "path": "CITATION.cff",
+      "sha256": "fdb62750891d02855cb3a9e818f01196fb94f4a67fa2db0e15f4e44ee08cac99"
+    },
+    {
+      "path": "README.md",
+      "sha256": "bf5f9da929b50434ab8e220fafd5e0916c2aea4a0e65edd59769af2da287624f"
+    },
+    {
+      "path": "RELEASE_NOTES.md",
+      "sha256": "10bb31d6bee4643dc65eb0ce8fa6639213239936bb2787fb48c014b3eafd7796"
+    },
+    {
+      "path": "RELEASE_NOTES_v0.14.0.md",
+      "sha256": "c69cefa5dce24cbf8aceab65fbab0eaa765da51a22f6a84a82c44681f26cefff"
+    },
+    {
+      "path": "SOURCE_INDEX.txt",
+      "sha256": "71f72011e3d042deeab12532cf14d7562bfa1af000f145edc4e5a0fd35d966cd"
+    },
+    {
+      "path": "V014_INSTALLATION_AND_FREEZE_RECORD.md",
+      "sha256": "07d0789486ed6a47636b39dbcb75619070a791ea55760b5e932d35465cd5d89a"
+    },
+    {
+      "path": "V014_RELEASE_ACTIVATION_CHECKLIST.md",
+      "sha256": "b2623beae88fff5f077cc0e95174c5ea4f8b31e4fb9c0f8abbda721bbdf9c9ba"
+    },
+    {
+      "path": "acceptance/v014/README.md",
+      "sha256": "7496526006458baed8f5f286189f388b71673d42eee21fb0a95f3ada69c779b4"
+    },
+    {
+      "path": "acceptance/v014/test_streaming_division_contract.py",
+      "sha256": "78ad17b4b00ec1c41bb4c74682e0126e4730fde86ff1b12d4e9c9f6d1e0f2207"
+    },
+    {
+      "path": "benchmarks/benchmark_streaming_division.py",
+      "sha256": "6f47cc3adc4988e9908261d8dfcc19ff93582b2be020a8e180aec0d3040bc3a7"
+    },
+    {
+      "path": "docs/API_STATUS.md",
+      "sha256": "2a6a132206f1d8febeb0800ea3028e6f56087b26220372f0cda2c90ccf0310cd"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "587112dea18ef14a1098a83c29f99b79721d2908377c688cc1a078fa4edd071d"
+    },
+    {
+      "path": "docs/CLAIM_STATUS.md",
+      "sha256": "cbf5ff1f1f1fed2182810d005fefbc3c4568ec5448e4c44f6805d75959a5a840"
+    },
+    {
+      "path": "docs/CNRS_DIVISION_STATUS.md",
+      "sha256": "97aec5640014a61ea42dab9f72db0b4b4c26fee3b9807f689c4b559b7a17fc7a"
+    },
+    {
+      "path": "docs/CNRS_DIVISION_STRUCTURED_EXPANSIONS.md",
+      "sha256": "849e5f629fa40256307b67dc3f9d01821c8d7da92ad4d70d1b8f7df47f1ae1ba"
+    },
+    {
+      "path": "docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md",
+      "sha256": "eaa32b63427c92e4b15232853d224e2d5c218c167784c2ab3290e33f8189c1df"
+    },
+    {
+      "path": "docs/LEAN_FORMALIZATION_ALIGNMENT.md",
+      "sha256": "28692e145b99c5d208dbc786cdab32b5e534591f3f6c4c08e604245e86cba5ea"
+    },
+    {
+      "path": "docs/TEST_STATUS.md",
+      "sha256": "ee8125903eb51f13a5e613fdf4f1fc5c7ad989a35ea3a952e49a06b64e10143e"
+    },
+    {
+      "path": "docs/V014_ACCEPTANCE_TEST_PLAN.md",
+      "sha256": "83cc32aa79b610c706ab15456223d77e96540dc86b406cdf6f978fba2317ea28"
+    },
+    {
+      "path": "docs/V014_ARCHITECTURE_FREEZE.md",
+      "sha256": "1bbaa4c3e575a215b0fb954adc4f6cad7a523027fafa627f00600c9c8ff2e06d"
+    },
+    {
+      "path": "docs/V014_CLAIM_BOUNDARY.md",
+      "sha256": "95a6ef617440fe9b7bac0011372b94c503359b3ee06f6749f678dbfbe369f6d0"
+    },
+    {
+      "path": "docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md",
+      "sha256": "3bf2bd8625ff545de1b0af815892688593463e9fbff2649e5739ebc1397c414a"
+    },
+    {
+      "path": "docs/V014_STREAMING_DIVISION_API_CONTRACT.md",
+      "sha256": "5cb5f145522cd8669cd1e3ef892291695d92af00463de1d56c3e6c6ed3f7fe62"
+    }
+  ],
+  "verification": {
+    "python_syntax": "PASS",
+    "document_consistency": "PASS",
+    "baseline_new_module_import": "EXPECTED_RED_MODULE_NOT_FOUND",
+    "pytest_execution": "NOT_RUN_PYTEST_UNAVAILABLE_IN_PACKAGING_RUNTIME",
+    "performance_execution": "DEFERRED_UNTIL_IMPLEMENTATION"
+  }
+}
+

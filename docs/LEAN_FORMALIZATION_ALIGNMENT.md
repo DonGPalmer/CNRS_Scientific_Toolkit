@@ -1,3 +1,10 @@
+# Lean formalization alignment — v0.14.0 candidate note
+
+The v0.14.0 streaming-division work does not enlarge the governed Lean proof
+boundary. It must map Python recurrence and witness fields to existing formal
+concepts where available and label any unformalized runtime property as
+computationally verified. The released capstone alignment record follows.
+
 # Lean Formalization Alignment — CNRS-LEAN-CAPSTONE
 
 CNRS means **Complex Numeric Representation System**.
@@ -27,11 +34,11 @@ The detailed reader-facing crosswalk is
 
 The certified formal package is publicly released as:
 
-- repository: \`DonGPalmer/CNRS_Lean\`;
-- tag: \`v1.0.3\`;
-- commit: \`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f\`;
-- Zenodo version DOI: \`10.5281/zenodo.22727725\`;
-- Zenodo concept DOI: \`10.5281/zenodo.22726349\`.
+- repository: `DonGPalmer/CNRS_Lean`;
+- tag: `v1.0.3`;
+- commit: `ce56a7359f494d29bab8e9bea6c3ea596f8fd62f`;
+- Zenodo version DOI: `10.5281/zenodo.22727725`;
+- Zenodo concept DOI: `10.5281/zenodo.22726349`.
 
 The public release is the governed publication of the certified source. It
 does not replace the private capstone record as certification authority.
@@ -66,3 +73,4 @@ The capstone does not prove arbitrary infinite serialization, ordinary-complex
 analytic convergence, analytic continuation or path recovery, unequal-branch
 arithmetic, unrestricted streaming multiplication/division, or a universal
 complex-representation theorem.
+
