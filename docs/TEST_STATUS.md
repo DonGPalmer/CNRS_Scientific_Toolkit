@@ -1,10 +1,16 @@
-# Test Status — v0.13.1 Release Candidate
+# Test Status — v0.13.1 Release
 
-## Candidate validation
+## v0.13.1 release validation
 
-Final v0.13.1 Python and Lean validation results are pending execution against
-the exact candidate commit. Counts and workflow identities must be inserted
-from the completed runs, not inferred from the v0.13.0 baseline.
+`1214 passed, 4 skipped, 0 failed` on 2026-09-12. The run reported 922
+warnings: retained reliable-domain diagnostics and pytest deprecation warnings.
+
+All six Lean projects completed successfully in the matrix workflow. The
+successful six-project candidate run is
+[34706663684](https://github.com/DonGPalmer/CNRS_Scientific_Toolkit/actions/runs/34706663684).
+
+The initial upload exposed two stale tests that still asserted package version
+`0.13.0`; both were updated to `0.13.1` before final validation.
 
 ## Release validation
 
@@ -18,7 +24,7 @@ The suite reports 917 retained reliable-domain warnings from selected biological
 
 ## Independent Lean verification lane
 
-The v0.13.1 candidate retains six projects under `formal/lean/` and a
+The v0.13.1 release retains six projects under `formal/lean/` and a
 six-project matrix in `.github/workflows/lean.yml`. Repository-level guards
 verify the exact capstone checksum inventory, project identities, theorem
 boundaries and proof-marker policy. GitHub Actions performs the actual

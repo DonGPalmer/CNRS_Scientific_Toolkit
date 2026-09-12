@@ -1,7 +1,8 @@
-# CNRS Scientific Toolkit v0.13.1 release-candidate source index
-# Complete tracked candidate tree synchronized with the certified six-project CNRS-LEAN-CAPSTONE
+# CNRS Scientific Toolkit v0.13.1 release source index
+# Complete tracked release tree synchronized with the certified six-project CNRS-LEAN-CAPSTONE
 # and its governed public publication as CNRS Lean v1.0.3.
-# v0.13.1 candidate validation: pending exact candidate runs.
+# v0.13.1 Python validation: 1214 passed, 4 skipped, 0 failed, 922 warnings (2026-09-12).
+# Lean validation: all six project matrix builds completed successfully.
 # Lean inventory: six projects and 79 Lean source files; vendored source unchanged from v0.13.0.
 # Files listed: 412
 

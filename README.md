@@ -14,6 +14,9 @@ The private CNRS-LEAN-CAPSTONE identity remains the authoritative certification
 provenance. No Python runtime behavior, vendored Lean source, or mathematical
 claim is changed by this patch.
 
+Final v0.13.1 validation: `1214 passed, 4 skipped, 0 failed`, with 922
+warnings. All six Lean project matrix builds completed successfully.
+
 CNRS means **Complex Numeric Representation System**.
 
 ## v0.13.0 — CNRS Lean Capstone Alignment

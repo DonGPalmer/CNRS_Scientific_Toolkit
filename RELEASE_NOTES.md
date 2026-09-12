@@ -13,7 +13,8 @@
 - Updated package and citation metadata to v0.13.1.
 - No Python arithmetic behavior, vendored Lean source, or mathematical claim
   was changed.
-- Final v0.13.1 validation results: **pending candidate verification**.
+- Final Python validation: `1214 passed, 4 skipped, 0 failed`, with 922 warnings.
+- All six Lean project matrix builds completed successfully.
 
 See \`RELEASE_NOTES_v0.13.1.md\`.
 

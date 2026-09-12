@@ -1,6 +1,6 @@
 # v0.13.1 — Public Lean Release and Provenance Synchronization
 
-**Status:** release candidate preparation  
+**Status:** released  
 **Date:** 2026-09-12
 
 v0.13.1 is a documentation and provenance patch. It connects the six-project

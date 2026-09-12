@@ -1,4 +1,4 @@
-# Claim Status — v0.13.1 Release Candidate
+# Claim Status — v0.13.1 Release
 
 CNRS means **Complex Numeric Representation System**.
 
@@ -12,7 +12,8 @@ and Zenodo record provide public access and citation.
 
 The v0.13.0 Python release validation was \`1214 passed, 4 skipped, 0 failed\`,
 with 922 warnings (retained reliable-domain diagnostics and pytest deprecation
-warnings). Final v0.13.1 candidate results are pending verification.
+warnings). Final v0.13.1 validation is `1214 passed, 4 skipped, 0 failed`,
+with the same 922 warnings. All six Lean matrix builds completed successfully.
 
 `1206 passed`, `0 failed` on 2026-08-04. The suite reports 917 retained reliable-domain warnings from selected pre-existing scientific-workflow tests.
 
