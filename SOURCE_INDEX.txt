@@ -1,8 +1,9 @@
-# CNRS Scientific Toolkit v0.13.0 release-candidate source index
-# Complete tracked candidate tree synchronized with the certified six-project CNRS-LEAN-CAPSTONE.
-# Candidate Python validation: 1214 passed, 4 skipped, 0 failed, 922 warnings (2026-09-11).
-# Lean: six projects, 79 Lean source files, exact checksum and proof-hygiene guard, all matrix builds successful.
-# Files listed: 411
+# CNRS Scientific Toolkit v0.13.1 release-candidate source index
+# Complete tracked candidate tree synchronized with the certified six-project CNRS-LEAN-CAPSTONE
+# and its governed public publication as CNRS Lean v1.0.3.
+# v0.13.1 candidate validation: pending exact candidate runs.
+# Lean inventory: six projects and 79 Lean source files; vendored source unchanged from v0.13.0.
+# Files listed: 412
 
 .gitattributes
 .github/workflows/build-lean433-offline-runtime-v4.yml
@@ -19,6 +20,7 @@ RELEASE_NOTES_v0.11.2.md
 RELEASE_NOTES_v0.12.0.md
 RELEASE_NOTES_v0.12.1.md
 RELEASE_NOTES_v0.13.0.md
+RELEASE_NOTES_v0.13.1.md
 SOURCE_INDEX.txt
 cnrs/__init__.py
 cnrs/algebraic_curve.py

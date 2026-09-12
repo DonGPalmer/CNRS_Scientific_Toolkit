@@ -1,10 +1,10 @@
-# Test Status — v0.13.0 Release Candidate
+# Test Status — v0.13.1 Release Candidate
 
 ## Candidate validation
 
-`1214 passed, 4 skipped, 0 failed` on 2026-09-11. The run reported 922
-warnings: retained reliable-domain diagnostics and pytest deprecation
-warnings.
+Final v0.13.1 Python and Lean validation results are pending execution against
+the exact candidate commit. Counts and workflow identities must be inserted
+from the completed runs, not inferred from the v0.13.0 baseline.
 
 ## Release validation
 
@@ -18,7 +18,7 @@ The suite reports 917 retained reliable-domain warnings from selected biological
 
 ## Independent Lean verification lane
 
-The v0.13.0 candidate includes six projects under `formal/lean/` and a
+The v0.13.1 candidate retains six projects under `formal/lean/` and a
 six-project matrix in `.github/workflows/lean.yml`. Repository-level guards
 verify the exact capstone checksum inventory, project identities, theorem
 boundaries and proof-marker policy. GitHub Actions performs the actual

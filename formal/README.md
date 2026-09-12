@@ -1,7 +1,9 @@
 # CNRS Scientific Toolkit — Formal Verification
 
-Status date: 2026-09-11  
+Status date: 2026-09-12  
 Coverage boundary: governed CNRS-LEAN-CAPSTONE
+
+CNRS means **Complex Numeric Representation System**.
 
 The Toolkit vendors the exact six-project Lean source snapshot certified by
 CNRS-LEAN-CAPSTONE. The evidence chain remains:
@@ -10,6 +12,17 @@ CNRS-LEAN-CAPSTONE. The evidence chain remains:
 
 Lean verifies the mathematical statements encoded in the vendored projects.
 It does not automatically verify the independently written Python runtime.
+
+## Governed public publication
+
+The formal package is publicly released as CNRS Lean v1.0.3 at
+\`DonGPalmer/CNRS_Lean\`, commit
+\`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f\`. Its Zenodo version DOI is
+\`10.5281/zenodo.22727725\`, and its permanent concept DOI is
+\`10.5281/zenodo.22726349\`.
+
+This public release publishes the certified source; the private capstone
+identity below remains the authoritative certification provenance.
 
 ## Vendored projects
 

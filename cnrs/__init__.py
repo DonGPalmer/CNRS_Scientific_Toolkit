@@ -1,5 +1,5 @@
 """
-cnrs — Complex Numeric Representational System
+cnrs — Complex Numeric Representation System
 ===============================================
 
 A Python implementation of the CNRS arithmetic and calculus framework.
@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.13.0"
+__version__ = "0.13.1"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────

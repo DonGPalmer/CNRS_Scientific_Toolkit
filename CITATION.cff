@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "CNRS Scientific Toolkit"
-message: "If you use this software, please cite the Toolkit concept DOI. The Toolkit includes the governed CNRS-LEAN-CAPSTONE mathematical source snapshot; Python remains independently implemented."
+message: "CNRS means Complex Numeric Representation System. If you use this software, please cite the Toolkit concept DOI. The Toolkit includes the governed CNRS-LEAN-CAPSTONE mathematical source snapshot; Python remains independently implemented."
 type: software
 authors:
   - family-names: Palmer
@@ -9,8 +9,8 @@ authors:
 repository-code: "https://github.com/DonGPalmer/CNRS_Scientific_Toolkit"
 url: "https://www.nul1.com/"
 license: Apache-2.0
-version: "0.13.0"
-date-released: 2026-09-11
+version: "0.13.1"
+date-released: 2026-09-12
 identifiers:
   - type: doi
     value: "10.5281/zenodo.20574852"

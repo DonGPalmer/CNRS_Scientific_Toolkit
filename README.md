@@ -1,5 +1,21 @@
 # CNRS Scientific Toolkit
 
+## v0.13.1 — Public Lean Release and Provenance Synchronization
+
+v0.13.1 is a documentation and provenance patch connecting the six-project
+CNRS-LEAN-CAPSTONE snapshot vendored in v0.13.0 with its governed public
+publication as [CNRS Lean v1.0.3](https://github.com/DonGPalmer/CNRS_Lean/releases/tag/v1.0.3),
+commit \`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f\`.
+
+The public Lean release is archived at Zenodo under version DOI
+[10.5281/zenodo.22727725](https://doi.org/10.5281/zenodo.22727725) and concept
+DOI [10.5281/zenodo.22726349](https://doi.org/10.5281/zenodo.22726349).
+The private CNRS-LEAN-CAPSTONE identity remains the authoritative certification
+provenance. No Python runtime behavior, vendored Lean source, or mathematical
+claim is changed by this patch.
+
+CNRS means **Complex Numeric Representation System**.
+
 ## v0.13.0 — CNRS Lean Capstone Alignment
 
 v0.13.0 vendors the exact six-project CNRS-LEAN-CAPSTONE source snapshot and
@@ -17,7 +33,7 @@ runtime is Lean-extracted or end-to-end formally verified. See
 [`docs/LEAN_FORMALIZATION_ALIGNMENT.md`](docs/LEAN_FORMALIZATION_ALIGNMENT.md)
 and [`formal/README.md`](formal/README.md).
 
-Candidate Python validation: `1214 passed, 4 skipped, 0 failed`; 922 reported
+v0.13.0 release validation: `1214 passed, 4 skipped, 0 failed`; 922 reported
 warnings include retained reliable-domain diagnostics and pytest deprecation
 warnings.
 
@@ -309,7 +325,7 @@ See `docs/ARCHITECTURE.md`, `docs/CNRS_NATIVE_STATUS.md`, and `docs/CNRS_H_BRANC
 
 
 
-CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representational System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, first-order chain-rule automatic differentiation, minimal symbolic differentiation and conservative symbolic integration, CNRS-H scale-law calculus, CNRS-H coefficient-based ODE methods, and NumPy/SciPy interoperability.
+CNRS Scientific Toolkit is an open research-code package for exploring the Complex Numeric Representation System (CNRS): complex-base representation, CNRS-float, branch-aware complex-state workflows, first-order chain-rule automatic differentiation, minimal symbolic differentiation and conservative symbolic integration, CNRS-H scale-law calculus, CNRS-H coefficient-based ODE methods, and NumPy/SciPy interoperability.
 
 **Base:** `z0 = -2 + i`  (a Gaussian integer, `N(z0) = 5`)  
 **Digit alphabet:** `D = {0, 1, 2, 3, 4}`
@@ -526,7 +542,7 @@ Branch metadata is preserved through expression construction, substitution, diff
 
 ## Test status
 
-Current v0.13.0 candidate validation status:
+v0.13.0 release validation baseline:
 
 ```text
 1214 passed, 4 skipped, 0 failed

@@ -35,6 +35,12 @@ def test_capstone_provenance():
     assert release["artifact_id"] == 10175389923
     assert release["lean_source_files"] == 79
     assert [p["name"] for p in data["projects"]] == list(PROJECTS)
+    public = data["public_release"]
+    assert public["repository"] == "DonGPalmer/CNRS_Lean"
+    assert public["release"] == "v1.0.3"
+    assert public["commit"] == "ce56a7359f494d29bab8e9bea6c3ea596f8fd62f"
+    assert public["zenodo_version_doi"] == "10.5281/zenodo.22727725"
+    assert public["zenodo_concept_doi"] == "10.5281/zenodo.22726349"
 
 
 def test_capstone_theorem_boundaries_documented():

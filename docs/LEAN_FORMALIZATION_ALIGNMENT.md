@@ -1,5 +1,7 @@
 # Lean Formalization Alignment — CNRS-LEAN-CAPSTONE
 
+CNRS means **Complex Numeric Representation System**.
+
 ## Purpose
 
 This record connects the six-project governed Lean release to the CNRS
@@ -20,6 +22,19 @@ The detailed reader-facing crosswalk is
 - artifact SHA-256: `840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21`;
 - Lean: `v4.33.0`;
 - source: 79 Lean files, 14,341 lines.
+
+## Governed public release
+
+The certified formal package is publicly released as:
+
+- repository: \`DonGPalmer/CNRS_Lean\`;
+- tag: \`v1.0.3\`;
+- commit: \`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f\`;
+- Zenodo version DOI: \`10.5281/zenodo.22727725\`;
+- Zenodo concept DOI: \`10.5281/zenodo.22726349\`.
+
+The public release is the governed publication of the certified source. It
+does not replace the private capstone record as certification authority.
 
 ## Verified projects
 
@@ -51,4 +66,3 @@ The capstone does not prove arbitrary infinite serialization, ordinary-complex
 analytic convergence, analytic continuation or path recovery, unequal-branch
 arithmetic, unrestricted streaming multiplication/division, or a universal
 complex-representation theorem.
-

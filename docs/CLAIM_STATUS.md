@@ -1,14 +1,18 @@
-# Claim Status — v0.13.0 Release Candidate
+# Claim Status — v0.13.1 Release Candidate
+
+CNRS means **Complex Numeric Representation System**.
 
 ## Current validation
 
-The v0.13.0 candidate vendors the exact governed CNRS-LEAN-CAPSTONE source:
-six projects, 79 Lean files and the P2-L1–P2-L10 chain. Toolkit candidate
-validation is recorded separately from the upstream capstone certification.
+Toolkit v0.13.0 vendors the exact governed CNRS-LEAN-CAPSTONE source: six
+projects, 79 Lean files and the P2-L1–P2-L10 chain. CNRS Lean v1.0.3 is the
+governed public publication of that certified formal package. The private
+capstone identity remains the certification authority; the public repository
+and Zenodo record provide public access and citation.
 
-Candidate Python validation on 2026-09-11: `1214 passed, 4 skipped, 0 failed`,
+The v0.13.0 Python release validation was \`1214 passed, 4 skipped, 0 failed\`,
 with 922 warnings (retained reliable-domain diagnostics and pytest deprecation
-warnings).
+warnings). Final v0.13.1 candidate results are pending verification.
 
 `1206 passed`, `0 failed` on 2026-08-04. The suite reports 917 retained reliable-domain warnings from selected pre-existing scientific-workflow tests.
 

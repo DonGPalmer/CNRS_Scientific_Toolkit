@@ -1,8 +1,12 @@
 {
-  "schema": "cnrs-toolkit-lean-provenance-v2",
-  "status_date": "2026-09-11",
+  "schema": "cnrs-toolkit-lean-provenance-v3",
+  "status_date": "2026-09-12",
   "documentation_state": "CNRS-LEAN-CAPSTONE governed and GREEN",
-  "toolchain": {"lean": "4.33.0", "lean_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17", "note": "Each vendored project retains its certified resolved Mathlib manifest."},
+  "toolchain": {
+    "lean": "4.33.0",
+    "lean_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "note": "Each vendored project retains its certified resolved Mathlib manifest."
+  },
   "source_repository": "DonGPalmer/SSC_Formal_Methods_CI",
   "consolidated_release": {
     "name": "CNRS-LEAN-CAPSTONE",
@@ -32,18 +36,44 @@
     "byte_stable": true
   },
   "projects": [
-    {"name": "CNRSCore", "boundary": "v1 finite-Gaussian foundation"},
-    {"name": "CnrsQ2", "boundary": "v5 on CNRSCore"},
-    {"name": "CNRSArithmetic", "boundary": "E1-E11 and Phase F"},
-    {"name": "CNRSIntegration", "boundary": "E1 Addition Bridge"},
-    {"name": "CNRSProblem1", "boundary": "P1-L1 through P1-L7"},
-    {"name": "CNRSProblem2", "boundary": "P2-L1 through P2-L10"}
+    {
+      "name": "CNRSCore",
+      "boundary": "v1 finite-Gaussian foundation"
+    },
+    {
+      "name": "CnrsQ2",
+      "boundary": "v5 on CNRSCore"
+    },
+    {
+      "name": "CNRSArithmetic",
+      "boundary": "E1-E11 and Phase F"
+    },
+    {
+      "name": "CNRSIntegration",
+      "boundary": "E1 Addition Bridge"
+    },
+    {
+      "name": "CNRSProblem1",
+      "boundary": "P1-L1 through P1-L7"
+    },
+    {
+      "name": "CNRSProblem2",
+      "boundary": "P2-L1 through P2-L10"
+    }
   ],
   "integration": {
     "lean_source_vendored_for_release": true,
     "python_runtime_modified": false,
-    "release_target": "v0.13.0",
+    "release_target": "v0.13.1",
     "release_status": "candidate preparation",
     "next_formal_campaign": "P3-L1 finite-support convolution multiplication with evaluation theorem"
+  },
+  "public_release": {
+    "repository": "DonGPalmer/CNRS_Lean",
+    "release": "v1.0.3",
+    "commit": "ce56a7359f494d29bab8e9bea6c3ea596f8fd62f",
+    "zenodo_version_doi": "10.5281/zenodo.22727725",
+    "zenodo_concept_doi": "10.5281/zenodo.22726349",
+    "relationship": "governed public publication of the certified CNRS-LEAN-CAPSTONE source"
   }
 }

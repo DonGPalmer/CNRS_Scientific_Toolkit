@@ -1,3 +1,22 @@
+# v0.13.1 — Public Lean Release and Provenance Synchronization
+
+- Linked the vendored CNRS-LEAN-CAPSTONE snapshot to its governed public
+  publication as CNRS Lean v1.0.3.
+- Recorded public repository commit
+  \`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f\`, Zenodo version DOI
+  \`10.5281/zenodo.22727725\`, and Zenodo concept DOI
+  \`10.5281/zenodo.22726349\`.
+- Retained the private capstone commit, workflow, artifact, and checksum as the
+  authoritative certification provenance.
+- Standardized CNRS as **Complex Numeric Representation System**.
+- Removed stale v0.13.0 candidate wording from current-status documentation.
+- Updated package and citation metadata to v0.13.1.
+- No Python arithmetic behavior, vendored Lean source, or mathematical claim
+  was changed.
+- Final v0.13.1 validation results: **pending candidate verification**.
+
+See \`RELEASE_NOTES_v0.13.1.md\`.
+
 # v0.13.0 — CNRS Lean Capstone Alignment
 
 - Vendored the exact six-project CNRS-LEAN-CAPSTONE source snapshot.
@@ -9,7 +28,7 @@
   prohibited proof markers.
 - Updated package and citation metadata to v0.13.0.
 - No Python arithmetic algorithm was changed by this synchronization.
-- Candidate Python validation: `1214 passed, 4 skipped, 0 failed`, with 922
+- v0.13.0 release validation: `1214 passed, 4 skipped, 0 failed`, with 922
   warnings.
 
 See `RELEASE_NOTES_v0.13.0.md`.
