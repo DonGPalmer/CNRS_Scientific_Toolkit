@@ -3,7 +3,7 @@
 ## v0.14.0 candidate — Streaming Division and Formal–Runtime Witness Alignment
 
 **Status: implementation candidate; local Python, acceptance, alignment, benchmark,
-and distribution gates GREEN; GitHub CI and independent audit pending.**
+and distribution gates GREEN; exact-head GitHub CI GREEN; independent re-audit pending.**
 
 CNRS means **Complex Numeric Representation System**.
 

@@ -9,7 +9,8 @@ Local candidate validation on 2026-09-12:
 - clean installation smoke tests for both distributions: PASS;
 - 30-case equal-output timing/memory benchmark: PASS.
 
-GitHub Actions run identities and independent audit identity remain pending.
+Exact-head repair validation is GREEN: Python/distribution run `34733222919`
+and seven-job Lean run `34733222954`. Independent re-audit remains pending.
 The v0.13.1 release baseline follows unchanged.
 
 # Test Status — v0.13.1 Release

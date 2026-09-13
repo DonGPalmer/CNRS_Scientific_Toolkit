@@ -9,7 +9,11 @@
 # Python run 34722404539: SUCCESS.
 # Lean run 34722404541: SUCCESS; source identity plus all six projects.
 # Independent audit: AMBER on 2026-09-13; metadata/evidence/artifact repair authorized.
-# Repair-candidate CI, artifact, and final audit identities remain pending.
+# Exact-head repair commit: b4382510d724bf92bc26aedb4fb52da31b627af3
+# Exact-head repair tree: c4fde4738adc20a8f46d121bb81fa6ed93859bbd
+# Python/distribution run 34733222919: SUCCESS; artifact 10309848481.
+# Lean run 34733222954: SUCCESS; source identity plus all six projects.
+# Evidence-synchronized head CI and independent re-audit remain pending.
 # Regenerate from the exact public candidate with: git ls-files | LC_ALL=C sort
 
 .gitattributes

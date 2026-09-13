@@ -1,7 +1,7 @@
 {
   "schema": "cnrs-toolkit-v014-candidate-manifest-v1",
   "release": "0.14.0",
-  "status": "AMBER_EVIDENCE_REPAIR_AUTHORIZED",
+  "status": "AMBER_REPAIR_COMPLETE_EVIDENCE_SYNC_PENDING_FINAL_CI",
   "status_date": "2026-09-13",
   "baseline": {
     "commit": "b0b8f594d5b66d59151c0d266ba6200e44513df4",
@@ -20,6 +20,23 @@
     "lean_conclusion": "success",
     "lean_successful_jobs": 7,
     "audit_disposition": "AMBER — metadata, evidence, and auditable-distribution repair required"
+  },
+  "exact_head_repair_candidate": {
+    "commit": "b4382510d724bf92bc26aedb4fb52da31b627af3",
+    "tree": "c4fde4738adc20a8f46d121bb81fa6ed93859bbd",
+    "python_distribution_workflow_run": 34733222919,
+    "python_distribution_conclusion": "success",
+    "lean_workflow_run": 34733222954,
+    "lean_conclusion": "success",
+    "lean_successful_jobs": 7,
+    "distribution_artifact": {
+      "id": 10309848481,
+      "name": "cnrs-v0.14.0-distributions-b4382510d724bf92bc26aedb4fb52da31b627af3",
+      "size_bytes": 573636,
+      "digest": "sha256:dff8c3306e2350ddbd7f40cfa7262616c07c8e08cfe99a58510ed3b0fccf238c",
+      "expires": "2026-12-12"
+    },
+    "implementation_bytes_changed_from_initial_candidate": false
   },
   "implementation": {
     "modules": [
@@ -57,7 +74,7 @@
       "sdist_smoke": "PASS"
     }
   },
-  "distributions": [
+  "initial_local_distributions": [
     {
       "name": "cnrs-0.14.0-py3-none-any.whl",
       "size_bytes": 255333,
@@ -69,11 +86,21 @@
       "sha256": "4a527835e2eaee89ca90274bbb6b97db2ebb24359858ac9fb7b24569d6bf6d7c"
     }
   ],
+  "exact_head_ci_distributions": [
+    {
+      "name": "cnrs-0.14.0-py3-none-any.whl",
+      "size_bytes": 255333,
+      "sha256": "f7bf8d4862e401c93437658f8a279a1340ea126e4aa707fbffb8a645fd259fde"
+    },
+    {
+      "name": "cnrs-0.14.0.tar.gz",
+      "size_bytes": 324753,
+      "sha256": "bee726e4c05db1f1c05e864a254170a54aa6fecf199fe990e627488d4f64dd29"
+    }
+  ],
   "pending": [
-    "repair-candidate Python and distribution CI",
-    "repair-candidate seven-job Lean CI",
-    "retained distribution artifact identity",
-    "evidence synchronization",
+    "evidence-synchronized-head Python/distribution CI",
+    "evidence-synchronized-head seven-job Lean CI",
     "independent GREEN re-audit",
     "governed merge",
     "tag",
@@ -95,7 +122,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "0f405595a83d01b13b8e0f1ee372d4be07d91abd0ef014034f6a982589b44cd0"
+      "sha256": "8c6280336a0920ed7c597b2c4de091565caf52e62ef55a1c446b6059ad62ad48"
     },
     {
       "path": "RELEASE_NOTES.md",
@@ -103,15 +130,15 @@
     },
     {
       "path": "RELEASE_NOTES_v0.14.0.md",
-      "sha256": "de2169aebadde827989e7072cb321ccae21afbf499e666613ddbc63f7c64b7c8"
+      "sha256": "dc0d2389563932b027d12deb9f4697f4f2cd03068dc225f303eab1487055334f"
     },
     {
       "path": "SOURCE_INDEX.txt",
-      "sha256": "8347224dd51353f307fd77e5d99261a56b38fe30f530345bd58d93286774c592"
+      "sha256": "dee7cf80b668edce622476090c303603b6499f0c573491acf09369a44390a9ec"
     },
     {
       "path": "V014_AUDIT_REPAIR_RECORD_2026-09-13.md",
-      "sha256": "5dd0b3b89d29401f1d170924270fa3a21560671dbc9cc08707114ea9e7319805"
+      "sha256": "847ab8f9e7e7c1d8c773277767af60b82142cfcab1b89fd80519624aa5728ab3"
     },
     {
       "path": "V014_FREEZE_AMENDMENT_2026-09-12.md",
@@ -123,7 +150,7 @@
     },
     {
       "path": "V014_RELEASE_ACTIVATION_CHECKLIST.md",
-      "sha256": "e08684e10a3480623b79a968adc2727c9109a85e5ec2bc46532f38fadb9fafd5"
+      "sha256": "f83f1760ba3385f4e34a05567b38ad1081867df7984f23078457eea109e0bf2e"
     },
     {
       "path": "acceptance/v014/README.md",
@@ -179,7 +206,7 @@
     },
     {
       "path": "docs/TEST_STATUS.md",
-      "sha256": "7749fd09891077b18e347c6c4ce478a94c4879309a96c4d1e7c3bcdf161d3e7a"
+      "sha256": "4328df544df00f14a089f5fd38847960ce289e8985bdbf669e26fe93c1183cfa"
     },
     {
       "path": "docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md",
@@ -191,7 +218,7 @@
     },
     {
       "path": "formal/PROVENANCE.json",
-      "sha256": "1d2579c9503022066ecfefbce22f3ffbece29a3188a81bac4ce78b50c6606f4d"
+      "sha256": "35d783a2273a0013eed2b808443d37a4a7b3734300409d353f9ff6d8d5b57885"
     },
     {
       "path": "pyproject.toml",

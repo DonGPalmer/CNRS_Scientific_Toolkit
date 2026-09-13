@@ -1,6 +1,6 @@
 # v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment
 
-**Status:** implementation candidate — local gates GREEN; GitHub CI and audit pending
+**Status:** evidence-synchronized candidate — local and exact-head GitHub CI GREEN; independent re-audit pending
 **Architecture freeze:** 2026-09-12  
 **Baseline:** v0.13.1, commit `e7f8424a967292a36643bb5fa8206ccb1d3f8fcd`
 
@@ -53,7 +53,7 @@ formally verified.
 - clean wheel and source installation smoke tests: PASS;
 - equal-output benchmark: PASS over 30 deterministic cases.
 
-Local distribution candidates:
+Initial local distribution candidates:
 
 | Artifact | Size | SHA-256 |
 |---|---:|---|
@@ -63,6 +63,20 @@ Local distribution candidates:
 These artifacts are local candidate builds. Release assets must be rebuilt or
 identity-checked from the audited public candidate before publication.
 
+Exact-head GitHub Actions build evidence for commit
+`b4382510d724bf92bc26aedb4fb52da31b627af3` is retained as artifact
+`10309848481` (90-day retention; archive digest
+`sha256:dff8c3306e2350ddbd7f40cfa7262616c07c8e08cfe99a58510ed3b0fccf238c`).
+Its independently downloadable contents are:
+
+| Artifact | Size | SHA-256 |
+|---|---:|---|
+| `cnrs-0.14.0-py3-none-any.whl` | 255,333 bytes | `f7bf8d4862e401c93437658f8a279a1340ea126e4aa707fbffb8a645fd259fde` |
+| `cnrs-0.14.0.tar.gz` | 324,753 bytes | `bee726e4c05db1f1c05e864a254170a54aa6fecf199fe990e627488d4f64dd29` |
+
+The artifact also contains `CANDIDATE_COMMIT.txt`, `CANDIDATE_TREE.txt`, and
+`SHA256SUMS.txt`; they bind the files to the stated commit and tree.
+
 The local benchmark found lower median time ratios for 1- and 10-digit prefixes
 (0.645 and 0.936), higher ratios for 100 and 1,000 digits (3.073 and 10.736),
 and a full-resolution median ratio of 0.973. Median peak-memory ratios fall to
@@ -71,9 +85,9 @@ not universal performance guarantees. See `docs/V014_PERFORMANCE_RESULTS.md`.
 
 ## Release gates still pending
 
-- GREEN GitHub Python CI and six-project Lean matrix on the uploaded candidate;
+- GREEN CI on the evidence-synchronized candidate head;
 - independent audit of the exact candidate commit and artifacts;
 - governed merge, tag, GitHub Release, and Zenodo publication.
 
-Release date, public DOI, GitHub run identities, and final public commit remain
-unset until those events exist.
+Release date, public DOI, and final audited commit remain unset until those
+events exist.

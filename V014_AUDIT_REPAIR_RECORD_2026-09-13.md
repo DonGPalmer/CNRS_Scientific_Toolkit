@@ -2,7 +2,7 @@
 
 Date: 2026-09-13
 
-Status: REPAIR AUTHORIZED; RELEASE HOLD
+Status: REPAIR EXECUTED; EVIDENCE-SYNCHRONIZED CI/RE-AUDIT HOLD
 
 ## Audited candidate
 
@@ -42,3 +42,26 @@ or disclose any change.
 
 No merge, tag, GitHub Release, package publication, or Zenodo deposition is
 authorized by this record.
+
+## Repair/build completion
+
+- exact-head repair commit: `b4382510d724bf92bc26aedb4fb52da31b627af3`;
+- exact-head repair tree: `c4fde4738adc20a8f46d121bb81fa6ed93859bbd`;
+- Python, acceptance, and distribution run: `34733222919` — SUCCESS;
+- Lean source identity and six-project run: `34733222954` — SUCCESS;
+- retained distribution artifact: `10309848481`;
+- artifact name: `cnrs-v0.14.0-distributions-b4382510d724bf92bc26aedb4fb52da31b627af3`;
+- artifact size: 573,636 bytes;
+- artifact archive digest:
+  `sha256:dff8c3306e2350ddbd7f40cfa7262616c07c8e08cfe99a58510ed3b0fccf238c`;
+- retention expiry: 2026-12-12.
+
+The artifact records the same commit and tree internally. Its wheel is 255,333
+bytes with SHA-256
+`f7bf8d4862e401c93437658f8a279a1340ea126e4aa707fbffb8a645fd259fde`.
+Its source distribution is 324,753 bytes with SHA-256
+`bee726e4c05db1f1c05e864a254170a54aa6fecf199fe990e627488d4f64dd29`.
+
+The streaming implementation module hashes are unchanged from the initial
+candidate. The remaining candidate changes are governance records and workflow
+binding needed to make exact artifacts auditable.
