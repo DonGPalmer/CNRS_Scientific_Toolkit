@@ -1,9 +1,32 @@
-# Test Status — v0.14.0 candidate
+# Test Status — v0.14.1 Candidate
 
-The frozen v0.14.0 acceptance suite is intentionally RED before implementation.
-Final Python counts, performance results, CI identities, distribution checksums,
-and audit identities are pending and must be inserted only from the exact
-release candidate. The v0.13.1 release baseline follows unchanged.
+The v0.14.1 preparation tree adds three release-engineering tests and
+reproducible distribution gates. Local validation passed with `1221 passed`
+and 921 warnings in an optional-dependency-rich environment; the unchanged
+v0.14.0 acceptance suite contributed 19 passes. Two successive builds produced
+byte-identical wheel and source distributions, and both installed cleanly as
+version `0.14.1`. Final public-candidate counts, workflow identities, artifact
+identities, and distribution SHA-256 values remain pending candidate CI and
+independent audit. The required gates are frozen in
+`V0141_ACCEPTANCE_TEST_PLAN.md`.
+
+The v0.14.0 release baseline follows unchanged.
+
+## v0.14.0 release validation
+
+Release validation on 2026-09-12:
+
+- regression suite: `1214 passed, 4 skipped, 0 failed`, 922 warnings;
+- v0.14.0 acceptance suite: `19 passed`;
+- source-alignment guard: PASS, six Lean projects and 79 Lean files;
+- wheel and source distribution build: PASS;
+- clean installation smoke tests for both distributions: PASS;
+- 30-case equal-output timing/memory benchmark: PASS.
+
+The independently audited head `cd0d590818de3f2db615f2269276ede53527827d`
+is GREEN. Post-merge Python/distribution run `34734237160` and seven-job Lean
+run `34734237144` are SUCCESS.
+The v0.13.1 release baseline follows unchanged.
 
 # Test Status — v0.13.1 Release
 
@@ -69,4 +92,3 @@ python -m pytest -q
 ```
 
 See `CNRS_P4_REFERENCE_STATUS.md`, `CLAIM_STATUS.md`, and `EXAMPLE_SMOKE_STATUS.md` for the surrounding claim and workflow boundaries.
-

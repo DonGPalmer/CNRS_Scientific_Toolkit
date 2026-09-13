@@ -1,16 +1,36 @@
-# v0.14.0 candidate — Streaming Division and Formal–Runtime Witness Alignment
+# v0.14.1 — Release Governance and Reproducible Packaging
 
-- Frozen the v0.14.0 architecture, API contracts, claim boundaries, acceptance
-  tests, and performance-comparison protocol before implementation.
+- Closes the published v0.14.0 governance record.
+- Records Zenodo version DOI `10.5281/zenodo.22731846` and concept DOI
+  `10.5281/zenodo.20574852`.
+- Adds deterministic, double-build distribution verification.
+- Updates artifact upload to `actions/upload-artifact@v7`.
+- Adds release-publication automation that builds, verifies, and attaches the
+  exact wheel and source distribution.
+- Adds release guards for tag/version agreement, both required assets, and
+  SHA-256 inventory integrity.
+- Changes no arithmetic behavior, public API, Lean source, or mathematical
+  claim boundary.
+
+See `RELEASE_NOTES_v0.14.1.md`.
+
+# v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment
+
+- Implemented the previously frozen architecture, API contracts, claim
+  boundaries, acceptance tests, and performance-comparison protocol.
 - Targeted exact Gaussian-rational lazy digit streaming with replayable iteration.
 - Defined bounded resolution states: terminating, eventually periodic, and
   limit reached.
 - Defined deterministic division witnesses and independent witness validation.
 - Preserved all v0.13.1 materialized division interfaces.
 - Prohibited treating a search limit as proof of aperiodicity.
-- Added candidate acceptance and benchmark harnesses.
-- Implementation, final test counts, distribution identities, DOI, and measured
-  performance results remain pending.
+- Added governed acceptance and benchmark harnesses.
+- Local validation: `1214 passed, 4 skipped, 0 failed`, 922 warnings; dedicated
+  acceptance: `19 passed`; alignment, distributions, installation smoke tests,
+  and the 30-case benchmark pass.
+- Independent audit, governed merge, final CI, tag, GitHub Release, certified
+  release assets, and Zenodo publication are GREEN and closed.
+- Zenodo version DOI: `10.5281/zenodo.22731846`.
 
 See `RELEASE_NOTES_v0.14.0.md`.
 
@@ -179,4 +199,3 @@ The special `1/5` behavior is now a corollary of the general Gaussian-ideal impl
 - Added `cnrs.hybrid` with `CoefficientCodec` and `HybridSeries`, transporting canonical CNRS-A coefficient representations into the CNRS-H Hurwitz-series carrier.
 - Added theorem-aligned tests for ultrametricity, first-difference isometry, coefficientwise convergence, Hurwitz-product transport, Leibniz, integration, exponential eigenfunctions, and deterministic serialization.
 - Included both theorem papers and independent verification scripts under `docs/theory/` and `docs/audits/scripts/`.
-

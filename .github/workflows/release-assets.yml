@@ -1,0 +1,44 @@
+name: Publish certified release assets
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-v0141-assets:
+    if: github.event.release.tag_name == 'v0.14.1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: v0.14.1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Build byte-identical distributions twice
+        run: |
+          python -m pip install --upgrade pip build
+          python tools/build_reproducible_distributions.py
+      - name: Validate tag, assets, and checksums
+        run: python tools/check_release_assets.py --version 0.14.1 --tag v0.14.1 --directory dist
+      - name: Attach certified distributions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v0.14.1 \
+            dist/cnrs-0.14.1-py3-none-any.whl \
+            dist/cnrs-0.14.1.tar.gz \
+            --clobber
+      - name: Verify both release assets are public
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/${{ github.repository }}/releases/tags/v0.14.1 \
+            --jq '.assets[].name' | sort > /tmp/actual-assets.txt
+          printf '%s\n' \
+            cnrs-0.14.1-py3-none-any.whl \
+            cnrs-0.14.1.tar.gz | sort > /tmp/required-assets.txt
+          diff -u /tmp/required-assets.txt /tmp/actual-assets.txt

@@ -1,10 +1,20 @@
-# Claim Status — v0.14.0 candidate
+# Claim Status — v0.14.1
 
-v0.14.0 is not yet a released capability. Architecture and contracts are
-frozen for exact Gaussian-rational streaming division. No timing advantage,
+v0.14.1 introduces no new mathematical or scientific claim. It strengthens
+distribution reproducibility, release-asset validation, and publication
+metadata while retaining every v0.14.0 claim boundary unchanged.
+
+v0.14.0 provides exact Gaussian-rational streaming division. Regression,
+acceptance, alignment, benchmark, build, installation, audit, merge, and
+post-merge CI gates pass. No universal timing advantage,
 universal search bound, arbitrary infinite-stream closure, or Lean verification
 of the Python runtime is claimed. `LIMIT_REACHED` is not a mathematical
 nonperiodicity result.
+
+Within v0.14.0, lazy replay, bounded resolution, exact canonical parity,
+and deterministic witness revalidation are computationally verified over the
+frozen acceptance domain. The Python routines are theorem-aligned, not
+Lean-extracted or Lean-verified.
 
 The released baseline and its established claims follow.
 
@@ -73,4 +83,3 @@ distinct from ordinary complex analytic convergence.
 See `CNRS_P4_REFERENCE_STATUS.md`. The cited public record remains Version 12,
 DOI `10.5281/zenodo.21791909`; the synchronized programme working paper is
 Version 16 pending any later public deposit.
-

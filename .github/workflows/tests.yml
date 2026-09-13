@@ -9,8 +9,54 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
       - run: pip install -e .[dev]
       - run: pytest -q
+      - name: v0.14.0 streaming-division acceptance contract
+        run: pytest -q acceptance/v014
+
+  distribution:
+    needs: pytest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Build wheel and source distribution
+        run: |
+          python -m pip install --upgrade pip build
+          python tools/build_reproducible_distributions.py
+      - name: Verify wheel in a clean environment
+        run: |
+          python -m venv /tmp/cnrs-wheel-venv
+          /tmp/cnrs-wheel-venv/bin/python -m pip install dist/cnrs-0.14.1-py3-none-any.whl
+          /tmp/cnrs-wheel-venv/bin/python -c "import cnrs; assert cnrs.__version__ == '0.14.1'"
+      - name: Verify source distribution in a clean environment
+        run: |
+          python -m venv /tmp/cnrs-sdist-venv
+          /tmp/cnrs-sdist-venv/bin/python -m pip install dist/cnrs-0.14.1.tar.gz
+          /tmp/cnrs-sdist-venv/bin/python -c "import cnrs; assert cnrs.__version__ == '0.14.1'"
+      - name: Record immutable build identity and checksums
+        run: |
+          git rev-parse HEAD > dist/CANDIDATE_COMMIT.txt
+          git rev-parse HEAD^{tree} > dist/CANDIDATE_TREE.txt
+          python tools/check_release_assets.py --version 0.14.1 --tag v0.14.1 --directory dist
+      - name: Upload auditable v0.14.1 distributions
+        uses: actions/upload-artifact@v7
+        with:
+          name: cnrs-v0.14.1-distributions-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            dist/cnrs-0.14.1-py3-none-any.whl
+            dist/cnrs-0.14.1.tar.gz
+            dist/SHA256SUMS.txt
+            dist/CANDIDATE_COMMIT.txt
+            dist/CANDIDATE_TREE.txt
+          if-no-files-found: error
+          retention-days: 90

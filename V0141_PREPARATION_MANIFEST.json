@@ -1,0 +1,164 @@
+{
+  "schema": "cnrs-toolkit-v0141-maintenance-preparation-v1",
+  "release": "0.14.1",
+  "status": "PREPARATION_COMPLETE_LOCAL_VALIDATION_GREEN_PUBLIC_CANDIDATE_PENDING",
+  "status_date": "2026-09-13",
+  "baseline_release": {
+    "version": "0.14.0",
+    "release_date": "2026-09-12",
+    "commit": "0726faba1fe2ebdddf24d71ab7d1d6f22eec1ccc",
+    "tree": "7550d0cdac2727c5cf0ad23b98ab785f1aa41988",
+    "zenodo_version_doi": "10.5281/zenodo.22731846",
+    "zenodo_concept_doi": "10.5281/zenodo.20574852",
+    "status": "CLOSED_GREEN"
+  },
+  "scope": {
+    "release_engineering_only": true,
+    "arithmetic_changed": false,
+    "public_api_changed": false,
+    "vendored_lean_changed": false,
+    "claim_boundary_changed": false
+  },
+  "local_validation": {
+    "regression": {
+      "passed": 1221,
+      "failed": 0,
+      "warnings": 921
+    },
+    "v014_acceptance": {
+      "passed": 19,
+      "failed": 0
+    },
+    "reproducible_double_build": "PASS",
+    "wheel_clean_install": "PASS",
+    "sdist_clean_install": "PASS"
+  },
+  "controls": {
+    "artifact_action": "actions/upload-artifact@v7",
+    "reproducible_build_script": "tools/build_reproducible_distributions.py",
+    "release_asset_guard": "tools/check_release_assets.py",
+    "release_publication_workflow": ".github/workflows/release-assets.yml",
+    "required_assets": [
+      "cnrs-0.14.1-py3-none-any.whl",
+      "cnrs-0.14.1.tar.gz"
+    ]
+  },
+  "pending": [
+    "public candidate commit and tree",
+    "Python/distribution CI",
+    "seven-job Lean CI",
+    "retained candidate artifact",
+    "independent audit",
+    "governed merge",
+    "release date finalization",
+    "tag v0.14.1",
+    "GitHub Release",
+    "Zenodo publication"
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/release-assets.yml",
+      "sha256": "85d0ab563350037665c20e71aee31525b3ca6eb77ab32289e0ab05d333d5b081"
+    },
+    {
+      "path": ".github/workflows/tests.yml",
+      "sha256": "678dd025ba05b88ec98f342dd820e063b8f7e5155dc93fe65e739ef9fe2bc991"
+    },
+    {
+      "path": "CITATION.cff",
+      "sha256": "3b4154eb935375643dc595e9de730577eb6c00b73b9a19565f912307e473e7c7"
+    },
+    {
+      "path": "README.md",
+      "sha256": "48c276cd5cb7d402d1b4cacc925ffbf84802aaf063f94c77ee43b100cf68a69c"
+    },
+    {
+      "path": "RELEASE_NOTES.md",
+      "sha256": "90ef47af6663af44563ca98d583553fdb5f45418688f8bf9ef91be2f5a8b7744"
+    },
+    {
+      "path": "RELEASE_NOTES_v0.14.1.md",
+      "sha256": "6ea3a809e019280fa234bb775c85e9e7f83a35b156fc94c9190d02ac54c0baaa"
+    },
+    {
+      "path": "SOURCE_INDEX.txt",
+      "sha256": "eda16a7bfba224dfe0792f160f8e4b7d081d3fd820e51f208d3abc58fcc298c3"
+    },
+    {
+      "path": "V0141_RELEASE_ACTIVATION_CHECKLIST.md",
+      "sha256": "c97d7475c21b5ce3e257fcb904efca0d0c1c2d59da602d507ee0a00d67e1fdb0"
+    },
+    {
+      "path": "V014_RELEASE_CLOSEOUT_RECORD_2026-09-12.md",
+      "sha256": "fb2af1087fe3bee8d2b4dbae2834363ed9ae24b8bbd77d340a56b6addf218fab"
+    },
+    {
+      "path": "cnrs/__init__.py",
+      "sha256": "359967817f0b66921d92cd0d58646358542fb0e388fdae248f90861f3d823c4f"
+    },
+    {
+      "path": "docs/API_STATUS.md",
+      "sha256": "14fd7595168907632a081bf4e09703a2fcab2dba28e93e10227b4038630fc0b2"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "9f9e6246ea1b04ae7504e56aced1e651abc0113a1cb79606db078ab254ba4ca9"
+    },
+    {
+      "path": "docs/CLAIM_STATUS.md",
+      "sha256": "f27a8209c4a2b7083f4cb10004d15379752eb0a26f848ab0afa1e27d82c92b00"
+    },
+    {
+      "path": "docs/LEAN_FORMALIZATION_ALIGNMENT.md",
+      "sha256": "57822427de7590f1d96b0a354fdde547bf02b23e828cbbda353e53ce96fbc9fd"
+    },
+    {
+      "path": "docs/TEST_STATUS.md",
+      "sha256": "1538ab7adcba884a6106242661daf76b46a1e6b3aa7035b97c2e110ef8a2fb1d"
+    },
+    {
+      "path": "docs/V0141_ACCEPTANCE_TEST_PLAN.md",
+      "sha256": "754d998f8bf3eaaa3b5a8b0e21654dbb209295a99247463f4ecae56c7d8bd1e5"
+    },
+    {
+      "path": "docs/V0141_CLAIM_BOUNDARY.md",
+      "sha256": "deca13ff4a431080451ef535c2df3f1103ef1b213f2850489346c495b8fab095"
+    },
+    {
+      "path": "docs/V0141_MAINTENANCE_SCOPE.md",
+      "sha256": "b94bfc24330a8d99f46b697e9bba13fe7e666c6ad5ab701ba3262066a93590a3"
+    },
+    {
+      "path": "formal/PROVENANCE.json",
+      "sha256": "3ad896b41d16db61bc6b3263843f1cc6cb2b99ada04a28ea695be2328a60bc02"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "4be50084a7be1df46beb28b27801eef6cabcdeefbf4560e1e0d3c666abfb17e6"
+    },
+    {
+      "path": "tests/test_architecture_v060.py",
+      "sha256": "3fa1dd72d22d109748c074e78590cc4831a2fd3c32dfa3420a4883aa3a4bbb5b"
+    },
+    {
+      "path": "tests/test_cli.py",
+      "sha256": "12c1f4f185c8997677ece2e78bc53abb68f156bbc5f79a256fa392192a1d22ef"
+    },
+    {
+      "path": "tests/test_native_status_v071.py",
+      "sha256": "11744c8113f7f3b285376168e56a7cc75b161d384886a2070bb208deb6475a65"
+    },
+    {
+      "path": "tests/test_release_engineering_v0141.py",
+      "sha256": "331a612e4c59312ba63135d245cecd2d44aa1922748d9237908a1695ff771626"
+    },
+    {
+      "path": "tools/build_reproducible_distributions.py",
+      "sha256": "5dac43ee6f0f6e1e00fe38a850d3232ebf282f5ea8d24c2bc539aa9966d2a622"
+    },
+    {
+      "path": "tools/check_release_assets.py",
+      "sha256": "b0a6c5221b15fc43fd7d755ff5181db37f17321a49ff0f4ed9675aeff6c38e85"
+    }
+  ]
+}

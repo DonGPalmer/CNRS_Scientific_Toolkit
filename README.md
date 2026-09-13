@@ -1,14 +1,38 @@
 # CNRS Scientific Toolkit
 
-## v0.14.0 candidate — Streaming Division and Formal–Runtime Witness Alignment
+## v0.14.1 — Release Governance and Reproducible Packaging
 
-**Status: architecture and contracts frozen; implementation and release validation pending.**
+**Status: maintenance candidate; implementation and acceptance validation pending.**
 
 CNRS means **Complex Numeric Representation System**.
 
-The v0.14.0 development target adds exact Gaussian-rational streaming division,
-bounded state resolution, and deterministic division witnesses. The existing
-materialized division API remains supported without signature changes.
+Version 0.14.1 closes the v0.14.0 publication records and strengthens release
+engineering. It changes no arithmetic algorithm, public Python API, vendored
+Lean source, or theorem boundary. The v0.14.0 streaming-division behavior and
+witness contracts remain unchanged.
+
+The maintenance scope is:
+
+- synchronize the published v0.14.0 GitHub and Zenodo identities;
+- produce wheel and source distributions reproducibly from a fixed Git commit;
+- verify two independent builds are byte-identical before artifact upload;
+- attach the exact wheel and source distribution automatically when a GitHub
+  Release is published;
+- use the Node-24-compatible artifact upload action;
+- fail release-asset automation if either distribution is absent.
+
+The CNRS Scientific Toolkit concept DOI is
+[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The closed
+v0.14.0 version DOI is
+[10.5281/zenodo.22731846](https://doi.org/10.5281/zenodo.22731846).
+
+See `RELEASE_NOTES_v0.14.1.md` and `docs/V0141_MAINTENANCE_SCOPE.md`.
+
+## v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment
+
+Released 2026-09-12. GitHub tag `v0.14.0` points to commit
+`0726faba1fe2ebdddf24d71ab7d1d6f22eec1ccc`; Zenodo version DOI
+[`10.5281/zenodo.22731846`](https://doi.org/10.5281/zenodo.22731846).
 
 The frozen scope is deliberately narrow:
 
@@ -30,11 +54,17 @@ See:
 - `docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md`;
 - `RELEASE_NOTES_v0.14.0.md`.
 
-No v0.14.0 release claim is authorized until the implementation, acceptance
-suite, regression suite, Lean matrix, distributions, performance evidence, and
-independent candidate audit are GREEN.
+Release validation records `1214 passed, 4 skipped, 0 failed` with
+922 warnings in the historical regression suite, plus `19 passed` in the
+v0.14.0 acceptance suite. The source-alignment guard and clean wheel/source
+installation smoke tests pass. Performance results are reported as
+environment-specific measurements in
+`docs/V014_PERFORMANCE_RESULTS.md`; no universal speed claim is made.
 
-# CNRS Scientific Toolkit
+Independent audit, governed merge, final GitHub CI, release assets, and Zenodo
+verification are GREEN. The v0.14.0 release is closed.
+
+## Release history
 
 ## v0.13.1 — Public Lean Release and Provenance Synchronization
 
@@ -989,4 +1019,3 @@ numerical fallback. Install with `pip install cnrs[algebraic]`.
 Current boundary: finite branch values only. Points at infinity, normalization,
 Puiseux charts, automatic monodromy, and certified continuation remain future
 stages.
-
