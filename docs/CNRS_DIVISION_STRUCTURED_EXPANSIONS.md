@@ -1,9 +1,11 @@
 # CNRS-A structured and streaming division expansions
 
-The v0.14.0 candidate preserves the materialized structured expansion API below
-and freezes a replayable streaming API. A resolved stream must reproduce the
+The v0.14.0 implementation preserves the materialized structured
+expansion API below and implements the frozen replayable streaming API. A
+resolved stream reproduces the
 canonical power offset, prefix, primitive period, and exact value. See
-`V014_STREAMING_DIVISION_API_CONTRACT.md`.
+`V014_STREAMING_DIVISION_API_CONTRACT.md`. Local acceptance verifies at least
+100 deterministic canonical-parity cases.
 
 # CNRS-A Structured Division Expansions
 
@@ -30,4 +32,3 @@ It reports whether a reduced denominator is:
   occur.
 
 Sharp minimal carry-state counts remain an open/theory-side question.
-

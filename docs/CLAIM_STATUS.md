@@ -3,7 +3,6 @@
 v0.14.1 introduces no new mathematical or scientific claim. It strengthens
 distribution reproducibility, release-asset validation, and publication
 metadata while retaining every v0.14.0 claim boundary unchanged.
-
 v0.14.0 provides exact Gaussian-rational streaming division. Regression,
 acceptance, alignment, benchmark, build, installation, audit, merge, and
 post-merge CI gates pass. No universal timing advantage,

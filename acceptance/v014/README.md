@@ -1,6 +1,8 @@
 # v0.14.0 preimplementation acceptance suite
 
-This suite freezes the public contract before implementation. At freeze time it must fail during collection because cnrs.streaming_division and cnrs.witnesses do not yet exist. That RED result is intentional.
+This suite froze the public contract before implementation. Its recorded
+preimplementation state was RED because cnrs.streaming_division and
+cnrs.witnesses did not yet exist. The implementation candidate is now GREEN.
 
 During implementation run:
 

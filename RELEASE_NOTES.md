@@ -15,7 +15,6 @@
 See `RELEASE_NOTES_v0.14.1.md`.
 
 # v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment
-
 - Implemented the previously frozen architecture, API contracts, claim
   boundaries, acceptance tests, and performance-comparison protocol.
 - Targeted exact Gaussian-rational lazy digit streaming with replayable iteration.

@@ -9,18 +9,18 @@ Baseline tree: c2364123aef02514bc242c8ea0796dc7d7c1cdde
 
 ## Purpose
 
-This is a copy-into-existing-folder-structure preimplementation package. It freezes architecture, API contracts, claim boundaries, acceptance tests, and the performance-comparison method. It contains no streaming-division implementation and does not modify v0.13.1 runtime behavior.
+This record originated with the copy-into-existing-folder-structure
+preimplementation freeze. The candidate now implements that frozen scope.
+V014_FREEZE_AMENDMENT_2026-09-12.md records the two technical clarifications
+made during implementation.
 
 ## Placement
 
 Copy docs, acceptance, and benchmarks into the corresponding repository-root folders. Preserve v0.13.1 files unchanged. V014_FREEZE_MANIFEST.json and V014_SHA256SUMS.txt are governance records and may be kept at the repository root or in the release evidence directory.
 
-The supplied README.md, RELEASE_NOTES.md, RELEASE_NOTES_v0.14.0.md,
-CITATION.cff, SOURCE_INDEX.txt, and synchronized status documents are
-preimplementation candidate documents. They may be installed on a development
-branch, but they do not authorize a release. See
-V014_RELEASE_ACTIVATION_CHECKLIST.md for the final evidence and non-document
-version changes that cannot be completed before implementation.
+The synchronized documents now describe an implementation candidate with local
+gates GREEN. They do not authorize release. GitHub CI and independent audit
+remain required as stated in V014_RELEASE_ACTIVATION_CHECKLIST.md.
 
 ## Frozen decision
 
