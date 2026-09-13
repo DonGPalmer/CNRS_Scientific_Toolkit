@@ -3,6 +3,7 @@
 v0.14.1 changes release engineering only. The v0.14.0 runtime architecture,
 module ownership, exact-arithmetic boundary, and formal/runtime separation are
 unchanged.
+
 v0.14.0 adds two layers above the existing exact Gaussian arithmetic:
 `cnrs.streaming_division` owns lazy replayable iteration and bounded
 resolution; `cnrs.witnesses` owns stable serialization and independent

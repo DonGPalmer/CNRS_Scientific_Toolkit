@@ -6,6 +6,7 @@ witness contracts remain in force unchanged.
 
 The v0.13.1 interfaces below remain supported. The v0.14.0 additions are
 `cnrs.streaming_division` and `cnrs.witnesses`.
+
 Public additions: `stream_division`, `CnrsDivisionStream`,
 `DivisionResolution`, `DivisionStreamStatus`, `CycleWitness`,
 `DivisionWitness`, `division_witness`, and

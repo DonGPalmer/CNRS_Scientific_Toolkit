@@ -13,6 +13,7 @@ independent audit. The required gates are frozen in
 The v0.14.0 release baseline follows unchanged.
 
 ## v0.14.0 release validation
+
 Release validation on 2026-09-12:
 
 - regression suite: `1214 passed, 4 skipped, 0 failed`, 922 warnings;

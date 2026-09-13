@@ -2,6 +2,7 @@
 
 v0.14.1 does not modify the vendored Lean source or enlarge the formal proof
 boundary. The six-project CNRS-LEAN-CAPSTONE alignment remains unchanged.
+
 The v0.14.0 streaming-division implementation does not enlarge the governed
 Lean proof boundary. Python recurrence and witness fields are aligned with
 existing Gaussian-rational periodicity and canonical-normalization concepts

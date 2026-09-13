@@ -48,7 +48,6 @@ jobs:
           git rev-parse HEAD > dist/CANDIDATE_COMMIT.txt
           git rev-parse HEAD^{tree} > dist/CANDIDATE_TREE.txt
           python tools/check_release_assets.py --version 0.14.1 --tag v0.14.1 --directory dist
-          (cd dist && sha256sum cnrs-0.14.1-py3-none-any.whl cnrs-0.14.1.tar.gz > SHA256SUMS.txt)
       - name: Upload auditable v0.14.1 distributions
         uses: actions/upload-artifact@v7
         with:
@@ -56,9 +55,6 @@ jobs:
           path: |
             dist/cnrs-0.14.1-py3-none-any.whl
             dist/cnrs-0.14.1.tar.gz
-            dist/SHA256SUMS.txt
-            dist/CANDIDATE_COMMIT.txt
-            dist/CANDIDATE_TREE.txt
             dist/SHA256SUMS.txt
             dist/CANDIDATE_COMMIT.txt
             dist/CANDIDATE_TREE.txt
