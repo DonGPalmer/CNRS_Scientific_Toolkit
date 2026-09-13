@@ -6,12 +6,20 @@ on:
       - 'formal/**'
       - 'tools/check_lean_alignment.py'
       - 'tests/test_lean_alignment.py'
+      - 'cnrs/streaming_division.py'
+      - 'cnrs/witnesses.py'
+      - 'acceptance/v014/**'
+      - 'docs/LEAN_FORMALIZATION_ALIGNMENT.md'
       - '.github/workflows/lean.yml'
   pull_request:
     paths:
       - 'formal/**'
       - 'tools/check_lean_alignment.py'
       - 'tests/test_lean_alignment.py'
+      - 'cnrs/streaming_division.py'
+      - 'cnrs/witnesses.py'
+      - 'acceptance/v014/**'
+      - 'docs/LEAN_FORMALIZATION_ALIGNMENT.md'
       - '.github/workflows/lean.yml'
   workflow_dispatch:
 
@@ -23,6 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Verify capstone source identity and proof hygiene
         run: python tools/check_lean_alignment.py
 
@@ -44,6 +54,8 @@ jobs:
         working-directory: formal/lean/${{ matrix.project }}
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Install elan
         run: |
           curl -sSfL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none

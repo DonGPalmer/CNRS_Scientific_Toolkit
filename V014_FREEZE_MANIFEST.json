@@ -1,117 +1,248 @@
 {
-  "schema": "cnrs-toolkit-preimplementation-freeze-v2",
+  "schema": "cnrs-toolkit-v014-candidate-manifest-v1",
   "release": "0.14.0",
-  "freeze_date": "2026-09-12",
-  "status": "FROZEN_FOR_IMPLEMENTATION",
+  "status": "AMBER_REPAIR_COMPLETE_EVIDENCE_SYNC_PENDING_FINAL_CI",
+  "status_date": "2026-09-13",
   "baseline": {
-    "release": "0.13.1",
-    "commit": "e7f8424a967292a36643bb5fa8206ccb1d3f8fcd",
-    "tree": "c2364123aef02514bc242c8ea0796dc7d7c1cdde"
+    "commit": "b0b8f594d5b66d59151c0d266ba6200e44513df4",
+    "tree": "d615f6f9633f8cb0a1242de9cb1838605f0d387a"
   },
-  "release_title": "CNRS Scientific Toolkit v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment",
-  "implementation_included": false,
-  "repository_facing_documents_included": true,
-  "acceptance_state": "EXPECTED_RED_PREIMPLEMENTATION",
+  "measured_source": {
+    "commit": "939bbecf4cc6fa76b25c543c5459634cdf9f0a86",
+    "tree": "e670990ee0783a254011af803d0e7c0ebb2566c7"
+  },
+  "initial_public_candidate": {
+    "commit": "a65c5834e56ed2bd28a8683c4a9e2017bb64157e",
+    "tree": "9eb4ed67891405fa8824d933c883e51205f152a8",
+    "python_workflow_run": 34722404539,
+    "python_conclusion": "success",
+    "lean_workflow_run": 34722404541,
+    "lean_conclusion": "success",
+    "lean_successful_jobs": 7,
+    "audit_disposition": "AMBER — metadata, evidence, and auditable-distribution repair required"
+  },
+  "exact_head_repair_candidate": {
+    "commit": "b4382510d724bf92bc26aedb4fb52da31b627af3",
+    "tree": "c4fde4738adc20a8f46d121bb81fa6ed93859bbd",
+    "python_distribution_workflow_run": 34733222919,
+    "python_distribution_conclusion": "success",
+    "lean_workflow_run": 34733222954,
+    "lean_conclusion": "success",
+    "lean_successful_jobs": 7,
+    "distribution_artifact": {
+      "id": 10309848481,
+      "name": "cnrs-v0.14.0-distributions-b4382510d724bf92bc26aedb4fb52da31b627af3",
+      "size_bytes": 573636,
+      "digest": "sha256:dff8c3306e2350ddbd7f40cfa7262616c07c8e08cfe99a58510ed3b0fccf238c",
+      "expires": "2026-12-12"
+    },
+    "implementation_bytes_changed_from_initial_candidate": false
+  },
+  "implementation": {
+    "modules": [
+      "cnrs/streaming_division.py",
+      "cnrs/witnesses.py"
+    ],
+    "witness_schema": "cnrs-division-witness-v1",
+    "algorithm": "cnrs-gaussian-rational-stream-v1"
+  },
+  "validation": {
+    "regression": {
+      "passed": 1214,
+      "skipped": 4,
+      "failed": 0,
+      "warnings": 922
+    },
+    "acceptance": {
+      "passed": 19,
+      "failed": 0
+    },
+    "lean_alignment": {
+      "status": "PASS",
+      "projects": 6,
+      "lean_files": 79
+    },
+    "benchmark": {
+      "status": "PASS",
+      "cases": 30,
+      "raw_json_sha256": "44bb13d92a7243e40f89c82b8ff4b88eeab692520494e232b0809a40a542a4e1",
+      "summary_csv_sha256": "9971d584314d3d1295fa1cf061baa67c5999b1815d18ab31e1196796cf5429d5"
+    },
+    "distributions": {
+      "build": "PASS",
+      "wheel_smoke": "PASS",
+      "sdist_smoke": "PASS"
+    }
+  },
+  "initial_local_distributions": [
+    {
+      "name": "cnrs-0.14.0-py3-none-any.whl",
+      "size_bytes": 255333,
+      "sha256": "6de8e4c4b2a4e19d8a0d01186e99ef87f6846602b538671d50a2bb9c9a9d3b92"
+    },
+    {
+      "name": "cnrs-0.14.0.tar.gz",
+      "size_bytes": 324857,
+      "sha256": "4a527835e2eaee89ca90274bbb6b97db2ebb24359858ac9fb7b24569d6bf6d7c"
+    }
+  ],
+  "exact_head_ci_distributions": [
+    {
+      "name": "cnrs-0.14.0-py3-none-any.whl",
+      "size_bytes": 255333,
+      "sha256": "f7bf8d4862e401c93437658f8a279a1340ea126e4aa707fbffb8a645fd259fde"
+    },
+    {
+      "name": "cnrs-0.14.0.tar.gz",
+      "size_bytes": 324753,
+      "sha256": "bee726e4c05db1f1c05e864a254170a54aa6fecf199fe990e627488d4f64dd29"
+    }
+  ],
+  "pending": [
+    "evidence-synchronized-head Python/distribution CI",
+    "evidence-synchronized-head seven-job Lean CI",
+    "independent GREEN re-audit",
+    "governed merge",
+    "tag",
+    "GitHub Release",
+    "Zenodo publication"
+  ],
   "files": [
     {
+      "path": ".github/workflows/lean.yml",
+      "sha256": "ccdf7b9eaa819d729294c0bfd139e216f20144bb6e9bd9deaad7ee78aa900880"
+    },
+    {
+      "path": ".github/workflows/tests.yml",
+      "sha256": "b497018174262345e600657ed1f9c34bbf0868b0d81f70cd0861f61da709e7aa"
+    },
+    {
       "path": "CITATION.cff",
-      "sha256": "fdb62750891d02855cb3a9e818f01196fb94f4a67fa2db0e15f4e44ee08cac99"
+      "sha256": "3dfbad44318d9ea5172a2a2ab6c78cf340f07900bacf7d50d515aa005d9a5e43"
     },
     {
       "path": "README.md",
-      "sha256": "bf5f9da929b50434ab8e220fafd5e0916c2aea4a0e65edd59769af2da287624f"
+      "sha256": "8c6280336a0920ed7c597b2c4de091565caf52e62ef55a1c446b6059ad62ad48"
     },
     {
       "path": "RELEASE_NOTES.md",
-      "sha256": "10bb31d6bee4643dc65eb0ce8fa6639213239936bb2787fb48c014b3eafd7796"
+      "sha256": "d9b7c00127465a348652ba6385939daee02b4711b2fbd3dc37731aca958f3c44"
     },
     {
       "path": "RELEASE_NOTES_v0.14.0.md",
-      "sha256": "c69cefa5dce24cbf8aceab65fbab0eaa765da51a22f6a84a82c44681f26cefff"
+      "sha256": "dc0d2389563932b027d12deb9f4697f4f2cd03068dc225f303eab1487055334f"
     },
     {
       "path": "SOURCE_INDEX.txt",
-      "sha256": "71f72011e3d042deeab12532cf14d7562bfa1af000f145edc4e5a0fd35d966cd"
+      "sha256": "dee7cf80b668edce622476090c303603b6499f0c573491acf09369a44390a9ec"
+    },
+    {
+      "path": "V014_AUDIT_REPAIR_RECORD_2026-09-13.md",
+      "sha256": "847ab8f9e7e7c1d8c773277767af60b82142cfcab1b89fd80519624aa5728ab3"
+    },
+    {
+      "path": "V014_FREEZE_AMENDMENT_2026-09-12.md",
+      "sha256": "932a1e00d1aedea5fbf1d4eb0d9ece844b9083a72116f3fbe8e14f1652256986"
     },
     {
       "path": "V014_INSTALLATION_AND_FREEZE_RECORD.md",
-      "sha256": "07d0789486ed6a47636b39dbcb75619070a791ea55760b5e932d35465cd5d89a"
+      "sha256": "50bbbba5c48b7ffad973dd4feeddf434178a50f474d7ed0dddb0640d04429cd7"
     },
     {
       "path": "V014_RELEASE_ACTIVATION_CHECKLIST.md",
-      "sha256": "b2623beae88fff5f077cc0e95174c5ea4f8b31e4fb9c0f8abbda721bbdf9c9ba"
+      "sha256": "f83f1760ba3385f4e34a05567b38ad1081867df7984f23078457eea109e0bf2e"
     },
     {
       "path": "acceptance/v014/README.md",
-      "sha256": "7496526006458baed8f5f286189f388b71673d42eee21fb0a95f3ada69c779b4"
+      "sha256": "f20524da39b99b8ffb0b41cfb7bcbc46d4315f5bf0373ffd5a16e928ba5a3be6"
     },
     {
       "path": "acceptance/v014/test_streaming_division_contract.py",
-      "sha256": "78ad17b4b00ec1c41bb4c74682e0126e4730fde86ff1b12d4e9c9f6d1e0f2207"
+      "sha256": "2dd20afd0e3efae121212639285ffcb454f063830b2d8e7e411b5b90d2db4c98"
     },
     {
       "path": "benchmarks/benchmark_streaming_division.py",
-      "sha256": "6f47cc3adc4988e9908261d8dfcc19ff93582b2be020a8e180aec0d3040bc3a7"
+      "sha256": "a8ddf73c170178f2ab265644d1e0dd6d54c16121a8573eeb32fa2f494c378f7b"
+    },
+    {
+      "path": "cnrs/__init__.py",
+      "sha256": "f1159ad6ed5dd1ff824bd9aece73c6ebc28e16f756e1b724a94e16bfda887ada"
+    },
+    {
+      "path": "cnrs/streaming_division.py",
+      "sha256": "715da8bbbba31706048b46c362defb5a75de34c3578e70dacb43f58fac2e8c36"
+    },
+    {
+      "path": "cnrs/witnesses.py",
+      "sha256": "914490a6fb6802e4fa66ef49ebdab83d567471e480c96042b78bdffda70f989f"
     },
     {
       "path": "docs/API_STATUS.md",
-      "sha256": "2a6a132206f1d8febeb0800ea3028e6f56087b26220372f0cda2c90ccf0310cd"
+      "sha256": "ccae56697d055f90a853fc3804decffe29a133ebdd62d815cee17e0cc7043399"
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "sha256": "587112dea18ef14a1098a83c29f99b79721d2908377c688cc1a078fa4edd071d"
+      "sha256": "80bb6955452f8691f1ae02437896277fb471b89307501876351013bb4d3e4f0b"
     },
     {
       "path": "docs/CLAIM_STATUS.md",
-      "sha256": "cbf5ff1f1f1fed2182810d005fefbc3c4568ec5448e4c44f6805d75959a5a840"
+      "sha256": "22bd010564c9cf4526383cbe925468c0be540ec167af75b6889c3f4abf79b572"
     },
     {
       "path": "docs/CNRS_DIVISION_STATUS.md",
-      "sha256": "97aec5640014a61ea42dab9f72db0b4b4c26fee3b9807f689c4b559b7a17fc7a"
+      "sha256": "0426fe16d924307040466bc0aeceb8581cfd289c21fe65853aa0f9155a4aaabb"
     },
     {
       "path": "docs/CNRS_DIVISION_STRUCTURED_EXPANSIONS.md",
-      "sha256": "849e5f629fa40256307b67dc3f9d01821c8d7da92ad4d70d1b8f7df47f1ae1ba"
+      "sha256": "000fd64c72ce2e93c4e61b0688345df2d9c71037f257e75f4055c95a2fda5cf5"
     },
     {
       "path": "docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md",
-      "sha256": "eaa32b63427c92e4b15232853d224e2d5c218c167784c2ab3290e33f8189c1df"
+      "sha256": "ccce244c1284a360881785e427f46562070dab5d082e4b129cde82a0518b544d"
     },
     {
       "path": "docs/LEAN_FORMALIZATION_ALIGNMENT.md",
-      "sha256": "28692e145b99c5d208dbc786cdab32b5e534591f3f6c4c08e604245e86cba5ea"
+      "sha256": "d609926143b1d1de1a53d2d7f8b5c1ca2eb90c6488a264769c9dea4197b07d74"
     },
     {
       "path": "docs/TEST_STATUS.md",
-      "sha256": "ee8125903eb51f13a5e613fdf4f1fc5c7ad989a35ea3a952e49a06b64e10143e"
-    },
-    {
-      "path": "docs/V014_ACCEPTANCE_TEST_PLAN.md",
-      "sha256": "83cc32aa79b610c706ab15456223d77e96540dc86b406cdf6f978fba2317ea28"
-    },
-    {
-      "path": "docs/V014_ARCHITECTURE_FREEZE.md",
-      "sha256": "1bbaa4c3e575a215b0fb954adc4f6cad7a523027fafa627f00600c9c8ff2e06d"
-    },
-    {
-      "path": "docs/V014_CLAIM_BOUNDARY.md",
-      "sha256": "95a6ef617440fe9b7bac0011372b94c503359b3ee06f6749f678dbfbe369f6d0"
+      "sha256": "4328df544df00f14a089f5fd38847960ce289e8985bdbf669e26fe93c1183cfa"
     },
     {
       "path": "docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md",
-      "sha256": "3bf2bd8625ff545de1b0af815892688593463e9fbff2649e5739ebc1397c414a"
+      "sha256": "693454d68e0eb396f80487407b3f38d0e5f52792332a22dae07d2056374e78d6"
     },
     {
-      "path": "docs/V014_STREAMING_DIVISION_API_CONTRACT.md",
-      "sha256": "5cb5f145522cd8669cd1e3ef892291695d92af00463de1d56c3e6c6ed3f7fe62"
+      "path": "docs/V014_PERFORMANCE_RESULTS.md",
+      "sha256": "5a130fbb939fda07dda79bd5731ccc65ee1e22d634b9f2c0dd132e3f08414891"
+    },
+    {
+      "path": "formal/PROVENANCE.json",
+      "sha256": "35d783a2273a0013eed2b808443d37a4a7b3734300409d353f9ff6d8d5b57885"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "a8646a6130991747ac6abf38915853567e88fc74e8360192898b6d345ab4dd82"
+    },
+    {
+      "path": "tests/test_architecture_v060.py",
+      "sha256": "170db2fa2b240c87ceae731594124736425c95486ef00780c09439880d17ef4d"
+    },
+    {
+      "path": "tests/test_cli.py",
+      "sha256": "f246b10f6483477f3ca49a53b463d0781aba049ede6ad4a6b1747f943b92da7f"
+    },
+    {
+      "path": "tests/test_native_status_v071.py",
+      "sha256": "c75f46970bea9be32de95d43fc87cb5519bd964974b424aaa7242a8e2652469e"
+    },
+    {
+      "path": "v014_performance_results.json",
+      "sha256": "44bb13d92a7243e40f89c82b8ff4b88eeab692520494e232b0809a40a542a4e1"
+    },
+    {
+      "path": "v014_performance_summary.csv",
+      "sha256": "9971d584314d3d1295fa1cf061baa67c5999b1815d18ab31e1196796cf5429d5"
     }
-  ],
-  "verification": {
-    "python_syntax": "PASS",
-    "document_consistency": "PASS",
-    "baseline_new_module_import": "EXPECTED_RED_MODULE_NOT_FOUND",
-    "pytest_execution": "NOT_RUN_PYTEST_UNAVAILABLE_IN_PACKAGING_RUNTIME",
-    "performance_execution": "DEFERRED_UNTIL_IMPLEMENTATION"
-  }
+  ]
 }
-

@@ -14,13 +14,16 @@ No performance claim may appear in release material until this protocol has prod
 | Scenario | Streaming operation | Traditional operation |
 | --- | --- | --- |
 | Construction | stream_division(p, q) | Not presented as a speed comparison |
-| First digit | stream_division(p, q).take(1) | expand_division(p, q, max_frac=1) |
-| Prefix | stream_division(p, q).take(n) | expand_division(p, q, max_frac=n) |
+| First digit | stream_division(p, q).take(1) | canonical_expansion(p, q), then materialize one digit |
+| Prefix | stream_division(p, q).take(n) | canonical_expansion(p, q), then materialize n logical digits |
 | Complete canonical result | stream_division(p, q).resolve() | canonical_expansion(p, q) |
 | Witness creation | division_witness(p, q) | Reported separately; no traditional equivalent |
 | Witness validation | validate_division_witness(w) | Reported separately; no traditional equivalent |
 
-The direct expand_division comparison applies to integer denominators, matching that API's established domain. Gaussian-denominator complete-resolution cases use canonical_expansion as the traditional comparator.
+The traditional prefix comparator resolves the existing canonical compact
+representation before expanding its prefix/period to the same requested logical
+digit count. This gives an equal-output comparison for integer and Gaussian
+denominators.
 
 ## Required datasets
 

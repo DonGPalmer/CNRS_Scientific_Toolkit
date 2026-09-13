@@ -152,6 +152,10 @@ def test_limit_is_honest_and_has_no_witness() -> None:
     with pytest.raises(DivisionSearchLimitError):
         division_witness(1, 2, max_steps=1)
 
+    finite_limit = stream_division(10**30 + 1).resolve(max_steps=1)
+    assert finite_limit.status is DivisionStreamStatus.LIMIT_REACHED
+    assert not finite_limit.resolved
+
 
 def test_witness_round_trip_determinism_and_tamper_rejection() -> None:
     first = division_witness((3, 2), (1, -2))

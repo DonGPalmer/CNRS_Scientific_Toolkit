@@ -1,9 +1,11 @@
 # Lean formalization alignment — v0.14.0 candidate note
 
-The v0.14.0 streaming-division work does not enlarge the governed Lean proof
-boundary. It must map Python recurrence and witness fields to existing formal
-concepts where available and label any unformalized runtime property as
-computationally verified. The released capstone alignment record follows.
+The v0.14.0 streaming-division implementation does not enlarge the governed
+Lean proof boundary. Python recurrence and witness fields are aligned with
+existing Gaussian-rational periodicity and canonical-normalization concepts
+where available. Lazy iteration, JSON serialization, benchmark behavior, and
+Python witness validation are computationally verified runtime properties, not
+Lean theorems. The released capstone alignment record follows.
 
 # Lean Formalization Alignment — CNRS-LEAN-CAPSTONE
 
@@ -73,4 +75,3 @@ The capstone does not prove arbitrary infinite serialization, ordinary-complex
 analytic convergence, analytic continuation or path recovery, unequal-branch
 arithmetic, unrestricted streaming multiplication/division, or a universal
 complex-representation theorem.
-

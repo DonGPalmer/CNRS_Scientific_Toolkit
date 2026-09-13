@@ -1,7 +1,7 @@
-# v0.14.0 candidate — Streaming Division and Formal–Runtime Witness Alignment
+# v0.14.0 implementation candidate — Streaming Division and Formal–Runtime Witness Alignment
 
-- Frozen the v0.14.0 architecture, API contracts, claim boundaries, acceptance
-  tests, and performance-comparison protocol before implementation.
+- Implemented the previously frozen architecture, API contracts, claim
+  boundaries, acceptance tests, and performance-comparison protocol.
 - Targeted exact Gaussian-rational lazy digit streaming with replayable iteration.
 - Defined bounded resolution states: terminating, eventually periodic, and
   limit reached.
@@ -9,8 +9,11 @@
 - Preserved all v0.13.1 materialized division interfaces.
 - Prohibited treating a search limit as proof of aperiodicity.
 - Added candidate acceptance and benchmark harnesses.
-- Implementation, final test counts, distribution identities, DOI, and measured
-  performance results remain pending.
+- Local validation: `1214 passed, 4 skipped, 0 failed`, 922 warnings; dedicated
+  acceptance: `19 passed`; alignment, distributions, installation smoke tests,
+  and the 30-case benchmark pass.
+- GitHub CI, independent audit, final public commit, release DOI, merge, tag,
+  and publication remain pending.
 
 See `RELEASE_NOTES_v0.14.0.md`.
 
@@ -179,4 +182,3 @@ The special `1/5` behavior is now a corollary of the general Gaussian-ideal impl
 - Added `cnrs.hybrid` with `CoefficientCodec` and `HybridSeries`, transporting canonical CNRS-A coefficient representations into the CNRS-H Hurwitz-series carrier.
 - Added theorem-aligned tests for ultrametricity, first-difference isometry, coefficientwise convergence, Hurwitz-product transport, Leibniz, integration, exponential eigenfunctions, and deterministic serialization.
 - Included both theorem papers and independent verification scripts under `docs/theory/` and `docs/audits/scripts/`.
-

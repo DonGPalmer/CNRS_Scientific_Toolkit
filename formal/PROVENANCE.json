@@ -1,6 +1,6 @@
 {
-  "schema": "cnrs-toolkit-lean-provenance-v3",
-  "status_date": "2026-09-12",
+  "schema": "cnrs-toolkit-lean-provenance-v4",
+  "status_date": "2026-09-13",
   "documentation_state": "CNRS-LEAN-CAPSTONE governed and GREEN",
   "toolchain": {
     "lean": "4.33.0",
@@ -63,9 +63,48 @@
   ],
   "integration": {
     "lean_source_vendored_for_release": true,
-    "python_runtime_modified": false,
-    "release_target": "v0.13.1",
-    "release_status": "released",
+    "python_runtime_modified": true,
+    "release_target": "v0.14.0",
+    "release_status": "AMBER repair complete; exact-head CI GREEN; independent re-audit pending",
+    "initial_candidate": {
+      "commit": "a65c5834e56ed2bd28a8683c4a9e2017bb64157e",
+      "tree": "9eb4ed67891405fa8824d933c883e51205f152a8",
+      "python_workflow_run": 34722404539,
+      "python_conclusion": "success",
+      "lean_workflow_run": 34722404541,
+      "lean_conclusion": "success",
+      "lean_jobs": [
+        "source-identity",
+        "CNRSCore",
+        "CnrsQ2",
+        "CNRSArithmetic",
+        "CNRSIntegration",
+        "CNRSProblem1",
+        "CNRSProblem2"
+      ],
+      "audit_disposition": "AMBER — release hold; metadata, CI evidence, and auditable distributions required"
+    },
+    "exact_head_repair_candidate": {
+      "commit": "b4382510d724bf92bc26aedb4fb52da31b627af3",
+      "tree": "c4fde4738adc20a8f46d121bb81fa6ed93859bbd",
+      "python_distribution_workflow_run": 34733222919,
+      "python_distribution_conclusion": "success",
+      "lean_workflow_run": 34733222954,
+      "lean_conclusion": "success",
+      "lean_successful_jobs": 7,
+      "distribution_artifact_id": 10309848481,
+      "distribution_artifact_name": "cnrs-v0.14.0-distributions-b4382510d724bf92bc26aedb4fb52da31b627af3",
+      "distribution_artifact_size_bytes": 573636,
+      "distribution_artifact_digest": "sha256:dff8c3306e2350ddbd7f40cfa7262616c07c8e08cfe99a58510ed3b0fccf238c",
+      "distribution_artifact_expires": "2026-12-12",
+      "wheel_sha256": "f7bf8d4862e401c93437658f8a279a1340ea126e4aa707fbffb8a645fd259fde",
+      "sdist_sha256": "bee726e4c05db1f1c05e864a254170a54aa6fecf199fe990e627488d4f64dd29",
+      "implementation_bytes_changed_from_initial_candidate": false
+    },
+    "python_addition": "exact Gaussian-rational streaming division and deterministic witness validation",
+    "formal_boundary_changed": false,
+    "measured_source_commit": "939bbecf4cc6fa76b25c543c5459634cdf9f0a86",
+    "measured_source_tree": "e670990ee0783a254011af803d0e7c0ebb2566c7",
     "next_formal_campaign": "P3-L1 finite-support convolution multiplication with evaluation theorem"
   },
   "public_release": {
