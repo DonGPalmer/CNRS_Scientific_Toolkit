@@ -83,11 +83,11 @@
   "files": [
     {
       "path": ".github/workflows/lean.yml",
-      "sha256": "c9a6f17f093aca2d44e7700b7dfddf518cce4e1e7e91c7d52819f3b0287171a0"
+      "sha256": "ccdf7b9eaa819d729294c0bfd139e216f20144bb6e9bd9deaad7ee78aa900880"
     },
     {
       "path": ".github/workflows/tests.yml",
-      "sha256": "e1c7b03f39254bc5c8e1461a163e7fba07906fc2197376c76c305dbe133113e3"
+      "sha256": "b497018174262345e600657ed1f9c34bbf0868b0d81f70cd0861f61da709e7aa"
     },
     {
       "path": "CITATION.cff",

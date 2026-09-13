@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
@@ -22,6 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
@@ -47,7 +51,7 @@ jobs:
       - name: Upload auditable v0.14.0 distributions
         uses: actions/upload-artifact@v4
         with:
-          name: cnrs-v0.14.0-distributions-${{ github.sha }}
+          name: cnrs-v0.14.0-distributions-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
             dist/cnrs-0.14.0-py3-none-any.whl
             dist/cnrs-0.14.0.tar.gz
