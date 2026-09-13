@@ -1,4 +1,4 @@
-# v0.14.0 implementation candidate — Streaming Division and Formal–Runtime Witness Alignment
+# v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment
 
 - Implemented the previously frozen architecture, API contracts, claim
   boundaries, acceptance tests, and performance-comparison protocol.
@@ -8,12 +8,12 @@
 - Defined deterministic division witnesses and independent witness validation.
 - Preserved all v0.13.1 materialized division interfaces.
 - Prohibited treating a search limit as proof of aperiodicity.
-- Added candidate acceptance and benchmark harnesses.
+- Added governed acceptance and benchmark harnesses.
 - Local validation: `1214 passed, 4 skipped, 0 failed`, 922 warnings; dedicated
   acceptance: `19 passed`; alignment, distributions, installation smoke tests,
   and the 30-case benchmark pass.
-- GitHub CI, independent audit, final public commit, release DOI, merge, tag,
-  and publication remain pending.
+- Independent audit, governed merge, and post-merge CI are GREEN. Tag, GitHub
+  Release, release assets, and Zenodo publication remain pending.
 
 See `RELEASE_NOTES_v0.14.0.md`.
 

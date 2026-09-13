@@ -1,7 +1,7 @@
 {
   "schema": "cnrs-toolkit-v014-candidate-manifest-v1",
   "release": "0.14.0",
-  "status": "AMBER_REPAIR_COMPLETE_EVIDENCE_SYNC_PENDING_FINAL_CI",
+  "status": "GOVERNED_MERGE_GREEN_RELEASE_FINALIZATION_CI_PENDING",
   "status_date": "2026-09-13",
   "baseline": {
     "commit": "b0b8f594d5b66d59151c0d266ba6200e44513df4",
@@ -37,6 +37,23 @@
       "expires": "2026-12-12"
     },
     "implementation_bytes_changed_from_initial_candidate": false
+  },
+  "certified_candidate": {
+    "commit": "cd0d590818de3f2db615f2269276ede53527827d",
+    "tree": "18e171d6a8e5a3a0b5a69614d05950fe0144f2ac",
+    "python_distribution_workflow_run": 34733492839,
+    "lean_workflow_run": 34733492819,
+    "distribution_artifact_id": 10310278319,
+    "audit_disposition": "GREEN — ready for governed merge"
+  },
+  "governed_merge": {
+    "commit": "511526fdd60cfa2967d0307fe16ba4131785c0b3",
+    "python_distribution_workflow_run": 34734237160,
+    "python_distribution_conclusion": "success",
+    "lean_workflow_run": 34734237144,
+    "lean_conclusion": "success",
+    "lean_successful_jobs": 7,
+    "release_date": "2026-09-12"
   },
   "implementation": {
     "modules": [
@@ -99,10 +116,8 @@
     }
   ],
   "pending": [
-    "evidence-synchronized-head Python/distribution CI",
-    "evidence-synchronized-head seven-job Lean CI",
-    "independent GREEN re-audit",
-    "governed merge",
+    "release-finalization Python/distribution CI",
+    "release-finalization seven-job Lean CI",
     "tag",
     "GitHub Release",
     "Zenodo publication"
@@ -118,27 +133,27 @@
     },
     {
       "path": "CITATION.cff",
-      "sha256": "3dfbad44318d9ea5172a2a2ab6c78cf340f07900bacf7d50d515aa005d9a5e43"
+      "sha256": "25b9a1d97f08b68910a43e9efc3820d581abcf564864d827af6e873dc8d6a088"
     },
     {
       "path": "README.md",
-      "sha256": "8c6280336a0920ed7c597b2c4de091565caf52e62ef55a1c446b6059ad62ad48"
+      "sha256": "77654ab5d36e7a3963d48758777454876ea9cb506c7892c8aa308634aded8527"
     },
     {
       "path": "RELEASE_NOTES.md",
-      "sha256": "d9b7c00127465a348652ba6385939daee02b4711b2fbd3dc37731aca958f3c44"
+      "sha256": "85378e864737a3cc0f4f3034f697c3e6acf507323d1c01db5c9c577dd6062faf"
     },
     {
       "path": "RELEASE_NOTES_v0.14.0.md",
-      "sha256": "dc0d2389563932b027d12deb9f4697f4f2cd03068dc225f303eab1487055334f"
+      "sha256": "b88f79a7897d210a3d0ff1f2b43554a0af3cb4eed2c8528625c5bc0541751028"
     },
     {
       "path": "SOURCE_INDEX.txt",
-      "sha256": "dee7cf80b668edce622476090c303603b6499f0c573491acf09369a44390a9ec"
+      "sha256": "3914577a2403a66eee62e857c808a1682c8f6094f27508e91273558b8706b0ee"
     },
     {
       "path": "V014_AUDIT_REPAIR_RECORD_2026-09-13.md",
-      "sha256": "847ab8f9e7e7c1d8c773277767af60b82142cfcab1b89fd80519624aa5728ab3"
+      "sha256": "b6c94180abe3226c253dfb640b3fef9e4fca9f553f2dc3036335b7eb2221e744"
     },
     {
       "path": "V014_FREEZE_AMENDMENT_2026-09-12.md",
@@ -150,7 +165,11 @@
     },
     {
       "path": "V014_RELEASE_ACTIVATION_CHECKLIST.md",
-      "sha256": "f83f1760ba3385f4e34a05567b38ad1081867df7984f23078457eea109e0bf2e"
+      "sha256": "716e16098213269794a72551d53cf91a72a48179f7fae5eb042d7a729431ec23"
+    },
+    {
+      "path": "V014_RELEASE_FINALIZATION_RECORD_2026-09-12.md",
+      "sha256": "3005f095d20a3da4a0090fa5506bf221f8646a4edb57246fc837a08330b20f8a"
     },
     {
       "path": "acceptance/v014/README.md",
@@ -178,35 +197,35 @@
     },
     {
       "path": "docs/API_STATUS.md",
-      "sha256": "ccae56697d055f90a853fc3804decffe29a133ebdd62d815cee17e0cc7043399"
+      "sha256": "832e276012db32700788e1a63b02c2438452319f27b5d1863bfdcf21cb2f1deb"
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "sha256": "80bb6955452f8691f1ae02437896277fb471b89307501876351013bb4d3e4f0b"
+      "sha256": "5d5104b4adeee8bff4397ef3f4d3a532fbafe1764d13486bf4515634e9689b46"
     },
     {
       "path": "docs/CLAIM_STATUS.md",
-      "sha256": "22bd010564c9cf4526383cbe925468c0be540ec167af75b6889c3f4abf79b572"
+      "sha256": "664acb943794635593d011ec90f28039860e03f57f79ff79dc8faee59db98196"
     },
     {
       "path": "docs/CNRS_DIVISION_STATUS.md",
-      "sha256": "0426fe16d924307040466bc0aeceb8581cfd289c21fe65853aa0f9155a4aaabb"
+      "sha256": "de00afbaad534994e2a65ffc202463fb32fc217cc6227476143286f4c61f80c6"
     },
     {
       "path": "docs/CNRS_DIVISION_STRUCTURED_EXPANSIONS.md",
-      "sha256": "000fd64c72ce2e93c4e61b0688345df2d9c71037f257e75f4055c95a2fda5cf5"
+      "sha256": "5ead8cc409d12cd7c60d1b73439175474db55abe4d82ddd7612c4c0e9f3291c9"
     },
     {
       "path": "docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md",
-      "sha256": "ccce244c1284a360881785e427f46562070dab5d082e4b129cde82a0518b544d"
+      "sha256": "e0627d8f26c5c0bab811823875d615aa2ba45d2811c034e6f8e4d2804b8a8751"
     },
     {
       "path": "docs/LEAN_FORMALIZATION_ALIGNMENT.md",
-      "sha256": "d609926143b1d1de1a53d2d7f8b5c1ca2eb90c6488a264769c9dea4197b07d74"
+      "sha256": "c4cdc27df8c33bbb2b711fc47bd0c4e166a5856a89b15a94298f0fda5bc1e617"
     },
     {
       "path": "docs/TEST_STATUS.md",
-      "sha256": "4328df544df00f14a089f5fd38847960ce289e8985bdbf669e26fe93c1183cfa"
+      "sha256": "4d139b6be85b8be7f6fe31b20b6f7c6a951e7ee730a99fc6bf4ed66d12484d11"
     },
     {
       "path": "docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md",
@@ -218,7 +237,7 @@
     },
     {
       "path": "formal/PROVENANCE.json",
-      "sha256": "35d783a2273a0013eed2b808443d37a4a7b3734300409d353f9ff6d8d5b57885"
+      "sha256": "4df8e5504c0705d7ef9bc010c9a314c279cb4a137e2cfae0ef7863d1e85d09f7"
     },
     {
       "path": "pyproject.toml",

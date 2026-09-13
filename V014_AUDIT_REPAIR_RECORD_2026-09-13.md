@@ -65,3 +65,15 @@ Its source distribution is 324,753 bytes with SHA-256
 The streaming implementation module hashes are unchanged from the initial
 candidate. The remaining candidate changes are governance records and workflow
 binding needed to make exact artifacts auditable.
+
+## Final re-audit and merge disposition
+
+Independent re-audit returned GREEN for commit
+`cd0d590818de3f2db615f2269276ede53527827d`, tree
+`18e171d6a8e5a3a0b5a69614d05950fe0144f2ac`, and retained artifact
+`10310278319`.
+
+The authorized governed merge produced commit
+`511526fdd60cfa2967d0307fe16ba4131785c0b3`. Post-merge
+Python/distribution run `34734237160` and Lean run `34734237144` succeeded.
+The release date `2026-09-12` was explicitly authorized for finalization.

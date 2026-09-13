@@ -1,11 +1,11 @@
-# CNRS Scientific Toolkit Architecture — v0.14.0 implementation candidate
+# CNRS Scientific Toolkit Architecture — v0.14.0
 
-v0.14.0 adds two implemented candidate layers above the existing exact Gaussian arithmetic:
+v0.14.0 adds two layers above the existing exact Gaussian arithmetic:
 `cnrs.streaming_division` owns lazy replayable iteration and bounded
 resolution; `cnrs.witnesses` owns stable serialization and independent
 revalidation. Existing materialized division and canonical-periodic modules
-remain authoritative compatibility and parity layers. Local acceptance and
-regression gates pass; governed release remains pending.
+remain authoritative compatibility and parity layers. Acceptance, regression,
+independent audit, governed merge, and post-merge CI gates pass.
 
 See `V014_ARCHITECTURE_FREEZE.md` for the frozen component and dependency
 boundary. The historical architecture record follows.

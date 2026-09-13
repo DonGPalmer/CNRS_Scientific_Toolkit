@@ -1,6 +1,6 @@
-# CNRS theorem-alignment registry — v0.14.0 candidate note
+# CNRS theorem-alignment registry — v0.14.0 note
 
-The v0.14.0 Python streaming-division candidate has exact canonical parity and
+The v0.14.0 Python streaming-division implementation has exact canonical parity and
 witness-revalidation evidence over its acceptance domain. Its recurrence is
 aligned with the Gaussian-rational eventual-periodicity and canonical
 normalization contracts. The Python implementation remains independently

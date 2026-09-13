@@ -1,13 +1,13 @@
-# Claim Status — v0.14.0 candidate
+# Claim Status — v0.14.0
 
-v0.14.0 is an implemented but not yet released candidate for exact
-Gaussian-rational streaming division. Local regression, acceptance, alignment,
-benchmark, build, and installation gates pass. No universal timing advantage,
+v0.14.0 provides exact Gaussian-rational streaming division. Regression,
+acceptance, alignment, benchmark, build, installation, audit, merge, and
+post-merge CI gates pass. No universal timing advantage,
 universal search bound, arbitrary infinite-stream closure, or Lean verification
 of the Python runtime is claimed. `LIMIT_REACHED` is not a mathematical
 nonperiodicity result.
 
-Within the candidate, lazy replay, bounded resolution, exact canonical parity,
+Within v0.14.0, lazy replay, bounded resolution, exact canonical parity,
 and deterministic witness revalidation are computationally verified over the
 frozen acceptance domain. The Python routines are theorem-aligned, not
 Lean-extracted or Lean-verified.

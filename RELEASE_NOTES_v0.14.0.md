@@ -1,12 +1,13 @@
 # v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment
 
-**Status:** evidence-synchronized candidate — local and exact-head GitHub CI GREEN; independent re-audit pending
+**Status:** governed merge complete; post-merge CI GREEN; tag and publication pending
+**Release date:** 2026-09-12
 **Architecture freeze:** 2026-09-12  
 **Baseline:** v0.13.1, commit `e7f8424a967292a36643bb5fa8206ccb1d3f8fcd`
 
 ## Purpose
 
-v0.14.0 is the first Toolkit candidate with lazy, replayable division
+v0.14.0 is the first Toolkit release with lazy, replayable division
 streams for exact Gaussian-rational values. It also introduces explicit bounded
 resolution records and deterministic witnesses connecting runtime recurrence
 states to the established canonical eventually-periodic representation.
@@ -42,7 +43,7 @@ projects. The Python implementation is independently written and must be
 described as theorem-aligned and computationally tested, not Lean-extracted or
 formally verified.
 
-## Local candidate validation
+## Release validation
 
 - historical Python regression suite: `1214 passed, 4 skipped, 0 failed`,
   with 922 retained warnings;
@@ -83,11 +84,13 @@ and a full-resolution median ratio of 0.973. Median peak-memory ratios fall to
 0.721 at 1,000 digits. These are measurements from the recorded environment,
 not universal performance guarantees. See `docs/V014_PERFORMANCE_RESULTS.md`.
 
-## Release gates still pending
+## Governance and publication status
 
-- GREEN CI on the evidence-synchronized candidate head;
-- independent audit of the exact candidate commit and artifacts;
-- governed merge, tag, GitHub Release, and Zenodo publication.
+- independently audited candidate `cd0d590818de3f2db615f2269276ede53527827d`: GREEN;
+- governed merge commit `511526fdd60cfa2967d0307fe16ba4131785c0b3`;
+- post-merge Python/distribution run `34734237160`: SUCCESS;
+- post-merge seven-job Lean run `34734237144`: SUCCESS;
+- tag, GitHub Release, release-asset publication, and Zenodo verification pending.
 
-Release date, public DOI, and final audited commit remain unset until those
-events exist.
+The release uses the Toolkit concept DOI `10.5281/zenodo.20574852`. The Zenodo
+version DOI will be recorded after publication.

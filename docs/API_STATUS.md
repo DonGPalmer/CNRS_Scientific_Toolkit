@@ -1,10 +1,9 @@
-# API Status — v0.14.0 candidate
+# API Status — v0.14.0
 
-The v0.13.1 interfaces below remain the current released API. The implemented
-v0.14.0 candidate additions are `cnrs.streaming_division` and
-`cnrs.witnesses`. They become released interfaces only after governed release.
+The v0.13.1 interfaces below remain supported. The v0.14.0 additions are
+`cnrs.streaming_division` and `cnrs.witnesses`.
 
-Candidate public additions: `stream_division`, `CnrsDivisionStream`,
+Public additions: `stream_division`, `CnrsDivisionStream`,
 `DivisionResolution`, `DivisionStreamStatus`, `CycleWitness`,
 `DivisionWitness`, `division_witness`, and
 `validate_division_witness`. See `V014_STREAMING_DIVISION_API_CONTRACT.md`.

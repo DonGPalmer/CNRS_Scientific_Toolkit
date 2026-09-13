@@ -1,6 +1,6 @@
-# CNRS Scientific Toolkit v0.14.0 implementation-candidate source index
-# Generated from the candidate Git index on 2026-09-12.
-# Files listed: 432
+# CNRS Scientific Toolkit v0.14.0 release-finalization source index
+# Release date: 2026-09-12
+# Files listed: 433
 # Regression: 1214 passed, 4 skipped, 0 failed, 922 warnings.
 # Dedicated v0.14.0 acceptance: 19 passed.
 # Lean alignment guard: PASS; six projects and exactly 79 Lean files.
@@ -13,8 +13,12 @@
 # Exact-head repair tree: c4fde4738adc20a8f46d121bb81fa6ed93859bbd
 # Python/distribution run 34733222919: SUCCESS; artifact 10309848481.
 # Lean run 34733222954: SUCCESS; source identity plus all six projects.
-# Evidence-synchronized head CI and independent re-audit remain pending.
-# Regenerate from the exact public candidate with: git ls-files | LC_ALL=C sort
+# Independent re-audit of cd0d590818de3f2db615f2269276ede53527827d: GREEN.
+# Governed merge: 511526fdd60cfa2967d0307fe16ba4131785c0b3
+# Post-merge Python/distribution run 34734237160: SUCCESS.
+# Post-merge Lean run 34734237144: SUCCESS; source identity plus all six projects.
+# Finalization CI, tag, GitHub Release, and Zenodo verification remain pending.
+# Regenerate from the exact release-finalization Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
 .github/workflows/build-lean433-offline-runtime-v4.yml
@@ -39,6 +43,7 @@ V014_FREEZE_AMENDMENT_2026-09-12.md
 V014_FREEZE_MANIFEST.json
 V014_INSTALLATION_AND_FREEZE_RECORD.md
 V014_RELEASE_ACTIVATION_CHECKLIST.md
+V014_RELEASE_FINALIZATION_RECORD_2026-09-12.md
 V014_SHA256SUMS.txt
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py

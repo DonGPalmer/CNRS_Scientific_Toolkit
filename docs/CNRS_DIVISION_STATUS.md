@@ -1,11 +1,11 @@
-# CNRS-A division status — v0.14.0 candidate
+# CNRS-A division status — v0.14.0
 
-The v0.14.0 implementation candidate preserves the released materialized
+The v0.14.0 implementation preserves the materialized
 classification and adds a separate
 stream-resolution status: terminating, eventually periodic, or limit reached.
 Limit reached reports only exhaustion of the caller's bound.
 
-The candidate implementation is `cnrs.streaming_division`. It accepts exact
+The streaming implementation is `cnrs.streaming_division`. It accepts exact
 integer or Gaussian-integer numerator/denominator pairs, normalizes them in
 `Z[i]`, and emits digits without floating-point conversion.
 

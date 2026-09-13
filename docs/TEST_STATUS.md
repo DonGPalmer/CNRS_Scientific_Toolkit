@@ -1,6 +1,6 @@
-# Test Status — v0.14.0 candidate
+# Test Status — v0.14.0
 
-Local candidate validation on 2026-09-12:
+Release validation on 2026-09-12:
 
 - regression suite: `1214 passed, 4 skipped, 0 failed`, 922 warnings;
 - v0.14.0 acceptance suite: `19 passed`;
@@ -9,8 +9,9 @@ Local candidate validation on 2026-09-12:
 - clean installation smoke tests for both distributions: PASS;
 - 30-case equal-output timing/memory benchmark: PASS.
 
-Exact-head repair validation is GREEN: Python/distribution run `34733222919`
-and seven-job Lean run `34733222954`. Independent re-audit remains pending.
+The independently audited head `cd0d590818de3f2db615f2269276ede53527827d`
+is GREEN. Post-merge Python/distribution run `34734237160` and seven-job Lean
+run `34734237144` are SUCCESS.
 The v0.13.1 release baseline follows unchanged.
 
 # Test Status — v0.13.1 Release

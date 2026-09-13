@@ -1,4 +1,4 @@
-# Lean formalization alignment — v0.14.0 candidate note
+# Lean formalization alignment — v0.14.0 note
 
 The v0.14.0 streaming-division implementation does not enlarge the governed
 Lean proof boundary. Python recurrence and witness fields are aligned with

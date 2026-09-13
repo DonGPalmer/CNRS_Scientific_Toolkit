@@ -1,13 +1,13 @@
 # CNRS Scientific Toolkit
 
-## v0.14.0 candidate — Streaming Division and Formal–Runtime Witness Alignment
+## v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment
 
-**Status: implementation candidate; local Python, acceptance, alignment, benchmark,
-and distribution gates GREEN; exact-head GitHub CI GREEN; independent re-audit pending.**
+**Status: governed merge and post-merge validation GREEN; release finalization
+dated 2026-09-12; tag and publication pending.**
 
 CNRS means **Complex Numeric Representation System**.
 
-The v0.14.0 candidate adds exact Gaussian-rational streaming division,
+Version 0.14.0 adds exact Gaussian-rational streaming division,
 bounded state resolution, and deterministic division witnesses. The existing
 materialized division API remains supported without signature changes.
 
@@ -31,15 +31,16 @@ See:
 - `docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md`;
 - `RELEASE_NOTES_v0.14.0.md`.
 
-Local candidate validation records `1214 passed, 4 skipped, 0 failed` with
+Release validation records `1214 passed, 4 skipped, 0 failed` with
 922 warnings in the historical regression suite, plus `19 passed` in the
 v0.14.0 acceptance suite. The source-alignment guard and clean wheel/source
 installation smoke tests pass. Performance results are reported as
 environment-specific measurements in
 `docs/V014_PERFORMANCE_RESULTS.md`; no universal speed claim is made.
 
-GitHub CI and an independent audit of the uploaded candidate remain required
-before governed merge or release.
+Independent audit, governed merge, and post-merge GitHub CI are GREEN. The
+remaining publication actions are the `v0.14.0` tag, GitHub Release, release
+assets, and Zenodo verification.
 
 ## Release history
 

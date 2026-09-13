@@ -65,7 +65,7 @@
     "lean_source_vendored_for_release": true,
     "python_runtime_modified": true,
     "release_target": "v0.14.0",
-    "release_status": "AMBER repair complete; exact-head CI GREEN; independent re-audit pending",
+    "release_status": "independent re-audit GREEN; governed merge and post-merge CI GREEN; tag and publication pending",
     "initial_candidate": {
       "commit": "a65c5834e56ed2bd28a8683c4a9e2017bb64157e",
       "tree": "9eb4ed67891405fa8824d933c883e51205f152a8",
@@ -100,6 +100,23 @@
       "wheel_sha256": "f7bf8d4862e401c93437658f8a279a1340ea126e4aa707fbffb8a645fd259fde",
       "sdist_sha256": "bee726e4c05db1f1c05e864a254170a54aa6fecf199fe990e627488d4f64dd29",
       "implementation_bytes_changed_from_initial_candidate": false
+    },
+    "certified_candidate": {
+      "commit": "cd0d590818de3f2db615f2269276ede53527827d",
+      "tree": "18e171d6a8e5a3a0b5a69614d05950fe0144f2ac",
+      "python_distribution_workflow_run": 34733492839,
+      "lean_workflow_run": 34733492819,
+      "distribution_artifact_id": 10310278319,
+      "audit_disposition": "GREEN — ready for governed merge"
+    },
+    "governed_merge": {
+      "commit": "511526fdd60cfa2967d0307fe16ba4131785c0b3",
+      "python_distribution_workflow_run": 34734237160,
+      "python_distribution_conclusion": "success",
+      "lean_workflow_run": 34734237144,
+      "lean_conclusion": "success",
+      "lean_successful_jobs": 7,
+      "release_date": "2026-09-12"
     },
     "python_addition": "exact Gaussian-rational streaming division and deterministic witness validation",
     "formal_boundary_changed": false,

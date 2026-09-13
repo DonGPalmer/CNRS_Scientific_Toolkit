@@ -1,6 +1,6 @@
 # v0.14.0 release activation checklist
 
-Status: AMBER REPAIR COMPLETE; EVIDENCE-SYNCHRONIZED CI/RE-AUDIT HOLD
+Status: GOVERNED MERGE AND POST-MERGE CI GREEN; FINALIZATION CI PENDING
 
 ## Documents supplied in this package
 
@@ -50,15 +50,22 @@ The premature `date-released` field has been removed. Exact-head repair commit
 candidate commit, and candidate tree. Its archive digest is
 `sha256:dff8c3306e2350ddbd7f40cfa7262616c07c8e08cfe99a58510ed3b0fccf238c`.
 
-Evidence-synchronized-head CI, final audit, GitHub Release URL, actual release
-date, and Zenodo version DOI remain pending.
+The synchronized candidate at commit
+`cd0d590818de3f2db615f2269276ede53527827d`, tree
+`18e171d6a8e5a3a0b5a69614d05950fe0144f2ac`, passed independent re-audit with
+artifact `10310278319`. Governed merge commit
+`511526fdd60cfa2967d0307fe16ba4131785c0b3` is on `main`. Post-merge
+Python/distribution run `34734237160` and seven-job Lean run `34734237144`
+both succeeded. Release date `2026-09-12` is authorized.
+
+Finalization CI, tag, GitHub Release, attached release assets, and Zenodo
+version DOI verification remain pending.
 
 ## Release sequence
 
-1. Run Python/distribution and seven-job Lean CI on the repair commit.
-2. Synchronize the repair commit/tree, workflow runs, and artifact identity.
-3. Run CI on the evidence-synchronized immutable candidate.
-4. Obtain a GREEN independent re-audit of that candidate and artifact.
-5. Governed merge and post-merge verification.
-6. Add the actual release date, verify, tag, publish the GitHub Release assets,
-   and verify Zenodo publication.
+1. Run Python/distribution and seven-job Lean CI on the release-finalization commit.
+2. Verify the finalization commit/tree, workflow runs, and exact distribution artifact.
+3. Create tag `v0.14.0` at the verified finalization commit.
+4. Publish the GitHub Release using the approved release notes.
+5. Attach the exact finalization wheel and source distribution.
+6. Verify Zenodo publication and record the version DOI.
