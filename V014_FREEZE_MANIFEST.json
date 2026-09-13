@@ -1,8 +1,8 @@
 {
   "schema": "cnrs-toolkit-v014-candidate-manifest-v1",
   "release": "0.14.0",
-  "status": "IMPLEMENTATION_CANDIDATE_LOCAL_GREEN",
-  "status_date": "2026-09-12",
+  "status": "AMBER_EVIDENCE_REPAIR_AUTHORIZED",
+  "status_date": "2026-09-13",
   "baseline": {
     "commit": "b0b8f594d5b66d59151c0d266ba6200e44513df4",
     "tree": "d615f6f9633f8cb0a1242de9cb1838605f0d387a"
@@ -10,6 +10,16 @@
   "measured_source": {
     "commit": "939bbecf4cc6fa76b25c543c5459634cdf9f0a86",
     "tree": "e670990ee0783a254011af803d0e7c0ebb2566c7"
+  },
+  "initial_public_candidate": {
+    "commit": "a65c5834e56ed2bd28a8683c4a9e2017bb64157e",
+    "tree": "9eb4ed67891405fa8824d933c883e51205f152a8",
+    "python_workflow_run": 34722404539,
+    "python_conclusion": "success",
+    "lean_workflow_run": 34722404541,
+    "lean_conclusion": "success",
+    "lean_successful_jobs": 7,
+    "audit_disposition": "AMBER — metadata, evidence, and auditable-distribution repair required"
   },
   "implementation": {
     "modules": [
@@ -60,9 +70,11 @@
     }
   ],
   "pending": [
-    "GitHub Python CI",
-    "GitHub six-project Lean matrix",
-    "independent audit",
+    "repair-candidate Python and distribution CI",
+    "repair-candidate seven-job Lean CI",
+    "retained distribution artifact identity",
+    "evidence synchronization",
+    "independent GREEN re-audit",
     "governed merge",
     "tag",
     "GitHub Release",
@@ -75,11 +87,11 @@
     },
     {
       "path": ".github/workflows/tests.yml",
-      "sha256": "2b5f2cf222a515d60b48c600f04382aa374fb9a52d1ed73bd54375a1a533e35a"
+      "sha256": "e1c7b03f39254bc5c8e1461a163e7fba07906fc2197376c76c305dbe133113e3"
     },
     {
       "path": "CITATION.cff",
-      "sha256": "7deaac2f3d7bf4f8c6f8064b07ac3212115b46431b575694bafa622b4d5df9a7"
+      "sha256": "3dfbad44318d9ea5172a2a2ab6c78cf340f07900bacf7d50d515aa005d9a5e43"
     },
     {
       "path": "README.md",
@@ -95,7 +107,11 @@
     },
     {
       "path": "SOURCE_INDEX.txt",
-      "sha256": "a52b08363938a68940e5cf04a688cba0fb9d1bc394c64eb807a5edf06281593a"
+      "sha256": "8347224dd51353f307fd77e5d99261a56b38fe30f530345bd58d93286774c592"
+    },
+    {
+      "path": "V014_AUDIT_REPAIR_RECORD_2026-09-13.md",
+      "sha256": "5dd0b3b89d29401f1d170924270fa3a21560671dbc9cc08707114ea9e7319805"
     },
     {
       "path": "V014_FREEZE_AMENDMENT_2026-09-12.md",
@@ -107,7 +123,7 @@
     },
     {
       "path": "V014_RELEASE_ACTIVATION_CHECKLIST.md",
-      "sha256": "62f724d9d53ea277e6ef4c506dd28646b23a3e63ec0580ba0c7b23b231731bc9"
+      "sha256": "e08684e10a3480623b79a968adc2727c9109a85e5ec2bc46532f38fadb9fafd5"
     },
     {
       "path": "acceptance/v014/README.md",
@@ -175,7 +191,7 @@
     },
     {
       "path": "formal/PROVENANCE.json",
-      "sha256": "015eee3965b2e1534e8536619a8d990689dff606a40b83351d3e456750e04a3f"
+      "sha256": "1d2579c9503022066ecfefbce22f3ffbece29a3188a81bac4ce78b50c6606f4d"
     },
     {
       "path": "pyproject.toml",

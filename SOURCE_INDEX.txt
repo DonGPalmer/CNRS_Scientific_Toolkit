@@ -1,10 +1,15 @@
 # CNRS Scientific Toolkit v0.14.0 implementation-candidate source index
 # Generated from the candidate Git index on 2026-09-12.
-# Files listed: 431
+# Files listed: 432
 # Regression: 1214 passed, 4 skipped, 0 failed, 922 warnings.
 # Dedicated v0.14.0 acceptance: 19 passed.
 # Lean alignment guard: PASS; six projects and exactly 79 Lean files.
-# GitHub CI and independent audit identities remain pending.
+# Initial candidate: a65c5834e56ed2bd28a8683c4a9e2017bb64157e
+# Initial candidate tree: 9eb4ed67891405fa8824d933c883e51205f152a8
+# Python run 34722404539: SUCCESS.
+# Lean run 34722404541: SUCCESS; source identity plus all six projects.
+# Independent audit: AMBER on 2026-09-13; metadata/evidence/artifact repair authorized.
+# Repair-candidate CI, artifact, and final audit identities remain pending.
 # Regenerate from the exact public candidate with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -25,6 +30,7 @@ RELEASE_NOTES_v0.13.0.md
 RELEASE_NOTES_v0.13.1.md
 RELEASE_NOTES_v0.14.0.md
 SOURCE_INDEX.txt
+V014_AUDIT_REPAIR_RECORD_2026-09-13.md
 V014_FREEZE_AMENDMENT_2026-09-12.md
 V014_FREEZE_MANIFEST.json
 V014_INSTALLATION_AND_FREEZE_RECORD.md
