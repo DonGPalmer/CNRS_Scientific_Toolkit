@@ -1,6 +1,6 @@
-# CNRS Scientific Toolkit v0.14.1 maintenance-candidate source index
-# Prepared on 2026-09-13.
-# Files listed: 445
+# CNRS Scientific Toolkit v0.14.1 post-release closeout source index
+# Synchronized on 2026-09-14.
+# Files listed: 446
 # Local regression: 1221 passed, 0 failed, 921 warnings.
 # Unchanged v0.14.0 acceptance suite: 19 passed.
 # Reproducible double-build comparison: PASS.
@@ -8,7 +8,8 @@
 # v0.14.0 release: CLOSED / GREEN.
 # v0.14.0 finalization commit: 0726faba1fe2ebdddf24d71ab7d1d6f22eec1ccc
 # v0.14.0 Zenodo version DOI: 10.5281/zenodo.22731846
-# v0.14.1 public candidate, CI, retained artifact, and independent audit remain pending.
+# v0.14.1 Zenodo version DOI: 10.5281/zenodo.22750622
+# GitHub and Zenodo publication complete; independent post-release closeout audit pending.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -33,6 +34,7 @@ RELEASE_NOTES_v0.14.1.md
 SOURCE_INDEX.txt
 V0141_PREPARATION_MANIFEST.json
 V0141_RELEASE_ACTIVATION_CHECKLIST.md
+V0141_RELEASE_CLOSEOUT_RECORD_2026-09-14.md
 V0141_SHA256SUMS.txt
 V014_AUDIT_REPAIR_RECORD_2026-09-13.md
 V014_FREEZE_AMENDMENT_2026-09-12.md

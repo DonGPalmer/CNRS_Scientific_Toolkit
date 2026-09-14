@@ -1,8 +1,8 @@
 {
   "schema": "cnrs-toolkit-v0141-maintenance-preparation-v1",
   "release": "0.14.1",
-  "status": "PREPARATION_COMPLETE_LOCAL_VALIDATION_GREEN_PUBLIC_CANDIDATE_PENDING",
-  "status_date": "2026-09-13",
+  "status": "RELEASE_PUBLISHED_POST_RELEASE_CLOSEOUT_AUDIT_PENDING",
+  "status_date": "2026-09-14",
   "baseline_release": {
     "version": "0.14.0",
     "release_date": "2026-09-12",
@@ -43,17 +43,25 @@
       "cnrs-0.14.1.tar.gz"
     ]
   },
+  "published_release": {
+    "release_date": "2026-09-14",
+    "tag": "v0.14.1",
+    "commit": "a1ac3e1273ef9492c7b4a1aaeba08f078ce1d56a",
+    "tree": "b7b258537aacbbf0ef8bac807c4f8fcd68d7ca38",
+    "python_distribution_workflow_run": 34770774063,
+    "lean_workflow_run": 34770773970,
+    "lean_successful_jobs": 7,
+    "candidate_artifact_id": 10321763058,
+    "release_assets_workflow_run": 34848995514,
+    "wheel_size_bytes": 255646,
+    "wheel_sha256": "159db0051472f9b1c09f38786ea40b274661b674ac00de71ebcb61f140f1c377",
+    "sdist_size_bytes": 319137,
+    "sdist_sha256": "f5ca8b7f5b1849787a9c3cd8b4a6b3136d1196c70bfeaf1a936a641f2f67f520",
+    "zenodo_version_doi": "10.5281/zenodo.22750622",
+    "zenodo_concept_doi": "10.5281/zenodo.20574852"
+  },
   "pending": [
-    "public candidate commit and tree",
-    "Python/distribution CI",
-    "seven-job Lean CI",
-    "retained candidate artifact",
-    "independent audit",
-    "governed merge",
-    "release date finalization",
-    "tag v0.14.1",
-    "GitHub Release",
-    "Zenodo publication"
+    "independent post-release closeout audit"
   ],
   "files": [
     {
@@ -66,27 +74,31 @@
     },
     {
       "path": "CITATION.cff",
-      "sha256": "3b4154eb935375643dc595e9de730577eb6c00b73b9a19565f912307e473e7c7"
+      "sha256": "26740dfca0df3e0b05e3ed6b37620d8d69974153649a3377502e8025a01b23a2"
     },
     {
       "path": "README.md",
-      "sha256": "48c276cd5cb7d402d1b4cacc925ffbf84802aaf063f94c77ee43b100cf68a69c"
+      "sha256": "53a3483af1d21c760dc0122879d1bdb3e56552ad0c17385982db41a34492dd3c"
     },
     {
       "path": "RELEASE_NOTES.md",
-      "sha256": "90ef47af6663af44563ca98d583553fdb5f45418688f8bf9ef91be2f5a8b7744"
+      "sha256": "ddf1aa180604b354b378628e78d659c9314af57c733d3d9bc274bc11af622c24"
     },
     {
       "path": "RELEASE_NOTES_v0.14.1.md",
-      "sha256": "6ea3a809e019280fa234bb775c85e9e7f83a35b156fc94c9190d02ac54c0baaa"
+      "sha256": "16b00d89ac31919a853d5a9b134fd885e908fa84a3133bd73b307bc2f4fa2cf9"
     },
     {
       "path": "SOURCE_INDEX.txt",
-      "sha256": "eda16a7bfba224dfe0792f160f8e4b7d081d3fd820e51f208d3abc58fcc298c3"
+      "sha256": "71add9c9b3dca270cd3e50f67e5e64d168460ec2af5f30aa9a06c0f9d38325e7"
     },
     {
       "path": "V0141_RELEASE_ACTIVATION_CHECKLIST.md",
-      "sha256": "c97d7475c21b5ce3e257fcb904efca0d0c1c2d59da602d507ee0a00d67e1fdb0"
+      "sha256": "e48628c7e2c54a504cef0c8d3fd779e30f756e283a638c54e0fd4b602190ca93"
+    },
+    {
+      "path": "V0141_RELEASE_CLOSEOUT_RECORD_2026-09-14.md",
+      "sha256": "87f11089e8575215db7567e2449e77a0fb60e6068306a78065b200c2cfbbbbd0"
     },
     {
       "path": "V014_RELEASE_CLOSEOUT_RECORD_2026-09-12.md",
@@ -114,7 +126,7 @@
     },
     {
       "path": "docs/TEST_STATUS.md",
-      "sha256": "1538ab7adcba884a6106242661daf76b46a1e6b3aa7035b97c2e110ef8a2fb1d"
+      "sha256": "e3e0165651687a83e6c898f111b35cf6b0a69757bf36795a5318730e1f2affb6"
     },
     {
       "path": "docs/V0141_ACCEPTANCE_TEST_PLAN.md",
@@ -130,7 +142,7 @@
     },
     {
       "path": "formal/PROVENANCE.json",
-      "sha256": "3ad896b41d16db61bc6b3263843f1cc6cb2b99ada04a28ea695be2328a60bc02"
+      "sha256": "c48e7b123ed220d1cfb22b43bc1efb79fa2fd1474744a5e7b813ad622156d295"
     },
     {
       "path": "pyproject.toml",

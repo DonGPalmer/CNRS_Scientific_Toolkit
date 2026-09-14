@@ -1,4 +1,4 @@
-# Test Status — v0.14.1 Candidate
+# Test Status — v0.14.1 Release
 
 The v0.14.1 preparation tree adds three release-engineering tests and
 reproducible distribution gates. Local validation passed with `1221 passed`
@@ -6,9 +6,13 @@ and 921 warnings in an optional-dependency-rich environment; the unchanged
 v0.14.0 acceptance suite contributed 19 passes. Two successive builds produced
 byte-identical wheel and source distributions, and both installed cleanly as
 version `0.14.1`. Final public-candidate counts, workflow identities, artifact
-identities, and distribution SHA-256 values remain pending candidate CI and
-independent audit. The required gates are frozen in
-`V0141_ACCEPTANCE_TEST_PLAN.md`.
+identities, and distribution SHA-256 values were subsequently confirmed by
+GitHub Actions. Python/distribution run `34770774063` and seven-job Lean run
+`34770773970` succeeded at commit
+`a1ac3e1273ef9492c7b4a1aaeba08f078ce1d56a`. Release-assets run
+`34848995514` successfully attached and verified both distributions.
+Independent post-release closeout audit remains pending. The required gates
+are frozen in `V0141_ACCEPTANCE_TEST_PLAN.md`.
 
 The v0.14.0 release baseline follows unchanged.
 

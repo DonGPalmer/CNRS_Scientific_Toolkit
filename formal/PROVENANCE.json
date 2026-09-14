@@ -1,6 +1,6 @@
 {
   "schema": "cnrs-toolkit-lean-provenance-v4",
-  "status_date": "2026-09-13",
+  "status_date": "2026-09-14",
   "documentation_state": "CNRS-LEAN-CAPSTONE governed and GREEN",
   "toolchain": {
     "lean": "4.33.0",
@@ -65,7 +65,7 @@
     "lean_source_vendored_for_release": true,
     "python_runtime_modified": true,
     "release_target": "v0.14.1",
-    "release_status": "v0.14.0 published and closed; v0.14.1 maintenance candidate validation pending",
+    "release_status": "v0.14.1 published on GitHub and Zenodo; independent post-release closeout audit pending",
     "initial_candidate": {
       "commit": "a65c5834e56ed2bd28a8683c4a9e2017bb64157e",
       "tree": "9eb4ed67891405fa8824d933c883e51205f152a8",
@@ -125,18 +125,30 @@
     "next_formal_campaign": "P3-L1 finite-support convolution multiplication with evaluation theorem"
   },
   "toolkit_public_release": {
-    "release": "v0.14.0",
-    "release_date": "2026-09-12",
-    "commit": "0726faba1fe2ebdddf24d71ab7d1d6f22eec1ccc",
-    "tree": "7550d0cdac2727c5cf0ad23b98ab785f1aa41988",
-    "python_distribution_workflow_run": 34734809351,
-    "lean_workflow_run": 34734809362,
-    "distribution_artifact_id": 10311135524,
-    "wheel_sha256": "5e1798dd4473ab8120e9c95ffd166b4d2d2640824ca712164a5cc37566c3c164",
-    "sdist_sha256": "34b5a446b81f6c365916b7be9b782a47443f80549c4e28741f938d9fe07ae340",
-    "zenodo_version_doi": "10.5281/zenodo.22731846",
+    "release": "v0.14.1",
+    "release_date": "2026-09-14",
+    "commit": "a1ac3e1273ef9492c7b4a1aaeba08f078ce1d56a",
+    "tree": "b7b258537aacbbf0ef8bac807c4f8fcd68d7ca38",
+    "python_distribution_workflow_run": 34770774063,
+    "lean_workflow_run": 34770773970,
+    "lean_successful_jobs": 7,
+    "distribution_artifact_id": 10321763058,
+    "release_assets_workflow_run": 34848995514,
+    "wheel_size_bytes": 255646,
+    "wheel_sha256": "159db0051472f9b1c09f38786ea40b274661b674ac00de71ebcb61f140f1c377",
+    "sdist_size_bytes": 319137,
+    "sdist_sha256": "f5ca8b7f5b1849787a9c3cd8b4a6b3136d1196c70bfeaf1a936a641f2f67f520",
+    "zenodo_version_doi": "10.5281/zenodo.22750622",
     "zenodo_concept_doi": "10.5281/zenodo.20574852",
-    "status": "GREEN — governed release closed"
+    "status": "PUBLISHED — post-release closeout audit pending",
+    "prior_release": {
+      "release": "v0.14.0",
+      "release_date": "2026-09-12",
+      "commit": "0726faba1fe2ebdddf24d71ab7d1d6f22eec1ccc",
+      "tree": "7550d0cdac2727c5cf0ad23b98ab785f1aa41988",
+      "zenodo_version_doi": "10.5281/zenodo.22731846",
+      "status": "GREEN — governed release closed"
+    }
   },
   "public_release": {
     "repository": "DonGPalmer/CNRS_Lean",

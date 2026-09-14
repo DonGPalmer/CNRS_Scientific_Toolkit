@@ -10,7 +10,11 @@ repository-code: "https://github.com/DonGPalmer/CNRS_Scientific_Toolkit"
 url: "https://www.nul1.com/"
 license: Apache-2.0
 version: "0.14.1"
+date-released: 2026-09-14
 identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22750622"
+    description: "CNRS Scientific Toolkit v0.14.1 version DOI"
   - type: doi
     value: "10.5281/zenodo.20574852"
     description: "CNRS Scientific Toolkit concept DOI"
