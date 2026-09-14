@@ -1,64 +1,45 @@
 # CNRS Scientific Toolkit v0.15.0 acceptance test plan
 
-Status: FROZEN BEFORE IMPLEMENTATION
-
-## Carrier and exactness
+Status: HOLD REPAIRED; FROZEN BEFORE IMPLEMENTATION; RE-AUDIT REQUIRED
 
 | Gate | Requirement |
 |---|---|
-| A1 | Zero, trimming, offsets, support bounds, equality, and immutability behave canonically |
-| A2 | Known examples and randomized finite cases match direct Gaussian-integer convolution exactly |
-| A3 | Evaluation of convolution equals the product of evaluations for multiple exact bases |
-| A4 | Empty, singleton, shifted, sparse, negative-coefficient, and cancellation cases pass |
-| A5 | Output support and coefficient types satisfy the architecture invariants |
+| A1 | Exact-int and pair coercion passes; Boolean, malformed, approximate, and noncanonical inputs fail |
+| A2 | Trimming updates offset correctly and zero has the sole empty/offset-zero representation |
+| A3 | Support and coefficient lookup cover positive and negative Laurent offsets |
+| A4 | `GaussianRational` reduction, unit normalization, equality, zero, and zero-denominator behavior pass |
+| A5 | Laurent evaluation returns exact reduced rational values, including `beta^-1=(-2-i)/5` |
+| A6 | Evaluation at zero rejects negative support and handles nonnegative support exactly |
+| A7 | Known and seeded randomized cases match an independent exact oracle |
+| A8 | Evaluation of convolution equals the product of exact evaluations |
+| A9 | Empty, singleton, shifted, sparse/internal-zero, cancellation, and large-bit cases pass |
+| A10 | Commutativity, associativity, distributivity, zero, and identity laws pass |
+| A11 | Required product count is exactly stored-length product, including internal zeros |
+| A12 | Traversal is left-major/right-minor and progress `last_pair` is exact |
+| A13 | Limit tests cover zero, below, equal, and above required count |
+| A14 | `convolve_exact` preflight failure performs no products and raises `ConvolutionLimitError` |
+| A15 | Iterator emits chunk records and exactly one terminal under every boundary case |
+| A16 | `LIMIT_REACHED` exposes no result; `COMPLETE` exposes the sole authoritative result |
+| A17 | Chunk size changes neither complete result nor canonical witness |
+| A18 | `multiply_with_witness` returns the frozen field/null behavior for both statuses and normalize modes |
+| A19 | Exact Gaussian/Laurent normalization uses no `complex`, float, or `round` |
+| A20 | Normalization digits are 0..4 Gaussian-real pairs and preserve exact value and offset semantics |
+| A21 | Carry-step exhaustion raises `NormalizationLimitError` without a partial canonical result |
+| A22 | Canonical sequence/witness JSON matches exact key, array, UTF-8, separator, ordering, and newline rules |
+| A23 | SHA-256 vectors match independently generated expected bytes and lowercase digests |
+| A24 | Strict parsing rejects missing/unknown fields, bad schema/status/algorithm/traversal, malformed pairs, and bad digests |
+| A25 | No incomplete witness can be constructed, serialized, or accepted |
+| A26 | Independent verifier has an import/dependency guard preventing use of production convolution |
+| A27 | Independent verifier detects mutations of every decisive field and recomputes normalization |
+| A28 | Claim guard requires “product-count bounded” and rejects broader bounded-resource language |
+| A29 | Complete pre-v0.15 regression and unchanged v0.14 acceptance suites pass |
+| A30 | Benchmark oracle checks equality before timing and records raw JSON/CSV plus environment metadata |
+| A31 | Timing reports warm-up, samples, median, minimum, IQR, input family, and separated witness/normalization cost |
+| A32 | Peak-memory protocol is separate, reproducible, qualified, and permits negative results |
+| A33 | Lean mapping records theorem statements, hypotheses, carrier/offset/evaluation conventions, certified identities, and adapters |
+| A34 | Vendored Lean identity/proof hygiene and all six existing project builds pass |
+| A35 | Package/runtime/CFF versions stay 0.14.1 until final release activation |
+| A36 | Reproducible wheel/sdist double-build, clean installs, retained artifact, and independent candidate audit pass |
+| A37 | Manifest, amendment, source index, repaired document blobs, PR head, and Git tree form a complete terminal evidence chain |
 
-## Algebra and normalization
-
-| Gate | Requirement |
-|---|---|
-| A6 | Commutativity, associativity, and distributivity pass for finite accepted cases |
-| A7 | Additive and multiplicative zero/identity laws pass |
-| A8 | Canonical normalization preserves exact represented value |
-| A9 | Raw convolution and normalized multiplication remain separately inspectable |
-| A10 | Existing multiplication parity cases remain unchanged |
-
-## Limits, iteration, and witnesses
-
-| Gate | Requirement |
-|---|---|
-| A11 | Product-count boundary tests cover below, equal to, and above the required count |
-| A12 | `LIMIT_REACHED` never exposes a partial result as complete |
-| A13 | Chunk size does not change terminal result or canonical witness |
-| A14 | Iteration is deterministic and replayable |
-| A15 | Witness serialization round-trips canonically |
-| A16 | Independent validation accepts genuine witnesses and rejects every mutated decisive field |
-| A17 | Invalid types, Boolean limits, negative limits, and malformed witnesses fail deterministically |
-
-## Regression and comparison
-
-| Gate | Requirement |
-|---|---|
-| A18 | Complete pre-v0.15 Python regression suite passes |
-| A19 | Existing v0.14 streaming-division acceptance suite passes unchanged |
-| A20 | Comparison oracle uses an independently written direct implementation |
-| A21 | Benchmark harness produces machine-readable JSON and CSV with environment metadata |
-| A22 | Timing reports warm-up, sample count, median, dispersion, and input family |
-| A23 | Memory comparison uses one documented measurement method and does not overclaim |
-
-## Formal alignment and release governance
-
-| Gate | Requirement |
-|---|---|
-| A24 | Lean alignment names exact theorem, repository, commit, tree, toolchain, workflow, and artifact |
-| A25 | Vendored Lean source identity and proof-hygiene guard pass |
-| A26 | All six existing Lean projects build; any new formal project/build is separately identified |
-| A27 | Claim-boundary guard rejects prohibited release language |
-| A28 | Package/runtime/CFF versions synchronize only at release finalization |
-| A29 | Reproducible wheel and sdist build twice identically and install cleanly |
-| A30 | Independent audit certifies immutable candidate source, CI, distributions, benchmarks, and claims |
-
-## Required test families
-
-Use exhaustive small-support cases where feasible, fixed seeded randomized cases for wider coverage, metamorphic algebraic tests, corruption tests for witnesses, and explicit performance-regression thresholds that detect gross regressions without treating timing noise as correctness failure.
-
-No gate may be waived silently. A waiver requires a dated record stating scope, justification, impact, and approval.
+Use exhaustive small cases where feasible, fixed seeded wider cases, metamorphic laws, corruption matrices, exact reference vectors, and gross-regression thresholds that do not treat timing noise as correctness failure. No waiver may be silent.
