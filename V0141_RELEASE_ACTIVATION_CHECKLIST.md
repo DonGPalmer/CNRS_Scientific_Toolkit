@@ -1,6 +1,6 @@
 # CNRS Scientific Toolkit v0.14.1 release activation checklist
 
-Status: PREPARATION COMPLETE; VALIDATION PENDING
+Status: RELEASE PUBLISHED; POST-RELEASE CLOSEOUT AUDIT PENDING
 
 ## Preparation
 
@@ -19,18 +19,19 @@ Status: PREPARATION COMPLETE; VALIDATION PENDING
 - [x] v0.14.0 acceptance suite locally: `19 passed`.
 - [x] Reproducible wheel and source-distribution comparison locally.
 - [x] Clean installation from both distributions locally.
-- [ ] Lean source identity plus six project builds.
+- [x] Lean source identity plus six project builds: run `34770773970`.
 - [x] Exact source index and checksum inventory prepared and locally verified.
-- [ ] Immutable public candidate CI and retained artifact.
+- [x] Immutable public candidate CI and retained artifact `10321763058`.
 - [ ] Independent GREEN audit.
 
 ## Governed publication
 
-- [ ] Explicit merge authorization.
-- [ ] Governed merge and post-merge CI.
-- [ ] Actual release date added to `CITATION.cff`.
-- [ ] Finalization CI and exact distributions verified.
-- [ ] Tag `v0.14.1` created at the verified commit.
-- [ ] GitHub Release published with approved title and notes.
-- [ ] Automated workflow attaches both certified distributions.
-- [ ] Zenodo record, publication date, and version DOI verified.
+- [x] Publication commit fixed on `main`.
+- [x] Python/distribution and Lean CI succeeded at the publication commit.
+- [x] Actual release date `2026-09-14` added to `CITATION.cff` in closeout synchronization.
+- [x] Exact distributions verified by release-assets workflow `34848995514`.
+- [x] Tag `v0.14.1` created at commit `a1ac3e1273ef9492c7b4a1aaeba08f078ce1d56a`.
+- [x] GitHub Release published with approved title and notes.
+- [x] Automated workflow attached both certified distributions.
+- [x] Zenodo version DOI `10.5281/zenodo.22750622` recorded.
+- [ ] Independent post-release closeout audit.

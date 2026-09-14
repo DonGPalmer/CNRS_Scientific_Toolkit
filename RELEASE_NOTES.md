@@ -1,8 +1,11 @@
 # v0.14.1 — Release Governance and Reproducible Packaging
 
-- Closes the published v0.14.0 governance record.
-- Records Zenodo version DOI `10.5281/zenodo.22731846` and concept DOI
+- Released 2026-09-14 at tag `v0.14.1`, commit
+  `a1ac3e1273ef9492c7b4a1aaeba08f078ce1d56a`.
+- Published at Zenodo version DOI `10.5281/zenodo.22750622`; concept DOI
   `10.5281/zenodo.20574852`.
+- Closes the published v0.14.0 governance record.
+- Records the prior v0.14.0 Zenodo version DOI `10.5281/zenodo.22731846`.
 - Adds deterministic, double-build distribution verification.
 - Updates artifact upload to `actions/upload-artifact@v7`.
 - Adds release-publication automation that builds, verifies, and attaches the
@@ -11,6 +14,8 @@
   SHA-256 inventory integrity.
 - Changes no arithmetic behavior, public API, Lean source, or mathematical
   claim boundary.
+- Python/distribution run `34770774063`, seven-job Lean run `34770773970`, and
+  release-assets run `34848995514` succeeded.
 
 See `RELEASE_NOTES_v0.14.1.md`.
 

@@ -2,7 +2,7 @@
 
 ## v0.14.1 — Release Governance and Reproducible Packaging
 
-**Status: maintenance candidate; implementation and acceptance validation pending.**
+**Status: released 2026-09-14; GitHub and Zenodo publication complete.**
 
 CNRS means **Complex Numeric Representation System**.
 
@@ -23,8 +23,16 @@ The maintenance scope is:
 
 The CNRS Scientific Toolkit concept DOI is
 [10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The closed
+v0.14.1 version DOI is
+[10.5281/zenodo.22750622](https://doi.org/10.5281/zenodo.22750622). The prior
 v0.14.0 version DOI is
 [10.5281/zenodo.22731846](https://doi.org/10.5281/zenodo.22731846).
+
+The v0.14.1 tag points to commit
+`a1ac3e1273ef9492c7b4a1aaeba08f078ce1d56a`. Python/distribution CI, Lean
+source identity, all six Lean builds, and automated publication of the wheel
+and source distribution succeeded. Independent post-release closeout audit
+remains the final governance check.
 
 See `RELEASE_NOTES_v0.14.1.md` and `docs/V0141_MAINTENANCE_SCOPE.md`.
 
