@@ -1,8 +1,12 @@
 {
-  "schema": "cnrs-toolkit-v015-preimplementation-freeze-v1",
+  "schema": "cnrs-toolkit-v015-preimplementation-freeze-v2",
   "release_target": "0.15.0",
-  "status": "ARCHITECTURE_API_CLAIMS_ACCEPTANCE_BENCHMARK_AND_LEAN_ALIGNMENT_FROZEN",
+  "status": "AUDIT_HOLD_REPAIRED_INDEPENDENT_REAUDIT_REQUIRED",
   "freeze_date": "2026-09-14",
+  "audited_predecessor": {
+    "commit": "170694a675686da2c7c1cfcd4bc45c68877914d4",
+    "verdict": "HOLD_FREEZE_AMENDMENT_REQUIRED_BEFORE_IMPLEMENTATION"
+  },
   "baseline": {
     "branch": "main",
     "commit": "f0f674be654a2d9a82f8ec8b77ca732a04af218a",
@@ -11,33 +15,46 @@
   },
   "version_policy": {
     "selected_target": "0.15.0",
-    "reason": "Backward-compatible feature release after 0.14.x",
     "package_metadata_remains": "0.14.1 until release finalization",
     "v0.20.0_reserved_for": "A separately defined programme milestone",
     "v1.0.0_reserved_for": "Stable adoption-ready public API"
   },
   "frozen_documents": [
+    "V015_FREEZE_AMENDMENT_2026-09-14.md",
     "V015_ARCHITECTURE_FREEZE.md",
     "V015_FINITE_CONVOLUTION_API_CONTRACT.md",
     "docs/V015_CLAIM_BOUNDARY.md",
     "docs/V015_ACCEPTANCE_TEST_PLAN.md",
     "docs/V015_BENCHMARK_PLAN.md",
-    "docs/V015_LEAN_ALIGNMENT_PLAN.md"
+    "docs/V015_LEAN_ALIGNMENT_PLAN.md",
+    "V015_FREEZE_MANIFEST.json",
+    "SOURCE_INDEX.txt"
   ],
-  "implementation_scope": [
-    "immutable finite coefficient carrier",
-    "exact finite-support convolution",
-    "bounded and chunked execution",
-    "multiplication result and independently recomputable witness",
-    "canonical-normalization adapter",
-    "conventional-processing comparison benchmarks"
+  "repaired_content_blob_sha1": {
+    "V015_FREEZE_AMENDMENT_2026-09-14.md": "baa851b865beea669a9e8c0447d2c552014079ff",
+    "V015_ARCHITECTURE_FREEZE.md": "f6a4473b6b2a61b3d897d49e518df711c19c7c1c",
+    "V015_FINITE_CONVOLUTION_API_CONTRACT.md": "3d4d1544fd969e296aed87a85904a2ff802de7a1",
+    "docs/V015_CLAIM_BOUNDARY.md": "61a113511aefc0f086a99c3697c1ee249c94b001",
+    "docs/V015_ACCEPTANCE_TEST_PLAN.md": "e9112cb042d384e0a2181501d2ddbe1ac5e1b26d",
+    "docs/V015_BENCHMARK_PLAN.md": "bfa39097b854d20dd0af099a727f19ae72dc05fc",
+    "docs/V015_LEAN_ALIGNMENT_PLAN.md": "118db2cfbdf9bed3217a2ea7f8a47d8873996325"
+  },
+  "terminal_binding": {
+    "strategy": "The manifest binds all non-self-referential repaired content blobs. The final PR body records the manifest blob, source-index blob, final commit, and final tree.",
+    "reason": "A file cannot contain its own final blob hash or the SHA of the commit containing it.",
+    "manifest_predecessor_blob": "66f797c365c079a85ce3b23f2f476b735cf36781",
+    "source_index_predecessor_blob": "dc3f0a63a9e305d35fabff2b42a549c863802795"
+  },
+  "corrected_contracts": [
+    "canonical GaussianInteger storage and GaussianLike coercion",
+    "reduced GaussianRational Laurent evaluation",
+    "new exact Gaussian and Laurent carry normalization",
+    "stored-position product count and left-major traversal",
+    "frozen progress result status and exception behavior",
+    "canonical JSON and lowercase SHA-256 witness encoding",
+    "implementation-independent verification boundary",
+    "product-count-bounded claim qualification"
   ],
-  "prohibited_before_release_finalization": [
-    "changing package runtime or citation version to 0.15.0",
-    "adding a release date",
-    "claiming infinite-stream multiplication",
-    "claiming universal performance superiority",
-    "claiming Lean extraction or end-to-end Python verification"
-  ],
-  "next_gate": "IMPLEMENTATION_CANDIDATE_AND_ACCEPTANCE_TESTS"
+  "implementation_authorized": false,
+  "next_gate": "INDEPENDENT_FREEZE_REAUDIT"
 }
