@@ -1,10 +1,10 @@
-# CNRS Scientific Toolkit v0.15.0 pre-implementation freeze source index
-# Frozen on 2026-09-14.
-# Files listed: 453
+# CNRS Scientific Toolkit v0.15.0 repaired pre-implementation freeze source index
+# Amended on 2026-09-14 after independent HOLD audit.
+# Files listed: 454
 # Baseline main commit: f0f674be654a2d9a82f8ec8b77ca732a04af218a
+# Audited predecessor: 170694a675686da2c7c1cfcd4bc45c68877914d4
 # Package/runtime/CFF version remains 0.14.1 until release finalization.
-# v0.15.0 architecture, API, claim, acceptance, benchmark, and Lean-alignment contracts are frozen.
-# Runtime implementation has not begun on this branch.
+# Runtime implementation remains prohibited pending independent GREEN re-audit.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -41,6 +41,7 @@ V014_RELEASE_FINALIZATION_RECORD_2026-09-12.md
 V014_SHA256SUMS.txt
 V015_ARCHITECTURE_FREEZE.md
 V015_FINITE_CONVOLUTION_API_CONTRACT.md
+V015_FREEZE_AMENDMENT_2026-09-14.md
 V015_FREEZE_MANIFEST.json
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py
