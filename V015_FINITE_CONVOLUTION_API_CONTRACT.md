@@ -103,7 +103,7 @@ class NormalizationLimitError(RuntimeError): ...
 
 `chunk_products` requires a positive exact int. Iterator records after each full chunk strictly before termination use `IN_PROGRESS`, `result=None`, and the last traversed pair. Exactly one terminal follows. A complete terminal alone carries the result. A limited terminal performs exactly `max_products` products, has `LIMIT_REACHED`, no result, and the last processed pair or `None`. Zero work yields one complete terminal with canonical zero and `last_pair=None`. Completion on a chunk boundary does not emit a preceding duplicate progress record.
 
-`multiply_with_witness` returns rather than raises on a valid insufficient product limit: every result/witness field is null. Complete mode exposes raw convolution; normalized is non-null exactly when `normalize=True`; witness is always non-null. Invalid arguments retain the exceptions above.
+`multiply_with_witness` validates `max_carry_steps` using the normalization limit rules on every call, including when `normalize=False`; after validation it is unused when normalization is disabled. A valid insufficient product limit returns `LIMIT_REACHED` with every result/witness field null. Complete product mode exposes raw convolution; normalized is non-null exactly when `normalize=True`; witness is non-null after successful requested processing. If `normalize=True` and post-input carry draining exceeds `max_carry_steps`, `NormalizationLimitError` propagates and no `MultiplicationResult`, normalized value, or witness is returned or created. Normalization exhaustion is never encoded as `LIMIT_REACHED`. Invalid arguments retain the specified exceptions.
 
 ## Exact normalization signature and accounting
 
@@ -115,7 +115,11 @@ def normalize_gaussian_laurent(
 ) -> CNRSFiniteSequence: ...
 ```
 
-The exact base-`(-2,1)` recurrence processes input positions from `value.offset` upward. `max_carry_steps` counts only recurrence iterations after the last stored input coefficient. If carry is already zero, zero steps are required. Before each post-input iteration, if the completed drain count equals the limit while carry is nonzero, raise `NormalizationLimitError` and expose no partial canonical result. Input-position processing does not consume this limit. Exact value and exponent placement before trimming are preserved; canonical boundary trimming may increase output offset.
+`value` must be a `CNRSFiniteSequence` instance (subclasses accepted); otherwise raise `TypeError`. `max_carry_steps` must be `None` or a nonnegative exact `int`; Boolean or any non-integer raises `TypeError`, and a negative integer raises `ValueError`.
+
+The exact base-`(-2,1)` recurrence processes input positions from `value.offset` upward. At each position, let the total input-plus-carry be `t=(x,y)`. Select exactly `d=(x+2*y) % 5`, where Python integer modulo gives the unique `d in {0,1,2,3,4}`. Emit `(d,0)` and compute `carry_next=(t-(d,0))/(-2,1)` by exact Gaussian division. Every returned coefficient must therefore belong to `{(0,0),(1,0),(2,0),(3,0),(4,0)}`. Internal zero digits are retained; boundary zeros are removed by the canonical constructor, increasing offset for each removed low-boundary zero.
+
+`max_carry_steps` counts only recurrence iterations after the last stored input coefficient. If carry is already zero, zero steps are required. Before each post-input iteration, if the completed drain count equals the limit while carry is nonzero, raise `NormalizationLimitError` and expose no partial canonical result. Input-position processing does not consume this limit. Exact value and exponent placement before trimming are preserved; canonical trimming may increase output offset. The vector `CNRSFiniteSequence(((5,0),),0)` normalizes to coefficients `((1,0),(3,0),(1,0))` at offset `1`.
 
 ## Complete witness schema
 
