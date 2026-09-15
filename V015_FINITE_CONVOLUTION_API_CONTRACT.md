@@ -154,15 +154,15 @@ The top-level JSON object has exactly these keys and value types:
 ```json
 {
   "algorithm": "schoolbook-gaussian-exact-v1",
-  "left": {"coefficients": [[0, 0]], "offset": 0},
+  "left": {"coefficients": [[1, 0]], "offset": 0},
   "left_sha256": "64 lowercase hex characters",
   "normalization_requested": true,
-  "normalized": {"coefficients": [[0, 0]], "offset": 0},
+  "normalized": {"coefficients": [[1, 0]], "offset": 0},
   "normalized_sha256": "64 lowercase hex characters",
   "products_required": 1,
-  "raw": {"coefficients": [[0, 0]], "offset": 0},
+  "raw": {"coefficients": [[1, 0]], "offset": 0},
   "raw_sha256": "64 lowercase hex characters",
-  "right": {"coefficients": [[0, 0]], "offset": 0},
+  "right": {"coefficients": [[1, 0]], "offset": 0},
   "right_sha256": "64 lowercase hex characters",
   "schema": "cnrs-convolution-witness-v1",
   "status": "complete",
@@ -170,7 +170,7 @@ The top-level JSON object has exactly these keys and value types:
 }
 ```
 
-The displayed zero coefficient is illustrative only; actual sequence objects must already satisfy canonical zero/trimming rules. `normalized` and `normalized_sha256` are both null exactly when `normalization_requested=false`; otherwise both are non-null. No other field is nullable. Status is only `"complete"`.
+The displayed unit sequences are canonical examples; every actual sequence object must satisfy the same zero/trimming rules. `normalized` and `normalized_sha256` are both null exactly when `normalization_requested=false`; otherwise both are non-null. No other field is nullable. Status is only `"complete"`.
 
 A sequence object has exactly keys `coefficients` and `offset`; coefficients are arrays of two JSON integers, with Boolean forbidden. Canonical bytes are UTF-8 of `json.dumps(obj,sort_keys=True,separators=(",",":"),ensure_ascii=False,allow_nan=False)`, without BOM or trailing newline. Each digest hashes the corresponding canonical sequence-object bytes.
 
