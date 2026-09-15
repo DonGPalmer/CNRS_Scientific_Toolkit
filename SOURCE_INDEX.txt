@@ -1,15 +1,10 @@
-# CNRS Scientific Toolkit v0.14.1 post-release closeout source index
-# Synchronized on 2026-09-14.
-# Files listed: 446
-# Local regression: 1221 passed, 0 failed, 921 warnings.
-# Unchanged v0.14.0 acceptance suite: 19 passed.
-# Reproducible double-build comparison: PASS.
-# Clean wheel and source-distribution installation: PASS.
-# v0.14.0 release: CLOSED / GREEN.
-# v0.14.0 finalization commit: 0726faba1fe2ebdddf24d71ab7d1d6f22eec1ccc
-# v0.14.0 Zenodo version DOI: 10.5281/zenodo.22731846
-# v0.14.1 Zenodo version DOI: 10.5281/zenodo.22750622
-# GitHub and Zenodo publication complete; independent post-release closeout audit pending.
+# CNRS Scientific Toolkit v0.15.0 third-amended pre-implementation freeze source index
+# Amended on 2026-09-15 after the third independent HOLD audit.
+# Files listed: 456
+# Baseline main commit: f0f674be654a2d9a82f8ec8b77ca732a04af218a
+# Audited predecessors: 170694a675686da2c7c1cfcd4bc45c68877914d4; 376dc1ec4ed7e576e1ecd75e4200cd1b32f9bc7d; 13543667c5ad4339338abb0e7661e1c49be3f203
+# Package/runtime/CFF version remains 0.14.1 until release finalization.
+# Runtime implementation remains prohibited pending independent GREEN re-audit.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -44,6 +39,12 @@ V014_RELEASE_ACTIVATION_CHECKLIST.md
 V014_RELEASE_CLOSEOUT_RECORD_2026-09-12.md
 V014_RELEASE_FINALIZATION_RECORD_2026-09-12.md
 V014_SHA256SUMS.txt
+V015_ARCHITECTURE_FREEZE.md
+V015_FINITE_CONVOLUTION_API_CONTRACT.md
+V015_FREEZE_AMENDMENT_2026-09-14.md
+V015_FREEZE_AMENDMENT_2026-09-15.md
+V015_FREEZE_AMENDMENT_3_2026-09-15.md
+V015_FREEZE_MANIFEST.json
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py
 benchmarks/benchmark_streaming_division.py
@@ -195,6 +196,10 @@ docs/V014_CLAIM_BOUNDARY.md
 docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md
 docs/V014_PERFORMANCE_RESULTS.md
 docs/V014_STREAMING_DIVISION_API_CONTRACT.md
+docs/V015_ACCEPTANCE_TEST_PLAN.md
+docs/V015_BENCHMARK_PLAN.md
+docs/V015_CLAIM_BOUNDARY.md
+docs/V015_LEAN_ALIGNMENT_PLAN.md
 docs/audits/DIVISION_RATIONAL_VALIDATION_V011.md
 docs/audits/SCIENTIFIC_WORKFLOW_AUDIT_V011.md
 docs/audits/scripts/branch_index_algebra_verify_v1.py

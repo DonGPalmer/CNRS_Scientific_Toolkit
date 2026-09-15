@@ -1,0 +1,76 @@
+{
+  "schema": "cnrs-toolkit-v015-preimplementation-freeze-v4",
+  "release_target": "0.15.0",
+  "status": "THIRD_AUDIT_HOLD_REPAIRED_INDEPENDENT_REAUDIT_REQUIRED",
+  "freeze_date": "2026-09-15",
+  "audited_chain": [
+    {
+      "commit": "170694a675686da2c7c1cfcd4bc45c68877914d4",
+      "verdict": "HOLD_FIRST_AMENDMENT_REQUIRED"
+    },
+    {
+      "commit": "376dc1ec4ed7e576e1ecd75e4200cd1b32f9bc7d",
+      "tree": "e8fa88a93e5b52010d0dbed1f4a79c657368613f",
+      "verdict": "HOLD_SECOND_AMENDMENT_REQUIRED"
+    },
+    {
+      "commit": "13543667c5ad4339338abb0e7661e1c49be3f203",
+      "tree": "cccd9810ce074b5c839d295cd963cd1dd536950d",
+      "verdict": "HOLD_THIRD_AMENDMENT_REQUIRED"
+    }
+  ],
+  "baseline": {
+    "branch": "main",
+    "commit": "f0f674be654a2d9a82f8ec8b77ca732a04af218a",
+    "tree": "49ac71001d90e6e908f66d1e7481b54c3bc06e81",
+    "released_package_version": "0.14.1"
+  },
+  "version_policy": {
+    "selected_target": "0.15.0",
+    "package_metadata_remains": "0.14.1 until release finalization",
+    "v0_20_0": "reserved for separately defined programme milestone",
+    "v1_0_0": "reserved for stable adoption-ready public API"
+  },
+  "frozen_documents": [
+    "V015_ARCHITECTURE_FREEZE.md",
+    "V015_FINITE_CONVOLUTION_API_CONTRACT.md",
+    "V015_FREEZE_AMENDMENT_2026-09-14.md",
+    "V015_FREEZE_AMENDMENT_2026-09-15.md",
+    "V015_FREEZE_AMENDMENT_3_2026-09-15.md",
+    "docs/V015_ACCEPTANCE_TEST_PLAN.md",
+    "docs/V015_BENCHMARK_PLAN.md",
+    "docs/V015_CLAIM_BOUNDARY.md",
+    "docs/V015_LEAN_ALIGNMENT_PLAN.md",
+    "V015_FREEZE_MANIFEST.json",
+    "SOURCE_INDEX.txt"
+  ],
+  "repaired_content_blob_sha1": {
+    "V015_ARCHITECTURE_FREEZE.md": "11652f6c274ce78a61b1687cb3d5e231406c02bd",
+    "V015_FINITE_CONVOLUTION_API_CONTRACT.md": "c2b0abe5a59b36d062c85d3837e87db0c9e5ab68",
+    "V015_FREEZE_AMENDMENT_2026-09-14.md": "baa851b865beea669a9e8c0447d2c552014079ff",
+    "V015_FREEZE_AMENDMENT_2026-09-15.md": "a9700ec40697af1cefc8042a13471827fe1fbdfe",
+    "V015_FREEZE_AMENDMENT_3_2026-09-15.md": "23a6115087a320ab6a11d7516128dd7558597548",
+    "docs/V015_ACCEPTANCE_TEST_PLAN.md": "a009fc85fb6626f9625d599ef39b16f737691129",
+    "docs/V015_BENCHMARK_PLAN.md": "bfa39097b854d20dd0af099a727f19ae72dc05fc",
+    "docs/V015_CLAIM_BOUNDARY.md": "61a113511aefc0f086a99c3697c1ee249c94b001",
+    "docs/V015_LEAN_ALIGNMENT_PLAN.md": "118db2cfbdf9bed3217a2ea7f8a47d8873996325"
+  },
+  "third_amendment_contracts": [
+    "canonical digits are Gaussian-real pairs with d in 0 through 4",
+    "digit rule d equals x plus 2y modulo 5",
+    "next carry is exact quotient by beta",
+    "normalization value type and carry-limit validation are fixed",
+    "carry limit is validated when normalization is disabled",
+    "normalization exhaustion propagates NormalizationLimitError",
+    "normalization exhaustion creates no result or witness",
+    "42 acceptance gates include exact normalization vectors"
+  ],
+  "terminal_binding": {
+    "strategy": "Manifest binds all non-self-referential content blobs; final PR body binds manifest blob, source-index blob, final commit, and final tree.",
+    "self_reference_note": "A file cannot contain its own final blob hash or the SHA of its containing commit.",
+    "manifest_predecessor_blob": "2e152b53d7fc9b4a1495731226a67e7b6485013a",
+    "source_index_predecessor_blob": "b94acad5586c3dbe1492cc909e44c5afceed016f"
+  },
+  "implementation_authorized": false,
+  "next_gate": "INDEPENDENT_THIRD_AMENDMENT_REAUDIT"
+}
