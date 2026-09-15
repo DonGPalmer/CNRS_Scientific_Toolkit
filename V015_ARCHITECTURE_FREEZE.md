@@ -3,7 +3,7 @@
 Status: SECOND HOLD REPAIRED; INDEPENDENT RE-AUDIT REQUIRED
 
 Baseline: `main` commit `f0f674be654a2d9a82f8ec8b77ca732a04af218a`.
-Controlling amendments: `V015_FREEZE_AMENDMENT_2026-09-14.md` and `V015_FREEZE_AMENDMENT_2026-09-15.md`; the later amendment controls conflicts.
+Controlling amendments: `V015_FREEZE_AMENDMENT_2026-09-14.md`, `V015_FREEZE_AMENDMENT_2026-09-15.md`, and `V015_FREEZE_AMENDMENT_3_2026-09-15.md`; the third amendment controls conflicts.
 
 ## Release objective
 
@@ -29,7 +29,7 @@ Raw convolution is first positioned at `left.offset + right.offset`. Its coeffic
 
 ## Exact normalization
 
-Starting at the input offset, process every stored position in increasing exponent order using exact Gaussian carry division by `beta=(-2,1)`. After the final input position, each additional carry-drain recurrence counts as one `max_carry_steps` unit. Input-position processing is not counted by that limit. Output boundary zeros are trimmed canonically, so output offset may increase. Exact value is invariant; no floating-point arithmetic or rounding is permitted.
+Starting at the input offset, process every stored position in increasing exponent order. For total `t=(x,y)` (input coefficient plus incoming carry), choose exactly `d=(x+2*y) % 5` in `{0,1,2,3,4}`, emit `(d,0)`, and compute the next carry by exact Gaussian division `(t-(d,0))/(-2,1)`. After the final input position, each additional recurrence counts as one `max_carry_steps` unit. Input-position processing is not counted. Every returned coefficient lies in `{(0,0),(1,0),(2,0),(3,0),(4,0)}`; internal zeros remain and boundary zeros are canonically trimmed, so output offset may increase. Exact value is invariant; no floating-point arithmetic or rounding is permitted. Exhaustion propagates `NormalizationLimitError` and yields no result or witness.
 
 ## State and independence
 
