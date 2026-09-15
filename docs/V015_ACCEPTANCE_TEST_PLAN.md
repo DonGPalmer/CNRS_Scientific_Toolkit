@@ -1,45 +1,47 @@
 # CNRS Scientific Toolkit v0.15.0 acceptance test plan
 
-Status: HOLD REPAIRED; FROZEN BEFORE IMPLEMENTATION; RE-AUDIT REQUIRED
+Status: SECOND HOLD REPAIRED; FROZEN BEFORE IMPLEMENTATION; RE-AUDIT REQUIRED
 
 | Gate | Requirement |
 |---|---|
-| A1 | Exact-int and pair coercion passes; Boolean, malformed, approximate, and noncanonical inputs fail |
-| A2 | Trimming updates offset correctly and zero has the sole empty/offset-zero representation |
-| A3 | Support and coefficient lookup cover positive and negative Laurent offsets |
-| A4 | `GaussianRational` reduction, unit normalization, equality, zero, and zero-denominator behavior pass |
-| A5 | Laurent evaluation returns exact reduced rational values, including `beta^-1=(-2-i)/5` |
-| A6 | Evaluation at zero rejects negative support and handles nonnegative support exactly |
-| A7 | Known and seeded randomized cases match an independent exact oracle |
-| A8 | Evaluation of convolution equals the product of exact evaluations |
-| A9 | Empty, singleton, shifted, sparse/internal-zero, cancellation, and large-bit cases pass |
-| A10 | Commutativity, associativity, distributivity, zero, and identity laws pass |
-| A11 | Required product count is exactly stored-length product, including internal zeros |
-| A12 | Traversal is left-major/right-minor and progress `last_pair` is exact |
-| A13 | Limit tests cover zero, below, equal, and above required count |
-| A14 | `convolve_exact` preflight failure performs no products and raises `ConvolutionLimitError` |
-| A15 | Iterator emits chunk records and exactly one terminal under every boundary case |
-| A16 | `LIMIT_REACHED` exposes no result; `COMPLETE` exposes the sole authoritative result |
-| A17 | Chunk size changes neither complete result nor canonical witness |
-| A18 | `multiply_with_witness` returns the frozen field/null behavior for both statuses and normalize modes |
-| A19 | Exact Gaussian/Laurent normalization uses no `complex`, float, or `round` |
-| A20 | Normalization digits are 0..4 Gaussian-real pairs and preserve exact value and offset semantics |
-| A21 | Carry-step exhaustion raises `NormalizationLimitError` without a partial canonical result |
-| A22 | Canonical sequence/witness JSON matches exact key, array, UTF-8, separator, ordering, and newline rules |
-| A23 | SHA-256 vectors match independently generated expected bytes and lowercase digests |
-| A24 | Strict parsing rejects missing/unknown fields, bad schema/status/algorithm/traversal, malformed pairs, and bad digests |
-| A25 | No incomplete witness can be constructed, serialized, or accepted |
-| A26 | Independent verifier has an import/dependency guard preventing use of production convolution |
-| A27 | Independent verifier detects mutations of every decisive field and recomputes normalization |
-| A28 | Claim guard requires “product-count bounded” and rejects broader bounded-resource language |
-| A29 | Complete pre-v0.15 regression and unchanged v0.14 acceptance suites pass |
-| A30 | Benchmark oracle checks equality before timing and records raw JSON/CSV plus environment metadata |
-| A31 | Timing reports warm-up, samples, median, minimum, IQR, input family, and separated witness/normalization cost |
-| A32 | Peak-memory protocol is separate, reproducible, qualified, and permits negative results |
-| A33 | Lean mapping records theorem statements, hypotheses, carrier/offset/evaluation conventions, certified identities, and adapters |
-| A34 | Vendored Lean identity/proof hygiene and all six existing project builds pass |
-| A35 | Package/runtime/CFF versions stay 0.14.1 until final release activation |
-| A36 | Reproducible wheel/sdist double-build, clean installs, retained artifact, and independent candidate audit pass |
-| A37 | Manifest, amendment, source index, repaired document blobs, PR head, and Git tree form a complete terminal evidence chain |
+| A1 | Exact-int/pair coercion passes and every prohibited scalar form fails |
+| A2 | Canonical trimming increments offset per low zero; zero is uniquely empty/offset-zero |
+| A3 | Support, lookup, and exact Laurent evaluation cover positive/negative offsets |
+| A4 | Gaussian-rational vector tests fix gcd reduction and the exact `(abs(im),real,imag)` unit ordering |
+| A5 | `beta^-1=(-2-i)/5` and base-zero boundary vectors pass exactly |
+| A6 | Known, exhaustive-small, and seeded cases match an independent convolution oracle |
+| A7 | Convolution evaluation equals the product of exact evaluations |
+| A8 | Algebraic laws, sparse/internal-zero, cancellation, shifted, and large-bit cases pass |
+| A9 | Required count is stored-length product and traversal is left-major/right-minor |
+| A10 | Raw offset begins at left-plus-right offset; trimming vectors test unchanged and increased offsets |
+| A11 | `IN_PROGRESS`, `COMPLETE`, and `LIMIT_REACHED` are the only statuses |
+| A12 | Iterator chunk records use `IN_PROGRESS` with null result and exact last pair |
+| A13 | Exactly one terminal is emitted, including zero-work and exact-chunk-boundary vectors |
+| A14 | Product limits cover zero/below/equal/above; exact API preflights without arithmetic |
+| A15 | Limited iteration performs exactly the allowed count and exposes no result |
+| A16 | Complete iteration exposes the sole result and is invariant under chunk size |
+| A17 | Every public signature, keyword-only boundary, default, and invalid argument exception is introspection-tested |
+| A18 | `multiply_with_witness` nullability/status behavior passes every normalize/limit combination |
+| A19 | Normalization uses exact Gaussian arithmetic and contains no float/complex/round route |
+| A20 | Normalization preserves value/exponent semantics while canonical output offset may increase |
+| A21 | Vector `[((-2,1)), offset=-1]` normalizes to value one at canonical offset zero |
+| A22 | Carry limit counts only post-input drain iterations; 0/equal/below vectors pass |
+| A23 | Exhaustion raises without exposing a partial canonical result |
+| A24 | Witness dataclass field order/types and exact top-level JSON key set match the contract |
+| A25 | Canonical UTF-8 bytes, separators, sorting, no-BOM/no-newline, and digest vectors match |
+| A26 | Normalized object/digest null together exactly when normalization was not requested |
+| A27 | Serializer rejects structurally or arithmetically inconsistent witnesses |
+| A28 | Parser rejects non-bytes, invalid UTF-8, duplicate/unknown/missing keys, noncanonical bytes, bad identifiers, pairs, and digests |
+| A29 | No incomplete witness can be constructed, serialized, parsed, or verified |
+| A30 | Independent verifier dependency guard forbids production-convolution import/call |
+| A31 | Independent verifier detects mutation of every decisive field and recomputes normalization |
+| A32 | Claim guard requires product-count/carry-drain-count wording and rejects total-resource claims |
+| A33 | Complete pre-v0.15 regression and unchanged v0.14 acceptance suites pass |
+| A34 | Benchmark equality precheck, raw JSON/CSV, environment, timing statistics, memory lane, and cost separation pass |
+| A35 | Lean mapping records exact propositions, hypotheses, carriers, offsets, evaluation, certified identities, and adapters |
+| A36 | Vendored Lean identity/proof hygiene and all six existing project builds pass |
+| A37 | Package/runtime/CFF versions remain 0.14.1 until final activation |
+| A38 | Reproducible wheel/sdist double-build, clean installs, retained artifact, and independent candidate audit pass |
+| A39 | Both amendments, manifest, exact blobs, source index, final PR head, and tree form the terminal evidence chain |
 
-Use exhaustive small cases where feasible, fixed seeded wider cases, metamorphic laws, corruption matrices, exact reference vectors, and gross-regression thresholds that do not treat timing noise as correctness failure. No waiver may be silent.
+No waiver may be silent. A dated waiver must state scope, justification, impact, and approval.
