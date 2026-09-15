@@ -22,11 +22,11 @@ Status: SECOND HOLD REPAIRED; FROZEN BEFORE IMPLEMENTATION; RE-AUDIT REQUIRED
 | A16 | Complete iteration exposes the sole result and is invariant under chunk size |
 | A17 | Every public signature, keyword-only boundary, default, and invalid argument exception is introspection-tested |
 | A18 | `multiply_with_witness` nullability/status behavior passes every normalize/limit combination |
-| A19 | Normalization uses exact Gaussian arithmetic and contains no float/complex/round route |
-| A20 | Normalization preserves value/exponent semantics while canonical output offset may increase |
+| A19 | Normalization uses `d=(x+2*y)%5`, exact quotient carry, and no float/complex/round route |
+| A20 | Every normalized coefficient is `(d,0)` with `d` in 0..4; internal zeros remain and boundary trimming is canonical |
 | A21 | Vector `[((-2,1)), offset=-1]` normalizes to value one at canonical offset zero |
-| A22 | Carry limit counts only post-input drain iterations; 0/equal/below vectors pass |
-| A23 | Exhaustion raises without exposing a partial canonical result |
+| A22 | Carry limit accepts only `None`/nonnegative exact int; Boolean/non-int/negative exceptions are exact |
+| A23 | Carry count covers only post-input drain; zero/equal/below vectors pass and exhaustion exposes no partial result |
 | A24 | Witness dataclass field order/types and exact top-level JSON key set match the contract |
 | A25 | Canonical UTF-8 bytes, separators, sorting, no-BOM/no-newline, and digest vectors match |
 | A26 | Normalized object/digest null together exactly when normalization was not requested |
@@ -42,6 +42,9 @@ Status: SECOND HOLD REPAIRED; FROZEN BEFORE IMPLEMENTATION; RE-AUDIT REQUIRED
 | A36 | Vendored Lean identity/proof hygiene and all six existing project builds pass |
 | A37 | Package/runtime/CFF versions remain 0.14.1 until final activation |
 | A38 | Reproducible wheel/sdist double-build, clean installs, retained artifact, and independent candidate audit pass |
-| A39 | Both amendments, manifest, exact blobs, source index, final PR head, and tree form the terminal evidence chain |
+| A39 | `value` rejects non-sequences; subclasses are accepted |
+| A40 | `multiply_with_witness` validates carry limit even with normalization disabled |
+| A41 | Requested normalization exhaustion propagates `NormalizationLimitError` and creates no result/witness |
+| A42 | Three amendments, manifest, exact blobs, source index, final PR head, and tree form the terminal evidence chain |
 
 No waiver may be silent. A dated waiver must state scope, justification, impact, and approval.
