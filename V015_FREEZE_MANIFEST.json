@@ -1,7 +1,7 @@
 {
-  "schema": "cnrs-toolkit-v015-preimplementation-freeze-v3",
+  "schema": "cnrs-toolkit-v015-preimplementation-freeze-v4",
   "release_target": "0.15.0",
-  "status": "SECOND_AUDIT_HOLD_REPAIRED_INDEPENDENT_REAUDIT_REQUIRED",
+  "status": "THIRD_AUDIT_HOLD_REPAIRED_INDEPENDENT_REAUDIT_REQUIRED",
   "freeze_date": "2026-09-15",
   "audited_chain": [
     {
@@ -12,6 +12,11 @@
       "commit": "376dc1ec4ed7e576e1ecd75e4200cd1b32f9bc7d",
       "tree": "e8fa88a93e5b52010d0dbed1f4a79c657368613f",
       "verdict": "HOLD_SECOND_AMENDMENT_REQUIRED"
+    },
+    {
+      "commit": "13543667c5ad4339338abb0e7661e1c49be3f203",
+      "tree": "cccd9810ce074b5c839d295cd963cd1dd536950d",
+      "verdict": "HOLD_THIRD_AMENDMENT_REQUIRED"
     }
   ],
   "baseline": {
@@ -31,6 +36,7 @@
     "V015_FINITE_CONVOLUTION_API_CONTRACT.md",
     "V015_FREEZE_AMENDMENT_2026-09-14.md",
     "V015_FREEZE_AMENDMENT_2026-09-15.md",
+    "V015_FREEZE_AMENDMENT_3_2026-09-15.md",
     "docs/V015_ACCEPTANCE_TEST_PLAN.md",
     "docs/V015_BENCHMARK_PLAN.md",
     "docs/V015_CLAIM_BOUNDARY.md",
@@ -39,31 +45,32 @@
     "SOURCE_INDEX.txt"
   ],
   "repaired_content_blob_sha1": {
-    "V015_ARCHITECTURE_FREEZE.md": "5c22073e01875cabe759b0ad75e04409af5b2506",
-    "V015_FINITE_CONVOLUTION_API_CONTRACT.md": "829483af6d9fc1e979341378bde659d417a41814",
+    "V015_ARCHITECTURE_FREEZE.md": "11652f6c274ce78a61b1687cb3d5e231406c02bd",
+    "V015_FINITE_CONVOLUTION_API_CONTRACT.md": "c2b0abe5a59b36d062c85d3837e87db0c9e5ab68",
     "V015_FREEZE_AMENDMENT_2026-09-14.md": "baa851b865beea669a9e8c0447d2c552014079ff",
     "V015_FREEZE_AMENDMENT_2026-09-15.md": "a9700ec40697af1cefc8042a13471827fe1fbdfe",
-    "docs/V015_ACCEPTANCE_TEST_PLAN.md": "fba602867cb0d3c29e2421e89c1cde8cdcf2a737",
+    "V015_FREEZE_AMENDMENT_3_2026-09-15.md": "23a6115087a320ab6a11d7516128dd7558597548",
+    "docs/V015_ACCEPTANCE_TEST_PLAN.md": "a009fc85fb6626f9625d599ef39b16f737691129",
     "docs/V015_BENCHMARK_PLAN.md": "bfa39097b854d20dd0af099a727f19ae72dc05fc",
     "docs/V015_CLAIM_BOUNDARY.md": "61a113511aefc0f086a99c3697c1ee249c94b001",
     "docs/V015_LEAN_ALIGNMENT_PLAN.md": "118db2cfbdf9bed3217a2ea7f8a47d8873996325"
   },
-  "second_amendment_contracts": [
-    "IN_PROGRESS nonterminal status",
-    "canonical trim may increase stored offset",
-    "deterministic Gaussian unit-associate ordering",
-    "complete public signatures and defaults",
-    "exact top-level witness JSON schema and bytes parser",
-    "raw output offset equals left offset plus right offset before trimming",
-    "max_carry_steps counts post-input drain iterations only",
-    "39 acceptance gates with boundary vectors"
+  "third_amendment_contracts": [
+    "canonical digits are Gaussian-real pairs with d in 0 through 4",
+    "digit rule d equals x plus 2y modulo 5",
+    "next carry is exact quotient by beta",
+    "normalization value type and carry-limit validation are fixed",
+    "carry limit is validated when normalization is disabled",
+    "normalization exhaustion propagates NormalizationLimitError",
+    "normalization exhaustion creates no result or witness",
+    "42 acceptance gates include exact normalization vectors"
   ],
   "terminal_binding": {
     "strategy": "Manifest binds all non-self-referential content blobs; final PR body binds manifest blob, source-index blob, final commit, and final tree.",
     "self_reference_note": "A file cannot contain its own final blob hash or the SHA of its containing commit.",
-    "manifest_predecessor_blob": "04a274a39d70c146e3d931368a8fe172154d93f1",
-    "source_index_predecessor_blob": "10ee181eeacd41d3fb0025d66b7500a8ad6e08a0"
+    "manifest_predecessor_blob": "2e152b53d7fc9b4a1495731226a67e7b6485013a",
+    "source_index_predecessor_blob": "b94acad5586c3dbe1492cc909e44c5afceed016f"
   },
   "implementation_authorized": false,
-  "next_gate": "INDEPENDENT_SECOND_AMENDMENT_REAUDIT"
+  "next_gate": "INDEPENDENT_THIRD_AMENDMENT_REAUDIT"
 }
