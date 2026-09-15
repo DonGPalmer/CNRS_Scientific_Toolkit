@@ -1,8 +1,8 @@
 # CNRS Scientific Toolkit v0.15.0 finite-convolution API contract
 
-Status: HOLD REPAIRED; INDEPENDENT RE-AUDIT REQUIRED
+Status: SECOND HOLD REPAIRED; INDEPENDENT RE-AUDIT REQUIRED
 
-## Canonical scalar types
+## Scalars and canonical rational representative
 
 ```python
 GaussianInteger: TypeAlias = tuple[int, int]
@@ -12,19 +12,21 @@ GaussianLike: TypeAlias = int | GaussianInteger
 class GaussianRational:
     numerator: GaussianInteger
     denominator: GaussianInteger
+
+    def __init__(self, numerator: GaussianLike, denominator: GaussianLike = 1): ...
 ```
 
-A stored Gaussian integer is exactly a two-tuple whose components have `type(x) is int`. Public constructors accept `GaussianLike`: a value with `type(x) is int` becomes `(x, 0)`; a valid pair is preserved; Boolean values, lists, floats, complex values, subclasses with non-exact component types, and malformed pairs raise `TypeError`. Zero is `(0,0)`.
+Stored Gaussian components require `type(x) is int`. A public non-Boolean exact `int` coerces to `(x,0)`; a valid pair is preserved. Boolean, float, complex, list, malformed pair, and non-exact component types raise `TypeError`. A zero denominator raises `ZeroDivisionError`.
 
-`GaussianRational` rejects a zero denominator and is reduced and unit-normalized using exact Gaussian gcd rules. Zero is `((0,0),(1,0))`. Equality is mathematical equality after canonical reduction.
+Reduction uses exact Gaussian gcd. From reduced `p,q`, form the four associates `u*q` for `u in ((1,0),(-1,0),(0,1),(0,-1))`. Keep associates `w=(r,s)` satisfying `r>0 or (r==0 and s>=0)`; choose the minimum key `(abs(s),r,s)` in ascending tuple order. Multiply the numerator by the same unit. This uniquely fixes the representative and matches the baseline `unit_normalize` rule. Zero is exactly `((0,0),(1,0))`.
 
-## Finite carrier and Laurent evaluation
+## Finite carrier
 
 ```python
 @dataclass(frozen=True, init=False)
 class CNRSFiniteSequence:
     coefficients: tuple[GaussianInteger, ...]
-    offset: int = 0
+    offset: int
 
     def __init__(self, coefficients: Iterable[GaussianLike], offset: int = 0): ...
     @property
@@ -34,18 +36,47 @@ class CNRSFiniteSequence:
     def trimmed(self) -> "CNRSFiniteSequence": ...
 ```
 
-`offset` requires `type(offset) is int`. Construction coerces then trims zero coefficients at both ends, increasing the offset for each leading stored zero. Zero canonicalizes to empty coefficients and offset zero. For nonzero storage, support is `(offset, offset+len(coefficients)-1)`.
+`offset` requires `type(offset) is int`. Construction coerces all coefficients, trims zeros from both boundaries, and increments offset once for each low-boundary zero removed. Zero is `()`, offset `0`, support `None`. Otherwise support is `(offset,offset+len(coefficients)-1)`. Exact evaluation computes `sum(a_k*b**k)`; base zero with negative support raises `ZeroDivisionError`.
 
-Evaluation computes (sum_k a_k b^k) exactly. Base zero with any negative exponent raises `ZeroDivisionError`. Negative powers are represented through the canonical `GaussianRational` denominator; evaluation never rounds.
+## Public convolution signatures
 
-## Product count and traversal
+```python
+def convolve_exact(
+    left: CNRSFiniteSequence,
+    right: CNRSFiniteSequence,
+    *,
+    max_products: int | None = None,
+) -> CNRSFiniteSequence: ...
 
-For canonical stored lengths `m` and `n`, `required_products = m*n`. Every stored position pair counts, including internal zero coefficients. Zero input therefore requires zero products. Traversal is deterministic row-major order: `i=0..m-1` outer, `j=0..n-1` inner, accumulating at stored output index `i+j`.
+def iter_convolution(
+    left: CNRSFiniteSequence,
+    right: CNRSFiniteSequence,
+    *,
+    chunk_products: int = 1024,
+    max_products: int | None = None,
+) -> Iterator[ConvolutionProgress]: ...
 
-## Status, progress, result, and exceptions
+def multiply_with_witness(
+    left: CNRSFiniteSequence,
+    right: CNRSFiniteSequence,
+    *,
+    normalize: bool = True,
+    max_products: int | None = None,
+    max_carry_steps: int | None = None,
+) -> MultiplicationResult: ...
+```
+
+Inputs require `CNRSFiniteSequence` exactly or a subclass; other types raise `TypeError`. `normalize` requires `type(normalize) is bool`.
+
+For canonical stored lengths `m,n`, required products are `m*n`, including internal-zero positions. Traversal is `i=0..m-1` outer and `j=0..n-1` inner. Before trimming, output offset is exactly `left.offset + right.offset`; constructor trimming may increase the canonical stored offset.
+
+`max_products` requires `None` or a nonnegative exact int; Boolean/non-int raises `TypeError`, negative raises `ValueError`. `convolve_exact` raises `ConvolutionLimitError` before arithmetic if required exceeds the limit.
+
+## Progress and result types
 
 ```python
 class ConvolutionStatus(str, Enum):
+    IN_PROGRESS = "in_progress"
     COMPLETE = "complete"
     LIMIT_REACHED = "limit_reached"
 
@@ -67,17 +98,14 @@ class MultiplicationResult:
     witness: ConvolutionWitness | None
 
 class ConvolutionLimitError(RuntimeError): ...
+class NormalizationLimitError(RuntimeError): ...
 ```
 
-Limits require a nonnegative exact `int` or `None`; Boolean and non-integer values raise `TypeError`, negatives raise `ValueError`. `chunk_products` requires a positive exact integer.
+`chunk_products` requires a positive exact int. Iterator records after each full chunk strictly before termination use `IN_PROGRESS`, `result=None`, and the last traversed pair. Exactly one terminal follows. A complete terminal alone carries the result. A limited terminal performs exactly `max_products` products, has `LIMIT_REACHED`, no result, and the last processed pair or `None`. Zero work yields one complete terminal with canonical zero and `last_pair=None`. Completion on a chunk boundary does not emit a preceding duplicate progress record.
 
-`convolve_exact` precomputes the required count. If it exceeds `max_products`, it raises `ConvolutionLimitError` before multiplication. Otherwise it returns the complete trimmed sequence.
+`multiply_with_witness` returns rather than raises on a valid insufficient product limit: every result/witness field is null. Complete mode exposes raw convolution; normalized is non-null exactly when `normalize=True`; witness is always non-null. Invalid arguments retain the exceptions above.
 
-`iter_convolution` emits a progress record after each full chunk and then exactly one terminal record. If the limit is below the required count, it performs exactly `max_products` products and terminates with `LIMIT_REACHED`; that terminal has `result=None`. A complete terminal has the sole authoritative result. When zero products are required, it emits one `COMPLETE` terminal with canonical zero. No duplicate terminal is emitted when a chunk boundary equals completion.
-
-`multiply_with_witness` never raises `ConvolutionLimitError` for an otherwise valid limit. It returns `LIMIT_REACHED` with all three result/witness fields `None`, or `COMPLETE` with raw convolution, optional normalized result, and a witness. Invalid arguments still raise their specified type/value exceptions.
-
-## Exact normalization
+## Exact normalization signature and accounting
 
 ```python
 def normalize_gaussian_laurent(
@@ -87,20 +115,67 @@ def normalize_gaussian_laurent(
 ) -> CNRSFiniteSequence: ...
 ```
 
-This new function implements exact Gaussian carry recurrence in base `(-2,1)`, preserves value and Laurent offset, and returns coefficients `(d,0)` with `d in {0,1,2,3,4}`. It does not call the legacy floating-point/string normalizer. `max_carry_steps` uses the same exact-integer validation; exhaustion raises `NormalizationLimitError` and returns no partial canonical result.
+The exact base-`(-2,1)` recurrence processes input positions from `value.offset` upward. `max_carry_steps` counts only recurrence iterations after the last stored input coefficient. If carry is already zero, zero steps are required. Before each post-input iteration, if the completed drain count equals the limit while carry is nonzero, raise `NormalizationLimitError` and expose no partial canonical result. Input-position processing does not consume this limit. Exact value and exponent placement before trimming are preserved; canonical boundary trimming may increase output offset.
 
-## Witness schema and canonical bytes
+## Complete witness schema
 
-Schema identifier: `cnrs-convolution-witness-v1`.
+```python
+@dataclass(frozen=True)
+class ConvolutionWitness:
+    schema: str
+    status: str
+    algorithm: str
+    traversal: str
+    left: CNRSFiniteSequence
+    right: CNRSFiniteSequence
+    raw: CNRSFiniteSequence
+    normalized: CNRSFiniteSequence | None
+    normalization_requested: bool
+    products_required: int
+    left_sha256: str
+    right_sha256: str
+    raw_sha256: str
+    normalized_sha256: str | None
 
-A complete witness contains: schema; status; canonical left/right/raw/normalized sequence objects; `normalization_requested`; `products_required`; traversal identifier `left-major-right-minor-v1`; algorithm identifier `schoolbook-gaussian-exact-v1`; and SHA-256 digests of the canonical byte encodings of left, right, raw, and normalized values (normalized digest is null when normalization was not requested).
+@dataclass(frozen=True)
+class WitnessValidation:
+    valid: bool
+    errors: tuple[str, ...]
 
-A sequence JSON object is exactly `{"coefficients":[[re,im],...],"offset":n}`. Canonical JSON bytes are UTF-8 of `json.dumps(obj, sort_keys=True, separators=(",",":"), ensure_ascii=False, allow_nan=False)` with no BOM and no trailing newline. Digests are lowercase hexadecimal SHA-256 of those bytes.
+def serialize_convolution_witness(witness: ConvolutionWitness) -> bytes: ...
+def deserialize_convolution_witness(data: bytes) -> ConvolutionWitness: ...
+def verify_convolution_witness(
+    witness: ConvolutionWitness | bytes,
+) -> WitnessValidation: ...
+```
 
-No witness is produced for `LIMIT_REACHED`. Deserialization rejects unknown/missing keys, unknown schema/status/algorithm/traversal, noncanonical scalar encodings, digest case/length errors, and any byte-noncanonical reserialization.
+The top-level JSON object has exactly these keys and value types:
 
-`cnrs.validation.convolution_oracle.verify_convolution_witness` parses strictly, recomputes convolution with an independently coded nested loop that does not import `cnrs.convolution`, recomputes exact normalization when requested, and compares every decisive field and digest.
+```json
+{
+  "algorithm": "schoolbook-gaussian-exact-v1",
+  "left": {"coefficients": [[0, 0]], "offset": 0},
+  "left_sha256": "64 lowercase hex characters",
+  "normalization_requested": true,
+  "normalized": {"coefficients": [[0, 0]], "offset": 0},
+  "normalized_sha256": "64 lowercase hex characters",
+  "products_required": 1,
+  "raw": {"coefficients": [[0, 0]], "offset": 0},
+  "raw_sha256": "64 lowercase hex characters",
+  "right": {"coefficients": [[0, 0]], "offset": 0},
+  "right_sha256": "64 lowercase hex characters",
+  "schema": "cnrs-convolution-witness-v1",
+  "status": "complete",
+  "traversal": "left-major-right-minor-v1"
+}
+```
+
+The displayed zero coefficient is illustrative only; actual sequence objects must already satisfy canonical zero/trimming rules. `normalized` and `normalized_sha256` are both null exactly when `normalization_requested=false`; otherwise both are non-null. No other field is nullable. Status is only `"complete"`.
+
+A sequence object has exactly keys `coefficients` and `offset`; coefficients are arrays of two JSON integers, with Boolean forbidden. Canonical bytes are UTF-8 of `json.dumps(obj,sort_keys=True,separators=(",",":"),ensure_ascii=False,allow_nan=False)`, without BOM or trailing newline. Each digest hashes the corresponding canonical sequence-object bytes.
+
+Serialization accepts only a structurally and arithmetically self-consistent complete witness; otherwise it raises `ValueError`. Deserialization accepts `type(data) is bytes` only, rejects invalid UTF-8, duplicate keys, missing/unknown keys, noncanonical bytes, invalid/null mismatches, bad identifiers and digests, and returns the dataclass. Verification accepts only `ConvolutionWitness` or exact `bytes`; other types raise `TypeError`. It independently recomputes convolution without importing production convolution, recomputes normalization when requested, and returns all detected consistency errors.
 
 ## Resource claim
 
-`max_products` and `chunk_products` are product-count controls only. They do not bound coefficient bit length, Python-integer allocation, result size, carry steps, elapsed time, or total memory. Documentation must use “product-count bounded” unless additional explicit limits are later frozen.
+Product and carry-drain limits do not bound coefficient bit length, Python-integer work, output allocation, elapsed time, or total memory. Only “product-count bounded” and “post-input carry-drain-count bounded” are permitted.
