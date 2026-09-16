@@ -21,6 +21,7 @@ from cnrs import (
     verify_convolution_witness,
 )
 from cnrs.validation.convolution_oracle import oracle_convolve
+from tools.check_v015_claims import validate_public_claim_text
 
 BETA = (-2, 1)
 
@@ -248,3 +249,190 @@ def test_nonsequence_rejected_everywhere():
             function((1,), CNRSFiniteSequence((1,)))
     with pytest.raises(TypeError):
         normalize_gaussian_laurent((1,))
+
+
+def test_exhaustive_small_convolution_and_evaluation():
+    values = [(a, b) for a in range(-1, 2) for b in range(-1, 2)]
+    for left_value in values:
+        for right_value in values:
+            for left_offset in (-1, 0, 1):
+                for right_offset in (-1, 0, 1):
+                    left = CNRSFiniteSequence((left_value,), left_offset)
+                    right = CNRSFiniteSequence((right_value,), right_offset)
+                    result = convolve_exact(left, right)
+                    assert result == oracle_convolve(left, right)
+                    assert result.evaluate(BETA) == (
+                        left.evaluate(BETA) * right.evaluate(BETA)
+                    )
+
+
+def test_convolution_algebraic_laws_and_internal_zeros():
+    zero = CNRSFiniteSequence(())
+    one = CNRSFiniteSequence((1,))
+    left = CNRSFiniteSequence(((2, -1), 0, (3, 4)), -2)
+    right = CNRSFiniteSequence(((-1, 2), 0, 5), 3)
+    third = CNRSFiniteSequence(((4, 1), -2), -1)
+    assert convolve_exact(left, zero) == zero
+    assert convolve_exact(left, one) == left
+    assert convolve_exact(left, right) == convolve_exact(right, left)
+    assert convolve_exact(convolve_exact(left, right), third) == convolve_exact(
+        left, convolve_exact(right, third)
+    )
+
+
+def test_all_frozen_public_signatures_exactly():
+    expected = {
+        convolve_exact: "(left: 'CNRSFiniteSequence', right: 'CNRSFiniteSequence', *, max_products: 'int | None' = None) -> 'CNRSFiniteSequence'",
+        iter_convolution: "(left: 'CNRSFiniteSequence', right: 'CNRSFiniteSequence', *, chunk_products: 'int' = 1024, max_products: 'int | None' = None) -> 'Iterator[ConvolutionProgress]'",
+        multiply_with_witness: "(left: 'CNRSFiniteSequence', right: 'CNRSFiniteSequence', *, normalize: 'bool' = True, max_products: 'int | None' = None, max_carry_steps: 'int | None' = None) -> 'MultiplicationResult'",
+        normalize_gaussian_laurent: "(value: 'CNRSFiniteSequence', *, max_carry_steps: 'int | None' = None) -> 'CNRSFiniteSequence'",
+        serialize_convolution_witness: "(witness: 'ConvolutionWitness') -> 'bytes'",
+        deserialize_convolution_witness: "(data: 'bytes') -> 'ConvolutionWitness'",
+        verify_convolution_witness: "(witness: 'ConvolutionWitness | bytes') -> 'WitnessValidation'",
+    }
+    for function, signature in expected.items():
+        assert str(inspect.signature(function)) == signature
+
+
+@pytest.mark.parametrize("normalize", [False, True])
+@pytest.mark.parametrize("limit_delta", [-1, 0, 1])
+def test_multiply_limit_normalize_matrix(normalize, limit_delta):
+    left = CNRSFiniteSequence((1, 2))
+    right = CNRSFiniteSequence((3, 4))
+    required = 4
+    result = multiply_with_witness(
+        left,
+        right,
+        normalize=normalize,
+        max_products=required + limit_delta,
+        max_carry_steps=20,
+    )
+    if limit_delta < 0:
+        assert result.status is ConvolutionStatus.LIMIT_REACHED
+        assert result.raw_convolution is None
+        assert result.normalized is None
+        assert result.witness is None
+    else:
+        assert result.status is ConvolutionStatus.COMPLETE
+        assert result.raw_convolution == convolve_exact(left, right)
+        assert (result.normalized is not None) is normalize
+        assert result.witness is not None
+        assert result.witness.normalization_requested is normalize
+
+
+def test_fixed_sequence_digest_vector():
+    result = multiply_with_witness(
+        CNRSFiniteSequence((1,)), CNRSFiniteSequence((1,))
+    )
+    witness = result.witness
+    assert witness is not None
+    expected = "696f8debb065a59f2ad77572546943a0cdaa1bc0dfd90d613899ef1fca19a931"
+    assert witness.left_sha256 == expected
+    assert witness.right_sha256 == expected
+    assert witness.raw_sha256 == expected
+    assert witness.normalized_sha256 == expected
+
+
+def _canonical_witness_bytes(obj):
+    return json.dumps(
+        obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+    ).encode("utf-8")
+
+
+def test_parser_complete_rejection_matrix():
+    witness = multiply_with_witness(
+        CNRSFiniteSequence((1,)), CNRSFiniteSequence((1,))
+    ).witness
+    assert witness is not None
+    canonical = serialize_convolution_witness(witness)
+    obj = json.loads(canonical)
+
+    bad_values = [bytearray(canonical), "not bytes", None]
+    for value in bad_values:
+        with pytest.raises(TypeError):
+            deserialize_convolution_witness(value)
+
+    mutations = []
+    missing = dict(obj); missing.pop("status"); mutations.append(missing)
+    unknown = dict(obj); unknown["unknown"] = 1; mutations.append(unknown)
+    bad_schema = dict(obj); bad_schema["schema"] = "wrong"; mutations.append(bad_schema)
+    bad_status = dict(obj); bad_status["status"] = "in_progress"; mutations.append(bad_status)
+    bad_algorithm = dict(obj); bad_algorithm["algorithm"] = "wrong"; mutations.append(bad_algorithm)
+    bad_traversal = dict(obj); bad_traversal["traversal"] = "wrong"; mutations.append(bad_traversal)
+    bad_digest = dict(obj); bad_digest["left_sha256"] = "A" * 64; mutations.append(bad_digest)
+    bad_pair = json.loads(canonical); bad_pair["left"]["coefficients"] = [[True, 0]]; mutations.append(bad_pair)
+    bad_offset = json.loads(canonical); bad_offset["left"]["offset"] = True; mutations.append(bad_offset)
+    bad_null = dict(obj); bad_null["normalized"] = None; mutations.append(bad_null)
+    for mutation in mutations:
+        with pytest.raises(ValueError):
+            deserialize_convolution_witness(_canonical_witness_bytes(mutation))
+
+    with pytest.raises(ValueError):
+        deserialize_convolution_witness(b"\xef\xbb\xbf" + canonical)
+    with pytest.raises(ValueError):
+        deserialize_convolution_witness(canonical + b"\n")
+
+
+def test_incomplete_witnesses_cannot_serialize_or_verify():
+    witness = multiply_with_witness(
+        CNRSFiniteSequence((1,)), CNRSFiniteSequence((2,))
+    ).witness
+    assert witness is not None
+    for mutation in (
+        replace(witness, status="in_progress"),
+        replace(witness, raw=None),
+        replace(witness, normalized=None),
+        replace(witness, normalized_sha256=None),
+    ):
+        assert not verify_convolution_witness(mutation).valid
+        with pytest.raises(ValueError):
+            serialize_convolution_witness(mutation)
+
+
+def test_every_decisive_witness_field_is_recomputed_or_validated():
+    witness = multiply_with_witness(
+        CNRSFiniteSequence((1, 2), -1), CNRSFiniteSequence((3, 4), 2)
+    ).witness
+    assert witness is not None
+    changes = {
+        "schema": "wrong",
+        "status": "in_progress",
+        "algorithm": "wrong",
+        "traversal": "wrong",
+        "left": CNRSFiniteSequence((9,)),
+        "right": CNRSFiniteSequence((9,)),
+        "raw": CNRSFiniteSequence((9,)),
+        "normalized": CNRSFiniteSequence((9,)),
+        "normalization_requested": False,
+        "products_required": witness.products_required + 1,
+        "left_sha256": "0" * 64,
+        "right_sha256": "0" * 64,
+        "raw_sha256": "0" * 64,
+        "normalized_sha256": "0" * 64,
+    }
+    for field, value in changes.items():
+        mutated = replace(witness, **{field: value})
+        assert not verify_convolution_witness(mutated).valid, field
+        with pytest.raises(ValueError):
+            serialize_convolution_witness(mutated)
+
+
+@pytest.mark.parametrize(
+    "claim",
+    [
+        "This operation has bounded total computational resources.",
+        "The algorithm provides bounded elapsed time.",
+        "The implementation is universally faster.",
+        "The method offers universal memory superiority.",
+    ],
+)
+def test_claim_guard_rejects_total_resource_and_universal_claims(claim):
+    with pytest.raises(ValueError):
+        validate_public_claim_text("candidate.md", claim)
+
+
+def test_claim_guard_accepts_exact_frozen_qualifications():
+    validate_public_claim_text(
+        "candidate.md",
+        "Execution is product-count bounded and post-input carry-drain-count bounded only.",
+    )
