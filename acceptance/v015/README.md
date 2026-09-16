@@ -8,6 +8,12 @@ The executable 42-gate contract is represented by:
 - `benchmarks/benchmark_finite_convolution.py` for equality-gated timing and peak-memory evidence;
 - the complete regression suite and existing Lean source-identity workflow.
 
+The dedicated suite includes committed exhaustive-small convolution cases,
+all frozen public signatures, the normalize/product-limit matrix, fixed digest
+vectors, the complete parser rejection matrix, incomplete-witness rejection,
+mutation of every decisive witness field, and positive/negative resource-claim
+guard cases.
+
 Candidate command:
 
 ```bash
