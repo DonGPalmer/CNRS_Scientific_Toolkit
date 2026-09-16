@@ -1,10 +1,11 @@
 # CNRS Scientific Toolkit v0.15.0 implementation-candidate source index
-# Synchronized on 2026-09-15 after local implementation validation.
+# Synchronized on 2026-09-16 after AMBER acceptance/evidence repair.
 # Files listed: 472
 # Governed baseline merge: 017d9273e0f05d75b2019c623cd91c9615d9571a
-# Measured implementation commit: 467fda628e046545209fb99366802a8b631b9c50
+# Audited implementation commit: 2adf691b3ad25dd2db9a7be6d9aae92175a71db8
+# Audited implementation tree: 8e05246d477237bd96b6d3cb51c82a1f17404e9d
 # Package/runtime/CFF version remains 0.14.1 until release finalization.
-# Candidate merge and release remain prohibited pending public CI and independent audit.
+# Candidate merge and release remain prohibited pending exact-head CI and independent re-audit.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
