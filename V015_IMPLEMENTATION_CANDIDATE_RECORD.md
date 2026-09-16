@@ -58,6 +58,11 @@ complete frozen signature/limit/parser/witness-mutation matrices, negative
 claim-guard cases, a restricted exact Lean theorem map, and benchmark evidence
 tied to the accessible audited implementation commit above.
 
+Terminal CI then exposed a test-collection portability defect: `tools/` is not
+an installed package under the workflow's `pytest` entry point. The test now
+loads the same claim guard explicitly from its governed repository path. This
+changes no runtime module, public API, mathematical result, or claim boundary.
+
 This record does not authorize merge, version activation, tagging or
 publication. Because a tracked file cannot contain the identity of the commit
 that contains it, the terminal repair head/tree, exact-head Python and Lean CI,
