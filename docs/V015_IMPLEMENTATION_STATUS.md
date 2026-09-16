@@ -7,9 +7,10 @@ The candidate implements the approved 42-gate finite-convolution contract withou
 The repaired executable identity is commit
 `2adf691b3ad25dd2db9a7be6d9aae92175a71db8`, tree
 `8e05246d477237bd96b6d3cb51c82a1f17404e9d`. It closes the first audit's
-acceptance-coverage findings. The final evidence-only descendant is permitted
-to change benchmark outputs and governance records but not runtime or test
-bytes; PR #5 supplies its terminal commit/tree binding.
+acceptance-coverage findings. The terminal descendant may change benchmark
+outputs, governance records, and the test-only import needed for GitHub runner
+collection, but not runtime bytes; PR #5 supplies its terminal commit/tree
+binding.
 
 ## Public API components
 
