@@ -1,6 +1,6 @@
-# CNRS Scientific Toolkit v0.15.0 Lean-alignment plan
+# CNRS Scientific Toolkit v0.15.0 Lean-alignment record
 
-Status: FROZEN BEFORE IMPLEMENTATION
+Status: IMPLEMENTATION CANDIDATE MAPPED; THEOREM BOUNDARY RESTRICTED
 
 ## Target mathematical bridge
 
@@ -17,6 +17,30 @@ Before any theorem-backed release claim, record:
 - certified commit, Git tree, workflow run/job, artifact identity, and source checksums;
 - a field-by-field mapping from Lean objects to Python types and operations.
 
+## Certified theorem map used by this candidate
+
+The governed CNRS-LEAN-CAPSTONE identity is repository
+`DonGPalmer/SSC_Formal_Methods_CI`, commit
+`07e776b4e1d7d09513394a4b676516eb51e4c597`, tree
+`fd61bac37369f8e3020d70141c565a4fba414a98`, Lean `4.33.0`, workflow
+run `34534566879`, job `103063055916`, artifact `10175389923`, artifact
+SHA-256 `840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21`.
+The exact sources are vendored under `formal/lean/` and guarded by
+`tools/check_lean_alignment.py`.
+
+| Lean proposition | Exact hypotheses and carrier | Python correspondence | Boundary |
+|---|---|---|---|
+| `CNRSArithmetic.coeffValue_convolutionCoefficients` | `xs ys : List Digit`; `Digit = Fin 5`; coefficients and values in the Gaussian integers; LSD-first, exponent zero | `convolve_exact()` restricted to zero-offset inputs whose coefficients are `(d,0)`, `0 <= d <= 4`; `CNRSFiniteSequence.evaluate((-2,1))` | The Python API additionally accepts arbitrary Gaussian coefficients and integer Laurent offsets; those extensions are computationally validated, not covered by this theorem |
+| `CNRSArithmetic.normalizeCoefficients_correct` | arbitrary finite `List GaussianInt`; evaluation by `coeffValue`; exponent zero | `normalize_gaussian_laurent()` restricted to offset zero; digit recurrence and evaluation at `(-2,1)` | Python preserves arbitrary integer offsets by carrying the offset unchanged; that placement adapter is tested but is not a Lean theorem |
+| `CNRSArithmetic.fixedMultiply_correct` | canonical finite digit lists; convolution followed by normalization | `multiply_with_witness()` on zero-offset canonical-digit sequences with normalization requested | Witness serialization, limits, progress records, Gaussian-rational evaluation, and negative offsets are outside this theorem |
+
+The adapter is explicit: Lean `GaussianInt` maps to Python `(real, imag)`;
+Lean `List Digit` maps to `CNRSFiniteSequence(tuple((int(d),0) ...), 0)`;
+Lean LSD-first list position maps to Python coefficient index; Lean `beta` maps
+to Python `(-2,1)`; and Lean `wordValue`/`coeffValue` maps to
+`CNRSFiniteSequence.evaluate((-2,1))`. No claim maps a negative Python offset
+to the natural-number denominator shift used by `CnrsQ2.evalFiniteLaurent`.
+
 ## Synchronization rule
 
 The Toolkit may import a Lean result only after that result has completed its own independent audit and governed promotion. The exact certified sources must be vendored or checksum-linked using the existing source-identity mechanism. Development snapshots may guide tests but cannot support release claims.
@@ -31,4 +55,9 @@ Differences in trimming, zero representation, coefficient order, Laurent offsets
 
 ## Fallback release posture
 
-If the formal P3-L1 result is not certified in time, v0.15.0 may release the finite exact Python feature as computationally validated, provided all theorem-backed language is removed and the provenance records the formal alignment as pending. No provisional theorem identity may be cited.
+The certified capstone contains the restricted finite-convolution and
+normalization propositions above, but not a theorem matching the complete
+v0.15.0 Python carrier and API. Accordingly, v0.15.0 remains a computationally
+validated Python release. The restricted mapping may be described accurately;
+the complete Python implementation must not be described as Lean-verified,
+Lean-extracted, or end-to-end formally verified.

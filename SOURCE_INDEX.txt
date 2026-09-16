@@ -1,10 +1,11 @@
-# CNRS Scientific Toolkit v0.15.0 third-amended pre-implementation freeze source index
-# Amended on 2026-09-15 after the third independent HOLD audit.
-# Files listed: 456
-# Baseline main commit: f0f674be654a2d9a82f8ec8b77ca732a04af218a
-# Audited predecessors: 170694a675686da2c7c1cfcd4bc45c68877914d4; 376dc1ec4ed7e576e1ecd75e4200cd1b32f9bc7d; 13543667c5ad4339338abb0e7661e1c49be3f203
+# CNRS Scientific Toolkit v0.15.0 implementation-candidate source index
+# Synchronized on 2026-09-16 after AMBER acceptance/evidence repair.
+# Files listed: 472
+# Governed baseline merge: 017d9273e0f05d75b2019c623cd91c9615d9571a
+# Audited implementation commit: 2adf691b3ad25dd2db9a7be6d9aae92175a71db8
+# Audited implementation tree: 8e05246d477237bd96b6d3cb51c82a1f17404e9d
 # Package/runtime/CFF version remains 0.14.1 until release finalization.
-# Runtime implementation remains prohibited pending independent GREEN re-audit.
+# Candidate merge and release remain prohibited pending exact-head CI and independent re-audit.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -40,13 +41,19 @@ V014_RELEASE_CLOSEOUT_RECORD_2026-09-12.md
 V014_RELEASE_FINALIZATION_RECORD_2026-09-12.md
 V014_SHA256SUMS.txt
 V015_ARCHITECTURE_FREEZE.md
+V015_CANDIDATE_SHA256SUMS.txt
 V015_FINITE_CONVOLUTION_API_CONTRACT.md
 V015_FREEZE_AMENDMENT_2026-09-14.md
 V015_FREEZE_AMENDMENT_2026-09-15.md
 V015_FREEZE_AMENDMENT_3_2026-09-15.md
 V015_FREEZE_MANIFEST.json
+V015_IMPLEMENTATION_CANDIDATE_RECORD.md
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py
+acceptance/v015/README.md
+benchmark-results/v015/finite_convolution_results.json
+benchmark-results/v015/finite_convolution_summary.csv
+benchmarks/benchmark_finite_convolution.py
 benchmarks/benchmark_streaming_division.py
 cnrs/__init__.py
 cnrs/algebraic_curve.py
@@ -103,6 +110,8 @@ cnrs/cnrs_scale.py
 cnrs/cnrs_scientific_state.py
 cnrs/cnrs_value.py
 cnrs/cnrs_verify.py
+cnrs/convolution.py
+cnrs/convolution_witnesses.py
 cnrs/core/__init__.py
 cnrs/core/arithmetic.py
 cnrs/core/base.py
@@ -110,8 +119,11 @@ cnrs/core/branch.py
 cnrs/core/digits.py
 cnrs/core/value.py
 cnrs/division.py
+cnrs/finite_sequence.py
 cnrs/formal_h_algebra.py
 cnrs/formal_state.py
+cnrs/gaussian_normalization.py
+cnrs/gaussian_types.py
 cnrs/gaussian_valuation.py
 cnrs/generalized_branch.py
 cnrs/h/__init__.py
@@ -143,6 +155,7 @@ cnrs/topology.py
 cnrs/validation/__init__.py
 cnrs/validation/autodiff.py
 cnrs/validation/compare.py
+cnrs/validation/convolution_oracle.py
 cnrs/validation/reference_complex.py
 cnrs/witnesses.py
 cnrs/workflows/__init__.py
@@ -199,7 +212,9 @@ docs/V014_STREAMING_DIVISION_API_CONTRACT.md
 docs/V015_ACCEPTANCE_TEST_PLAN.md
 docs/V015_BENCHMARK_PLAN.md
 docs/V015_CLAIM_BOUNDARY.md
+docs/V015_IMPLEMENTATION_STATUS.md
 docs/V015_LEAN_ALIGNMENT_PLAN.md
+docs/V015_PERFORMANCE_RESULTS.md
 docs/audits/DIVISION_RATIONAL_VALIDATION_V011.md
 docs/audits/SCIENTIFIC_WORKFLOW_AUDIT_V011.md
 docs/audits/scripts/branch_index_algebra_verify_v1.py
@@ -455,11 +470,13 @@ tests/test_termination_ideal_theorem_v011.py
 tests/test_theorem_alignment_v080.py
 tests/test_theorem_alignment_v081.py
 tests/test_topology_v011.py
+tests/test_v015_finite_convolution.py
 tools/audit_native_status.py
 tools/build_release.py
 tools/build_reproducible_distributions.py
 tools/check_lean_alignment.py
 tools/check_release_assets.py
+tools/check_v015_claims.py
 tools/toolkit_audit_crossval.py
 v014_performance_results.json
 v014_performance_summary.csv
