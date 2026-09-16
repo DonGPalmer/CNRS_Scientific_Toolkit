@@ -1,3 +1,11 @@
+# Lean formalization alignment — v0.15.0 note
+
+v0.15.0 retains the governed six-project Lean source unchanged. The exact
+restricted convolution mapping covers zero-offset canonical digit words as
+specified in `docs/V015_LEAN_ALIGNMENT_PLAN.md`; the general Gaussian/Laurent
+Python carrier, normalization implementation, witness serialization, and
+benchmark behavior remain independently implemented computational properties.
+
 # Lean formalization alignment — v0.14.1 note
 
 v0.14.1 does not modify the vendored Lean source or enlarge the formal proof

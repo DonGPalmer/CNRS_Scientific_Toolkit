@@ -1,3 +1,16 @@
+# Claim Status — v0.15.0
+
+v0.15.0 establishes exact finite convolution for the frozen Gaussian/Laurent
+carrier, exact canonical normalization, deterministic progress and witnesses,
+and independent finite verification over the documented acceptance domain.
+`max_products` is product-count bounded only and `max_carry_steps` is
+post-input carry-drain-count bounded only. Neither is a bound on coefficient
+bit complexity, elapsed time, total memory, or unrestricted input streams.
+
+The Python implementation is independently written and computationally
+verified. The restricted theorem map is exact where stated; it does not claim
+that the general Python carrier is Lean-extracted or end-to-end Lean-verified.
+
 # Claim Status — v0.14.1
 
 v0.14.1 introduces no new mathematical or scientific claim. It strengthens

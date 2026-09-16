@@ -1,3 +1,17 @@
+# v0.15.0 — Exact Finite Convolution and Canonical Witnesses
+
+- Adds strict Gaussian-integer and canonical Gaussian-rational carriers.
+- Adds immutable finite Gaussian-coefficient Laurent sequences.
+- Adds deterministic exact and chunked finite convolution with product-count limits.
+- Adds exact canonical base-`(-2+i)` normalization with carry-drain limits.
+- Adds canonical convolution witnesses and independent witness verification.
+- Adds an independent nested-loop convolution oracle and equality-gated benchmarks.
+- Preserves the v0.14 streaming-division contracts and existing public interfaces.
+- Retains the independent-Python and restricted Lean-alignment boundary.
+- Makes no universal speed, memory, elapsed-time, or unrestricted analytic claim.
+
+See `RELEASE_NOTES_v0.15.0.md`.
+
 # v0.14.1 — Release Governance and Reproducible Packaging
 
 - Released 2026-09-14 at tag `v0.14.1`, commit

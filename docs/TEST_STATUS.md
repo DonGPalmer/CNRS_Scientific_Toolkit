@@ -1,3 +1,15 @@
+# Test Status — v0.15.0 Release Finalization
+
+The independently audited implementation recorded 61 dedicated v0.15 passes,
+19 unchanged v0.14 acceptance passes, 1,278 standard-suite passes with 4
+optional-dependency skips and 922 warnings, and 1,282 passes with optional
+pandas and 921 warnings. The 16-file candidate checksum inventory passed 16/16
+and the implementation source index passed 472/472. Exact-head Python,
+distribution, claim/oracle, benchmark, and seven-job Lean gates succeeded.
+
+Release-finalization CI rebuilds and clean-installs both v0.15.0 distributions
+and re-runs the complete Python and Lean lanes at the final tagged tree.
+
 # Test Status — v0.14.1 Release
 
 The v0.14.1 preparation tree adds three release-engineering tests and
