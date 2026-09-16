@@ -18,6 +18,10 @@ jobs:
       - run: pytest -q
       - name: v0.14.0 streaming-division acceptance contract
         run: pytest -q acceptance/v014
+      - name: v0.15.0 finite-convolution acceptance contract
+        run: |
+          pytest -q tests/test_v015_finite_convolution.py
+          python tools/check_v015_claims.py
 
   distribution:
     needs: pytest
