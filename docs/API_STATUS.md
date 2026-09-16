@@ -1,3 +1,15 @@
+# API Status — v0.15.0
+
+v0.15.0 adds `GaussianInteger`, `GaussianRational`, `CNRSFiniteSequence`,
+`convolve_exact`, `iter_convolution`, `multiply_with_witness`, canonical
+Gaussian/Laurent normalization, deterministic convolution-witness codecs and
+validation, and the independent convolution oracle. The frozen signatures and
+limit behavior are defined by `V015_FINITE_CONVOLUTION_API_CONTRACT.md`.
+
+All v0.14.0 streaming-division interfaces and earlier compatible APIs remain
+available. The new finite-convolution layer does not claim arbitrary infinite
+stream multiplication or unrestricted analytic convergence.
+
 # API Status — v0.14.1
 
 v0.14.1 changes no public Python API. It is a release-governance and

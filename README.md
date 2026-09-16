@@ -1,5 +1,27 @@
 # CNRS Scientific Toolkit
 
+## v0.15.0 — Exact Finite Convolution and Canonical Witnesses
+
+**Status: release finalization; independently audited implementation and post-merge CI are GREEN.**
+
+Version 0.15.0 adds exact finite Gaussian-coefficient Laurent sequences,
+deterministic raw and chunked convolution, canonical base-`(-2+i)`
+normalization, complete canonical witnesses, and an independent nested-loop
+verification oracle. Product and carry controls bound counted operations only;
+they do not claim universal elapsed-time or total-memory bounds.
+
+The implementation was independently audited at commit
+`0740c1e8ace7af98ac3ed4c76d6ba74610bada56`, tree
+`88a545bbf359e2e5fe2b0d29111b915e08963e08`, and merged through PR #5 as
+normal merge commit `fa93a8307905961808321e19d7020dc7806e4e5f` with the same
+tree. Exact-head Python/distribution CI and the seven-job Lean source-identity
+and project-build lane succeeded. See `RELEASE_NOTES_v0.15.0.md`.
+
+The Toolkit concept DOI remains
+[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.15.0
+version DOI will be recorded additively after Zenodo processes the published
+GitHub release.
+
 ## v0.14.1 — Release Governance and Reproducible Packaging
 
 **Status: released 2026-09-14; GitHub and Zenodo publication complete.**

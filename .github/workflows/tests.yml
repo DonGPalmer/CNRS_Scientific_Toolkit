@@ -40,25 +40,25 @@ jobs:
       - name: Verify wheel in a clean environment
         run: |
           python -m venv /tmp/cnrs-wheel-venv
-          /tmp/cnrs-wheel-venv/bin/python -m pip install dist/cnrs-0.14.1-py3-none-any.whl
-          /tmp/cnrs-wheel-venv/bin/python -c "import cnrs; assert cnrs.__version__ == '0.14.1'"
+          /tmp/cnrs-wheel-venv/bin/python -m pip install dist/cnrs-0.15.0-py3-none-any.whl
+          /tmp/cnrs-wheel-venv/bin/python -c "import cnrs; assert cnrs.__version__ == '0.15.0'"
       - name: Verify source distribution in a clean environment
         run: |
           python -m venv /tmp/cnrs-sdist-venv
-          /tmp/cnrs-sdist-venv/bin/python -m pip install dist/cnrs-0.14.1.tar.gz
-          /tmp/cnrs-sdist-venv/bin/python -c "import cnrs; assert cnrs.__version__ == '0.14.1'"
+          /tmp/cnrs-sdist-venv/bin/python -m pip install dist/cnrs-0.15.0.tar.gz
+          /tmp/cnrs-sdist-venv/bin/python -c "import cnrs; assert cnrs.__version__ == '0.15.0'"
       - name: Record immutable build identity and checksums
         run: |
           git rev-parse HEAD > dist/CANDIDATE_COMMIT.txt
           git rev-parse HEAD^{tree} > dist/CANDIDATE_TREE.txt
-          python tools/check_release_assets.py --version 0.14.1 --tag v0.14.1 --directory dist
-      - name: Upload auditable v0.14.1 distributions
+          python tools/check_release_assets.py --version 0.15.0 --tag v0.15.0 --directory dist
+      - name: Upload auditable v0.15.0 distributions
         uses: actions/upload-artifact@v7
         with:
-          name: cnrs-v0.14.1-distributions-${{ github.event.pull_request.head.sha || github.sha }}
+          name: cnrs-v0.15.0-distributions-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
-            dist/cnrs-0.14.1-py3-none-any.whl
-            dist/cnrs-0.14.1.tar.gz
+            dist/cnrs-0.15.0-py3-none-any.whl
+            dist/cnrs-0.15.0.tar.gz
             dist/SHA256SUMS.txt
             dist/CANDIDATE_COMMIT.txt
             dist/CANDIDATE_TREE.txt

@@ -8,13 +8,13 @@ permissions:
   contents: write
 
 jobs:
-  publish-v0141-assets:
-    if: github.event.release.tag_name == 'v0.14.1'
+  publish-v0150-assets:
+    if: github.event.release.tag_name == 'v0.15.0'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: v0.14.1
+          ref: v0.15.0
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
@@ -23,22 +23,22 @@ jobs:
           python -m pip install --upgrade pip build
           python tools/build_reproducible_distributions.py
       - name: Validate tag, assets, and checksums
-        run: python tools/check_release_assets.py --version 0.14.1 --tag v0.14.1 --directory dist
+        run: python tools/check_release_assets.py --version 0.15.0 --tag v0.15.0 --directory dist
       - name: Attach certified distributions
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload v0.14.1 \
-            dist/cnrs-0.14.1-py3-none-any.whl \
-            dist/cnrs-0.14.1.tar.gz \
+          gh release upload v0.15.0 \
+            dist/cnrs-0.15.0-py3-none-any.whl \
+            dist/cnrs-0.15.0.tar.gz \
             --clobber
       - name: Verify both release assets are public
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api repos/${{ github.repository }}/releases/tags/v0.14.1 \
+          gh api repos/${{ github.repository }}/releases/tags/v0.15.0 \
             --jq '.assets[].name' | sort > /tmp/actual-assets.txt
           printf '%s\n' \
-            cnrs-0.14.1-py3-none-any.whl \
-            cnrs-0.14.1.tar.gz | sort > /tmp/required-assets.txt
+            cnrs-0.15.0-py3-none-any.whl \
+            cnrs-0.15.0.tar.gz | sort > /tmp/required-assets.txt
           diff -u /tmp/required-assets.txt /tmp/actual-assets.txt

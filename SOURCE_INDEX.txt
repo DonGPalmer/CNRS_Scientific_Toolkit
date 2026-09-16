@@ -1,11 +1,10 @@
-# CNRS Scientific Toolkit v0.15.0 implementation-candidate source index
-# Synchronized on 2026-09-16 after AMBER acceptance/evidence repair.
-# Files listed: 472
-# Governed baseline merge: 017d9273e0f05d75b2019c623cd91c9615d9571a
-# Audited implementation commit: 2adf691b3ad25dd2db9a7be6d9aae92175a71db8
-# Audited implementation tree: 8e05246d477237bd96b6d3cb51c82a1f17404e9d
-# Package/runtime/CFF version remains 0.14.1 until release finalization.
-# Candidate merge and release remain prohibited pending exact-head CI and independent re-audit.
+# CNRS Scientific Toolkit v0.15.0 release-finalization source index
+# Synchronized on 2026-09-16 after the governed implementation merge.
+# Files listed: 476
+# Governed implementation merge: fa93a8307905961808321e19d7020dc7806e4e5f
+# Certified implementation tree: 88a545bbf359e2e5fe2b0d29111b915e08963e08
+# Package/runtime/CFF version: 0.15.0
+# Release finalization, exact-head CI, tag and publication remain governed.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -27,6 +26,7 @@ RELEASE_NOTES_v0.13.0.md
 RELEASE_NOTES_v0.13.1.md
 RELEASE_NOTES_v0.14.0.md
 RELEASE_NOTES_v0.14.1.md
+RELEASE_NOTES_v0.15.0.md
 SOURCE_INDEX.txt
 V0141_PREPARATION_MANIFEST.json
 V0141_RELEASE_ACTIVATION_CHECKLIST.md
@@ -48,6 +48,8 @@ V015_FREEZE_AMENDMENT_2026-09-15.md
 V015_FREEZE_AMENDMENT_3_2026-09-15.md
 V015_FREEZE_MANIFEST.json
 V015_IMPLEMENTATION_CANDIDATE_RECORD.md
+V015_RELEASE_FINALIZATION_RECORD_2026-09-16.md
+V015_SHA256SUMS.txt
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py
 acceptance/v015/README.md
@@ -458,6 +460,7 @@ tests/test_rational_all_cases.py
 tests/test_rational_arithmetic.py
 tests/test_rational_value_v090.py
 tests/test_release_engineering_v0141.py
+tests/test_release_engineering_v015.py
 tests/test_riemann_surface.py
 tests/test_science_toolkit.py
 tests/test_scientific_workflow_crossval_v011.py

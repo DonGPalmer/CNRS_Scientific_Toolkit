@@ -1,3 +1,13 @@
+# CNRS Scientific Toolkit Architecture — v0.15.0
+
+v0.15.0 adds an exact finite-convolution layer. `cnrs.gaussian_types` owns the
+strict coefficient carriers; `cnrs.finite_sequence` owns immutable finite
+Laurent sequences; `cnrs.convolution` owns deterministic raw/chunked products;
+`cnrs.gaussian_normalization` owns exact canonical carry recurrence;
+`cnrs.convolution_witnesses` owns stable serialization and verification; and
+`cnrs.validation.convolution_oracle` remains independent of production
+convolution. Existing division and CNRS-H layers remain unchanged.
+
 # CNRS Scientific Toolkit Architecture — v0.14.1
 
 v0.14.1 changes release engineering only. The v0.14.0 runtime architecture,

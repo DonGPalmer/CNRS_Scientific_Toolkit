@@ -55,7 +55,7 @@ Author:  Donald G. Palmer
 ORCID:   0000-0003-4335-5533
 """
 
-__version__ = "0.14.1"
+__version__ = "0.15.0"
 
 
 # ── Layer 1: CNRS-A arithmetic ────────────────────────────────────────────────
