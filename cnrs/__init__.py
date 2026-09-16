@@ -442,6 +442,36 @@ from .witnesses import (
     division_witness,
     validate_division_witness,
 )
+from .gaussian_types import (
+    GaussianInteger,
+    GaussianLike,
+    GaussianRational,
+    coerce_gaussian,
+)
+from .finite_sequence import CNRSFiniteSequence
+from .gaussian_normalization import (
+    NormalizationLimitError,
+    normalize_gaussian_laurent,
+)
+from .convolution import (
+    ConvolutionLimitError,
+    ConvolutionProgress,
+    ConvolutionStatus,
+    MultiplicationResult,
+    convolve_exact,
+    iter_convolution,
+    multiply_with_witness,
+)
+from .convolution_witnesses import (
+    CONVOLUTION_ALGORITHM,
+    CONVOLUTION_TRAVERSAL,
+    CONVOLUTION_WITNESS_SCHEMA,
+    ConvolutionWitness,
+    WitnessValidation,
+    deserialize_convolution_witness,
+    serialize_convolution_witness,
+    verify_convolution_witness,
+)
 from .science.workflow import (
     ObservationPreservationReport,
     sample_state,
@@ -470,6 +500,15 @@ __all__ = [
     "DivisionSearchLimitError", "DivisionStreamStatus", "stream_division",
     "DIVISION_ALGORITHM", "DIVISION_WITNESS_SCHEMA", "DivisionWitness",
     "WitnessValidationError", "division_witness", "validate_division_witness",
+    # ── Exact finite convolution and witnesses (v0.15.0 candidate)
+    "GaussianInteger", "GaussianLike", "GaussianRational", "coerce_gaussian",
+    "CNRSFiniteSequence", "NormalizationLimitError", "normalize_gaussian_laurent",
+    "ConvolutionLimitError", "ConvolutionProgress", "ConvolutionStatus",
+    "MultiplicationResult", "convolve_exact", "iter_convolution",
+    "multiply_with_witness", "CONVOLUTION_ALGORITHM", "CONVOLUTION_TRAVERSAL",
+    "CONVOLUTION_WITNESS_SCHEMA", "ConvolutionWitness", "WitnessValidation",
+    "deserialize_convolution_witness", "serialize_convolution_witness",
+    "verify_convolution_witness",
     # ── Calculus
     "CnrsH", "CnrsHNative", "NonGaussianCoefficientError", "InversionError",
     "compose_native", "invert_native", "verify_inversion",
