@@ -1,3 +1,21 @@
+# v0.16.0 — Exact CNRS-A String Multiplication
+
+- Adds exact finite CNRS-A string/carrier parsing and formatting.
+- Routes `mul_cnrs(a, b)` through exact convolution and Gaussian-Laurent
+  normalization.
+- Preserves the established public multiplication signature and valid-input
+  outputs.
+- Retains independent exact rational-pair and historical-parity validation
+  oracles outside production.
+- Enforces static guards against floating-point, complex, division, oracle
+  imports, and duplicate production arithmetic loops.
+- Preserves the v0.15.0 finite-convolution API, witnesses, and formal-source
+  boundary.
+- Makes no universal performance, whole-memory, unrestricted-stream, or
+  end-to-end Lean-verification claim.
+
+See `RELEASE_NOTES_v0.16.0.md`.
+
 # v0.15.0 — Exact Finite Convolution and Canonical Witnesses
 
 - Adds strict Gaussian-integer and canonical Gaussian-rational carriers.

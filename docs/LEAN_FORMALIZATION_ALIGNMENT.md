@@ -1,3 +1,10 @@
+# Lean formalization alignment — v0.16.0 note
+
+v0.16.0 preserves the governed six-project, 79-file Lean source subtree
+byte-for-byte. The finite string/carrier bridge and Python routing are
+independently implemented and computationally verified; no new Lean theorem or
+enlarged formal-proof boundary is claimed.
+
 # Lean formalization alignment — v0.15.0 note
 
 v0.15.0 retains the governed six-project Lean source unchanged. The exact
