@@ -1,5 +1,33 @@
 # CNRS Scientific Toolkit
 
+## v0.16.0 development candidate — Exact CNRS-A String Multiplication
+
+The approved v0.16.0 candidate scope connects finite CNRS-A strings to the
+exact Gaussian/Laurent carrier introduced in v0.15.0. The released package
+version remains `0.15.0` until separately authorized activation.
+
+```python
+from cnrs import (
+    cnrs_string_to_finite_sequence,
+    convolve_exact,
+    finite_sequence_to_cnrs_string,
+    mul_cnrs,
+    normalize_gaussian_laurent,
+)
+
+left = cnrs_string_to_finite_sequence("23.1")
+right = cnrs_string_to_finite_sequence("104")
+raw = convolve_exact(left, right)
+normalized = normalize_gaussian_laurent(raw)
+exact_text = finite_sequence_to_cnrs_string(normalized)
+
+assert exact_text == mul_cnrs("23.1", "104")
+```
+
+The production multiplication path uses exact Gaussian-integer arithmetic. It
+makes no wall-clock, whole-memory, integer-bit-length, or universal performance
+guarantee.
+
 ## v0.15.0 — Exact Finite Convolution and Canonical Witnesses
 
 **Status: released 2026-09-17; GitHub and Zenodo publication independently verified.**
