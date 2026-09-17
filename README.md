@@ -2,7 +2,7 @@
 
 ## v0.15.0 — Exact Finite Convolution and Canonical Witnesses
 
-**Status: release finalization; independently audited implementation and post-merge CI are GREEN.**
+**Status: released 2026-09-17; GitHub and Zenodo publication independently verified.**
 
 Version 0.15.0 adds exact finite Gaussian-coefficient Laurent sequences,
 deterministic raw and chunked convolution, canonical base-`(-2+i)`
@@ -17,10 +17,10 @@ normal merge commit `fa93a8307905961808321e19d7020dc7806e4e5f` with the same
 tree. Exact-head Python/distribution CI and the seven-job Lean source-identity
 and project-build lane succeeded. See `RELEASE_NOTES_v0.15.0.md`.
 
-The Toolkit concept DOI remains
-[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.15.0
-version DOI will be recorded additively after Zenodo processes the published
-GitHub release.
+The v0.15.0 version DOI is
+[10.5281/zenodo.22812232](https://doi.org/10.5281/zenodo.22812232). The Toolkit
+concept DOI remains
+[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852).
 
 ## v0.14.1 — Release Governance and Reproducible Packaging
 
