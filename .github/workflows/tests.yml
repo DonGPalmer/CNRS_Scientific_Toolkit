@@ -47,12 +47,12 @@ jobs:
         run: |
           python -m venv /tmp/cnrs-wheel-venv
           /tmp/cnrs-wheel-venv/bin/python -m pip install dist/cnrs-0.15.0-py3-none-any.whl
-          /tmp/cnrs-wheel-venv/bin/python -c "import cnrs; assert cnrs.__version__ == '0.15.0'"
+          /tmp/cnrs-wheel-venv/bin/python -c "from cnrs import cnrs_string_to_finite_sequence, finite_sequence_to_cnrs_string, mul_cnrs; assert finite_sequence_to_cnrs_string(cnrs_string_to_finite_sequence('.1')) == '0.1'; assert finite_sequence_to_cnrs_string(cnrs_string_to_finite_sequence('1.')) == '1'; assert mul_cnrs('.1', '1.') == '0.1'"
       - name: Verify source distribution in a clean environment
         run: |
           python -m venv /tmp/cnrs-sdist-venv
           /tmp/cnrs-sdist-venv/bin/python -m pip install dist/cnrs-0.15.0.tar.gz
-          /tmp/cnrs-sdist-venv/bin/python -c "import cnrs; assert cnrs.__version__ == '0.15.0'"
+          /tmp/cnrs-sdist-venv/bin/python -c "from cnrs import cnrs_string_to_finite_sequence, finite_sequence_to_cnrs_string, mul_cnrs; assert finite_sequence_to_cnrs_string(cnrs_string_to_finite_sequence('.1')) == '0.1'; assert finite_sequence_to_cnrs_string(cnrs_string_to_finite_sequence('1.')) == '1'; assert mul_cnrs('.1', '1.') == '0.1'"
       - name: Record immutable build identity and checksums
         run: |
           git rev-parse HEAD > dist/CANDIDATE_COMMIT.txt

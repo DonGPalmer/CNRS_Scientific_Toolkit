@@ -47,6 +47,60 @@ def _called_names(tree: ast.AST) -> set[str]:
     }
 
 
+def _guard_no_duplicate_arithmetic(relative: str, tree: ast.AST) -> None:
+    """Reject production-local convolution or carry recurrences.
+
+    The bridge has one permitted coefficient-validation loop. Every other
+    explicit loop, every while loop, and every multi-generator comprehension
+    is outside the frozen parse/format responsibility.
+    """
+    explicit_loops = [
+        node for node in ast.walk(tree) if isinstance(node, (ast.For, ast.AsyncFor))
+    ]
+    while_loops = [node for node in ast.walk(tree) if isinstance(node, ast.While)]
+    nested_comprehensions = [
+        node
+        for node in ast.walk(tree)
+        if isinstance(node, (ast.ListComp, ast.SetComp, ast.DictComp, ast.GeneratorExp))
+        and len(node.generators) > 1
+    ]
+    if while_loops or nested_comprehensions:
+        raise SystemExit(f"{relative} duplicates arithmetic iteration")
+
+    if relative == "cnrs_mul.py":
+        if explicit_loops:
+            raise SystemExit(f"{relative} duplicates arithmetic iteration")
+        return
+
+    if len(explicit_loops) != 1:
+        raise SystemExit(f"{relative} has an unexpected explicit loop")
+    loop = explicit_loops[0]
+    unpack = loop.body[0] if loop.body else None
+    if not (
+        isinstance(loop.target, ast.Name)
+        and loop.target.id == "coefficient"
+        and isinstance(loop.iter, ast.Attribute)
+        and isinstance(loop.iter.value, ast.Name)
+        and loop.iter.value.id == "value"
+        and loop.iter.attr == "coefficients"
+        and not loop.orelse
+        and len(loop.body) == 2
+        and isinstance(unpack, ast.Assign)
+        and len(unpack.targets) == 1
+        and isinstance(unpack.targets[0], ast.Tuple)
+        and [
+            element.id
+            for element in unpack.targets[0].elts
+            if isinstance(element, ast.Name)
+        ]
+        == ["real", "imaginary"]
+        and isinstance(unpack.value, ast.Name)
+        and unpack.value.id == "coefficient"
+        and isinstance(loop.body[1], ast.If)
+    ):
+        raise SystemExit(f"{relative} loop is not the frozen coefficient validator")
+
+
 def _guard_production() -> None:
     multiplication = _tree("cnrs/cnrs_mul.py")
     bridge = _tree("cnrs/finite_string.py")
@@ -56,11 +110,17 @@ def _guard_production() -> None:
             raise SystemExit(f"{relative} imports validation code")
         if _called_names(tree) & {"complex", "round"}:
             raise SystemExit(f"{relative} uses complex or round")
+        if any(
+            isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div)
+            for node in ast.walk(tree)
+        ):
+            raise SystemExit(f"{relative} uses division")
         attributes = {
             node.attr for node in ast.walk(tree) if isinstance(node, ast.Attribute)
         }
         if attributes & {"real", "imag"}:
             raise SystemExit(f"{relative} uses floating complex components")
+        _guard_no_duplicate_arithmetic(relative, tree)
 
     called = _called_names(multiplication)
     required = {
@@ -71,10 +131,6 @@ def _guard_production() -> None:
     }
     if not required <= called:
         raise SystemExit("mul_cnrs does not use every frozen exact-route operation")
-    if any(isinstance(node, (ast.For, ast.While)) for node in ast.walk(multiplication)):
-        raise SystemExit("cnrs_mul.py duplicates arithmetic iteration")
-
-
 def _guard_oracle(relative: str) -> None:
     tree = _tree(relative)
     modules, symbols = _imports(tree)
@@ -116,4 +172,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
