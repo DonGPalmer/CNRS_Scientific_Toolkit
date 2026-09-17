@@ -70,6 +70,10 @@ from .cnrs_repr import (
 
 from .cnrs_add import add_cnrs
 from .cnrs_mul import mul_cnrs
+from .finite_string import (
+    cnrs_string_to_finite_sequence,
+    finite_sequence_to_cnrs_string,
+)
 from .cnrs_div import div_by_base_power, div_by_base, div_cnrs
 from .cnrs_ops import cnrs_add, cnrs_sub, cnrs_mul, cnrs_neg, cnrs_eq
 from .cnrs_value import CVal
@@ -500,7 +504,7 @@ __all__ = [
     "DivisionSearchLimitError", "DivisionStreamStatus", "stream_division",
     "DIVISION_ALGORITHM", "DIVISION_WITNESS_SCHEMA", "DivisionWitness",
     "WitnessValidationError", "division_witness", "validate_division_witness",
-    # ── Exact finite convolution and witnesses (v0.15.0 candidate)
+    # ── Exact finite convolution and witnesses (released in v0.15.0)
     "GaussianInteger", "GaussianLike", "GaussianRational", "coerce_gaussian",
     "CNRSFiniteSequence", "NormalizationLimitError", "normalize_gaussian_laurent",
     "ConvolutionLimitError", "ConvolutionProgress", "ConvolutionStatus",
@@ -509,6 +513,8 @@ __all__ = [
     "CONVOLUTION_WITNESS_SCHEMA", "ConvolutionWitness", "WitnessValidation",
     "deserialize_convolution_witness", "serialize_convolution_witness",
     "verify_convolution_witness",
+    # ── Exact finite string/carrier bridge (v0.16.0 candidate)
+    "cnrs_string_to_finite_sequence", "finite_sequence_to_cnrs_string",
     # ── Calculus
     "CnrsH", "CnrsHNative", "NonGaussianCoefficientError", "InversionError",
     "compose_native", "invert_native", "verify_inversion",
