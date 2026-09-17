@@ -22,6 +22,12 @@ jobs:
         run: |
           pytest -q tests/test_v015_finite_convolution.py
           python tools/check_v015_claims.py
+      - name: v0.16.0 exact-multiplication candidate acceptance contract
+        run: |
+          pytest -q tests/test_v016_exact_multiplication.py
+          pytest -q acceptance/v016
+          python tools/check_v016_claims.py
+          python tools/check_lean_alignment.py
 
   distribution:
     needs: pytest
