@@ -49,6 +49,6 @@ The audited implementation head was
 `88a545bbf359e2e5fe2b0d29111b915e08963e08`. PR #5 merged it normally as
 `fa93a8307905961808321e19d7020dc7806e4e5f` with the identical tree.
 
-The v0.15.0 Zenodo version DOI will be recorded after Zenodo processes the
-published GitHub release. The Toolkit concept DOI remains
+The published v0.15.0 Zenodo version DOI is
+`10.5281/zenodo.22812232`. The Toolkit concept DOI remains
 `10.5281/zenodo.20574852`.
