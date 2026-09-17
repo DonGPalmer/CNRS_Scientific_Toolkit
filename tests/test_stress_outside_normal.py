@@ -32,7 +32,11 @@ import math
 import random
 import pytest
 
-from cnrs.cnrs_mul import _normalize_coeffs, _convolve_digits, mul_cnrs
+from cnrs.cnrs_mul import mul_cnrs
+from cnrs.validation.legacy_string_multiplication import (
+    _convolve_digits,
+    _normalize_coeffs,
+)
 from cnrs.cnrs_repr import cnrs_to_gaussian, gaussian_to_cnrs_str, cnrs_remainder
 from cnrs.cnrs_repr import Z0
 from cnrs.cnrs_h_mode import CnrsHMode, native_eligible

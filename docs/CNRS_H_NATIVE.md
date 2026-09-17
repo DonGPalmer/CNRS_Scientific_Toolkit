@@ -41,6 +41,6 @@ where B_{n,k} are partial Bell polynomials. For k ≥ 2, B_{n,k} depends only on
 
 ### Open items
 
-- Formal proof of the carry-drain bound for `_normalize_coeffs` in multiplication (currently empirical: ≤ 12 steps for inputs up to ~10³ digits).
+- Formal proof of finite exact carry drainage for arbitrary finite multiplication inputs; the v0.16 candidate removes the historical floating/rounding production helper and retains it only as a validation oracle.
 - Carry-set characterization for multiplication (analogue of the 14-state addition carry set).
 - `CnrsFormalState.compose` for the general case g(0) ≠ 0 (shift-compose-shift).
