@@ -10,7 +10,7 @@ repository-code: "https://github.com/DonGPalmer/CNRS_Scientific_Toolkit"
 url: "https://www.nul1.com/"
 license: Apache-2.0
 version: "0.16.0"
-date-released: 2026-09-17
+date-released: 2026-09-18
 identifiers:
   - type: doi
     value: "10.5281/zenodo.20574852"

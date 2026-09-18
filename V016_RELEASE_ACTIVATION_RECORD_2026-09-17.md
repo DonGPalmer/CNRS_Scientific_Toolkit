@@ -1,6 +1,6 @@
 # CNRS Scientific Toolkit v0.16.0 release-activation record
 
-Release date: 2026-09-17
+Intended release date: 2026-09-18
 
 Status: RELEASE-ACTIVATION CANDIDATE; EXACT-HEAD CI PENDING
 
