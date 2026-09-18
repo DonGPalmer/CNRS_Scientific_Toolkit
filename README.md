@@ -1,5 +1,51 @@
 # CNRS Scientific Toolkit
 
+## v0.17.0 implementation candidate — Exact CNRS-A String Division
+
+**Status: implementation candidate; package version remains v0.16.0.**
+
+The candidate connects finite CNRS-A strings to the exact streaming-division
+engine introduced in v0.14.0.  The result explicitly distinguishes terminating,
+eventually-periodic, and limit-reached outcomes; it never presents a truncated
+periodic quotient as an exact finite string.
+
+```python
+from fractions import Fraction
+
+from cnrs import (
+    DivisionStreamStatus,
+    divide_cnrs_exact,
+    validate_division_witness,
+)
+
+terminating = divide_cnrs_exact("1", "10")
+periodic = divide_cnrs_exact("1", "2")
+
+assert terminating.status is DivisionStreamStatus.TERMINATING
+assert terminating.exact_value_fractions() == (
+    Fraction(-2, 5),
+    Fraction(-1, 5),
+)
+assert periodic.status is DivisionStreamStatus.EVENTUALLY_PERIODIC
+assert periodic.exact_value_fractions() == (Fraction(1, 2), Fraction(0))
+
+assert validate_division_witness(terminating.to_witness()) == terminating.to_witness()
+assert validate_division_witness(periodic.to_witness()) == periodic.to_witness()
+
+limited = divide_cnrs_exact("1", "2", max_steps=1)
+assert limited.status is DivisionStreamStatus.LIMIT_REACHED
+assert not limited.resolved
+```
+
+`LIMIT_REACHED` is a reproducible operational outcome, not evidence that the
+quotient is aperiodic.  The limit bounds counted streaming recurrence steps; it
+does not bound wall-clock time, total memory, integer bit length, input or output
+size, or witness-serialization cost.
+
+The historical `div_cnrs` string API remains available for compatibility and is
+deprecated on call.  It uses legacy Python-complex arithmetic and is not part of
+the exactness claim.  New code should use `divide_cnrs_exact`.
+
 ## v0.16.0 — Exact CNRS-A String Multiplication
 
 **Status: release-activation candidate; implementation merge and post-merge CI are GREEN.**
