@@ -1,3 +1,17 @@
+# Claim Status — v0.17.0
+
+v0.17.0 establishes exact division of finite CNRS-A strings into structured
+terminating, eventually-periodic, or limit-reached outcomes. Resolved results
+carry exact Gaussian-rational values and deterministic witnesses that are
+independently recomputed during validation. `LIMIT_REACHED` is an operational
+result only and is not evidence of aperiodicity.
+
+Production exact division uses integer, Gaussian-integer, and rational-pair
+arithmetic. The deprecated legacy `div_cnrs` compatibility path is not part of
+the exactness claim. No universal elapsed-time, whole-memory, integer-bit-length,
+unrestricted-stream, unrestricted analytic, or end-to-end Lean-verification
+claim is made.
+
 # Claim Status — v0.16.0
 
 v0.16.0 establishes exact finite CNRS-A string/carrier conversion and exact

@@ -1,3 +1,19 @@
+# Test Status — v0.17.0 Release Activation
+
+The independently audited implementation candidate passed 65 dedicated v0.17
+tests, six executable v0.17 acceptance tests, 29 preserved v0.16 tests, five
+preserved v0.16 acceptance tests, 61 preserved v0.15 tests, 19 preserved v0.14
+tests, and the full regression suite at 1,378 passed, 4 skipped, 922 warnings.
+The static architecture and claim guards, exact-value and witness validation,
+bounded-result semantics, historical parity, and distribution smoke gates all
+passed.
+
+Exact-head push and pull-request CI passed before merge. PR #10 merged as
+`9965eb3bb2a1389469a4a99b90a03f6671fe76c8`, tree
+`924b8af717e17183e8bf9375adcb9fb35ca4093f`; post-merge workflow
+`35392851176` passed both Python and distribution jobs. The six-project,
+79-file Lean identity remained unchanged.
+
 # Test Status — v0.16.0 Release Activation
 
 The repaired implementation candidate passed 29 dedicated v0.16 tests, five

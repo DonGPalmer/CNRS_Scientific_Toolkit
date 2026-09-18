@@ -1,8 +1,8 @@
 # CNRS Scientific Toolkit
 
-## v0.17.0 implementation candidate — Exact CNRS-A String Division
+## v0.17.0 release-activation candidate — Exact CNRS-A String Division
 
-**Status: implementation candidate; package version remains v0.16.0.**
+**Status: release-activation candidate; implementation merge and post-merge CI are GREEN.**
 
 The candidate connects finite CNRS-A strings to the exact streaming-division
 engine introduced in v0.14.0.  The result explicitly distinguishes terminating,
@@ -46,9 +46,21 @@ The historical `div_cnrs` string API remains available for compatibility and is
 deprecated on call.  It uses legacy Python-complex arithmetic and is not part of
 the exactness claim.  New code should use `divide_cnrs_exact`.
 
+The implementation was independently audited at head
+`7840b51db1b7a3b9955aa20bd2b67fb99344335f`, tree
+`924b8af717e17183e8bf9375adcb9fb35ca4093f`, and merged through PR #10 as
+normal merge commit `9965eb3bb2a1389469a4a99b90a03f6671fe76c8` with the same
+tree. Post-merge workflow `35392851176` succeeded. See
+`RELEASE_NOTES_v0.17.0.md`.
+
+The Toolkit concept DOI remains
+[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.17.0
+version DOI will be recorded additively after Zenodo processes a separately
+authorized GitHub release.
+
 ## v0.16.0 — Exact CNRS-A String Multiplication
 
-**Status: release-activation candidate; implementation merge and post-merge CI are GREEN.**
+**Status: released 2026-09-18; GitHub and Zenodo publication complete.**
 
 Version 0.16.0 connects finite CNRS-A strings to the exact Gaussian/Laurent
 carrier introduced in v0.15.0. The public string-multiplication API now follows
@@ -83,10 +95,10 @@ normal merge commit `b382209899e97a64249d74291ce1b3268f84c64b` with the same
 tree. Post-merge workflow `35275828314` succeeded. See
 `RELEASE_NOTES_v0.16.0.md`.
 
-The Toolkit concept DOI remains
-[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.16.0
-version DOI will be recorded additively after Zenodo processes a separately
-authorized GitHub release.
+The v0.16.0 version DOI is
+[10.5281/zenodo.22834543](https://doi.org/10.5281/zenodo.22834543). The Toolkit
+concept DOI remains
+[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852).
 
 ## v0.15.0 — Exact Finite Convolution and Canonical Witnesses
 

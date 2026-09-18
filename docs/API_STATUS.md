@@ -1,3 +1,17 @@
+# API Status — v0.17.0
+
+v0.17.0 adds `divide_cnrs_exact(dividend, divisor, *, max_steps=None)` and the
+structured `ExactDivisionResult` interface for finite CNRS-A string division.
+Results distinguish `TERMINATING`, `EVENTUALLY_PERIODIC`, and `LIMIT_REACHED`;
+resolved outcomes expose exact Gaussian-rational values and deterministic,
+independently validated witnesses.
+
+The accepted grammar, signatures, outcome semantics, and limit behavior are
+frozen in `V017_EXACT_DIVISION_API_CONTRACT.md`. The historical `div_cnrs`
+interface remains available but emits `DeprecationWarning` and is outside the
+v0.17 exactness claim. All v0.16.0 exact-multiplication interfaces remain
+unchanged.
+
 # API Status — v0.16.0
 
 v0.16.0 adds the public bridge functions

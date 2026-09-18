@@ -1,10 +1,10 @@
-# CNRS Scientific Toolkit v0.16.0 release-activation source index
-# Synchronized on 2026-09-17 from governed implementation merge b382209899e97a64249d74291ce1b3268f84c64b.
-# Files listed: 490
-# Governed implementation merge: b382209899e97a64249d74291ce1b3268f84c64b
-# Certified implementation tree: 884b23bc0e775efe4330823d954ad05dca12658c
-# Package/runtime/CFF version: 0.16.0
-# Release publication remains unauthorized; no v0.16.0 tag or release exists.
+# CNRS Scientific Toolkit v0.17.0 release-activation source index
+# Synchronized on 2026-09-18 from governed implementation merge 9965eb3bb2a1389469a4a99b90a03f6671fe76c8.
+# Files listed: 502
+# Governed implementation merge: 9965eb3bb2a1389469a4a99b90a03f6671fe76c8
+# Certified implementation tree: 924b8af717e17183e8bf9375adcb9fb35ca4093f
+# Package/runtime/CFF version: 0.17.0
+# Release publication remains unauthorized; no v0.17.0 tag or release exists.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -28,6 +28,7 @@ RELEASE_NOTES_v0.14.0.md
 RELEASE_NOTES_v0.14.1.md
 RELEASE_NOTES_v0.15.0.md
 RELEASE_NOTES_v0.16.0.md
+RELEASE_NOTES_v0.17.0.md
 SOURCE_INDEX.txt
 V0141_PREPARATION_MANIFEST.json
 V0141_RELEASE_ACTIVATION_CHECKLIST.md
@@ -56,11 +57,17 @@ V016_ARCHITECTURE_FREEZE.md
 V016_EXACT_MULTIPLICATION_API_CONTRACT.md
 V016_RELEASE_ACTIVATION_RECORD_2026-09-17.md
 V016_SHA256SUMS.txt
+V017_ARCHITECTURE_FREEZE.md
+V017_EXACT_DIVISION_API_CONTRACT.md
+V017_RELEASE_ACTIVATION_RECORD_2026-09-18.md
+V017_SHA256SUMS.txt
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py
 acceptance/v015/README.md
 acceptance/v016/README.md
 acceptance/v016/test_exact_multiplication_contract.py
+acceptance/v017/README.md
+acceptance/v017/test_exact_division_contract.py
 benchmark-results/v015/finite_convolution_results.json
 benchmark-results/v015/finite_convolution_summary.csv
 benchmarks/benchmark_finite_convolution.py
@@ -129,6 +136,7 @@ cnrs/core/branch.py
 cnrs/core/digits.py
 cnrs/core/value.py
 cnrs/division.py
+cnrs/exact_division.py
 cnrs/finite_sequence.py
 cnrs/finite_string.py
 cnrs/formal_h_algebra.py
@@ -167,6 +175,7 @@ cnrs/validation/__init__.py
 cnrs/validation/autodiff.py
 cnrs/validation/compare.py
 cnrs/validation/convolution_oracle.py
+cnrs/validation/exact_division_oracle.py
 cnrs/validation/exact_string_oracle.py
 cnrs/validation/legacy_string_multiplication.py
 cnrs/validation/reference_complex.py
@@ -473,6 +482,7 @@ tests/test_rational_value_v090.py
 tests/test_release_engineering_v0141.py
 tests/test_release_engineering_v015.py
 tests/test_release_engineering_v016.py
+tests/test_release_engineering_v017.py
 tests/test_riemann_surface.py
 tests/test_science_toolkit.py
 tests/test_scientific_workflow_crossval_v011.py
@@ -487,6 +497,7 @@ tests/test_theorem_alignment_v081.py
 tests/test_topology_v011.py
 tests/test_v015_finite_convolution.py
 tests/test_v016_exact_multiplication.py
+tests/test_v017_exact_division.py
 tools/audit_native_status.py
 tools/build_release.py
 tools/build_reproducible_distributions.py
@@ -494,6 +505,7 @@ tools/check_lean_alignment.py
 tools/check_release_assets.py
 tools/check_v015_claims.py
 tools/check_v016_claims.py
+tools/check_v017_claims.py
 tools/toolkit_audit_crossval.py
 v014_performance_results.json
 v014_performance_summary.csv

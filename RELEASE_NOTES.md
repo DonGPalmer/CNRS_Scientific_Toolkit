@@ -1,3 +1,20 @@
+# v0.17.0 — Exact CNRS-A String Division
+
+- Adds `divide_cnrs_exact` for exact finite CNRS-A string division.
+- Returns explicit terminating, eventually-periodic, or limit-reached outcomes.
+- Provides deterministic division witnesses with independent validation.
+- Preserves exact quotient values as Gaussian rational pairs without presenting
+  truncated periodic output as an exact finite string.
+- Deprecates the historical `div_cnrs` string API on call while retaining it
+  for compatibility outside the exactness claim.
+- Enforces static routing, dependency, and legacy-arithmetic isolation guards.
+- Preserves v0.16.0 exact multiplication, v0.15.0 finite convolution, v0.14.0
+  streaming division, and the governed formal-source boundary.
+- Makes no universal performance, whole-memory, unrestricted-stream,
+  aperiodicity-from-limit, or end-to-end Lean-verification claim.
+
+See `RELEASE_NOTES_v0.17.0.md`.
+
 # v0.16.0 — Exact CNRS-A String Multiplication
 
 - Adds exact finite CNRS-A string/carrier parsing and formatting.

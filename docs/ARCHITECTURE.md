@@ -1,3 +1,16 @@
+# CNRS Scientific Toolkit Architecture — v0.17.0
+
+v0.17.0 adds an exact finite-string division bridge over the released
+Gaussian-rational streaming engine. Production `divide_cnrs_exact` is exactly:
+parse operands → reconstruct exact Gaussian integers → reduce/classify → run
+the exact streaming recurrence → return a structured outcome and witness.
+
+The production path uses exact integer, Gaussian-integer, and rational-pair
+arithmetic. The legacy Python-complex `div_cnrs` route remains isolated for
+compatibility and is deprecated on call. Validation oracles remain outside the
+production dependency graph. The v0.16.0 multiplication architecture and
+governed formal-source boundary remain unchanged.
+
 # CNRS Scientific Toolkit Architecture — v0.16.0
 
 v0.16.0 adds `cnrs.finite_string` as the exact bridge between finite CNRS-A
