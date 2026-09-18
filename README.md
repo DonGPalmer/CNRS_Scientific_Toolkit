@@ -1,10 +1,12 @@
 # CNRS Scientific Toolkit
 
-## v0.16.0 development candidate — Exact CNRS-A String Multiplication
+## v0.16.0 — Exact CNRS-A String Multiplication
 
-The approved v0.16.0 candidate scope connects finite CNRS-A strings to the
-exact Gaussian/Laurent carrier introduced in v0.15.0. The released package
-version remains `0.15.0` until separately authorized activation.
+**Status: release-activation candidate; implementation merge and post-merge CI are GREEN.**
+
+Version 0.16.0 connects finite CNRS-A strings to the exact Gaussian/Laurent
+carrier introduced in v0.15.0. The public string-multiplication API now follows
+the exact route parse → convolution → Gaussian-Laurent normalization → format.
 
 ```python
 from cnrs import (
@@ -27,6 +29,18 @@ assert exact_text == mul_cnrs("23.1", "104")
 The production multiplication path uses exact Gaussian-integer arithmetic. It
 makes no wall-clock, whole-memory, integer-bit-length, or universal performance
 guarantee.
+
+The implementation was independently audited at head
+`ba1f5eda0e359f10926587ced89e6dececb5e87d`, tree
+`884b23bc0e775efe4330823d954ad05dca12658c`, and merged through PR #8 as
+normal merge commit `b382209899e97a64249d74291ce1b3268f84c64b` with the same
+tree. Post-merge workflow `35275828314` succeeded. See
+`RELEASE_NOTES_v0.16.0.md`.
+
+The Toolkit concept DOI remains
+[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.16.0
+version DOI will be recorded additively after Zenodo processes a separately
+authorized GitHub release.
 
 ## v0.15.0 — Exact Finite Convolution and Canonical Witnesses
 

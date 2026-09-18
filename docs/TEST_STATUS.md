@@ -1,3 +1,18 @@
+# Test Status — v0.16.0 Release Activation
+
+The repaired implementation candidate passed 29 dedicated v0.16 tests, five
+executable acceptance tests, 61 preserved v0.15 tests, 19 preserved v0.14
+tests, and the full regression suite at 1,310 passed, 4 skipped, 922 warnings.
+Acceptance covered 4,490 valid strings, 425 canonical operands, 180,625
+operand pairs, 5,000 randomized long round trips, 5,000 randomized
+exact-value/parity products, and the 300-digit all-`4` stress case.
+
+Exact-head push and pull-request CI passed before merge. PR #8 merged as
+`b382209899e97a64249d74291ce1b3268f84c64b`, tree
+`884b23bc0e775efe4330823d954ad05dca12658c`; post-merge workflow
+`35275828314` passed both Python and distribution jobs. The six-project,
+79-file Lean identity remained unchanged.
+
 # Test Status — v0.15.0 Release Finalization
 
 The independently audited implementation recorded 61 dedicated v0.15 passes,

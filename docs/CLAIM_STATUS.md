@@ -1,3 +1,16 @@
+# Claim Status — v0.16.0
+
+v0.16.0 establishes exact finite CNRS-A string/carrier conversion and exact
+finite string multiplication through the released Gaussian/Laurent
+convolution and normalization machinery. The claim is computationally
+verified over the frozen exhaustive, randomized, long-input, parity, and
+distribution-smoke domains.
+
+Production uses integer or Gaussian-integer arithmetic and imports no
+validation oracle. No universal elapsed-time, whole-memory, integer-bit-length,
+arbitrary-infinite-stream, unrestricted analytic, or end-to-end Lean
+verification claim is made.
+
 # Claim Status — v0.15.0
 
 v0.15.0 establishes exact finite convolution for the frozen Gaussian/Laurent

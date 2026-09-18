@@ -1,3 +1,14 @@
+# CNRS Scientific Toolkit Architecture — v0.16.0
+
+v0.16.0 adds `cnrs.finite_string` as the exact bridge between finite CNRS-A
+text and `CNRSFiniteSequence`. Production `mul_cnrs` is exactly:
+parse both operands → `convolve_exact` →
+`normalize_gaussian_laurent` → format.
+
+Validation oracles remain under `cnrs.validation` and are not imported by
+production. The v0.15.0 Gaussian/Laurent carrier, convolution, normalization,
+witness, and formal-source boundaries remain unchanged.
+
 # CNRS Scientific Toolkit Architecture — v0.15.0
 
 v0.15.0 adds an exact finite-convolution layer. `cnrs.gaussian_types` owns the

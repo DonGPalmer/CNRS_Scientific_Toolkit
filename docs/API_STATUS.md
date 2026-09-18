@@ -1,3 +1,14 @@
+# API Status — v0.16.0
+
+v0.16.0 adds the public bridge functions
+`cnrs_string_to_finite_sequence` and `finite_sequence_to_cnrs_string`.
+`mul_cnrs(a, b) -> str` retains its signature and now routes finite CNRS-A
+strings through `convolve_exact` and `normalize_gaussian_laurent`.
+
+The accepted grammar and canonical formatting rules are frozen in
+`V016_EXACT_MULTIPLICATION_API_CONTRACT.md`. The v0.15.0 finite-convolution
+and witness interfaces remain unchanged.
+
 # API Status — v0.15.0
 
 v0.15.0 adds `GaussianInteger`, `GaussianRational`, `CNRSFiniteSequence`,
