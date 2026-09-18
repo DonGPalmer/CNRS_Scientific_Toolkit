@@ -23,6 +23,31 @@ PROHIBITED_PRODUCTION_MODULES = {
     "validation",
     "cnrs.cnrs_div",
     "cnrs_div",
+    "cnrs.canonical_periodic",
+    "canonical_periodic",
+    "cnrs.witnesses",
+    "witnesses",
+}
+PROHIBITED_PRODUCTION_SYMBOLS = {
+    "CanonicalPeriodicExpansion",
+    "CycleWitness",
+    "division_witness",
+    "primitive_period",
+    "validate_division_witness",
+    "_witness_from_resolution",
+}
+PROHIBITED_PRODUCTION_ATTRIBUTES = {
+    "allclose",
+    "from_gaussian_fraction",
+    "isclose",
+    "to_witness",
+    "validate_division_witness",
+}
+PROHIBITED_WITNESS_LITERALS = {
+    "algorithm",
+    "cnrs-division-witness-v1",
+    "cnrs-gaussian-rational-stream-v1",
+    "schema",
 }
 PROHIBITED_ORACLE_MODULES = {
     "cnrs.exact_division",
@@ -79,25 +104,62 @@ def _called_names(tree: ast.AST) -> set[str]:
 
 def guard_production_source(source: str) -> None:
     tree = _parse_source(source, PRODUCTION_PATH)
-    modules, _ = _imports(tree)
+    modules, symbols = _imports(tree)
     if any(
         module == prohibited or module.startswith(prohibited + ".")
         for module in modules
         for prohibited in PROHIBITED_PRODUCTION_MODULES
     ):
-        raise ClaimGuardError("production imports validation or legacy division")
+        raise ClaimGuardError(
+            "production imports validation, legacy division, canonical, or witness code"
+        )
+    if symbols & PROHIBITED_PRODUCTION_SYMBOLS:
+        raise ClaimGuardError("production imports canonical or witness operations")
 
     called = _called_names(tree)
     if called & {"complex", "float", "round"}:
         raise ClaimGuardError("production uses approximate numeric construction")
+    if any(
+        isinstance(node, ast.Constant) and type(node.value) is float
+        for node in ast.walk(tree)
+    ):
+        raise ClaimGuardError("production uses a floating literal or tolerance")
     if any(isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div)
            for node in ast.walk(tree)):
         raise ClaimGuardError("production uses numeric division")
     attributes = {node.attr for node in ast.walk(tree) if isinstance(node, ast.Attribute)}
     if attributes & {"real", "imag"}:
         raise ClaimGuardError("production uses floating complex components")
-    if any(isinstance(node, (ast.For, ast.AsyncFor, ast.While)) for node in ast.walk(tree)):
+    if called & {"isclose", "allclose"} or attributes & {"isclose", "allclose"}:
+        raise ClaimGuardError("production uses a floating tolerance comparison")
+    if any(
+        isinstance(node, (ast.For, ast.AsyncFor, ast.While, ast.comprehension))
+        for node in ast.walk(tree)
+    ):
         raise ClaimGuardError("production duplicates arithmetic iteration")
+    if called & PROHIBITED_PRODUCTION_SYMBOLS:
+        raise ClaimGuardError("production calls canonical or witness operations")
+    if attributes & PROHIBITED_PRODUCTION_ATTRIBUTES:
+        raise ClaimGuardError("production reaches canonical or witness operations")
+
+    identifiers = {
+        node.id for node in ast.walk(tree) if isinstance(node, ast.Name)
+    } | {
+        node.arg for node in ast.walk(tree) if isinstance(node, ast.arg)
+    } | {
+        node.name
+        for node in ast.walk(tree)
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+    }
+    if any("witness" in identifier.lower() for identifier in identifiers):
+        raise ClaimGuardError("production inspects, trusts, or mutates witness data")
+    if any(
+        isinstance(node, ast.Constant)
+        and isinstance(node.value, str)
+        and node.value in PROHIBITED_WITNESS_LITERALS
+        for node in ast.walk(tree)
+    ):
+        raise ClaimGuardError("production defines or mutates witness identity fields")
     if "finite_sequence_to_cnrs_string" in called or "str" in {
         getattr(node.returns, "id", "")
         for node in ast.walk(tree)
