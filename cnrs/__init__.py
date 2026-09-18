@@ -74,6 +74,7 @@ from .finite_string import (
     cnrs_string_to_finite_sequence,
     finite_sequence_to_cnrs_string,
 )
+from .exact_division import divide_cnrs_exact
 from .cnrs_div import div_by_base_power, div_by_base, div_cnrs
 from .cnrs_ops import cnrs_add, cnrs_sub, cnrs_mul, cnrs_neg, cnrs_eq
 from .cnrs_value import CVal
@@ -502,6 +503,7 @@ __all__ = [
     # ── Exact streaming division and witnesses (v0.14.0)
     "CnrsDivisionStream", "CycleWitness", "DivisionResolution",
     "DivisionSearchLimitError", "DivisionStreamStatus", "stream_division",
+    "divide_cnrs_exact",
     "DIVISION_ALGORITHM", "DIVISION_WITNESS_SCHEMA", "DivisionWitness",
     "WitnessValidationError", "division_witness", "validate_division_witness",
     # ── Exact finite convolution and witnesses (released in v0.15.0)
@@ -513,7 +515,7 @@ __all__ = [
     "CONVOLUTION_WITNESS_SCHEMA", "ConvolutionWitness", "WitnessValidation",
     "deserialize_convolution_witness", "serialize_convolution_witness",
     "verify_convolution_witness",
-    # ── Exact finite string/carrier bridge (v0.16.0 candidate)
+    # ── Exact finite string/carrier bridge (released in v0.16.0)
     "cnrs_string_to_finite_sequence", "finite_sequence_to_cnrs_string",
     # ── Calculus
     "CnrsH", "CnrsHNative", "NonGaussianCoefficientError", "InversionError",

@@ -18,6 +18,7 @@ This module is consistent with:
 
 from __future__ import annotations
 from typing import Tuple
+import warnings
 
 from .cnrs_repr import (
     Z0,
@@ -82,15 +83,19 @@ def div_by_base_power(z_str: str, k: int) -> str:
 
 def div_cnrs(a: str, b: str) -> str:
     """
-    Full CNRS-A division via Gaussian semantics.
-
-    This is mathematically exact:
-        (a / b)_CNRS = CNRS( Gaussian(a) / Gaussian(b) )
+    Legacy CNRS-A division through Python complex arithmetic.
 
     Notes:
       - If b = 0, raises ZeroDivisionError.
-      - Result may be a Gaussian rational, not necessarily a Gaussian integer.
+      - New code should use ``divide_cnrs_exact`` for authoritative exact
+        terminating, eventually-periodic, and limit-reached results.
     """
+    warnings.warn(
+        "div_cnrs is a legacy complex-arithmetic compatibility API; "
+        "use divide_cnrs_exact for exact division",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     ga = cnrs_to_gaussian(a)
     gb = cnrs_to_gaussian(b)
 
