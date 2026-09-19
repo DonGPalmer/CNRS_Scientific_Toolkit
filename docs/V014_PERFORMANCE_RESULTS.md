@@ -42,9 +42,11 @@ universal speed advantage or asymptotic theorem.
 
 ## Retained evidence
 
-- `v014_performance_results.json` — raw timing and peak-memory samples,
+- `benchmark-results/v014/v014_performance_results.json` — raw timing and
+  peak-memory samples,
   environment, inputs, and parameters;
-- `v014_performance_summary.csv` — per-case medians and dispersion;
+- `benchmark-results/v014/v014_performance_summary.csv` — per-case medians and
+  dispersion;
 - `benchmarks/benchmark_streaming_division.py` — exact harness;
 - harness SHA-256:
   `a8ddf73c170178f2ab265644d1e0dd6d54c16121a8573eeb32fa2f494c378f7b`.

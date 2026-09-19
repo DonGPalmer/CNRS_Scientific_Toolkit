@@ -90,8 +90,8 @@ Permitted wording must match the evidence, for example: “On the recorded bench
 
 The governed release evidence directory must retain:
 
-- v014_performance_results.json;
-- v014_performance_summary.csv;
+- `benchmark-results/v014/v014_performance_results.json`;
+- `benchmark-results/v014/v014_performance_summary.csv`;
 - the exact benchmark harness;
 - its SHA-256;
 - the candidate commit/tree and execution command;

@@ -127,8 +127,12 @@ def main() -> int:
     parser.add_argument("--warmups", type=int, default=5)
     parser.add_argument("--repetitions", type=int, default=30)
     parser.add_argument("--memory-repetitions", type=int, default=10)
-    parser.add_argument("--json", default="v014_performance_results.json")
-    parser.add_argument("--csv", default="v014_performance_summary.csv")
+    parser.add_argument(
+        "--json", default="benchmark-results/v014/v014_performance_results.json"
+    )
+    parser.add_argument(
+        "--csv", default="benchmark-results/v014/v014_performance_summary.csv"
+    )
     parser.add_argument("--commit", default=os.environ.get("CNRS_CANDIDATE_COMMIT", "UNRECORDED"))
     parser.add_argument("--tree", default=os.environ.get("CNRS_CANDIDATE_TREE", "UNRECORDED"))
     args = parser.parse_args()
