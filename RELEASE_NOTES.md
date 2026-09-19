@@ -1,12 +1,12 @@
 # CNRS Scientific Toolkit Release Notes
 
 This is the consolidated, reverse-chronological record of notable Toolkit
-changes. The version-specific `RELEASE_NOTES_vX.Y.Z.md` files are retained
-unchanged as historical release artifacts, while this file is the current
-reader-facing release history.
+changes. It supersedes the former version-specific
+`RELEASE_NOTES_vX.Y.Z.md` files, whose released states remain recoverable from
+repository history and, where present, the corresponding Git tags.
 
-For future releases, add the complete release record directly here. Create a
-separate version-specific release-note file only when a governed release
+For future releases, add the complete release record directly here. Do not
+create a separate version-specific release-note file unless a governed release
 procedure explicitly requires one.
 
 ## Contents
@@ -164,9 +164,10 @@ The audited implementation head was
 `884b23bc0e775efe4330823d954ad05dca12658c`. PR #8 merged it normally as
 `b382209899e97a64249d74291ce1b3268f84c64b` with the identical tree.
 
-The Toolkit concept DOI remains `10.5281/zenodo.20574852`. The v0.16.0
-version DOI will be recorded after separately authorized GitHub release
-publication and Zenodo processing.
+GitHub release v0.16.0 was published on 2026-09-18 from release commit
+`1b817fca30e061854e6bc62823e5c5ff28b92f9a`. The Zenodo version DOI is
+`10.5281/zenodo.22834543`; the Toolkit concept DOI remains
+`10.5281/zenodo.20574852`.
 
 ---
 

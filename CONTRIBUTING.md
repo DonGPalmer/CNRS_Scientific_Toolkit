@@ -81,7 +81,7 @@ Public releases should update:
 
 Add each complete release record directly to `RELEASE_NOTES.md`, newest
 first. Create a separate `RELEASE_NOTES_vX.Y.Z.md` only when a governed
-release procedure explicitly requires one. Existing version-specific files are
-retained unchanged as historical release artifacts.
+release procedure explicitly requires one. Historical release-note states are
+preserved by the corresponding Git tags and repository history.
 
 Generated files such as `__pycache__/` and `.pytest_cache/` should not be committed.
