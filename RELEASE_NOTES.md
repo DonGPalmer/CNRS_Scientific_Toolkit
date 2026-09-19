@@ -95,9 +95,12 @@ The audited implementation head was
 `924b8af717e17183e8bf9375adcb9fb35ca4093f`. PR #10 merged it normally as
 `9965eb3bb2a1389469a4a99b90a03f6671fe76c8` with the identical tree.
 
-The Toolkit concept DOI remains `10.5281/zenodo.20574852`. The v0.17.0
-version DOI will be recorded after separately authorized GitHub release
-publication and Zenodo processing.
+#### Publication closeout
+
+GitHub release v0.17.0 was published on 2026-09-19 from release commit
+`3125503d49c7956103f68ad6aa8edb1e808537f3`. The Zenodo version DOI is
+`10.5281/zenodo.22846854`; the Toolkit concept DOI remains
+`10.5281/zenodo.20574852`.
 
 ---
 
