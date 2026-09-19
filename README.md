@@ -51,7 +51,7 @@ The implementation was independently audited at head
 `924b8af717e17183e8bf9375adcb9fb35ca4093f`, and merged through PR #10 as
 normal merge commit `9965eb3bb2a1389469a4a99b90a03f6671fe76c8` with the same
 tree. Post-merge workflow `35392851176` succeeded. See
-`RELEASE_NOTES_v0.17.0.md`.
+the [v0.17.0 release notes](RELEASE_NOTES.md#v0-17-0).
 
 The Toolkit concept DOI remains
 [10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.17.0
@@ -93,7 +93,7 @@ The implementation was independently audited at head
 `884b23bc0e775efe4330823d954ad05dca12658c`, and merged through PR #8 as
 normal merge commit `b382209899e97a64249d74291ce1b3268f84c64b` with the same
 tree. Post-merge workflow `35275828314` succeeded. See
-`RELEASE_NOTES_v0.16.0.md`.
+the [v0.16.0 release notes](RELEASE_NOTES.md#v0-16-0).
 
 The v0.16.0 version DOI is
 [10.5281/zenodo.22834543](https://doi.org/10.5281/zenodo.22834543). The Toolkit
@@ -115,7 +115,8 @@ The implementation was independently audited at commit
 `88a545bbf359e2e5fe2b0d29111b915e08963e08`, and merged through PR #5 as
 normal merge commit `fa93a8307905961808321e19d7020dc7806e4e5f` with the same
 tree. Exact-head Python/distribution CI and the seven-job Lean source-identity
-and project-build lane succeeded. See `RELEASE_NOTES_v0.15.0.md`.
+and project-build lane succeeded. See the
+[v0.15.0 release notes](RELEASE_NOTES.md#v0-15-0).
 
 The v0.15.0 version DOI is
 [10.5281/zenodo.22812232](https://doi.org/10.5281/zenodo.22812232). The Toolkit
@@ -156,7 +157,8 @@ source identity, all six Lean builds, and automated publication of the wheel
 and source distribution succeeded. Independent post-release closeout audit
 remains the final governance check.
 
-See `RELEASE_NOTES_v0.14.1.md` and `docs/V0141_MAINTENANCE_SCOPE.md`.
+See the [v0.14.1 release notes](RELEASE_NOTES.md#v0-14-1) and
+`docs/V0141_MAINTENANCE_SCOPE.md`.
 
 ## v0.14.0 — Streaming Division and Formal–Runtime Witness Alignment
 
@@ -182,7 +184,7 @@ See:
 - `docs/V014_CLAIM_BOUNDARY.md`;
 - `docs/V014_ACCEPTANCE_TEST_PLAN.md`;
 - `docs/V014_PERFORMANCE_COMPARISON_PROTOCOL.md`;
-- `RELEASE_NOTES_v0.14.0.md`.
+- [v0.14.0 release notes](RELEASE_NOTES.md#v0-14-0).
 
 Release validation records `1214 passed, 4 skipped, 0 failed` with
 922 warnings in the historical regression suite, plus `19 passed` in the
@@ -260,17 +262,25 @@ Selected CNRS Q2 beta-adic completion and digit-expansion claims are machine-che
 
 Post-integration Python validation of this merged tree on 2026-08-30: `1211 passed, 0 failed` with the same 917 documented reliable-domain warnings. The five added tests are repository guards for the formal-source manifest, theorem crosswalk, and formal-proof metadata; they do not alter arithmetic behavior.
 
-See `RELEASE_NOTES_v0.12.1.md`, `docs/CLAIM_STATUS.md`, and `docs/TEST_STATUS.md` for the exact capability and claim boundaries.
+See the [v0.12.1 release notes](RELEASE_NOTES.md#v0-12-1),
+`docs/CLAIM_STATUS.md`, and `docs/TEST_STATUS.md` for the exact capability
+and claim boundaries.
 
 ## v0.12.0 — Finite Global Riemann-Surface Layer
 
-v0.12.0 added explicit finite sheets, branch generators, ordered path words, noncommuting monodromy permutations, lifted path transport, connected-component analysis, and local atlas overlap checks. See `docs/RIEMANN_SURFACE_GLOBAL_MODEL.md` and `RELEASE_NOTES_v0.12.0.md`.
+v0.12.0 added explicit finite sheets, branch generators, ordered path words,
+noncommuting monodromy permutations, lifted path transport,
+connected-component analysis, and local atlas overlap checks. See
+`docs/RIEMANN_SURFACE_GLOBAL_MODEL.md` and the
+[v0.12.0 release notes](RELEASE_NOTES.md#v0-12-0).
 
 ## v0.11.2 — Generalized Node-Specific Branch Objects
 
 v0.11.2 added stable symbolic branch keys and a generalized branch registry so separate branch points update only their associated `log`, `sqrt`, or `pow` nodes. It preserves the v0.11.1 aggregate API for backward compatibility and adds representation-invariance tests for `sqrt(z(z-1))` versus `sqrt(z)*sqrt(z-1)`.
 
-Historical validation baseline: `1190 passed, 0 failed`. See `docs/GENERALIZED_BRANCH_OBJECTS.md` and `RELEASE_NOTES_v0.11.2.md`.
+Historical validation baseline: `1190 passed, 0 failed`. See
+`docs/GENERALIZED_BRANCH_OBJECTS.md` and the
+[v0.11.2 release notes](RELEASE_NOTES.md#v0-11-2).
 
 ## v0.11.1: Division Classification Consistency Patch
 
