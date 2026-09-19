@@ -1,10 +1,10 @@
 # CNRS Scientific Toolkit v0.17.0 release-activation source index
 # Synchronized on 2026-09-18 from governed implementation merge 9965eb3bb2a1389469a4a99b90a03f6671fe76c8.
-# Files listed: 502
+# Files listed: 492
 # Governed implementation merge: 9965eb3bb2a1389469a4a99b90a03f6671fe76c8
 # Certified implementation tree: 924b8af717e17183e8bf9375adcb9fb35ca4093f
 # Package/runtime/CFF version: 0.17.0
-# Release publication remains unauthorized; no v0.17.0 tag or release exists.
+# Release publication complete: tag v0.17.0 and the GitHub and Zenodo records are public.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -19,16 +19,6 @@ LICENSE
 NOTICE
 README.md
 RELEASE_NOTES.md
-RELEASE_NOTES_v0.11.2.md
-RELEASE_NOTES_v0.12.0.md
-RELEASE_NOTES_v0.12.1.md
-RELEASE_NOTES_v0.13.0.md
-RELEASE_NOTES_v0.13.1.md
-RELEASE_NOTES_v0.14.0.md
-RELEASE_NOTES_v0.14.1.md
-RELEASE_NOTES_v0.15.0.md
-RELEASE_NOTES_v0.16.0.md
-RELEASE_NOTES_v0.17.0.md
 SOURCE_INDEX.txt
 V0141_PREPARATION_MANIFEST.json
 V0141_RELEASE_ACTIVATION_CHECKLIST.md
