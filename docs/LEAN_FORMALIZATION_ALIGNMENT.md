@@ -1,3 +1,10 @@
+# Lean formalization alignment — v0.17.0 note
+
+v0.17.0 preserves the governed six-project, 79-file Lean source subtree
+byte-for-byte. The finite-string division bridge, structured outcomes, and
+witness plumbing are independently implemented and computationally verified;
+no new Lean theorem or enlarged formal-proof boundary is claimed.
+
 # Lean formalization alignment — v0.16.0 note
 
 v0.16.0 preserves the governed six-project, 79-file Lean source subtree

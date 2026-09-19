@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "CNRS Scientific Toolkit"
-message: "CNRS means Complex Numeric Representation System. Version 0.16.0 adds exact finite CNRS-A string/carrier conversion and routes string multiplication through exact convolution and Gaussian-Laurent normalization. Python is independently implemented and theorem-aligned."
+message: "CNRS means Complex Numeric Representation System. Version 0.17.0 adds exact finite CNRS-A string division with explicit terminating, eventually-periodic, and limit-reached outcomes and independently validated witnesses. Python is independently implemented and theorem-aligned."
 type: software
 authors:
   - family-names: Palmer
@@ -9,7 +9,7 @@ authors:
 repository-code: "https://github.com/DonGPalmer/CNRS_Scientific_Toolkit"
 url: "https://www.nul1.com/"
 license: Apache-2.0
-version: "0.16.0"
+version: "0.17.0"
 date-released: 2026-09-18
 identifiers:
   - type: doi
