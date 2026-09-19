@@ -4,7 +4,7 @@
 # Governed implementation merge: 9965eb3bb2a1389469a4a99b90a03f6671fe76c8
 # Certified implementation tree: 924b8af717e17183e8bf9375adcb9fb35ca4093f
 # Package/runtime/CFF version: 0.17.0
-# Release publication remains unauthorized; no v0.17.0 tag or release exists.
+# Release publication complete: tag v0.17.0 and the GitHub and Zenodo records are public.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
