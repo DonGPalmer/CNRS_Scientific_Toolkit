@@ -1,10 +1,10 @@
 # CNRS Scientific Toolkit
 
-## v0.17.0 release-activation candidate — Exact CNRS-A String Division
+## v0.17.0 — Exact CNRS-A String Division
 
-**Status: release-activation candidate; implementation merge and post-merge CI are GREEN.**
+**Status: released 2026-09-19; GitHub and Zenodo publication complete.**
 
-The candidate connects finite CNRS-A strings to the exact streaming-division
+Version 0.17.0 connects finite CNRS-A strings to the exact streaming-division
 engine introduced in v0.14.0.  The result explicitly distinguishes terminating,
 eventually-periodic, and limit-reached outcomes; it never presents a truncated
 periodic quotient as an exact finite string.
@@ -53,10 +53,10 @@ normal merge commit `9965eb3bb2a1389469a4a99b90a03f6671fe76c8` with the same
 tree. Post-merge workflow `35392851176` succeeded. See
 the [v0.17.0 release notes](RELEASE_NOTES.md#v0-17-0).
 
-The Toolkit concept DOI remains
-[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.17.0
-version DOI will be recorded additively after Zenodo processes a separately
-authorized GitHub release.
+The v0.17.0 version DOI is
+[10.5281/zenodo.22846854](https://doi.org/10.5281/zenodo.22846854). The Toolkit
+concept DOI remains
+[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852).
 
 ## v0.16.0 — Exact CNRS-A String Multiplication
 
