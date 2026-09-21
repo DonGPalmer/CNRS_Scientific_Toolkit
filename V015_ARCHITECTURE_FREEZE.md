@@ -3,7 +3,7 @@
 Status: SECOND HOLD REPAIRED; INDEPENDENT RE-AUDIT REQUIRED
 
 Baseline: `main` commit `f0f674be654a2d9a82f8ec8b77ca732a04af218a`.
-Controlling amendments: `V015_FREEZE_AMENDMENT_2026-09-14.md`, `V015_FREEZE_AMENDMENT_2026-09-15.md`, and `V015_FREEZE_AMENDMENT_3_2026-09-15.md`; the third amendment controls conflicts.
+Controlling amendments: `docs/releases/v0.15.0/V015_FREEZE_AMENDMENT_2026-09-14.md`, `docs/releases/v0.15.0/V015_FREEZE_AMENDMENT_2026-09-15.md`, and `docs/releases/v0.15.0/V015_FREEZE_AMENDMENT_3_2026-09-15.md`; the third amendment controls conflicts.
 
 ## Release objective
 

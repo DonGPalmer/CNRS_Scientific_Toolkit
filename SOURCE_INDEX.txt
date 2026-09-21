@@ -1,8 +1,8 @@
-# CNRS Scientific Toolkit v0.17.0 release-activation source index
-# Synchronized on 2026-09-18 from governed implementation merge 9965eb3bb2a1389469a4a99b90a03f6671fe76c8.
-# Files listed: 492
-# Governed implementation merge: 9965eb3bb2a1389469a4a99b90a03f6671fe76c8
-# Certified implementation tree: 924b8af717e17183e8bf9375adcb9fb35ca4093f
+# CNRS Scientific Toolkit v0.17.0 source index
+# Synchronized on 2026-09-19 for the release-evidence archive candidate.
+# Files listed: 493
+# Candidate baseline commit: b97f18d8adf139dea4f17cd58c9742c5026d2c04
+# Candidate baseline tree: 663e3ac79995d9ed87db7e2e414a0bffc8f46ae9
 # Package/runtime/CFF version: 0.17.0
 # Release publication complete: tag v0.17.0 and the GitHub and Zenodo records are public.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
@@ -20,37 +20,12 @@ NOTICE
 README.md
 RELEASE_NOTES.md
 SOURCE_INDEX.txt
-V0141_PREPARATION_MANIFEST.json
-V0141_RELEASE_ACTIVATION_CHECKLIST.md
-V0141_RELEASE_CLOSEOUT_RECORD_2026-09-14.md
-V0141_SHA256SUMS.txt
-V014_AUDIT_REPAIR_RECORD_2026-09-13.md
-V014_FREEZE_AMENDMENT_2026-09-12.md
-V014_FREEZE_MANIFEST.json
-V014_INSTALLATION_AND_FREEZE_RECORD.md
-V014_RELEASE_ACTIVATION_CHECKLIST.md
-V014_RELEASE_CLOSEOUT_RECORD_2026-09-12.md
-V014_RELEASE_FINALIZATION_RECORD_2026-09-12.md
-V014_SHA256SUMS.txt
 V015_ARCHITECTURE_FREEZE.md
-V015_CANDIDATE_SHA256SUMS.txt
 V015_FINITE_CONVOLUTION_API_CONTRACT.md
-V015_FREEZE_AMENDMENT_2026-09-14.md
-V015_FREEZE_AMENDMENT_2026-09-15.md
-V015_FREEZE_AMENDMENT_3_2026-09-15.md
-V015_FREEZE_MANIFEST.json
-V015_IMPLEMENTATION_CANDIDATE_RECORD.md
-V015_RELEASE_CLOSEOUT_RECORD_2026-09-17.md
-V015_RELEASE_FINALIZATION_RECORD_2026-09-16.md
-V015_SHA256SUMS.txt
 V016_ARCHITECTURE_FREEZE.md
 V016_EXACT_MULTIPLICATION_API_CONTRACT.md
-V016_RELEASE_ACTIVATION_RECORD_2026-09-17.md
-V016_SHA256SUMS.txt
 V017_ARCHITECTURE_FREEZE.md
 V017_EXACT_DIVISION_API_CONTRACT.md
-V017_RELEASE_ACTIVATION_RECORD_2026-09-18.md
-V017_SHA256SUMS.txt
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py
 acceptance/v015/README.md
@@ -58,6 +33,8 @@ acceptance/v016/README.md
 acceptance/v016/test_exact_multiplication_contract.py
 acceptance/v017/README.md
 acceptance/v017/test_exact_division_contract.py
+benchmark-results/v014/v014_performance_results.json
+benchmark-results/v014/v014_performance_summary.csv
 benchmark-results/v015/finite_convolution_results.json
 benchmark-results/v015/finite_convolution_summary.csv
 benchmarks/benchmark_finite_convolution.py
@@ -236,6 +213,32 @@ docs/audits/scripts/hybrid_cnrs_a_cnrs_h_representation_verify_v1.py
 docs/audits/scripts/metric_topological_completeness_verify_v1.py
 docs/audits/toolkit_audit_2026-07-07_v1.md
 docs/release/V0.11.0_POST_RELEASE_NOTE.md
+docs/releases/README.md
+docs/releases/v0.14.0/V014_AUDIT_REPAIR_RECORD_2026-09-13.md
+docs/releases/v0.14.0/V014_FREEZE_AMENDMENT_2026-09-12.md
+docs/releases/v0.14.0/V014_FREEZE_MANIFEST.json
+docs/releases/v0.14.0/V014_INSTALLATION_AND_FREEZE_RECORD.md
+docs/releases/v0.14.0/V014_RELEASE_ACTIVATION_CHECKLIST.md
+docs/releases/v0.14.0/V014_RELEASE_CLOSEOUT_RECORD_2026-09-12.md
+docs/releases/v0.14.0/V014_RELEASE_FINALIZATION_RECORD_2026-09-12.md
+docs/releases/v0.14.0/V014_SHA256SUMS.txt
+docs/releases/v0.14.1/V0141_PREPARATION_MANIFEST.json
+docs/releases/v0.14.1/V0141_RELEASE_ACTIVATION_CHECKLIST.md
+docs/releases/v0.14.1/V0141_RELEASE_CLOSEOUT_RECORD_2026-09-14.md
+docs/releases/v0.14.1/V0141_SHA256SUMS.txt
+docs/releases/v0.15.0/V015_CANDIDATE_SHA256SUMS.txt
+docs/releases/v0.15.0/V015_FREEZE_AMENDMENT_2026-09-14.md
+docs/releases/v0.15.0/V015_FREEZE_AMENDMENT_2026-09-15.md
+docs/releases/v0.15.0/V015_FREEZE_AMENDMENT_3_2026-09-15.md
+docs/releases/v0.15.0/V015_FREEZE_MANIFEST.json
+docs/releases/v0.15.0/V015_IMPLEMENTATION_CANDIDATE_RECORD.md
+docs/releases/v0.15.0/V015_RELEASE_CLOSEOUT_RECORD_2026-09-17.md
+docs/releases/v0.15.0/V015_RELEASE_FINALIZATION_RECORD_2026-09-16.md
+docs/releases/v0.15.0/V015_SHA256SUMS.txt
+docs/releases/v0.16.0/V016_RELEASE_ACTIVATION_RECORD_2026-09-17.md
+docs/releases/v0.16.0/V016_SHA256SUMS.txt
+docs/releases/v0.17.0/V017_RELEASE_ACTIVATION_RECORD_2026-09-18.md
+docs/releases/v0.17.0/V017_SHA256SUMS.txt
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.pdf
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.tex
 docs/theory/CANONICAL_PERIODIC_NORMALIZATION_V1.pdf
@@ -497,5 +500,3 @@ tools/check_v015_claims.py
 tools/check_v016_claims.py
 tools/check_v017_claims.py
 tools/toolkit_audit_crossval.py
-v014_performance_results.json
-v014_performance_summary.csv
