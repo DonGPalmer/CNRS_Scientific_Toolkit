@@ -10,7 +10,9 @@ import pytest
 
 import cnrs
 from cnrs.cnrs_add import ADDITION_TABLE, CARRY_SET, CARRY_SET_PAIRS, add_cnrs
+from cnrs.cnrs_mul import mul_cnrs
 from cnrs.cnrs_ops import cnrs_add, cnrs_neg, cnrs_sub
+from cnrs.cnrs_value import CVal
 from cnrs.validation.exact_addition_subtraction_oracle import (
     exact_difference_value,
     exact_negated_value,
@@ -24,6 +26,17 @@ from cnrs.validation.v017_addition_subtraction_baseline import (
 )
 
 TRANSITION_SHA256 = "b68818cdb0766aead9993639ca2f1b96351371154c94453e730bf9a67a0746ee"
+LONG_PAIR_SEED = 2026092205
+LONG_PAIR_COUNT = 100
+LONG_MAX_DIGITS = 1000
+LONG_LAW_SEED = 2026092210
+LONG_LAW_COUNT = 100
+FRACTIONAL_CVAL_VECTORS = (
+    (".1", ".4"),
+    ("1.2", ".3"),
+    ("23.1", "4.3"),
+    ("0.004", "12.34"),
+)
 
 
 def test_public_signatures_exports_and_constants_are_frozen():
@@ -120,13 +133,85 @@ def _random_spelling(rng: random.Random) -> str:
     return digits[:position] + "." + digits[position:]
 
 
-def test_long_inputs_and_algebraic_laws():
-    samples = ["4" * 1000, ("40" * 500), "." + "1234" * 250]
-    for value in samples:
-        canonical = add_cnrs(value, "0")
-        assert exact_string_value(canonical) == exact_string_value(value)
-        assert add_cnrs(value, cnrs_neg(value)) == "0"
-        assert cnrs_sub(value, value) == "0"
+def _long_spelling(rng: random.Random, digit_count: int) -> str:
+    digits = "".join(str(rng.randrange(5)) for _ in range(digit_count))
+    point = rng.randrange(digit_count + 1)
+    if point == 0:
+        return "." + digits
+    if point == digit_count:
+        return digits
+    return digits[:point] + "." + digits[point:]
+
+
+def test_a05_one_hundred_long_input_pairs_to_one_thousand_digits():
+    rng = random.Random(LONG_PAIR_SEED)
+    observed_lengths = []
+    for index in range(LONG_PAIR_COUNT):
+        left_length = LONG_MAX_DIGITS if index == 0 else 64 + (index * 37) % 937
+        right_length = LONG_MAX_DIGITS if index == 0 else 64 + (index * 53 + 17) % 937
+        left = _long_spelling(rng, left_length)
+        right = _long_spelling(rng, right_length)
+        observed_lengths.extend((left_length, right_length))
+
+        addition = add_cnrs(left, right)
+        negation = cnrs_neg(left)
+        subtraction = cnrs_sub(left, right)
+        assert addition == legacy_add_cnrs(left, right)
+        assert exact_string_value(addition) == exact_sum_value(left, right)
+        assert exact_string_value(negation) == exact_negated_value(left)
+        assert exact_string_value(subtraction) == exact_difference_value(left, right)
+
+    assert len(observed_lengths) == 2 * LONG_PAIR_COUNT
+    assert max(observed_lengths) == LONG_MAX_DIGITS
+    assert all(64 <= length <= LONG_MAX_DIGITS for length in observed_lengths)
+
+
+def test_a10_one_hundred_randomized_longer_domain_law_triples():
+    rng = random.Random(LONG_LAW_SEED)
+    for _ in range(LONG_LAW_COUNT):
+        a, b, c = (_long_spelling(rng, 32 + rng.randrange(65)) for _ in range(3))
+
+        ab = add_cnrs(a, b)
+        ba = add_cnrs(b, a)
+        assert ab == ba == cnrs_add(a, b)
+        assert exact_string_value(ab) == exact_sum_value(a, b)
+
+        left_associative = add_cnrs(ab, c)
+        right_associative = add_cnrs(a, add_cnrs(b, c))
+        assert left_associative == right_associative
+        assert exact_string_value(left_associative) == exact_sum_value(ab, c)
+
+        canonical_a = add_cnrs(a, "0")
+        assert exact_string_value(canonical_a) == exact_string_value(a)
+        assert add_cnrs(a, cnrs_neg(a)) == "0"
+        assert cnrs_neg(cnrs_neg(a)) == canonical_a
+        assert exact_string_value(cnrs_neg(a)) == exact_negated_value(a)
+
+        difference = cnrs_sub(a, b)
+        reverse_difference = cnrs_sub(b, a)
+        assert difference == add_cnrs(a, cnrs_neg(b))
+        assert difference == cnrs_neg(reverse_difference)
+        assert cnrs_sub(a, "0") == canonical_a
+        assert cnrs_sub(a, a) == "0"
+        assert exact_string_value(difference) == exact_difference_value(a, b)
+
+        distributed_left = mul_cnrs(a, add_cnrs(b, c))
+        distributed_right = add_cnrs(mul_cnrs(a, b), mul_cnrs(a, c))
+        assert exact_string_value(distributed_left) == exact_string_value(distributed_right)
+
+
+def test_a13_fractional_direct_and_cval_route_parity():
+    assert len(FRACTIONAL_CVAL_VECTORS) >= 4
+    for left, right in FRACTIONAL_CVAL_VECTORS:
+        direct_negation = cnrs_neg(left)
+        cval_negation = (-CVal.from_str(left)).s
+        assert direct_negation == cval_negation
+        assert exact_string_value(direct_negation) == exact_negated_value(left)
+
+        direct_subtraction = cnrs_sub(left, right)
+        cval_subtraction = (CVal.from_str(left) - CVal.from_str(right)).s
+        assert direct_subtraction == cval_subtraction
+        assert exact_string_value(direct_subtraction) == exact_difference_value(left, right)
 
 
 @pytest.mark.parametrize("value", ["", ".", "5", "-1", "+1", " 1", "1 ", "1e2"])

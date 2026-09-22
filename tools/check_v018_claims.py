@@ -15,6 +15,21 @@ PACKET_HASHES = {
     "V018_EXACT_ADDITION_SUBTRACTION_API_CONTRACT.md": "1acc7dafda1bee31aa2e1be1391d8f123554a8019e431523d842a394f2c3a003",
     "acceptance/v018/README.md": "3c5270f84c1451f02ba14e6b0c8ee66e4ed93b004aa1ab3f97277ff94d180421",
 }
+EVIDENCE_TEST_PATHS = (
+    "acceptance/v018/test_exact_addition_subtraction_contract.py",
+    "tests/test_v018_exact_addition_subtraction.py",
+)
+EVIDENCE_CONSTANTS = {
+    "LONG_PAIR_COUNT": 100,
+    "LONG_MAX_DIGITS": 1000,
+    "LONG_LAW_COUNT": 100,
+}
+EVIDENCE_TESTS = {
+    "test_a05_one_hundred_long_input_pairs_to_one_thousand_digits",
+    "test_a10_one_hundred_randomized_longer_domain_law_triples",
+    "test_a10_exhaustive_short_and_randomized_longer_domain_laws",
+    "test_a13_fractional_direct_and_cval_route_parity",
+}
 
 
 class ClaimGuardError(RuntimeError):
@@ -81,6 +96,68 @@ def _guard_transition_identity() -> None:
         raise ClaimGuardError(f"transition checksum drift: {digest}")
 
 
+def _guard_committed_acceptance_evidence() -> None:
+    for path in EVIDENCE_TEST_PATHS:
+        source = (ROOT / path).read_text()
+        tree = ast.parse(source)
+        functions = {
+            node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)
+        }
+        required_tests = {
+            "test_a05_one_hundred_long_input_pairs_to_one_thousand_digits",
+            "test_a13_fractional_direct_and_cval_route_parity",
+        }
+        required_tests.add(
+            "test_a10_exhaustive_short_and_randomized_longer_domain_laws"
+            if path.startswith("acceptance/")
+            else "test_a10_one_hundred_randomized_longer_domain_law_triples"
+        )
+        if not required_tests <= functions.keys():
+            missing = sorted(required_tests - functions.keys())
+            raise ClaimGuardError(f"missing committed v0.18 evidence in {path}: {missing}")
+
+        assignments = {}
+        for node in tree.body:
+            if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+                try:
+                    assignments[node.targets[0].id] = ast.literal_eval(node.value)
+                except (ValueError, TypeError):
+                    pass
+        for name, expected in EVIDENCE_CONSTANTS.items():
+            if assignments.get(name) != expected:
+                raise ClaimGuardError(f"{path} does not freeze {name}={expected}")
+        vectors = assignments.get("FRACTIONAL_CVAL_VECTORS")
+        if not isinstance(vectors, tuple) or len(vectors) < 4:
+            raise ClaimGuardError(f"{path} has fewer than four fractional CVal vectors")
+
+        imports_cval = any(
+            isinstance(node, ast.ImportFrom)
+            and node.module == "cnrs.cnrs_value"
+            and any(alias.name == "CVal" for alias in node.names)
+            for node in tree.body
+        )
+        if not imports_cval:
+            raise ClaimGuardError(f"{path} does not import CVal for A13 parity")
+
+        evidence_nodes = [functions[name] for name in required_tests]
+        if "_assert_a10_laws" in functions:
+            evidence_nodes.append(functions["_assert_a10_laws"])
+        identifiers = {
+            node.id
+            for function in evidence_nodes
+            for node in ast.walk(function)
+            if isinstance(node, ast.Name)
+        }
+        required_identifiers = {
+            "LONG_PAIR_COUNT", "LONG_MAX_DIGITS", "LONG_LAW_COUNT",
+            "FRACTIONAL_CVAL_VECTORS", "CVal", "exact_string_value",
+            "exact_sum_value", "exact_negated_value", "exact_difference_value",
+        }
+        if not required_identifiers <= identifiers:
+            missing = sorted(required_identifiers - identifiers)
+            raise ClaimGuardError(f"{path} evidence omits required independent routes: {missing}")
+
+
 def _guard_identities() -> None:
     for path, expected in PACKET_HASHES.items():
         observed = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
@@ -95,6 +172,7 @@ def main() -> int:
     _guard_exact_production()
     _guard_oracle_independence()
     _guard_transition_identity()
+    _guard_committed_acceptance_evidence()
     _guard_identities()
     print("v0.18 claim guard: PASS")
     return 0
