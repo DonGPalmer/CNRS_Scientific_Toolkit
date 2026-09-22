@@ -104,3 +104,17 @@ The legacy module `cnrs.cnrs_division_status` remains a deprecated compatibility
 - a canonical global representation API for all ordinary complex values.
 
 See `CNRS_P4_REFERENCE_STATUS.md` for the current Problem 4 citation and theorem map.
+
+# API Status — v0.18.0 implementation candidate
+
+The unactivated candidate changes no public name, signature, import path, or
+result type. `add_cnrs` and `cnrs_add` retain the released 14-state relation and
+finite-string formatting behavior, with exact integer-pair transition
+construction. For the accepted finite grammar, `cnrs_neg(a)` is exact
+multiplication by `"144"`, and `cnrs_sub(a, b)` is exact addition after exact
+negation. A separate compatibility lane preserves representative v0.17
+behavior outside that grammar and is excluded from the exactness claim.
+
+The controlling candidate documents are `V018_ARCHITECTURE_FREEZE.md` and
+`V018_EXACT_ADDITION_SUBTRACTION_API_CONTRACT.md`. Version `0.18.0` is not
+activated or released by this candidate.

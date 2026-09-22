@@ -17,9 +17,24 @@ Provides:
 """
 
 from __future__ import annotations
+import re
 from .cnrs_add import add_cnrs
 from .cnrs_mul import mul_cnrs
 from .cnrs_repr import cnrs_to_gaussian, gaussian_to_cnrs_str, normalize_cnrs
+
+
+_FINITE_CNRS_PATTERN = re.compile(r"(?:[0-4]+(?:\.[0-4]*)?|\.[0-4]+)\Z")
+_NEGATIVE_ONE = "144"
+
+
+def _is_finite_cnrs_string(value: object) -> bool:
+    return type(value) is str and _FINITE_CNRS_PATTERN.fullmatch(value) is not None
+
+
+def _legacy_cnrs_neg(a: str) -> str:
+    """Preserve v0.17 behavior outside the claimed finite grammar."""
+    ga = cnrs_to_gaussian(a)
+    return normalize_cnrs(gaussian_to_cnrs_str(-ga))
 
 
 def cnrs_add(a: str, b: str) -> str:
@@ -28,14 +43,17 @@ def cnrs_add(a: str, b: str) -> str:
 
 
 def cnrs_neg(a: str) -> str:
-    """Unary negation in CNRS-A, via value map."""
-    ga = cnrs_to_gaussian(a)
-    return normalize_cnrs(gaussian_to_cnrs_str(-ga))
+    """Unary negation in CNRS-A, exact for accepted finite strings."""
+    if _is_finite_cnrs_string(a):
+        return mul_cnrs(_NEGATIVE_ONE, a)
+    return _legacy_cnrs_neg(a)
 
 
 def cnrs_sub(a: str, b: str) -> str:
     """a - b in CNRS-A."""
-    return cnrs_add(a, cnrs_neg(b))
+    if _is_finite_cnrs_string(a) and _is_finite_cnrs_string(b):
+        return add_cnrs(a, cnrs_neg(b))
+    return add_cnrs(a, _legacy_cnrs_neg(b))
 
 
 def cnrs_mul(a: str, b: str) -> str:
