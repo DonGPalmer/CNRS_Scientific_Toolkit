@@ -1,10 +1,10 @@
-# CNRS Scientific Toolkit v0.17.0 source index
-# Synchronized on 2026-09-19 for the release-evidence archive candidate.
-# Files listed: 493
-# Candidate baseline commit: b97f18d8adf139dea4f17cd58c9742c5026d2c04
-# Candidate baseline tree: 663e3ac79995d9ed87db7e2e414a0bffc8f46ae9
-# Package/runtime/CFF version: 0.17.0
-# Release publication complete: tag v0.17.0 and the GitHub and Zenodo records are public.
+# CNRS Scientific Toolkit v0.18.0 implementation candidate source index
+# Synchronized on 2026-09-22 for the exact-addition-and-subtraction candidate.
+# Files listed: 501
+# Authorized baseline commit: b290f2e3b43dc1830bb1311eb81393475b341a94
+# Authorized baseline tree: ff732e56a6597d9ec98ce071f41507d7dd9bca21
+# Package/runtime/CFF version: 0.17.0 (v0.18.0 not activated)
+# Candidate status: unactivated; no release, tag, or publication action.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -26,6 +26,8 @@ V016_ARCHITECTURE_FREEZE.md
 V016_EXACT_MULTIPLICATION_API_CONTRACT.md
 V017_ARCHITECTURE_FREEZE.md
 V017_EXACT_DIVISION_API_CONTRACT.md
+V018_ARCHITECTURE_FREEZE.md
+V018_EXACT_ADDITION_SUBTRACTION_API_CONTRACT.md
 acceptance/v014/README.md
 acceptance/v014/test_streaming_division_contract.py
 acceptance/v015/README.md
@@ -33,6 +35,8 @@ acceptance/v016/README.md
 acceptance/v016/test_exact_multiplication_contract.py
 acceptance/v017/README.md
 acceptance/v017/test_exact_division_contract.py
+acceptance/v018/README.md
+acceptance/v018/test_exact_addition_subtraction_contract.py
 benchmark-results/v014/v014_performance_results.json
 benchmark-results/v014/v014_performance_summary.csv
 benchmark-results/v015/finite_convolution_results.json
@@ -142,10 +146,12 @@ cnrs/validation/__init__.py
 cnrs/validation/autodiff.py
 cnrs/validation/compare.py
 cnrs/validation/convolution_oracle.py
+cnrs/validation/exact_addition_subtraction_oracle.py
 cnrs/validation/exact_division_oracle.py
 cnrs/validation/exact_string_oracle.py
 cnrs/validation/legacy_string_multiplication.py
 cnrs/validation/reference_complex.py
+cnrs/validation/v017_addition_subtraction_baseline.py
 cnrs/witnesses.py
 cnrs/workflows/__init__.py
 cnrs/workflows/oscillator.py
@@ -491,6 +497,7 @@ tests/test_topology_v011.py
 tests/test_v015_finite_convolution.py
 tests/test_v016_exact_multiplication.py
 tests/test_v017_exact_division.py
+tests/test_v018_exact_addition_subtraction.py
 tools/audit_native_status.py
 tools/build_release.py
 tools/build_reproducible_distributions.py
@@ -499,4 +506,5 @@ tools/check_release_assets.py
 tools/check_v015_claims.py
 tools/check_v016_claims.py
 tools/check_v017_claims.py
+tools/check_v018_claims.py
 tools/toolkit_audit_crossval.py

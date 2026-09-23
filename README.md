@@ -1159,3 +1159,27 @@ numerical fallback. Install with `pip install cnrs[algebraic]`.
 Current boundary: finite branch values only. Points at infinity, normalization,
 Puiseux charts, automatic monodromy, and certified continuation remain future
 stages.
+
+## v0.18.0 implementation candidate: exact finite addition and subtraction
+
+The unactivated v0.18.0 candidate preserves the existing `add_cnrs`,
+`cnrs_add`, `cnrs_neg`, and `cnrs_sub` APIs. For finite strings matching the
+documented digits-`0`-through-`4` grammar, addition constructs its existing
+14-state transition relation with integer-pair arithmetic, negation reuses
+exact multiplication by `"144"` (the CNRS-A representation of `-1`), and
+subtraction composes exact negation with exact addition.
+
+```python
+from cnrs import add_cnrs, cnrs_neg, cnrs_sub
+
+assert add_cnrs("23.1", "4.3") == "1332.4"
+assert cnrs_neg(".1") == "14.4"
+assert cnrs_sub("23.1", "4.3") == "33.3"
+```
+
+This corrects the narrow v0.17 fractional negation/subtraction value-map defect
+while retaining byte-for-byte addition output on the accepted finite grammar.
+It does not claim arithmetic over arbitrary infinite streams, universal
+resource bounds, Lean extraction, or end-to-end formal verification of the
+Python runtime. Package and release metadata remain at v0.17.0 until separately
+authorized activation.

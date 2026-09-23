@@ -12,7 +12,7 @@ Digits: D = {0, 1, 2, 3, 4}
 
 from __future__ import annotations
 from typing import Dict, Tuple
-from .cnrs_repr import Z0, cnrs_remainder, normalize_cnrs
+from .cnrs_repr import normalize_cnrs
 
 
 # ---------------------------------------------------------------------------
@@ -49,17 +49,22 @@ def _build_addition_table() -> Dict[Tuple[int, int, int], Tuple[int, int]]:
     """
     table = {}
 
-    for carry_idx, kappa in enumerate(CARRY_SET):
+    for carry_idx, (carry_real, carry_imag) in enumerate(CARRY_SET_PAIRS):
         for a in range(5):
             for b in range(5):
-                raw = kappa + a + b
-                d = cnrs_remainder(raw)
-                next_kappa = (raw - d) / Z0
-
-                nk_key = (int(round(next_kappa.real)), int(round(next_kappa.imag)))
+                raw_real = carry_real + a + b
+                raw_imag = carry_imag
+                d = (raw_real + 2 * raw_imag) % 5
+                divisible_real = raw_real - d
+                numerator_real = -2 * divisible_real + raw_imag
+                numerator_imag = -divisible_real - 2 * raw_imag
+                if numerator_real % 5 or numerator_imag % 5:
+                    raise RuntimeError("Nonintegral exact addition transition")
+                nk_key = (numerator_real // 5, numerator_imag // 5)
                 if nk_key not in CARRY_INDEX:
                     raise RuntimeError(
-                        f"Carry escaped canonical set: {kappa}, a={a}, b={b}, next={next_kappa}"
+                        "Carry escaped canonical set: "
+                        f"{(carry_real, carry_imag)}, a={a}, b={b}, next={nk_key}"
                     )
 
                 next_idx = CARRY_INDEX[nk_key]
