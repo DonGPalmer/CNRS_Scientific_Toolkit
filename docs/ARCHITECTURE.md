@@ -1,3 +1,16 @@
+# CNRS Scientific Toolkit Architecture — v0.18.0
+
+Version 0.18.0 completes the exact finite addition/subtraction route without
+introducing a new public arithmetic API. Addition constructs and executes the
+preserved 14-state transition relation using integer-pair arithmetic.
+Negation delegates to exact v0.16 multiplication by `"144"`, and subtraction
+composes exact negation with exact addition.
+
+The independent exact-value and frozen v0.17 parity oracles remain validation
+dependencies only. The six-project, 79-file governed formal subtree is
+unchanged. The Python runtime remains independently implemented and
+theorem-aligned rather than Lean-extracted.
+
 # CNRS Scientific Toolkit Architecture — v0.17.0
 
 v0.17.0 adds an exact finite-string division bridge over the released

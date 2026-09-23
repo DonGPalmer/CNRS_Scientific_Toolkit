@@ -1,10 +1,10 @@
-# CNRS Scientific Toolkit v0.18.0 implementation candidate source index
-# Synchronized on 2026-09-22 for the exact-addition-and-subtraction candidate.
-# Files listed: 501
-# Authorized baseline commit: b290f2e3b43dc1830bb1311eb81393475b341a94
-# Authorized baseline tree: ff732e56a6597d9ec98ce071f41507d7dd9bca21
-# Package/runtime/CFF version: 0.17.0 (v0.18.0 not activated)
-# Candidate status: unactivated; no release, tag, or publication action.
+# CNRS Scientific Toolkit v0.18.0 release-activation candidate source index
+# Synchronized on 2026-09-23 for the governed version-activation candidate.
+# Files listed: 504
+# Authorized baseline commit: ac03e2925ce754d84cceedf548fd2060ffe33736
+# Authorized baseline tree: 0a2fbba6151fd893231fe7f4bed459c0a7e0a853
+# Package/runtime/CFF version: 0.18.0
+# Candidate status: release activation; no merge, tag, release, or publication action.
 # Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -245,6 +245,8 @@ docs/releases/v0.16.0/V016_RELEASE_ACTIVATION_RECORD_2026-09-17.md
 docs/releases/v0.16.0/V016_SHA256SUMS.txt
 docs/releases/v0.17.0/V017_RELEASE_ACTIVATION_RECORD_2026-09-18.md
 docs/releases/v0.17.0/V017_SHA256SUMS.txt
+docs/releases/v0.18.0/V018_RELEASE_ACTIVATION_RECORD_2026-09-23.md
+docs/releases/v0.18.0/V018_SHA256SUMS.txt
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.pdf
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.tex
 docs/theory/CANONICAL_PERIODIC_NORMALIZATION_V1.pdf
@@ -482,6 +484,7 @@ tests/test_release_engineering_v0141.py
 tests/test_release_engineering_v015.py
 tests/test_release_engineering_v016.py
 tests/test_release_engineering_v017.py
+tests/test_release_engineering_v018.py
 tests/test_riemann_surface.py
 tests/test_science_toolkit.py
 tests/test_scientific_workflow_crossval_v011.py
