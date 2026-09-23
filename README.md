@@ -1,5 +1,40 @@
 # CNRS Scientific Toolkit
 
+## v0.18.0 release-activation candidate — Exact Finite Addition and Subtraction
+
+**Status: release-activation candidate; implementation merge and post-merge CI are GREEN.**
+
+Version 0.18.0 preserves the existing `add_cnrs`, `cnrs_add`, `cnrs_neg`,
+and `cnrs_sub` APIs. For finite strings matching the documented
+digits-`0`-through-`4` grammar, addition uses the preserved 14-state
+transition relation with exact integer-pair arithmetic, negation uses exact
+multiplication by `"144"` (the CNRS-A representation of `-1`), and
+subtraction composes exact negation with exact addition.
+
+```python
+from cnrs import add_cnrs, cnrs_neg, cnrs_sub
+
+assert add_cnrs("23.1", "4.3") == "1332.4"
+assert cnrs_neg(".1") == "14.4"
+assert cnrs_sub("23.1", "4.3") == "33.3"
+```
+
+This release preserves byte-for-byte v0.17 addition output throughout the
+accepted finite grammar and corrects only the independently demonstrated
+fractional negation/subtraction value-map defect. Compatibility behavior
+outside the accepted grammar remains separated from the exactness claim.
+
+The implementation was independently audited at head
+`fe3c27795085b13b402272de9a91b7a42d9ddda0`, tree
+`0a2fbba6151fd893231fe7f4bed459c0a7e0a853`, and merged through PR #15 as
+normal merge commit `ac03e2925ce754d84cceedf548fd2060ffe33736` with the same
+tree. Post-merge workflow `35877214047` succeeded.
+
+The Toolkit concept DOI remains
+[10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.18.0
+version DOI will be recorded additively after Zenodo processes a separately
+authorized GitHub release.
+
 ## v0.17.0 — Exact CNRS-A String Division
 
 **Status: released 2026-09-19; GitHub and Zenodo publication complete.**
@@ -1159,27 +1194,3 @@ numerical fallback. Install with `pip install cnrs[algebraic]`.
 Current boundary: finite branch values only. Points at infinity, normalization,
 Puiseux charts, automatic monodromy, and certified continuation remain future
 stages.
-
-## v0.18.0 implementation candidate: exact finite addition and subtraction
-
-The unactivated v0.18.0 candidate preserves the existing `add_cnrs`,
-`cnrs_add`, `cnrs_neg`, and `cnrs_sub` APIs. For finite strings matching the
-documented digits-`0`-through-`4` grammar, addition constructs its existing
-14-state transition relation with integer-pair arithmetic, negation reuses
-exact multiplication by `"144"` (the CNRS-A representation of `-1`), and
-subtraction composes exact negation with exact addition.
-
-```python
-from cnrs import add_cnrs, cnrs_neg, cnrs_sub
-
-assert add_cnrs("23.1", "4.3") == "1332.4"
-assert cnrs_neg(".1") == "14.4"
-assert cnrs_sub("23.1", "4.3") == "33.3"
-```
-
-This corrects the narrow v0.17 fractional negation/subtraction value-map defect
-while retaining byte-for-byte addition output on the accepted finite grammar.
-It does not claim arithmetic over arbitrary infinite streams, universal
-resource bounds, Lean extraction, or end-to-end formal verification of the
-Python runtime. Package and release metadata remain at v0.17.0 until separately
-authorized activation.

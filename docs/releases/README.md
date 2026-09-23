@@ -7,6 +7,7 @@ maintained separately in the reverse-chronological
 
 ## Archived releases
 
+- [`v0.18.0`](v0.18.0/) — release-activation candidate record and checksum manifest.
 - [`v0.17.0`](v0.17.0/) — activation record and release checksum manifest.
 - [`v0.16.0`](v0.16.0/) — activation record and release checksum manifest.
 - [`v0.15.0`](v0.15.0/) — freeze amendments, candidate evidence, manifests,

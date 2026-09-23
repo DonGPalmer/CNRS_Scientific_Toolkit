@@ -1,3 +1,19 @@
+# Claim Status — v0.18.0
+
+Version 0.18.0 establishes computationally verified exact addition, negation,
+and subtraction for accepted finite CNRS-A strings. Addition retains the
+released transition relation while removing approximate numeric operations
+from transition construction and execution. Fractional negation and
+subtraction are corrected through the released exact multiplication and
+normalization route; the correction boundary is governed by independent exact
+value and frozen v0.17 parity oracles.
+
+The claim excludes arbitrary infinite fractional streams, unrestricted
+analytic convergence, universal performance or resource bounds, and any claim
+that the independently implemented Python route is Lean-extracted or
+end-to-end Lean-verified. All v0.14–v0.17 claim boundaries remain unchanged,
+and the formal subtree is preserved byte-for-byte.
+
 # Claim Status — v0.17.0
 
 v0.17.0 establishes exact division of finite CNRS-A strings into structured
@@ -123,20 +139,3 @@ distinct from ordinary complex analytic convergence.
 See `CNRS_P4_REFERENCE_STATUS.md`. The cited public record remains Version 12,
 DOI `10.5281/zenodo.21791909`; the synchronized programme working paper is
 Version 16 pending any later public deposit.
-
-# Claim Status — v0.18.0 implementation candidate
-
-The unactivated candidate establishes computationally verified exact addition,
-negation, and subtraction for accepted finite CNRS-A strings. Addition retains
-the released transition relation while removing approximate numeric operations
-from transition construction and execution. Fractional negation and
-subtraction are corrected through the released exact multiplication and
-normalization route; the correction boundary is governed by independent exact
-value and frozen v0.17 parity oracles.
-
-The claim excludes arbitrary infinite fractional streams, unrestricted
-analytic convergence, universal performance or resource bounds, and any claim
-that the independently implemented Python route is Lean-extracted or
-end-to-end Lean-verified. All v0.14–v0.17 claim boundaries remain unchanged,
-and the formal subtree is preserved byte-for-byte. This text describes a
-candidate, not a released v0.18.0 version.

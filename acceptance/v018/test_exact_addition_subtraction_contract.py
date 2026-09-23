@@ -23,6 +23,8 @@ from cnrs.validation.v017_addition_subtraction_baseline import (
 
 BASE_COMMIT = "b290f2e3b43dc1830bb1311eb81393475b341a94"
 BASE_TREE = "ff732e56a6597d9ec98ce071f41507d7dd9bca21"
+IMPLEMENTATION_COMMIT = "fe3c27795085b13b402272de9a91b7a42d9ddda0"
+IMPLEMENTATION_TREE = "0a2fbba6151fd893231fe7f4bed459c0a7e0a853"
 LONG_PAIR_SEED = 2026092205
 LONG_PAIR_COUNT = 100
 LONG_MAX_DIGITS = 1000
@@ -98,11 +100,18 @@ def _assert_a10_laws(a: str, b: str, c: str) -> None:
 
 
 def test_a01_candidate_identity_ancestry_and_changed_paths():
-    assert subprocess.check_output(["git", "merge-base", "HEAD", BASE_COMMIT], text=True).strip() == BASE_COMMIT
-    assert subprocess.check_output(["git", "rev-parse", f"{BASE_COMMIT}^{{tree}}"], text=True).strip() == BASE_TREE
-    changed = set(subprocess.check_output(["git", "diff", "--name-only", BASE_COMMIT], text=True).splitlines())
-    changed.update(subprocess.check_output(
-        ["git", "ls-files", "--others", "--exclude-standard"], text=True
+    assert subprocess.check_output(
+        ["git", "merge-base", IMPLEMENTATION_COMMIT, BASE_COMMIT], text=True
+    ).strip() == BASE_COMMIT
+    assert subprocess.check_output(
+        ["git", "rev-parse", f"{BASE_COMMIT}^{{tree}}"], text=True
+    ).strip() == BASE_TREE
+    assert subprocess.check_output(
+        ["git", "rev-parse", f"{IMPLEMENTATION_COMMIT}^{{tree}}"], text=True
+    ).strip() == IMPLEMENTATION_TREE
+    changed = set(subprocess.check_output(
+        ["git", "diff", "--name-only", BASE_COMMIT, IMPLEMENTATION_COMMIT],
+        text=True,
     ).splitlines())
     assert changed == ALLOWED_PATHS
 

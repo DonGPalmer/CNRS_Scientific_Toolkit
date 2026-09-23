@@ -1,3 +1,11 @@
+# Lean formalization alignment — v0.18.0 note
+
+Version 0.18.0 preserves the governed six-project, 79-file Lean source subtree
+byte-for-byte. Exact finite addition, negation, and subtraction are
+independently implemented and computationally verified against exact oracles;
+no new Lean theorem, extraction claim, or enlarged formal-proof boundary is
+introduced.
+
 # Lean formalization alignment — v0.17.0 note
 
 v0.17.0 preserves the governed six-project, 79-file Lean source subtree

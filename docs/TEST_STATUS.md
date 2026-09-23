@@ -1,3 +1,20 @@
+# Test Status — v0.18.0 Release Activation
+
+The corrected implementation candidate passed 41 dedicated v0.18 tests, five
+executable v0.18 acceptance tests, 30 preserved v0.14–v0.17 acceptance tests,
+all applicable claim guards, and the full regression suite at 1,422 passed,
+4 skipped, with 922 retained warnings. Evidence includes exhaustive 3,375
+short-domain law triples, 100 deterministic long operand pairs extending to
+1,000 digits, 100 deterministic longer-domain law triples, four explicit
+fractional direct/CVal vectors, and the frozen 547,600-pair parity domain.
+
+Exact corrected-head push workflow `35798790752` and pull-request workflow
+`35798793254` succeeded. PR #15 merged normally as
+`ac03e2925ce754d84cceedf548fd2060ffe33736`, tree
+`0a2fbba6151fd893231fe7f4bed459c0a7e0a853`; post-merge workflow
+`35877214047` passed both Python and distribution jobs. The six-project,
+79-file Lean identity remained unchanged.
+
 # Test Status — v0.17.0 Release Activation
 
 The independently audited implementation candidate passed 65 dedicated v0.17

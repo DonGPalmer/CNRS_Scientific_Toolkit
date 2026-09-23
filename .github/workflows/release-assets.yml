@@ -8,13 +8,13 @@ permissions:
   contents: write
 
 jobs:
-  publish-v0170-assets:
-    if: github.event.release.tag_name == 'v0.17.0'
+  publish-v0180-assets:
+    if: github.event.release.tag_name == 'v0.18.0'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: v0.17.0
+          ref: v0.18.0
       - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
@@ -23,22 +23,22 @@ jobs:
           python -m pip install --upgrade pip build
           python tools/build_reproducible_distributions.py
       - name: Validate tag, assets, and checksums
-        run: python tools/check_release_assets.py --version 0.17.0 --tag v0.17.0 --directory dist
+        run: python tools/check_release_assets.py --version 0.18.0 --tag v0.18.0 --directory dist
       - name: Attach certified distributions
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload v0.17.0 \
-            dist/cnrs-0.17.0-py3-none-any.whl \
-            dist/cnrs-0.17.0.tar.gz \
+          gh release upload v0.18.0 \
+            dist/cnrs-0.18.0-py3-none-any.whl \
+            dist/cnrs-0.18.0.tar.gz \
             --clobber
       - name: Verify both release assets are public
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api repos/${{ github.repository }}/releases/tags/v0.17.0 \
+          gh api repos/${{ github.repository }}/releases/tags/v0.18.0 \
             --jq '.assets[].name' | sort > /tmp/actual-assets.txt
           printf '%s\n' \
-            cnrs-0.17.0-py3-none-any.whl \
-            cnrs-0.17.0.tar.gz | sort > /tmp/required-assets.txt
+            cnrs-0.18.0-py3-none-any.whl \
+            cnrs-0.18.0.tar.gz | sort > /tmp/required-assets.txt
           diff -u /tmp/required-assets.txt /tmp/actual-assets.txt

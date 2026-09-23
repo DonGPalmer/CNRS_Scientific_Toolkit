@@ -11,6 +11,7 @@ procedure explicitly requires one.
 
 ## Contents
 
+- [v0.18.0](#v0-18-0)
 - [v0.17.0](#v0-17-0)
 - [v0.16.0](#v0-16-0)
 - [v0.15.0](#v0-15-0)
@@ -24,6 +25,70 @@ procedure explicitly requires one.
 - [v0.11.2](#v0-11-2)
 - [v0.11.1](#v0-11-1)
 - [v0.11.0](#v0-11-0)
+
+<a id="v0-18-0"></a>
+
+## CNRS Scientific Toolkit v0.18.0
+
+### Exact finite CNRS-A addition and subtraction
+
+Version 0.18.0 completes the exact finite arithmetic route for addition,
+negation, and subtraction while preserving the existing public entry points.
+
+#### Added and changed
+
+- constructs the preserved 14-state addition transition relation entirely with
+  integer-pair arithmetic;
+- preserves byte-for-byte v0.17 addition output throughout the accepted finite
+  grammar;
+- routes finite-string negation through exact multiplication by `"144"`, the
+  CNRS-A value of `-1`;
+- defines finite-string subtraction as exact negation followed by exact
+  addition;
+- corrects the narrow v0.17 fractional negation/subtraction value-map defect;
+- retains a grammar-separated compatibility lane outside the exact finite
+  contract;
+- adds independent exact-value and frozen-v0.17 parity oracles;
+- adds exhaustive short-domain and deterministic long-domain laws, direct/CVal
+  parity vectors, static claim guards, and clean-install smoke checks.
+
+#### Compatibility
+
+The public `add_cnrs`, `cnrs_add`, `cnrs_neg`, and `cnrs_sub` names,
+signatures, import paths, and return types remain unchanged. Existing v0.17
+exact division, v0.16 exact multiplication, v0.15 finite convolution, v0.14
+streaming division, and earlier compatible APIs remain available.
+
+#### Claim boundary
+
+The exactness claim applies to accepted finite CNRS-A strings. It does not
+claim arbitrary infinite-stream arithmetic, unrestricted analytic convergence,
+universal time or memory bounds, Lean extraction, or end-to-end formal
+verification of the Python runtime. The six-project, 79-file formal subtree is
+unchanged.
+
+#### Validation
+
+- dedicated v0.18 tests: 41 passed;
+- executable v0.18 acceptance: 5 passed;
+- historical v0.14–v0.17 acceptance: 30 passed;
+- full regression: 1,422 passed, 4 skipped, 922 retained warnings;
+- 3,375 exhaustive short-domain law triples;
+- 100 deterministic long operand pairs extending to 1,000 digits;
+- 100 deterministic longer-domain law triples;
+- exact-head push and pull-request CI: SUCCESS;
+- post-merge Python/distribution CI: SUCCESS;
+- independent corrected-candidate and merge-closeout audits: PASS.
+
+The audited implementation head was
+`fe3c27795085b13b402272de9a91b7a42d9ddda0`, tree
+`0a2fbba6151fd893231fe7f4bed459c0a7e0a853`. PR #15 merged it normally as
+`ac03e2925ce754d84cceedf548fd2060ffe33736` with the identical tree.
+
+Publication, tagging, release-asset upload, and Zenodo/DOI action remain
+separately governed.
+
+---
 
 <a id="v0-17-0"></a>
 
