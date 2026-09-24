@@ -267,7 +267,11 @@ The certified upstream identity is commit
 This synchronization adds no claim that the independently written Python
 runtime is Lean-extracted or end-to-end formally verified. See
 [`docs/LEAN_FORMALIZATION_ALIGNMENT.md`](docs/LEAN_FORMALIZATION_ALIGNMENT.md)
-and [`formal/README.md`](formal/README.md).
+and [`formal/README.md`](formal/README.md). For the current governed status of
+P2-L10, see the
+[`CNRSProblem2 P2-L10 certification status correction`](docs/P2_L10_CERTIFICATION_STATUS_CORRECTION.md),
+which explains why candidate-stage wording remains unchanged in two frozen
+formal-subtree files.
 
 v0.13.0 release validation: `1214 passed, 4 skipped, 0 failed`; 922 reported
 warnings include retained reliable-domain diagnostics and pytest deprecation
