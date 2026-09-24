@@ -1,8 +1,8 @@
 # CNRS Scientific Toolkit
 
-## v0.18.0 release-activation candidate — Exact Finite Addition and Subtraction
+## v0.18.0 — Exact Finite Addition and Subtraction
 
-**Status: release-activation candidate; implementation merge and post-merge CI are GREEN.**
+**Status: released 2026-09-23; GitHub and Zenodo publication complete.**
 
 Version 0.18.0 preserves the existing `add_cnrs`, `cnrs_add`, `cnrs_neg`,
 and `cnrs_sub` APIs. For finite strings matching the documented
@@ -32,8 +32,8 @@ tree. Post-merge workflow `35877214047` succeeded.
 
 The Toolkit concept DOI remains
 [10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The v0.18.0
-version DOI will be recorded additively after Zenodo processes a separately
-authorized GitHub release.
+version DOI is
+[10.5281/zenodo.22926416](https://doi.org/10.5281/zenodo.22926416).
 
 ## v0.17.0 — Exact CNRS-A String Division
 
