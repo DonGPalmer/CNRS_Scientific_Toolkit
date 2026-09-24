@@ -1,12 +1,20 @@
-# CNRSProblem2 — P2-L10 finite-Hurwitz antiderivative candidate
+# CNRSProblem2 — P2-L10 finite-Hurwitz antiderivative
 
 P2-L10 extends the governed P2-L1–P2-L9 development with an exact
 finite-support Hurwitz antiderivative. A caller supplies the constant
 coefficient; all other coefficients are shifted upward by one index.
 
-## Governed P2-L9 baseline
+## Governed certification
 
-P2-L9 is promoted and authoritatively certified at commit
+P2-L10 is promoted and authoritatively certified at commit
+`38e38ceae3b9847c5fa4753145eabadec544e8fe`, artifact `10158719731`.
+The consolidated capstone workflow passed as run `34534566879`, job
+`103063055916`, artifact `10175389923`, SHA-256
+`840ffee8a9a1183292ef8c952fe81199b1d916ea0fd0e688602f19559a375c21`.
+
+## Governed P2-L9 predecessor
+
+P2-L9 was promoted and authoritatively certified at commit
 `be9f20f49e3878d639ec09b742c2c88e8afe66a9`, workflow run
 `34395065351`. Its branch-carrier integration bridge remains unchanged.
 
@@ -36,12 +44,13 @@ arithmetic. It does not import `CNRSArithmetic`, `CNRSProblem1`, the separate
 
 - Lean 4.33.0
 - Mathlib 4.33.0
-- exact governed P2-L9 authoritative baseline
+- exact governed P2-L9 authoritative predecessor baseline
 - governed CnrsQ2 v5 and CNRSCore v1 inherited unchanged
 - no dependency on CNRSArithmetic, the separate CNRSIntegration project,
   CNRSProblem1, the Toolkit, or Scale Space code
 
-Status: **IMPLEMENTATION COMPLETE / P2-L10 CANDIDATE CERTIFICATION PENDING**.
+Status: **AUTHORITATIVELY CERTIFIED / CONSOLIDATED RELEASE GREEN**.
 
-Dropbox remains frozen at governed P2-L9 until exact-byte candidate
-certification, independent audit, and separate promotion authorization.
+P2-L10 passed exact-byte certification, independent audit, separate promotion,
+and consolidated capstone certification. The P2-L9 identity above is retained
+as the historical predecessor baseline.
