@@ -38,6 +38,9 @@ from .cnrs_repr import (
 )
 from .cnrs_add import add_cnrs
 from .cnrs_mul import mul_cnrs
+from .cnrs_ops import cnrs_eq_exact
+from .finite_string import cnrs_string_value_exact
+from .gaussian_types import GaussianRational
 
 
 # CNRS-A representation of -1 in base z0 = -2+i.
@@ -80,6 +83,16 @@ class CVal:
 
     def to_gaussian(self) -> complex:
         return cnrs_to_gaussian(self.s)
+
+    def to_gaussian_exact(self) -> GaussianRational:
+        """Return the exact finite value; reject strings outside the finite grammar."""
+        return cnrs_string_value_exact(self.s)
+
+    def equals_exact(self, other: "CVal") -> bool:
+        """Compare finite values exactly, without changing legacy ==."""
+        if not isinstance(other, CVal):
+            raise TypeError("other must be a CVal")
+        return cnrs_eq_exact(self.s, other.s)
 
     # -----------------------------
     # Arithmetic — all CNRS-A native

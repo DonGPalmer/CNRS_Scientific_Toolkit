@@ -73,10 +73,11 @@ from .cnrs_mul import mul_cnrs
 from .finite_string import (
     cnrs_string_to_finite_sequence,
     finite_sequence_to_cnrs_string,
+    cnrs_string_value_exact,
 )
 from .exact_division import divide_cnrs_exact
 from .cnrs_div import div_by_base_power, div_by_base, div_cnrs
-from .cnrs_ops import cnrs_add, cnrs_sub, cnrs_mul, cnrs_neg, cnrs_eq
+from .cnrs_ops import cnrs_add, cnrs_sub, cnrs_mul, cnrs_neg, cnrs_eq, cnrs_eq_exact
 from .cnrs_value import CVal
 from .normalization import (
     NormalizationScope, NormalizationResult,
@@ -495,7 +496,7 @@ __all__ = [
     "cnrs_to_gaussian", "normalize_cnrs",
     # ── Arithmetic
     "add_cnrs", "mul_cnrs", "div_by_base_power", "div_by_base", "div_cnrs",
-    "cnrs_add", "cnrs_sub", "cnrs_mul", "cnrs_neg", "cnrs_eq",
+    "cnrs_add", "cnrs_sub", "cnrs_mul", "cnrs_neg", "cnrs_eq", "cnrs_eq_exact",
     "CVal",
     "DivisionStatus", "DenominatorClassification", "CnrsDivisionExpansion",
     "classify_denominator", "expand_division", "terminating_expansion", "periodic_expansion",
@@ -516,7 +517,7 @@ __all__ = [
     "deserialize_convolution_witness", "serialize_convolution_witness",
     "verify_convolution_witness",
     # ── Exact finite string/carrier bridge (released in v0.16.0)
-    "cnrs_string_to_finite_sequence", "finite_sequence_to_cnrs_string",
+    "cnrs_string_to_finite_sequence", "finite_sequence_to_cnrs_string", "cnrs_string_value_exact",
     # ── Calculus
     "CnrsH", "CnrsHNative", "NonGaussianCoefficientError", "InversionError",
     "compose_native", "invert_native", "verify_inversion",

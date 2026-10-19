@@ -1,11 +1,9 @@
-# CNRS Scientific Toolkit v0.18.0 release-activation candidate source index
-# Synchronized on 2026-09-23 for the governed version-activation candidate.
-# Files listed: 504
-# Authorized baseline commit: ac03e2925ce754d84cceedf548fd2060ffe33736
-# Authorized baseline tree: 0a2fbba6151fd893231fe7f4bed459c0a7e0a853
-# Package/runtime/CFF version: 0.18.0
-# Candidate status: release activation; no merge, tag, release, or publication action.
-# Regenerate from the exact Git index with: git ls-files | LC_ALL=C sort
+# CNRS Scientific Toolkit exact-comparison development candidate source index
+# Candidate baseline main: f291bb344fde37c9e40b8354378faec391293e9a
+# Package/runtime/CFF version remains 0.18.0; no release activation or publication.
+# Includes the pre-existing P2-L10 correction notice omitted by the prior index.
+# Files listed: 509
+# Reproduce the tracked inventory with: git ls-files | LC_ALL=C sort
 
 .gitattributes
 .github/workflows/build-lean433-offline-runtime-v4.yml
@@ -184,10 +182,13 @@ docs/CNRS_SCIENTIFIC_STATE.md
 docs/CNRS_SCIENTIFIC_WORKFLOWS_V090.md
 docs/CNRS_THEOREM_ALIGNMENT_REGISTRY.md
 docs/CNRS_TOPOLOGY_AND_HYBRID.md
+docs/EXACT_COMPARISON_CANDIDATE.md
 docs/EXAMPLE_SMOKE_STATUS.md
+docs/FINITE_ARITHMETIC_LEAN_EXTENSION_CANDIDATE.md
 docs/GAUSSIAN_RATIONAL_THEOREMS.md
 docs/GENERALIZED_BRANCH_OBJECTS.md
 docs/LEAN_FORMALIZATION_ALIGNMENT.md
+docs/P2_L10_CERTIFICATION_STATUS_CORRECTION.md
 docs/RESEARCH_STATUS.md
 docs/RIEMANN_SURFACE_GLOBAL_MODEL.md
 docs/STATUS_VOCABULARY_MAPPING.md
@@ -262,6 +263,7 @@ docs/theory/TERMINATION_DENOMINATOR_IDEALS_V1.pdf
 docs/theory/TERMINATION_DENOMINATOR_IDEALS_V1.tex
 examples/README.md
 examples/demo.py
+examples/exact_finite_arithmetic.py
 examples/generalized_branch_demo.py
 examples/quickstart_cnrs.py
 examples/riemann_surface_demo.py
@@ -464,6 +466,7 @@ tests/test_division_status_compat_v0111.py
 tests/test_division_status_v080.py
 tests/test_division_structured_v081.py
 tests/test_evaluate_limitations.py
+tests/test_exact_comparison_candidate.py
 tests/test_expansion.py
 tests/test_formal_h_algebra_v011.py
 tests/test_formal_state_preservation_v081.py

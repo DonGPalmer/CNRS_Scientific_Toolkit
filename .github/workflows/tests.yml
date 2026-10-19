@@ -17,6 +17,8 @@ jobs:
           python-version: '3.11'
       - run: pip install -e .[dev]
       - run: pytest -q
+      - name: Exact finite arithmetic worked example
+        run: python examples/exact_finite_arithmetic.py
       - name: v0.14.0 streaming-division acceptance contract
         run: pytest -q acceptance/v014
       - name: v0.15.0 finite-convolution acceptance contract
@@ -61,12 +63,14 @@ jobs:
         run: |
           python -m venv /tmp/cnrs-wheel-venv
           /tmp/cnrs-wheel-venv/bin/python -m pip install dist/cnrs-0.18.0-py3-none-any.whl
+          /tmp/cnrs-wheel-venv/bin/python -c "from cnrs import CVal, GaussianRational, cnrs_eq_exact, cnrs_string_value_exact; assert cnrs_eq_exact('.1','00.100'); assert cnrs_string_value_exact('.1') == GaussianRational(1,(-2,1)); assert CVal('.1').equals_exact(CVal('0.1')); a='1'+'0'*80; assert not cnrs_eq_exact(a,a[:-1]+'1')"
           /tmp/cnrs-wheel-venv/bin/python -c "import cnrs; from cnrs import add_cnrs, cnrs_neg, cnrs_sub, cnrs_string_to_finite_sequence, finite_sequence_to_cnrs_string, mul_cnrs; assert cnrs.__version__ == '0.18.0'; assert finite_sequence_to_cnrs_string(cnrs_string_to_finite_sequence('.1')) == '0.1'; assert finite_sequence_to_cnrs_string(cnrs_string_to_finite_sequence('1.')) == '1'; assert mul_cnrs('.1', '1.') == '0.1'; assert add_cnrs('23.1', '4.3') == '1332.4'; assert cnrs_neg('.1') == '14.4'; assert cnrs_sub('23.1', '4.3') == '33.3'"
           /tmp/cnrs-wheel-venv/bin/python -c "from fractions import Fraction; from cnrs import DivisionStreamStatus, divide_cnrs_exact, validate_division_witness; t=divide_cnrs_exact('1','10'); p=divide_cnrs_exact('1','2'); l=divide_cnrs_exact('1','2',max_steps=1); assert t.status is DivisionStreamStatus.TERMINATING; assert t.exact_value_fractions()==(Fraction(-2,5),Fraction(-1,5)); assert p.status is DivisionStreamStatus.EVENTUALLY_PERIODIC; assert p.exact_value_fractions()==(Fraction(1,2),Fraction(0)); assert validate_division_witness(t.to_witness())==t.to_witness(); assert validate_division_witness(p.to_witness())==p.to_witness(); assert l.status is DivisionStreamStatus.LIMIT_REACHED and l.witness is None"
       - name: Verify source distribution in a clean environment
         run: |
           python -m venv /tmp/cnrs-sdist-venv
           /tmp/cnrs-sdist-venv/bin/python -m pip install dist/cnrs-0.18.0.tar.gz
+          /tmp/cnrs-sdist-venv/bin/python -c "from cnrs import CVal, GaussianRational, cnrs_eq_exact, cnrs_string_value_exact; assert cnrs_eq_exact('.1','00.100'); assert cnrs_string_value_exact('.1') == GaussianRational(1,(-2,1)); assert CVal('.1').equals_exact(CVal('0.1')); a='1'+'0'*80; assert not cnrs_eq_exact(a,a[:-1]+'1')"
           /tmp/cnrs-sdist-venv/bin/python -c "import cnrs; from cnrs import add_cnrs, cnrs_neg, cnrs_sub, cnrs_string_to_finite_sequence, finite_sequence_to_cnrs_string, mul_cnrs; assert cnrs.__version__ == '0.18.0'; assert finite_sequence_to_cnrs_string(cnrs_string_to_finite_sequence('.1')) == '0.1'; assert finite_sequence_to_cnrs_string(cnrs_string_to_finite_sequence('1.')) == '1'; assert mul_cnrs('.1', '1.') == '0.1'; assert add_cnrs('23.1', '4.3') == '1332.4'; assert cnrs_neg('.1') == '14.4'; assert cnrs_sub('23.1', '4.3') == '33.3'"
           /tmp/cnrs-sdist-venv/bin/python -c "from fractions import Fraction; from cnrs import DivisionStreamStatus, divide_cnrs_exact, validate_division_witness; t=divide_cnrs_exact('1','10'); p=divide_cnrs_exact('1','2'); l=divide_cnrs_exact('1','2',max_steps=1); assert t.status is DivisionStreamStatus.TERMINATING; assert t.exact_value_fractions()==(Fraction(-2,5),Fraction(-1,5)); assert p.status is DivisionStreamStatus.EVENTUALLY_PERIODIC; assert p.exact_value_fractions()==(Fraction(1,2),Fraction(0)); assert validate_division_witness(t.to_witness())==t.to_witness(); assert validate_division_witness(p.to_witness())==p.to_witness(); assert l.status is DivisionStreamStatus.LIMIT_REACHED and l.witness is None"
       - name: Record immutable build identity and checksums
