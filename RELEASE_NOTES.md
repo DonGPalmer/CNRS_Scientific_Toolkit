@@ -51,6 +51,10 @@ or v0.19.0 version DOI is asserted. The concept DOI is unchanged.
 - Uses isolated Python imports and module-prefix assertions when testing
   actual installed wheel/sdist artifacts, closing audit finding C1.
 
+- Publication requires an out-of-band approved manifest binding the final merge
+  commit/tree and both asset hashes; missing or mismatched approval blocks upload.
+  See [publication controls](docs/releases/v0.19.0/PUBLICATION_APPROVAL.md).
+
 ### Formal boundary
 
 All six certified projects / 79 Lean files are unchanged. The external

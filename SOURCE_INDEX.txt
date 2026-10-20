@@ -2,7 +2,7 @@
 # Implementation baseline: f04c856064e82fc8e059af693d65392bff9ad843
 # Candidate only; no merge, tag, publication or E2 adoption.
 # Package/runtime/CFF candidate version: 0.19.0
-# Files listed: 516
+# Files listed: 519
 # Reproduce the tracked inventory with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -249,6 +249,7 @@ docs/releases/v0.17.0/V017_RELEASE_ACTIVATION_RECORD_2026-09-18.md
 docs/releases/v0.17.0/V017_SHA256SUMS.txt
 docs/releases/v0.18.0/V018_RELEASE_ACTIVATION_RECORD_2026-09-23.md
 docs/releases/v0.18.0/V018_SHA256SUMS.txt
+docs/releases/v0.19.0/PUBLICATION_APPROVAL.md
 docs/releases/v0.19.0/V019_RELEASE_ACTIVATION_RECORD_2026-10-20.md
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.pdf
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.tex
@@ -508,6 +509,7 @@ tests/test_v015_finite_convolution.py
 tests/test_v016_exact_multiplication.py
 tests/test_v017_exact_division.py
 tests/test_v018_exact_addition_subtraction.py
+tests/test_v019_release_approval.py
 tools/audit_native_status.py
 tools/build_release.py
 tools/build_reproducible_distributions.py
@@ -518,6 +520,7 @@ tools/check_v015_claims.py
 tools/check_v016_claims.py
 tools/check_v017_claims.py
 tools/check_v018_claims.py
+tools/check_v019_release_approval.py
 tools/export_addition_certificate.py
 tools/toolkit_audit_crossval.py
 verification/finite_addition_certificate.json

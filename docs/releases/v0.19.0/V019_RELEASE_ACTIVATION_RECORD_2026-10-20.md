@@ -24,7 +24,11 @@ oracle, historical acceptance packet or certified Lean source is changed.
 
 The new publication job is bound to tag v0.19.0 and does not overwrite
 existing assets. It verifies fresh isolated wheel/sdist imports and compares
-attached bytes with approved build hashes. It is not invoked by candidate
+built and attached bytes with hashes in a separately governed approval manifest.
+Missing approval data fails closed. The publication environment and its reviewer
+protections must be configured and verified before publication; they are not
+created by this candidate. See [publication approval controls](PUBLICATION_APPROVAL.md).
+It is not invoked by candidate
 push/PR validation. The historical v0.18 publication job remains unchanged.
 
 CITATION.cff retains the concept DOI and omits date-released while this is a
@@ -46,7 +50,9 @@ PR and external activation dossier, avoiding self-referential commit hashes.
 3. Audit the exact activation candidate and artifacts.
 4. Obtain separate author authorization to mark ready and merge.
 5. Verify actual activation merge parents/tree and post-merge CI/artifacts.
-6. Obtain separate tag/publication authorization; then verify public assets,
+6. Prepare the final merge/artifact approval manifest, obtain separate
+   tag/publication authorization, configure and verify the publication environment
+   and approval values; then verify public assets,
    actual release date and Zenodo version DOI and record additive closeout.
 
 The candidate does not authorize official Lean/E2 adoption or enlarge the
