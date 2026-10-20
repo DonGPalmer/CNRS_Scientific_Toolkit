@@ -1,8 +1,10 @@
 # Exact finite comparison — development candidate
 
-Status: CANDIDATE; not released or adopted. Based on Toolkit main at
-`f291bb344fde37c9e40b8354378faec391293e9a`. The package version remains
-0.18.0; version activation and publication are separate actions.
+Status: v0.19.0 RELEASE-ACTIVATION CANDIDATE; not released or published.
+Implementation merged through PR #20 as
+`f04c856064e82fc8e059af693d65392bff9ad843`. Package/runtime metadata is
+0.19.0 on this candidate branch; merging activation and publication remain
+separate governed actions. The public release remains v0.18.0.
 
 ## Additive public interfaces
 

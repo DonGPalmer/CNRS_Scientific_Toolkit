@@ -1,3 +1,12 @@
+# Lean formalization alignment — v0.19.0 activation candidate
+
+The candidate changes release-facing version/metadata/tooling for the
+implementation merged as `f04c856064e82fc8e059af693d65392bff9ad843`.
+The pinned table certificate, exact APIs and executable arithmetic remain
+unchanged. Certified `formal/` sources remain byte-for-byte identical.
+No new theorem, extraction claim, end-to-end Python certification or E2
+adoption/freeze is introduced. Publication remains pending.
+
 # Lean formalization alignment — development candidate
 
 The next Toolkit increment adds a permanent check of Python addition's 350

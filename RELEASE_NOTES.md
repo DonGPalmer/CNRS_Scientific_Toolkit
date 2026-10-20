@@ -11,6 +11,7 @@ procedure explicitly requires one.
 
 ## Contents
 
+- [v0.19.0 activation candidate](#v0-19-0)
 - [v0.18.0](#v0-18-0)
 - [v0.17.0](#v0-17-0)
 - [v0.16.0](#v0-16-0)
@@ -25,6 +26,54 @@ procedure explicitly requires one.
 - [v0.11.2](#v0-11-2)
 - [v0.11.1](#v0-11-1)
 - [v0.11.0](#v0-11-0)
+
+<a id="v0-19-0"></a>
+
+## CNRS Scientific Toolkit v0.19.0 — activation candidate
+
+**Status: release-activation candidate; not published.** No publication date
+or v0.19.0 version DOI is asserted. The concept DOI is unchanged.
+
+### Exact finite-value comparison and addition correspondence controls
+
+- Adds opt-in `cnrs_string_value_exact`, `cnrs_eq_exact`,
+  `CVal.to_gaussian_exact` and `CVal.equals_exact` using the existing strict
+  finite parser and exact Gaussian-rational/Laurent carriers.
+- Preserves legacy equality, hashing, constructors and arithmetic behavior.
+  New explicit APIs reject malformed or non-exact-str inputs as documented.
+- Adds a permanent offline check comparing all 350 production addition rows
+  and 14 ordered carries with pinned Lean-checked E2 candidate data; checks
+  exact column equations, reachability, zero absorption and the sharp
+  five-step drain bound. The runtime guard remains 20.
+- Corrects the former finite-state-only termination explanation; adds
+  mutation controls and exact-value tests, plus a worked finite-arithmetic
+  and division-witness example.
+- Uses isolated Python imports and module-prefix assertions when testing
+  actual installed wheel/sdist artifacts, closing audit finding C1.
+
+### Formal boundary
+
+All six certified projects / 79 Lean files are unchanged. The external
+installed E2 extension is authoritatively verified but its final governed
+adoption/freeze remains separate. Toolkit CI checks drift from pinned
+Lean-checked data; it neither invokes Lean nor certifies the complete Python
+runtime. Parser/formatter, variable-length early-stop trace refinement and
+multiplication-normalizer correspondence remain separate proof obligations.
+
+### Implementation and activation evidence
+
+PR #20 merged the implementation as
+`f04c856064e82fc8e059af693d65392bff9ad843`, with audited tree
+`a651d1e1c450782411056463fa17b18edbdfa809`.
+Post-implementation-merge baseline: 1,504 tests passed, four skipped; all
+v0.14–v0.18 acceptance, certificate/claim/alignment checks, reproducible
+builds, isolated installs and six frozen Lean builds passed.
+Those counts describe the implementation baseline, not a future activation
+head. Exact activation-head results/artifacts are retained in the draft PR
+and activation dossier; the
+[activation record](docs/releases/v0.19.0/V019_RELEASE_ACTIVATION_RECORD_2026-10-20.md)
+sets the remaining gates. Separate approval is required for activation merge
+and later tag/publication. Existing v0.18.0 release assets are preserved.
 
 <a id="v0-18-0"></a>
 
