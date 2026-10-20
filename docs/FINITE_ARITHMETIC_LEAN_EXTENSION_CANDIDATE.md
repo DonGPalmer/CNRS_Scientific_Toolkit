@@ -1,41 +1,49 @@
 # Finite arithmetic Lean extension — candidate crosswalk
 
-Status: DEVELOPMENT CANDIDATE; no governed promotion or release activation.
+Status: installed, authoritatively verified E2 DEVELOPMENT CANDIDATE.
+Final governed adoption/freeze and Toolkit release activation remain pending.
 The certified capstone and Toolkit `formal/` subtree remain unchanged.
 
-Certified source: `DonGPalmer/CNRS_Lean` at
-`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f`, Lean 4.33.0 / Mathlib
-`db584cd6d46c92f209a44c0f1c829460d327499d`.
+Certified public source: `DonGPalmer/CNRS_Lean` at
+`ce56a7359f494d29bab8e9bea6c3ea596f8fd62f`.
+The separate private checker head is
+`03e40d19348694b470897b6c6434e38ccc841250`, authoritative installed-source
+[run 39331704917](https://github.com/DonGPalmer/SSC_Formal_Methods_CI/actions/runs/39331704917).
+It checked the actual installed source/configuration inputs in normal and
+clean offline builds. The retained evidence contains source hashes, dependency
+revisions, build logs and axiom reports. This is successful checking of a
+candidate; it does not by itself establish final governed promotion.
 
-The separate private checker candidate is
-[finite-bridge audit source](https://github.com/DonGPalmer/SSC_Formal_Methods_CI/blob/7129e8166273ce620f0680ff5d1ce4e2e772d495/audit/v018/SharedShiftAddition.lean).
-CI evidence and the adoption decision must be read separately: source presence
-alone does not establish either successful checking or governed promotion.
+The Integration extension contains 28 results: 12 finite-Laurent bridge
+results, seven literal-table results, and nine typed-runner results.
+Declarations below are in `CNRSIntegration.ToolkitBridge` (bridge) or
+`CNRSIntegration.ToolkitTransition` (table/runner).
 
-| Boundary | Extension declarations | Remaining software correspondence |
+| Contract | Installed candidate results | Toolkit connection and remaining obligation |
 |---|---|---|
-| Common denominator shift | `evalFiniteLaurent_addWords_shift` | Parse/format and runtime refinement |
-| Independent shifts | `wordValue_lowZeroPad`, `betaFrac_ne_zero`, `evalFiniteLaurent_lowZeroPad`, `evalFiniteLaurent_align`, `evalFiniteLaurent_addWords_mixed` | Actual parser alignment and canonical output |
-| Negation constant | `wordValue_144`, `fixedMultiply_144_negates` | Python convolution/normalizer correspondence |
-| Fractional negation | `evalFiniteLaurent_fixedMultiply_144_negates` | Actual finite Laurent carrier pipeline |
-| Subtraction | `evalFiniteLaurent_subWords`, `evalFiniteLaurent_subWords_mixed` | Composition of verified runtime bridges |
-| Early stopping | `runAddition_stopped_value` | Show Python's emitted trace is the formal run and its drain reaches zero |
+| Common fractional shift | `evalFiniteLaurent_addWords_shift` | Abstract finite addition value; actual parse/format refinement remains |
+| Independent shifts | `wordValue_lowZeroPad`, `betaFrac_ne_zero`, `evalFiniteLaurent_lowZeroPad`, `evalFiniteLaurent_align`, `evalFiniteLaurent_addWords_mixed` | Proves mathematical alignment; Python alignment still independently tested |
+| Negation by 144 | `wordValue_144`, `fixedMultiply_144_negates`, `evalFiniteLaurent_fixedMultiply_144_negates` | Proves abstract multiplication by 144 negates; actual Python convolution/normalizer correspondence remains |
+| Subtraction | `evalFiniteLaurent_subWords`, `evalFiniteLaurent_subWords_mixed` | Abstract composition; requires runtime negation and addition bridges |
+| Abstract stopped run | `runAddition_stopped_value` | Correct value conditional on zero final carry |
+| Carry inventory and literal relation | `carry_order_matches`, `table_size`, `table_matches_addStep`, `carry_indices_injective`, `table_value_equation` | Permanent Python gate compares all 350 rows and 14 ordered carries to these pinned literals |
+| Sharp literal-table drain | `table_drain_five`, `table_drain_four_insufficient` | Permanent gate checks all zero-input paths; runtime guard remains 20 |
+| Typed single-step simulation | `table_carry_mem`, `tableOutput_matches`, `tableNext_matches` | Establishes state/output relation in Lean; Python table identity checked computationally |
+| Arbitrary finite typed runner | `tableRun_refines`, `tableRun_output_length`, `tableRun_invariant` | No input-length bound in these Lean results; actual Python loop/trace bridge remains |
+| Stopped/drained typed runner | `tableRun_stopped_value`, `tableRun_append_drain`, `tableRun_drained_value` | Conditional zero-stop correctness and unconditional correctness after fixed five-column drain; Python's variable-length early stop still needs explicit refinement |
 
-The stopping lemma assumes zero final carry. It does not independently prove
-that a Python loop terminates or that two output strings are identical. The
-existing certified five-step drain supplies the mathematical termination fact;
-the trace correspondence remains to be proved.
+The [certificate documentation](FINITE_ADDITION_CERTIFICATE.md) records exact
+module/artifact pins and reproducible extraction. Its CI gate checks drift
+against Lean-checked data without invoking Lean. It does not extend the
+certified `formal/` crosswalk or establish full Python program verification.
 
-The prior three declarations passed the earlier additive audit run
-[39257321314](https://github.com/DonGPalmer/SSC_Formal_Methods_CI/actions/runs/39257321314).
-The extended candidate's checking result is retained in the programme audit
-evidence. It remains a candidate until author-governed adoption.
+Axiom reports remain part of the authoritative evidence. Algebraic corollaries
+can inherit native-decision dependencies from certified carry/termination
+lemmas; the extension does not remove that trust boundary.
 
-Axiom output is retained per theorem. New algebraic corollaries can inherit
-native-decision dependencies from certified carry and termination lemmas; this
-extension does not claim to remove that existing trust boundary.
-
-The exact comparison/value Python additions reuse existing exact carriers and
-are independently tested. These model lemmas do not certify those Python
-functions, canonical spelling uniqueness, arbitrary infinite streams, or
-ordinary-complex analytic convergence.
+The candidate Python APIs `cnrs_string_value_exact`, `cnrs_eq_exact`,
+`CVal.to_gaussian_exact` and `CVal.equals_exact` supply exact finite-value
+comparison using existing exact carriers. They are independently tested;
+these Lean results do not certify those functions, canonical spelling
+uniqueness, arbitrary infinite streams, ordinary-complex analytic convergence,
+or the general multiplication normalizer.

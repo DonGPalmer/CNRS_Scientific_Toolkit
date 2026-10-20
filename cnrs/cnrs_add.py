@@ -133,8 +133,9 @@ def add_cnrs(a: str, b: str) -> str:
         out.append(str(d))
 
     # Drain carry.
-    # The carry is always an element of the 14-state canonical set, so it
-    # must reach state 0 within 14 steps.  Guard is set to 20 for safety margin.
+    # Every zero-input path in the pinned 14-state relation reaches zero
+    # within five steps (sharp bound); tools/check_addition_certificate.py
+    # checks this exhaustively. Retain the existing guard of 20 as a margin.
     drain_guard = 0
     while carry_idx != 0:
         d, carry_idx = ADDITION_TABLE[(carry_idx, 0, 0)]

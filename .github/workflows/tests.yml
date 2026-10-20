@@ -17,6 +17,8 @@ jobs:
           python-version: '3.11'
       - run: pip install -e .[dev]
       - run: pytest -q
+      - name: Pinned finite-addition certificate and sharp drain bound
+        run: python tools/check_addition_certificate.py
       - name: Exact finite arithmetic worked example
         run: python examples/exact_finite_arithmetic.py
       - name: v0.14.0 streaming-division acceptance contract
