@@ -1,6 +1,6 @@
-# Development candidate — exact finite comparison
+# Release-activation candidate — v0.19.0 exact finite comparison
 
-Unreleased additive candidate: `cnrs_eq_exact`, `cnrs_string_value_exact`,
+Unreleased v0.19.0 activation candidate: `cnrs_eq_exact`, `cnrs_string_value_exact`,
 `CVal.equals_exact` and `CVal.to_gaussian_exact`. See
 [EXACT_COMPARISON_CANDIDATE.md](EXACT_COMPARISON_CANDIDATE.md) for the strict
 grammar, return types, precision examples and compatibility boundary. Legacy

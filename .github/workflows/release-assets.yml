@@ -42,3 +42,81 @@ jobs:
             cnrs-0.18.0-py3-none-any.whl \
             cnrs-0.18.0.tar.gz | sort > /tmp/required-assets.txt
           diff -u /tmp/required-assets.txt /tmp/actual-assets.txt
+
+  publish-v0190-assets:
+    environment: cnrs-v019-publication
+    if: github.event.release.tag_name == 'v0.19.0'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: v0.19.0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Require separately approved release identity
+        env:
+          CNRS_APPROVED_MANIFEST_JSON: ${{ vars.CNRS_V019_APPROVED_MANIFEST_JSON }}
+          CNRS_APPROVED_MANIFEST_SHA256: ${{ vars.CNRS_V019_APPROVED_MANIFEST_SHA256 }}
+        run: |
+          python - <<'PYCODE'
+          import os
+          from pathlib import Path
+          raw = os.environ.get('CNRS_APPROVED_MANIFEST_JSON', '')
+          if not raw:
+              raise SystemExit('No approved release manifest configured; publication blocked')
+          (Path(os.environ['RUNNER_TEMP']) / 'cnrs-v019-approved.json').write_bytes(raw.encode('utf-8'))
+          PYCODE
+          python tools/check_v019_release_approval.py \
+            --manifest "$RUNNER_TEMP/cnrs-v019-approved.json" \
+            --approved-sha256 "$CNRS_APPROVED_MANIFEST_SHA256"
+      - name: Build byte-identical v0.19.0 distributions twice
+        run: |
+          test "$(git rev-parse HEAD)" = "$(git rev-parse 'refs/tags/v0.19.0^{commit}')"
+          python -m pip install --upgrade pip build
+          python tools/build_reproducible_distributions.py
+          python tools/check_release_assets.py --version 0.19.0 --tag v0.19.0 --directory dist
+      - name: Verify installed v0.19.0 artifacts in isolation
+        run: |
+          for kind in wheel sdist; do
+            if [ "$kind" = wheel ]; then
+              cnrs_asset=dist/cnrs-0.19.0-py3-none-any.whl
+            else
+              cnrs_asset=dist/cnrs-0.19.0.tar.gz
+            fi
+            cnrs_venv="/tmp/cnrs-v019-${kind}"
+            python -m venv "$cnrs_venv"
+            "$cnrs_venv/bin/python" -m pip install "$cnrs_asset"
+            "$cnrs_venv/bin/python" -I -c "import cnrs,sys; from pathlib import Path; from cnrs import CVal,GaussianRational,cnrs_eq_exact,cnrs_string_value_exact; assert Path(cnrs.__file__).resolve().is_relative_to(Path(sys.prefix).resolve()); assert cnrs.__version__ == '0.19.0'; assert cnrs_eq_exact('.1','00.100'); assert cnrs_string_value_exact('.1') == GaussianRational(1,(-2,1)); assert CVal('.1').equals_exact(CVal('0.1')); assert CVal('.1').to_gaussian_exact() == cnrs_string_value_exact('.1'); a='1'+'0'*80; assert not cnrs_eq_exact(a,a[:-1]+'1')"
+          done
+      - name: Require approved artifact bytes before upload
+        env:
+          CNRS_APPROVED_MANIFEST_SHA256: ${{ vars.CNRS_V019_APPROVED_MANIFEST_SHA256 }}
+        run: |
+          python tools/check_v019_release_approval.py \
+            --manifest "$RUNNER_TEMP/cnrs-v019-approved.json" \
+            --approved-sha256 "$CNRS_APPROVED_MANIFEST_SHA256" --directory dist
+      - name: Attach new v0.19.0 assets without replacement
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v0.19.0 \
+            dist/cnrs-0.19.0-py3-none-any.whl \
+            dist/cnrs-0.19.0.tar.gz
+      - name: Verify published v0.19.0 asset bytes
+        env:
+          CNRS_APPROVED_MANIFEST_SHA256: ${{ vars.CNRS_V019_APPROVED_MANIFEST_SHA256 }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/${{ github.repository }}/releases/tags/v0.19.0 \
+            --jq '.assets[].name' | sort > /tmp/cnrs-v019-actual-assets.txt
+          printf '%s\n' cnrs-0.19.0-py3-none-any.whl cnrs-0.19.0.tar.gz | sort > /tmp/cnrs-v019-required-assets.txt
+          diff -u /tmp/cnrs-v019-required-assets.txt /tmp/cnrs-v019-actual-assets.txt
+          mkdir /tmp/cnrs-v019-public-assets
+          gh release download v0.19.0 --dir /tmp/cnrs-v019-public-assets \
+            --pattern cnrs-0.19.0-py3-none-any.whl --pattern cnrs-0.19.0.tar.gz
+          python tools/check_v019_release_approval.py \
+            --manifest "$RUNNER_TEMP/cnrs-v019-approved.json" \
+            --approved-sha256 "$CNRS_APPROVED_MANIFEST_SHA256" \
+            --directory /tmp/cnrs-v019-public-assets

@@ -1,8 +1,8 @@
-# CNRS Scientific Toolkit exact-comparison and addition-certificate development candidate source index
-# Candidate baseline main: f291bb344fde37c9e40b8354378faec391293e9a
-# Package/runtime/CFF version remains 0.18.0; no release activation or publication.
-# Includes the pre-existing P2-L10 correction notice omitted by the prior index.
-# Files listed: 514
+# CNRS Scientific Toolkit v0.19.0 release-activation candidate source index
+# Implementation baseline: f04c856064e82fc8e059af693d65392bff9ad843
+# Candidate only; no merge, tag, publication or E2 adoption.
+# Package/runtime/CFF candidate version: 0.19.0
+# Files listed: 519
 # Reproduce the tracked inventory with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -249,6 +249,8 @@ docs/releases/v0.17.0/V017_RELEASE_ACTIVATION_RECORD_2026-09-18.md
 docs/releases/v0.17.0/V017_SHA256SUMS.txt
 docs/releases/v0.18.0/V018_RELEASE_ACTIVATION_RECORD_2026-09-23.md
 docs/releases/v0.18.0/V018_SHA256SUMS.txt
+docs/releases/v0.19.0/PUBLICATION_APPROVAL.md
+docs/releases/v0.19.0/V019_RELEASE_ACTIVATION_RECORD_2026-10-20.md
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.pdf
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.tex
 docs/theory/CANONICAL_PERIODIC_NORMALIZATION_V1.pdf
@@ -490,6 +492,7 @@ tests/test_release_engineering_v015.py
 tests/test_release_engineering_v016.py
 tests/test_release_engineering_v017.py
 tests/test_release_engineering_v018.py
+tests/test_release_engineering_v019.py
 tests/test_riemann_surface.py
 tests/test_science_toolkit.py
 tests/test_scientific_workflow_crossval_v011.py
@@ -506,6 +509,7 @@ tests/test_v015_finite_convolution.py
 tests/test_v016_exact_multiplication.py
 tests/test_v017_exact_division.py
 tests/test_v018_exact_addition_subtraction.py
+tests/test_v019_release_approval.py
 tools/audit_native_status.py
 tools/build_release.py
 tools/build_reproducible_distributions.py
@@ -516,6 +520,7 @@ tools/check_v015_claims.py
 tools/check_v016_claims.py
 tools/check_v017_claims.py
 tools/check_v018_claims.py
+tools/check_v019_release_approval.py
 tools/export_addition_certificate.py
 tools/toolkit_audit_crossval.py
 verification/finite_addition_certificate.json
