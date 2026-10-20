@@ -1,12 +1,21 @@
 """Evidence drift controls and all-state drain/finite-addition checks."""
 from collections import deque
 from fractions import Fraction
+import importlib.util
+from pathlib import Path
 import pytest
 
 from cnrs.cnrs_add import ADDITION_TABLE, CARRY_SET_PAIRS, add_cnrs
-from tools.check_addition_certificate import (
-    CertificateError, FIXTURE, check_addition_certificate,
+_SPEC = importlib.util.spec_from_file_location(
+    "addition_certificate_checker",
+    Path(__file__).resolve().parents[1] / "tools" / "check_addition_certificate.py",
 )
+assert _SPEC is not None and _SPEC.loader is not None
+_CHECKER = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(_CHECKER)
+CertificateError = _CHECKER.CertificateError
+FIXTURE = _CHECKER.FIXTURE
+check_addition_certificate = _CHECKER.check_addition_certificate
 
 
 def test_complete_pinned_relation_and_sharp_bound():
