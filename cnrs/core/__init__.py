@@ -23,6 +23,7 @@ from .arithmetic import (
     cnrs_mul,
     cnrs_neg,
     cnrs_eq,
+    cnrs_eq_exact,
 )
 
 __all__ = [
@@ -30,5 +31,5 @@ __all__ = [
     "gaussian_to_cnrs_digits", "gaussian_to_cnrs_str", "cnrs_to_gaussian", "normalize_cnrs",
     "CVal", "CnrsValue",
     "BranchState", "DEFAULT_BRANCH_STATE",
-    "add_cnrs", "mul_cnrs", "div_cnrs", "cnrs_add", "cnrs_sub", "cnrs_mul", "cnrs_neg", "cnrs_eq",
+    "add_cnrs", "mul_cnrs", "div_cnrs", "cnrs_add", "cnrs_sub", "cnrs_mul", "cnrs_neg", "cnrs_eq", "cnrs_eq_exact",
 ]

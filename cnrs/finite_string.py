@@ -4,6 +4,7 @@ from __future__ import annotations
 import re
 
 from .finite_sequence import CNRSFiniteSequence
+from .gaussian_types import GaussianRational
 from .cnrs_repr import normalize_cnrs
 
 _FINITE_CNRS_PATTERN = re.compile(r"(?:[0-4]+(?:\.[0-4]*)?|\.[0-4]+)\Z")
@@ -50,8 +51,18 @@ def finite_sequence_to_cnrs_string(value: CNRSFiniteSequence) -> str:
     return normalize_cnrs(raw)
 
 
+def cnrs_string_value_exact(value: str) -> GaussianRational:
+    """Evaluate a finite string as an exact GaussianRational.
+
+    Invalid strings raise ValueError; objects other than exact str raise
+    TypeError. No complex conversion, approximation or validation oracle is used.
+    """
+    return cnrs_string_to_finite_sequence(value).evaluate((-2, 1))
+
+
 __all__ = [
     "cnrs_string_to_finite_sequence",
+    "cnrs_string_value_exact",
     "finite_sequence_to_cnrs_string",
 ]
 

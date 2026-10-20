@@ -20,6 +20,7 @@ from __future__ import annotations
 import re
 from .cnrs_add import add_cnrs
 from .cnrs_mul import mul_cnrs
+from .finite_string import cnrs_string_value_exact
 from .cnrs_repr import cnrs_to_gaussian, gaussian_to_cnrs_str, normalize_cnrs
 
 
@@ -64,3 +65,12 @@ def cnrs_mul(a: str, b: str) -> str:
 def cnrs_eq(a: str, b: str) -> bool:
     """Semantic equality: compare via value map, not string form."""
     return cnrs_to_gaussian(a) == cnrs_to_gaussian(b)
+
+
+def cnrs_eq_exact(a: str, b: str) -> bool:
+    """Compare strict finite strings by exact Gaussian-rational value.
+
+    The legacy cnrs_eq remains unchanged. Malformed or non-str operands are
+    rejected through the finite-string parser.
+    """
+    return cnrs_string_value_exact(a) == cnrs_string_value_exact(b)

@@ -1,3 +1,12 @@
+# Development candidate — exact finite comparison
+
+Unreleased additive candidate: `cnrs_eq_exact`, `cnrs_string_value_exact`,
+`CVal.equals_exact` and `CVal.to_gaussian_exact`. See
+[EXACT_COMPARISON_CANDIDATE.md](EXACT_COMPARISON_CANDIDATE.md) for the strict
+grammar, return types, precision examples and compatibility boundary. Legacy
+equality and approximate conversion interfaces remain unchanged. This section
+does not activate a release or enlarge the certified Lean proof boundary.
+
 # API Status — v0.18.0
 
 Version 0.18.0 changes no public name, signature, import path, or result type.

@@ -82,7 +82,11 @@ v0.8.1 adds scoped normalization, structured division expansion reports, theorem
 
 ### Carry-drain bounds
 
-Addition drain guard reduced from 1000 to 20: provably correct (carry always in 14-state set, ≤ 14 steps).
+Addition retains its guard of 20. Exhaustive zero-input paths through the pinned
+14-state transition relation establish a sharp maximum of five drain steps;
+finite state-set membership alone would not establish termination. See
+[the finite-addition certificate](FINITE_ADDITION_CERTIFICATE.md) for the
+Lean correspondence, permanent check, and remaining runtime proof boundary.
 
 Multiplication drain guard reduced from 1000 to 100: empirically grounded (≤ 12 steps for inputs to ~10³ digits); formal carry-set characterization remains open.
 

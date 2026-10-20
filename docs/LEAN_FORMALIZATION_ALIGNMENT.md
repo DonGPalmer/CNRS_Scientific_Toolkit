@@ -1,3 +1,17 @@
+# Lean formalization alignment — development candidate
+
+The next Toolkit increment adds a permanent check of Python addition's 350
+transitions against data pinned to the authoritatively checked, installed E2
+Lean candidate. It checks all 14 zero-input drain paths and their sharp
+five-step bound. This is a computational correspondence gate, not a Lean
+invocation or certification of the full Python runtime. Final E2 adoption and
+Toolkit release activation remain pending.
+
+See [certificate provenance and checks](FINITE_ADDITION_CERTIFICATE.md) and
+the [current candidate theorem crosswalk](FINITE_ARITHMETIC_LEAN_EXTENSION_CANDIDATE.md).
+The certified capstone and all six projects / 79 files under `formal/` remain
+unchanged. The historical release notes below retain their original scope.
+
 # Lean formalization alignment — v0.18.0 note
 
 Version 0.18.0 preserves the governed six-project, 79-file Lean source subtree
