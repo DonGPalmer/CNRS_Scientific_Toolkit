@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "CNRS Scientific Toolkit"
-message: "CNRS means Complex Numeric Representation System. Version 0.19.0 is a release-activation candidate adding exact finite-value comparison and pinned Lean-checked addition correspondence controls. Python remains independently implemented; no end-to-end formal verification is claimed."
+message: "CNRS means Complex Numeric Representation System. Version 0.19.0 adds exact finite-value comparison and pinned Lean-checked addition correspondence controls. GitHub publication and artifact integrity have been verified. Python remains independently implemented; no end-to-end formal verification is claimed."
 type: software
 authors:
   - family-names: Palmer
@@ -10,6 +10,7 @@ repository-code: "https://github.com/DonGPalmer/CNRS_Scientific_Toolkit"
 url: "https://www.nul1.com/"
 license: Apache-2.0
 version: "0.19.0"
+date-released: 2026-10-28
 identifiers:
   - type: doi
     value: "10.5281/zenodo.20574852"

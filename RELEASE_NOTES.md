@@ -11,7 +11,7 @@ procedure explicitly requires one.
 
 ## Contents
 
-- [v0.19.0 activation candidate](#v0-19-0)
+- [v0.19.0](#v0-19-0)
 - [v0.18.0](#v0-18-0)
 - [v0.17.0](#v0-17-0)
 - [v0.16.0](#v0-16-0)
@@ -29,10 +29,9 @@ procedure explicitly requires one.
 
 <a id="v0-19-0"></a>
 
-## CNRS Scientific Toolkit v0.19.0 — activation candidate
+## CNRS Scientific Toolkit v0.19.0 — published GitHub release
 
-**Status: release-activation candidate; not published.** No publication date
-or v0.19.0 version DOI is asserted. The concept DOI is unchanged.
+**Status: GitHub release published 2026-10-28, with both certified distribution assets independently verified.** The concept DOI is unchanged. Zenodo v0.19.0 version DOI `10.5281/zenodo.23747938` was supplied by the author; direct verification of Zenodo metadata and archived files remains outstanding.
 
 ### Exact finite-value comparison and addition correspondence controls
 
@@ -76,8 +75,14 @@ Those counts describe the implementation baseline, not a future activation
 head. Exact activation-head results/artifacts are retained in the draft PR
 and activation dossier; the
 [activation record](docs/releases/v0.19.0/V019_RELEASE_ACTIVATION_RECORD_2026-10-20.md)
-sets the remaining gates. Separate approval is required for activation merge
-and later tag/publication. Existing v0.18.0 release assets are preserved.
+sets the remaining gates. The separately approved activation merge and v0.19.0 GitHub tag/publication
+were completed. Approved tag commit: `c4ce26efed4051a111e036fca8720aa1441cf5f7`.
+Certified-assets run 40776738113, attempt 2: SUCCESS, after an author-approved
+wheel packaging-metadata SHA-256 correction. GitHub wheel SHA-256:
+`29ceba4684c68df02f64b43b0d6af2d84ff0e6070d56898426f7ed6d1f575bb5`;
+sdist SHA-256:
+`b0bf00ddbd7a9834f18b9a94b001293638db957ad173fd2d82c073e1fa2eb617`.
+Existing v0.18.0 release assets are preserved.
 
 <a id="v0-18-0"></a>
 
