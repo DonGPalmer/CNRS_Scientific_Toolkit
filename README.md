@@ -1,11 +1,8 @@
 # CNRS Scientific Toolkit
 
-## v0.19.0 — Release-activation candidate
+## v0.19.0 — Exact Finite Comparison and Lean-Checked Addition Correspondence
 
-**Status: candidate for review; not released or published.** The latest
-published version remains v0.18.0. This candidate activates release-facing
-metadata for the implementation merged through PR #20, without changing its
-arithmetic or the certified six-project, 79-file Lean subtree.
+**Status: GitHub release published 2026-10-28; certified distribution assets verified.** The v0.19.0 tag identifies approved commit `c4ce26efed4051a111e036fca8720aa1441cf5f7`. The Toolkit concept DOI remains [10.5281/zenodo.20574852](https://doi.org/10.5281/zenodo.20574852). The author reports v0.19.0 Zenodo version DOI [10.5281/zenodo.23747938](https://doi.org/10.5281/zenodo.23747938); direct Zenodo record/file verification is still pending.
 
 ```python
 from cnrs import CVal, cnrs_eq_exact, cnrs_string_value_exact
@@ -20,11 +17,10 @@ The permanent addition correspondence gate checks all 350 transitions and
 sharp five-step drain bound. It is a computational drift check, not
 end-to-end verification of Python. Legacy equality and hashing are preserved.
 
-See [API contracts](docs/EXACT_COMPARISON_CANDIDATE.md),
+See [the published GitHub Release](https://github.com/DonGPalmer/CNRS_Scientific_Toolkit/releases/tag/v0.19.0), [API contracts](docs/EXACT_COMPARISON_CANDIDATE.md),
 [certificate provenance](docs/FINITE_ADDITION_CERTIFICATE.md), and the
 [activation record](docs/releases/v0.19.0/V019_RELEASE_ACTIVATION_RECORD_2026-10-20.md).
-Merge and publication require separate governed decisions. No v0.19.0 version
-DOI or publication date is asserted in this candidate.
+See the [verified publication status](docs/releases/v0.19.0/V019_PUBLICATION_STATUS_2026-10-28.md) for commit, artifacts and the author-supplied Zenodo DOI.
 
 ## v0.18.0 — Exact Finite Addition and Subtraction
 
