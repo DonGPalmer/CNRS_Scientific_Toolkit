@@ -14,7 +14,7 @@ The candidate branch synchronizes `pyproject.toml` version, `cnrs.__version__`, 
 
 The existing `release-assets.yml` has dedicated handlers only for v0.18.0 and v0.19.0. **Do not create a v0.20.0 GitHub release or tag based on this preparation.** Publication requires a new, independently reviewed, fail-closed v0.20.0 approval-manifest workflow, including explicit author approval and exact source/asset SHA-256 gates. `tools/check_v019_release_approval.py` continues to apply to v0.19.0 only; it must not be reused as if it certified v0.20.0.
 
-`CITATION.cff` and consolidated `RELEASE_NOTES.md` intentionally continue to describe the last **published** release until the separate release transaction. On release approval, update them in the candidate-to-final packaging transaction and rerun checks; do not insert a fictional release date or DOI.
+`CITATION.cff` now identifies v0.20.0 **explicitly as an unreleased candidate**, with no `date-released` field. The consolidated `RELEASE_NOTES.md` continues to describe only the last **published** release until final adoption; update it in a separately governed release transaction. Do not invent a release date or DOI.
 
 ## Required verification and approval gates
 1. Verify all candidate source changes against **live** current `main` and resolve any base drift.
