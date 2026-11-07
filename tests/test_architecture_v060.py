@@ -49,7 +49,8 @@ def test_flat_imports_still_work():
     from cnrs.autodiff import CnrsDual
     from cnrs import __version__
 
-    assert __version__ == "0.19.0"
+    from importlib.metadata import version
+    assert __version__ == version("cnrs")
     assert CnrsHJet is not None
     assert CnrsDual is not None
 
