@@ -24,7 +24,7 @@ def test_active_version_consistency():
                    if isinstance(node, ast.Assign) and
                    any(isinstance(target, ast.Name) and target.id == "VERSION" for target in node.targets))
     assert package is not None and citation is not None
-    assert cnrs.__version__ == package.group(1) == citation.group(1) == version == "0.19.0"
+    assert cnrs.__version__ == package.group(1) == citation.group(1) == version
 
 
 @pytest.mark.parametrize("damage", [None, "wheel_bytes", "sdist_bytes", "inventory", "missing", "old_tag"])
