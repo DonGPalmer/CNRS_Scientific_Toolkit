@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 from fractions import Fraction
-from typing import Iterator, TypeAlias
+from typing import Iterator, Tuple, Union
 
 from .canonical_periodic import CanonicalPeriodicExpansion, primitive_period
 from .gaussian_valuation import (
@@ -16,7 +16,7 @@ from .gaussian_valuation import (
     reduce_gaussian_fraction,
 )
 
-GaussianInt: TypeAlias = int | tuple[int, int]
+GaussianInt = Union[int, Tuple[int, int]]
 
 
 class DivisionSearchLimitError(RuntimeError):
