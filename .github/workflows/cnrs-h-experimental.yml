@@ -1,0 +1,48 @@
+name: CNRS-H experimental compatibility
+
+on:
+  pull_request:
+    paths:
+      - 'cnrs/cnrs_h_*.py'
+      - 'tests/test_cnrs_h_*.py'
+      - 'docs/CNRS_H_EXPERIMENTAL_API.md'
+      - '.github/workflows/cnrs-h-experimental.yml'
+  push:
+    branches:
+      - cnrs-h-finite-experimental-integration-20261107
+
+permissions:
+  contents: read
+
+jobs:
+  finite-exact:
+    name: CNRS-H finite exact (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Toolkit in editable development mode
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+      - name: Run experimental finite CNRS-H test suite
+        run: |
+          python -m pytest -q             tests/test_cnrs_h_finite_exact.py             tests/test_cnrs_h_finite_interop.py             tests/test_cnrs_h_limits.py
+      - name: Verify qualified imports without root-level exports
+        run: |
+          python - <<'PY'
+          import cnrs
+          from cnrs.cnrs_h_finite_exact import RA, HurwitzJet
+          from cnrs.cnrs_h_limits import BoundedFiniteOps
+          from cnrs.cnrs_h_toolkit_interop import ToolkitDigitOps
+          assert BoundedFiniteOps().decode("1") == RA(1)
+          assert not hasattr(cnrs, "BoundedFiniteOps")
+          assert not hasattr(cnrs, "ToolkitDigitOps")
+          print("Experimental qualified imports PASS")
+          PY

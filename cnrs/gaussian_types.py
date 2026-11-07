@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TypeAlias
+from typing import Tuple, Union
 
 from .gaussian_valuation import (
     gadd,
@@ -12,8 +12,8 @@ from .gaussian_valuation import (
     reduce_gaussian_fraction,
 )
 
-GaussianInteger: TypeAlias = tuple[int, int]
-GaussianLike: TypeAlias = int | GaussianInteger
+GaussianInteger = Tuple[int, int]
+GaussianLike = Union[int, GaussianInteger]
 
 
 def coerce_gaussian(value: GaussianLike) -> GaussianInteger:
