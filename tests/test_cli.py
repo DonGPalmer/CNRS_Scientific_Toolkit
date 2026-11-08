@@ -4,7 +4,8 @@ from cnrs.cli import main, parse_expr, parse_env
 def test_cli_version(capsys):
     assert main(["version"]) == 0
     out = capsys.readouterr().out
-    assert "0.19.0" in out
+    from importlib.metadata import version
+    assert version("cnrs") in out
 
 
 def test_cli_convert_to_cnrs(capsys):

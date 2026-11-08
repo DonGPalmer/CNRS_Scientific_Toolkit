@@ -1,0 +1,86 @@
+name: v0.20.0 candidate verification
+
+on:
+  pull_request:
+    paths:
+      - 'pyproject.toml'
+      - 'cnrs/__init__.py'
+      - 'tools/build_reproducible_distributions.py'
+      - '.github/workflows/v020-candidate-verification.yml'
+      - 'tests/test_v020_release_identity.py'
+  push:
+    branches:
+      - v020-cnrs-h-release-candidate-20261107
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  finite-exact:
+    name: Candidate CNRS-H (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install candidate Toolkit
+        run: python -m pip install -e '.[dev]'
+      - name: Exact finite CNRS-H and package identity
+        run: |
+          python -m pytest -q tests/test_cnrs_h_finite_exact.py tests/test_cnrs_h_finite_interop.py tests/test_cnrs_h_limits.py tests/test_v020_release_identity.py
+      - name: Preserve qualified experimental API
+        run: |
+          python - <<'PY'
+          import cnrs
+          from cnrs.cnrs_h_finite_exact import RA, HurwitzJet
+          from cnrs.cnrs_h_limits import BoundedFiniteOps
+          from cnrs.cnrs_h_toolkit_interop import ToolkitDigitOps
+          assert cnrs.__version__ == '0.20.0'
+          assert BoundedFiniteOps().decode('1') == RA(1)
+          assert not hasattr(cnrs, 'BoundedFiniteOps')
+          assert not hasattr(cnrs, 'ToolkitDigitOps')
+          PY
+
+  lean-source-identity:
+    name: Candidate Lean source identity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Check preserved formal source
+        run: python tools/check_lean_alignment.py
+
+  lean-build:
+    name: Candidate Lean (${{ matrix.project }})
+    needs: lean-source-identity
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ['CNRSCore', 'CnrsQ2', 'CNRSArithmetic', 'CNRSIntegration', 'CNRSProblem1', 'CNRSProblem2']
+    defaults:
+      run:
+        working-directory: formal/lean/${{ matrix.project }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Install elan
+        run: |
+          curl -sSfL https://elan.lean-lang.org/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Verify pinned toolchain
+        run: lean --version
+      - name: Fetch pinned Mathlib cache
+        run: lake exe cache get
+      - name: Build formal project
+        run: lake build
