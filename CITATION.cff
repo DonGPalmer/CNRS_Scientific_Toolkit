@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: "CNRS Scientific Toolkit"
-message: "CNRS Scientific Toolkit v0.20.0 is an unreleased research candidate extending finite exact CNRS-H algebra and bounded interoperability. The experimental API does not imply formal verification of its Python implementation; cite the last published v0.19.0 release for released software."
+message: "CNRS Scientific Toolkit v0.20.0 contains experimental exact finite CNRS-H coefficient and divided-power arithmetic, qualified interoperability and bounded operations. The Python backend is not Lean-extracted or formally verified end-to-end; cite the published version record when available."
 type: software
 authors:
   - family-names: Palmer
