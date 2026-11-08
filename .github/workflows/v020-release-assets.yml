@@ -1,0 +1,103 @@
+name: Publish approved CNRS v0.20.0 assets
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  publish-v0200-assets:
+    if: github.event.release.tag_name == 'v0.20.0' && !github.event.release.prerelease
+    environment: cnrs-v020-publication
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: v0.20.0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Require independently approved source and asset identity
+        env:
+          CNRS_APPROVED_MANIFEST_JSON: ${{ vars.CNRS_V020_APPROVED_MANIFEST_JSON }}
+          CNRS_APPROVED_MANIFEST_SHA256: ${{ vars.CNRS_V020_APPROVED_MANIFEST_SHA256 }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          raw = os.environ.get("CNRS_APPROVED_MANIFEST_JSON", "")
+          if not raw:
+              raise SystemExit("Publication blocked: author-approved manifest missing")
+          (Path(os.environ["RUNNER_TEMP"]) / "v020-approved.json").write_bytes(raw.encode("utf-8"))
+          PY
+          python tools/check_v020_release_approval.py \
+            --manifest "$RUNNER_TEMP/v020-approved.json" \
+            --approved-sha256 "$CNRS_APPROVED_MANIFEST_SHA256"
+
+      - name: Build reproducible version-specific wheel and sdist
+        run: |
+          test "$(git rev-parse HEAD)" = "$(git rev-parse 'refs/tags/v0.20.0^{commit}')"
+          python -m pip install --upgrade pip build
+          python tools/build_reproducible_distributions.py
+          python tools/check_release_assets.py \
+            --version 0.20.0 --tag v0.20.0 --directory dist
+
+      - name: Independently verify built bytes against author approval
+        env:
+          CNRS_APPROVED_MANIFEST_SHA256: ${{ vars.CNRS_V020_APPROVED_MANIFEST_SHA256 }}
+        run: |
+          python tools/check_v020_release_approval.py \
+            --manifest "$RUNNER_TEMP/v020-approved.json" \
+            --approved-sha256 "$CNRS_APPROVED_MANIFEST_SHA256" \
+            --directory dist
+
+      - name: Check actual installed package identity and exact finite CNRS-H
+        run: |
+          for kind in wheel sdist; do
+            if [ "$kind" = wheel ]; then
+              asset=dist/cnrs-0.20.0-py3-none-any.whl
+            else
+              asset=dist/cnrs-0.20.0.tar.gz
+            fi
+            envdir="$RUNNER_TEMP/cnrs-v020-$kind"
+            python -m venv "$envdir"
+            "$envdir/bin/python" -m pip install "$asset"
+            "$envdir/bin/python" -I -c "import cnrs,sys;from pathlib import Path;from importlib.metadata import version;from cnrs import CVal,cnrs_eq_exact;from cnrs.cnrs_h_finite_exact import RA,HurwitzJet;from cnrs.cnrs_h_limits import BoundedFiniteOps;from cnrs.cnrs_h_toolkit_interop import ToolkitDigitOps;assert Path(cnrs.__file__).resolve().is_relative_to(Path(sys.prefix).resolve());assert cnrs.__version__==version('cnrs')=='0.20.0';assert cnrs_eq_exact('.1','00.100');api=BoundedFiniteOps();assert api.multiply(RA(2),RA(3))==RA(6);assert api.decode(api.encode(RA(1,2,1)))==RA(1,2,1);assert HurwitzJet.from_coefficients(1,2).degree==1;assert not hasattr(cnrs,'BoundedFiniteOps')"
+          done
+
+      - name: Reject any existing release asset before non-clobbering upload
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$(gh api repos/${{ github.repository }}/releases/tags/v0.20.0 --jq '.assets | length')" = "0"
+
+      - name: Attach approved v0.20.0 assets without replacement
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v0.20.0 \
+            dist/cnrs-0.20.0-py3-none-any.whl \
+            dist/cnrs-0.20.0.tar.gz
+
+      - name: Compare public downloads with independently approved hashes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CNRS_APPROVED_MANIFEST_SHA256: ${{ vars.CNRS_V020_APPROVED_MANIFEST_SHA256 }}
+        run: |
+          gh api repos/${{ github.repository }}/releases/tags/v0.20.0 \
+            --jq '.assets[].name' | sort > "$RUNNER_TEMP/actual-assets.txt"
+          printf '%s\n' cnrs-0.20.0-py3-none-any.whl cnrs-0.20.0.tar.gz \
+            | sort > "$RUNNER_TEMP/required-assets.txt"
+          diff -u "$RUNNER_TEMP/required-assets.txt" "$RUNNER_TEMP/actual-assets.txt"
+          mkdir "$RUNNER_TEMP/v020-public-assets"
+          gh release download v0.20.0 --dir "$RUNNER_TEMP/v020-public-assets" \
+            --pattern cnrs-0.20.0-py3-none-any.whl \
+            --pattern cnrs-0.20.0.tar.gz
+          python tools/check_v020_release_approval.py \
+            --manifest "$RUNNER_TEMP/v020-approved.json" \
+            --approved-sha256 "$CNRS_APPROVED_MANIFEST_SHA256" \
+            --directory "$RUNNER_TEMP/v020-public-assets"
