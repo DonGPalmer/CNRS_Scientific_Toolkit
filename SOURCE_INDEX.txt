@@ -1,15 +1,18 @@
-# CNRS Scientific Toolkit v0.19.0 release-activation candidate source index
-# Implementation baseline: f04c856064e82fc8e059af693d65392bff9ad843
-# Candidate only; no merge, tag, publication or E2 adoption.
-# Package/runtime/CFF candidate version: 0.19.0
-# Files listed: 519
-# Reproduce the tracked inventory with: git ls-files | LC_ALL=C sort
+# CNRS Scientific Toolkit v0.20.0 governed maintenance source index (candidate)
+# Current tracked inventory for the v0.20.0 pre-publication maintenance PR
+# Baseline main commit: e88087673705feaa9348acbeddcb8357ae93f97a
+# Version: 0.20.0; publication NOT authorized, no release tag
+# Files listed: 539
+# Reproduce with: git ls-files | LC_ALL=C sort
 
 .gitattributes
 .github/workflows/build-lean433-offline-runtime-v4.yml
+.github/workflows/cnrs-h-experimental.yml
 .github/workflows/lean.yml
 .github/workflows/release-assets.yml
 .github/workflows/tests.yml
+.github/workflows/v020-candidate-verification.yml
+.github/workflows/v020-release-assets.yml
 .gitignore
 CITATION.cff
 CONTRIBUTING.md
@@ -65,11 +68,14 @@ cnrs/cnrs_h_bridge.py
 cnrs/cnrs_h_chain.py
 cnrs/cnrs_h_continuation.py
 cnrs/cnrs_h_domain.py
+cnrs/cnrs_h_finite_exact.py
 cnrs/cnrs_h_jet.py
+cnrs/cnrs_h_limits.py
 cnrs/cnrs_h_mode.py
 cnrs/cnrs_h_native.py
 cnrs/cnrs_h_path.py
 cnrs/cnrs_h_taylor_model.py
+cnrs/cnrs_h_toolkit_interop.py
 cnrs/cnrs_h_verify.py
 cnrs/cnrs_hstream.py
 cnrs/cnrs_hstream_ops.py
@@ -169,6 +175,7 @@ docs/CNRS_H_BRANCH_CONTINUATION.md
 docs/CNRS_H_BRANCH_STATE.md
 docs/CNRS_H_CHAIN_RULE_THEORY.md
 docs/CNRS_H_DOMAIN_DIAGNOSTICS.md
+docs/CNRS_H_EXPERIMENTAL_API.md
 docs/CNRS_H_NATIVE.md
 docs/CNRS_H_PATH_CONTINUATION.md
 docs/CNRS_H_TAYLOR_MODELS.md
@@ -250,7 +257,12 @@ docs/releases/v0.17.0/V017_SHA256SUMS.txt
 docs/releases/v0.18.0/V018_RELEASE_ACTIVATION_RECORD_2026-09-23.md
 docs/releases/v0.18.0/V018_SHA256SUMS.txt
 docs/releases/v0.19.0/PUBLICATION_APPROVAL.md
+docs/releases/v0.19.0/V019_PUBLICATION_STATUS_2026-10-28.md
 docs/releases/v0.19.0/V019_RELEASE_ACTIVATION_RECORD_2026-10-20.md
+docs/releases/v0.20.0/PREPARATION.md
+docs/releases/v0.20.0/PUBLICATION_APPROVAL.md
+docs/releases/v0.20.0/RELEASE_DESCRIPTION_DRAFT.md
+docs/releases/v0.20.0/ZENODO_METADATA_DRAFT.md
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.pdf
 docs/theory/BRANCH_INDEX_MULTIPLICATION_LOGARITHM_ALGEBRA_V1.tex
 docs/theory/CANONICAL_PERIODIC_NORMALIZATION_V1.pdf
@@ -448,7 +460,10 @@ tests/test_cnrs_h_bridge.py
 tests/test_cnrs_h_chain_rule.py
 tests/test_cnrs_h_continuation.py
 tests/test_cnrs_h_domain.py
+tests/test_cnrs_h_finite_exact.py
+tests/test_cnrs_h_finite_interop.py
 tests/test_cnrs_h_jet.py
+tests/test_cnrs_h_limits.py
 tests/test_cnrs_h_mode_integrate_v010.py
 tests/test_cnrs_h_native.py
 tests/test_cnrs_h_native_compose.py
@@ -510,6 +525,9 @@ tests/test_v016_exact_multiplication.py
 tests/test_v017_exact_division.py
 tests/test_v018_exact_addition_subtraction.py
 tests/test_v019_release_approval.py
+tests/test_v020_archive_portability.py
+tests/test_v020_publication_approval.py
+tests/test_v020_release_identity.py
 tools/audit_native_status.py
 tools/build_release.py
 tools/build_reproducible_distributions.py
@@ -521,6 +539,8 @@ tools/check_v016_claims.py
 tools/check_v017_claims.py
 tools/check_v018_claims.py
 tools/check_v019_release_approval.py
+tools/check_v020_release_approval.py
 tools/export_addition_certificate.py
+tools/rehearse_v020_publication.py
 tools/toolkit_audit_crossval.py
 verification/finite_addition_certificate.json
