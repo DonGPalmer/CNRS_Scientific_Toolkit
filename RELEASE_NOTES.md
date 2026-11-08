@@ -11,6 +11,7 @@ procedure explicitly requires one.
 
 ## Contents
 
+- [v0.20.0](#v0-20-0)
 - [v0.19.0](#v0-19-0)
 - [v0.18.0](#v0-18-0)
 - [v0.17.0](#v0-17-0)
@@ -26,6 +27,31 @@ procedure explicitly requires one.
 - [v0.11.2](#v0-11-2)
 - [v0.11.1](#v0-11-1)
 - [v0.11.0](#v0-11-0)
+
+<a id="v0-20-0"></a>
+
+## CNRS Scientific Toolkit v0.20.0 — finite exact CNRS-H experimental integration
+
+**Release-content status:** Versioned source and publication candidate prepared. A public v0.20.0 release, publication date, version DOI, final certified commit/tree, and release-asset hashes are **not asserted by this document**. Consult the actual GitHub release and Zenodo records to establish publication state; do not infer it from the existence of this section.
+
+### Finite exact coefficient and Hurwitz arithmetic
+
+- Provides opt-in, qualified exact coefficient arithmetic over R_A = Z[i][(-2+i)^(-1)], with finite canonical CNRS-A coefficient serialization and reversible accepted finite encodings.
+- Provides finite-support divided-power/Hurwitz jets, exact finite binomial convolution, differentiation, antiderivatives with supplied constant, and restricted truncated inversion only when the constant coefficient is a unit of R_A. This is **not** general inversion in Q(i).
+- Provides cnrs.cnrs_h_toolkit_interop.ToolkitDigitOps, a bounded adapter checking selected published native digit-string operations against an independent exact value backend.
+- Provides cnrs.cnrs_h_limits.BoundedFiniteOps, an opt-in interface with explicit bounds on digits, integer bit size, denominator exponent, jet degree and computational terms. Raw research primitives are not globally resource limited; this is not a safe execution sandbox for untrusted inputs.
+- Preserves existing CnrsHNative, CnrsHJet interfaces and all existing package-root exports; the new APIs remain explicitly qualified.
+
+### Compatibility and verification boundary
+
+- Repairs two pre-existing Python 3.9 runtime type-alias incompatibilities using typing.Tuple and typing.Union, without arithmetic formula changes.
+- CNRS-H source integration: PR #25, merge 475a6b4d58068479e816450ea4b1506017473bcf. Versioned v0.20.0 candidate source integration: PR #26, merge e35085147e9eee1fdeda882b904db79f4737ce03.
+- The v0.20.0 candidate source gate included 1,563 passing Python tests, four skipped tests, historical arithmetic acceptance, reproducible wheel/sdist builds, and isolated installations. The five Python 3.9–3.13 CNRS-H jobs and six preserved Lean project builds passed on PR #26's exact head. These are recorded development checks, not proof of the new Python implementation.
+- No new Lean extraction, universal resource/time guarantee, analytic infinite-series convergence, physical prediction or performance-superiority claim.
+
+### Publication control
+
+A distinct v0.20.0 approval manifest must bind an author-approved **final release commit and tree** and both reproducible wheel/sdist SHA-256 digests. The publication workflow fails closed on missing or mismatched approval, tag identity, or changed asset bytes, and does not replace existing assets. Preparing or merging publication control source does not authorize creating the tag, publishing a GitHub release, or depositing a Zenodo version. The concept DOI remains 10.5281/zenodo.20574852; no new version DOI is recorded until actual Zenodo publication is independently verified.
 
 <a id="v0-19-0"></a>
 
