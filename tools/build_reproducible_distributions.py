@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import hashlib
-import gzip
 import os
 from pathlib import Path
 import shutil
@@ -12,6 +11,10 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import struct
+import zlib
+from datetime import datetime, timezone
+from zipfile import ZipFile, ZipInfo, ZIP_STORED
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = "0.20.0"
@@ -37,6 +40,42 @@ def source_date_epoch() -> str:
     ).strip()
 
 
+def normalize_wheel(path: Path, epoch: int) -> None:
+    """Canonical stored-entry ZIP: archive bytes do not depend on zlib."""
+    with tempfile.TemporaryDirectory() as directory:
+        target = Path(directory) / "canonical.whl"
+        when = datetime.fromtimestamp(max(epoch, 315532800), timezone.utc)
+        stamp = (when.year, when.month, when.day, when.hour, when.minute,
+                 when.second - when.second % 2)
+        with ZipFile(path, "r") as original, ZipFile(target, "w", compression=ZIP_STORED) as normalized:
+            for old in sorted(original.infolist(), key=lambda entry: entry.filename):
+                member = ZipInfo(old.filename, stamp)
+                member.compress_type = ZIP_STORED
+                member.create_system = 3
+                member.external_attr = ((0o40755 << 16) | 0x10) if old.is_dir() else (0o100644 << 16)
+                normalized.writestr(member, original.read(old))
+        shutil.copyfile(target, path)
+
+
+def _write_stored_gzip(raw_tar: Path, destination: Path, epoch: int) -> None:
+    """Portable RFC 1951 stored blocks, CRC32 and gzip header; no zlib encoder."""
+    crc, length = 0, 0
+    with raw_tar.open("rb") as source, destination.open("wb") as output:
+        output.write(struct.pack("<BBBBIBB", 31, 139, 8, 0, epoch, 0, 255))
+        block = source.read(65535)
+        while True:
+            upcoming = source.read(65535)
+            output.write(bytes([1 if not upcoming else 0]))
+            output.write(struct.pack("<HH", len(block), len(block) ^ 0xFFFF))
+            output.write(block)
+            crc = zlib.crc32(block, crc)
+            length += len(block)
+            if not upcoming:
+                break
+            block = upcoming
+        output.write(struct.pack("<II", crc & 0xffffffff, length & 0xffffffff))
+
+
 def build(outdir: Path, epoch: str) -> None:
     env = os.environ.copy()
     env.update({"SOURCE_DATE_EPOCH": epoch, "PYTHONHASHSEED": "0"})
@@ -47,6 +86,7 @@ def build(outdir: Path, epoch: str) -> None:
         check=True,
     )
     normalize_sdist(outdir / f"cnrs-{VERSION}.tar.gz", int(epoch))
+    normalize_wheel(outdir / f"cnrs-{VERSION}-py3-none-any.whl", int(epoch))
 
 
 def normalize_sdist(path: Path, epoch: int) -> None:
@@ -63,11 +103,7 @@ def normalize_sdist(path: Path, epoch: int) -> None:
                 member.pax_headers = {}
                 payload = source.extractfile(member) if member.isfile() else None
                 target.addfile(member, payload)
-        with raw_tar.open("rb") as source, path.open("wb") as destination:
-            with gzip.GzipFile(
-                filename="", mode="wb", fileobj=destination, mtime=epoch
-            ) as compressed:
-                shutil.copyfileobj(source, compressed)
+        _write_stored_gzip(raw_tar, path, epoch)
 
 
 def main() -> int:
