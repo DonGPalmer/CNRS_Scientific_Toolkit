@@ -1,12 +1,12 @@
 # CNRS Toolkit v0.20.0 publication approval and activation controls
 
-**Status:** Prepared candidate, NOT APPROVED for merge, tag creation, GitHub publication, Zenodo deposit or version-history updates.
+**Status:** Publication-control source merged via PR #27 (main commit af03014274d0d742da58376713cab8c8fb86ee3d); NOT AUTHOR-APPROVED for release tag creation, GitHub publication, Zenodo deposit or version-history updates.
 **Prior source merge:** PR #26, main commit e35085147e9eee1fdeda882b904db79f4737ce03. This is a baseline, NOT a final publication pin.
 **Previous published release:** v0.19.0; DO NOT reuse its variables, manifest, tag, artifacts, release, or DOI.
 
 ## Publication authorization is a separate decision
 
-An author decision to merge this candidate merely installs dormant publication controls. Publishing a GitHub release is a separate operation requiring explicit author approval of the final commit/tree, release files and manifest digest. Do not publish an empty GitHub Release to trigger this workflow before that authorization: an unapproved release event can still create a public release page even though the asset gate fails.
+The completed PR #27 source merge installed dormant publication controls; it did not authorize publication. Publishing a GitHub release is a separate operation requiring explicit author approval of the final commit/tree, release files and manifest digest. Do not publish an empty GitHub Release to trigger this workflow before that authorization: an unapproved release event can still create a public release page even though the asset gate fails.
 
 The candidate workflow is .github/workflows/v020-release-assets.yml. It matches only the published v0.20.0 release event, references the dedicated environment cnrs-v020-publication and never falls back to the v0.19.0 approval variables. It verifies source identity, build reproducibility, installed packages, exact wheel/sdist digests, release asset absence and public downloaded assets before reporting success. Uploads do NOT use --clobber. Existing v0.18/v0.19 jobs remain untouched.
 
@@ -40,6 +40,8 @@ All strings below in upper-case are placeholders; they are not hashes, approval 
 The verifier tools/check_v020_release_approval.py rejects absent/mutated/duplicate-key manifests, incorrect version/tag, incomplete asset identity and wrong source/tag/tree or distribution bytes. The separate Python negative-test suite tests these controls.
 
 ## Order of governed work
+
+Steps 1 and 2 were completed by the PR #27 source merge and its recorded verification. Steps 3 onward are separate publication preparation and author-approval gates; those steps are **not** marked complete by the merge.
 
 1. Review and author-approve the publication-control PR for merging only. Record authorization in an immutable SSC journal event.
 2. Recheck base/head immediately before merge. Merge with an expected-head guard. Verify the ACTUAL final main commit and Git tree, branch identity, published release baseline and post-merge CI.
