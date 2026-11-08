@@ -15,7 +15,7 @@ The two pre-existing runtime type-alias declarations incompatible with Python 3.
 
 ## Verification from pre-publication candidate
 
-The versioned source candidate passed 1,563 Python tests with 4 skipped; historical acceptance contracts and isolated wheel/source-distribution installation passed. Five Python 3.9–3.13 CNRS-H jobs and all six existing Lean project builds passed on the candidate. The publication gate requires fresh independent verification of the exact final release commit/tree and bytes before asset upload.
+The post-publication-control source candidate passed 1,575 Python tests with 4 skipped on GitHub Actions; an independent reviewer reproduced 1,575 passed and 4 skipped on Python 3.9 through 3.13. Historical acceptance contracts and isolated wheel/source-distribution installations also passed. Final release-source tests and hashes remain subject to verification after the last approved commit. Five Python 3.9–3.13 CNRS-H jobs and all six existing Lean project builds passed on the candidate. The publication gate requires fresh independent verification of the exact final release commit/tree and bytes before asset upload.
 
 ## Scientific and formal boundaries
 
@@ -26,7 +26,6 @@ The exact finite coefficient domain is the localization R_A, not all Gaussian ra
 - Final approved commit and tree: PENDING FINAL RELEASE AUDIT
 - Certified wheel and sdist SHA-256: PENDING FINAL RELEASE AUDIT
 - GitHub publication date: PENDING ACTUAL PUBLICATION
-- Zenodo version DOI: PENDING ACTUAL ZENODO DEPOSIT
 - Existing Toolkit concept DOI: https://doi.org/10.5281/zenodo.20574852
 
 Do not publish this draft or replace the already published v0.19.0 assets as part of preparation.

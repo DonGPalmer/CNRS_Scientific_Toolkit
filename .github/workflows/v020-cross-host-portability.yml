@@ -1,0 +1,65 @@
+name: v0.20.0 cross-host distribution portability
+
+on:
+  pull_request:
+    paths:
+      - 'pyproject.toml'
+      - 'tools/build_reproducible_distributions.py'
+      - '.github/workflows/v020-cross-host-portability.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build on Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.13']
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install pinned build frontend
+        run: python -m pip install 'build==1.6.1'
+      - name: Rebuild and check reproducibility
+        run: |
+          python tools/build_reproducible_distributions.py
+          python tools/check_release_assets.py --version 0.20.0 --tag v0.20.0 --directory dist
+      - uses: actions/upload-artifact@v7
+        with:
+          name: v020-portability-py${{ matrix.python-version }}
+          path: |
+            dist/cnrs-0.20.0-py3-none-any.whl
+            dist/cnrs-0.20.0.tar.gz
+            dist/SHA256SUMS.txt
+            dist/CANDIDATE_COMMIT.txt
+            dist/CANDIDATE_TREE.txt
+          if-no-files-found: error
+
+  compare:
+    name: Byte-identical across Python and zlib hosts
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: v020-portability-py*
+          path: portability
+      - name: Verify exact wheel, sdist, source and checksums across hosts
+        run: |
+          set -eu
+          first=portability/v020-portability-py3.10
+          second=portability/v020-portability-py3.13
+          for file in cnrs-0.20.0-py3-none-any.whl cnrs-0.20.0.tar.gz SHA256SUMS.txt CANDIDATE_COMMIT.txt CANDIDATE_TREE.txt; do
+            cmp "$first/$file" "$second/$file"
+          done
+          sha256sum "$first"/cnrs-0.20.0*
+          cat "$first/SHA256SUMS.txt"
+          echo "Cross-host byte identity PASS"

@@ -8,9 +8,6 @@ on:
       - 'tools/build_reproducible_distributions.py'
       - '.github/workflows/v020-candidate-verification.yml'
       - 'tests/test_v020_release_identity.py'
-  push:
-    branches:
-      - v020-cnrs-h-release-candidate-20261107
   workflow_dispatch:
 
 permissions:

@@ -41,10 +41,13 @@ jobs:
       - name: Build reproducible version-specific wheel and sdist
         run: |
           test "$(git rev-parse HEAD)" = "$(git rev-parse 'refs/tags/v0.20.0^{commit}')"
-          python -m pip install --upgrade pip build
+          python -m pip install --upgrade pip "build==1.6.1"
           python tools/build_reproducible_distributions.py
           python tools/check_release_assets.py \
             --version 0.20.0 --tag v0.20.0 --directory dist
+
+      - name: Rehearse approval gates without publication side effects
+        run: python -m tools.rehearse_v020_publication --directory dist
 
       - name: Independently verify built bytes against author approval
         env:
