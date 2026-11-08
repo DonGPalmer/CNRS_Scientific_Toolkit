@@ -2,7 +2,7 @@
 # Current tracked inventory for the v0.20.0 pre-publication maintenance PR
 # Baseline main commit: e88087673705feaa9348acbeddcb8357ae93f97a
 # Version: 0.20.0; publication NOT authorized, no release tag
-# Files listed: 539
+# Files listed: 540
 # Reproduce with: git ls-files | LC_ALL=C sort
 
 .gitattributes
@@ -12,6 +12,7 @@
 .github/workflows/release-assets.yml
 .github/workflows/tests.yml
 .github/workflows/v020-candidate-verification.yml
+.github/workflows/v020-cross-host-portability.yml
 .github/workflows/v020-release-assets.yml
 .gitignore
 CITATION.cff
